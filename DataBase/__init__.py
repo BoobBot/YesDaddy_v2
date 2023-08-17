@@ -53,3 +53,27 @@ class DiscordDatabase:
 
     async def delete_guild(self, guild_id):
         await self.guild_collection.delete_one({"guild_id": guild_id})
+
+    async def add_ticket(self, guild_id, ticket_data):
+        await self.guild_collection.update_one(
+            {"guild_id": guild_id},
+            {"$push": {"tickets": ticket_data}}
+        )
+
+    async def get_tickets(self, guild_id):
+        guild_data = await self.guild_collection.find_one({"guild_id": guild_id})
+        if guild_data and "tickets" in guild_data:
+            return guild_data["tickets"]
+        return []
+
+    async def update_ticket(self, guild_id, ticket_id, new_data):
+        await self.guild_collection.update_one(
+            {"guild_id": guild_id, "tickets.ticket_id": ticket_id},
+            {"$set": {"tickets.$": new_data}}
+        )
+
+    async def delete_ticket(self, guild_id, ticket_id):
+        await self.guild_collection.update_one(
+            {"guild_id": guild_id},
+            {"$pull": {"tickets": {"ticket_id": ticket_id}}}
+        )

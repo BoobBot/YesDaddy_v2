@@ -1,3 +1,4 @@
+import discord
 import openai
 from discord.ext import commands
 
@@ -13,20 +14,20 @@ class Core(commands.Cog):
         await ctx.reply(f"Pong! Bot latency: {self.bot.latency * 1000:.2f} ms")
 
 
-@commands.command(name="test", description="????")
-async def test(self, ctx):
-    await ctx.send("should be persistent, yes?", view=VerificationView())
-
-
-@commands.command(name="hi", description="????")
-async def hi(self, ctx):
-    chat_completion = openai.ChatCompletion.create(model="gpt-3.5-turbo",
-                                                   messages=[{"role": "user", "content": ctx.message.content}])
-    print(chat_completion.choices[0].message.content)
-
-    # Send the response as a message
-    await ctx.send(chat_completion.choices[0].message.content)
-
+    @commands.command(name="test", description="????")
+    async def test(self, ctx):
+        await ctx.send("stuff here", view=VerificationView())
+    #
+    #
+    # @commands.command(name="hi", description="????")
+    # async def hi(self, ctx):
+    #     chat_completion = openai.ChatCompletion.create(model="gpt-3.5-turbo",
+    #                                                    messages=[{"role": "user", "content": ctx.message.content}])
+    #     print(chat_completion.choices[0].message.content)
+    #
+    #     # Send the response as a message
+    #     await ctx.send(chat_completion.choices[0].message.content)
+    #
 
 
 async def setup(bot):

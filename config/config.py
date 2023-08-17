@@ -4,7 +4,11 @@ from dotenv import load_dotenv
 
 load_dotenv()  # Load environment variables from .env file
 
-
+roles = {
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964
+}
 class Config:
     def __init__(self):
         self.token = os.getenv('DISCORD_TOKEN',
@@ -26,6 +30,8 @@ class Config:
         self.prefix = os.getenv('PREFIX', "")  # Use environment variable as prefix
         self.owner_ids = os.getenv('OWNER_IDS', "")  # Use environment variable as owner_ids
         self.open_ai_key = os.getenv('OPEN_AI_KEY', "")  # Use environment variable as open_ai_key
+        self.member_role_id = os.getenv('MEMBER_ROLE_ID', "")  # Use environment variable as member_role_id
+
 
     def get_token(self, debug=False):  # Get token
         if self.debug_mode or debug:  # If debug_mode is True
