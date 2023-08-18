@@ -1,5 +1,3 @@
-# This example covers advanced startup options and uses some real world examples for why you may need them.
-
 import asyncio
 import logging
 import logging.handlers
@@ -35,7 +33,7 @@ if debug:
     bot_token = config.debug_token
     # logger.setLevel(logging.DEBUG)
 
-temp_data={}
+
 class Bot(commands.Bot):
     def __init__(
             self,
@@ -62,12 +60,11 @@ class Bot(commands.Bot):
             self.log.info(f"Loading {extension}")
             await self.load_extension(extension)
 
-
         if self.testing_guild_id and config.sync_testing_guild:
             self.log.info(f"Syncing commands for guild {self.testing_guild_id}")
             guild = discord.Object(self.testing_guild_id)
             self.tree.copy_global_to(guild=guild)
-            #await self.tree.sync(guild=guild)
+            # await self.tree.sync(guild=guild)
             self.log.info(f"Synced commands for guild {self.testing_guild_id}")
 
 
