@@ -12,6 +12,7 @@ class VerificationView(discord.ui.View):
     @discord.ui.button(label='Start verification', style=discord.ButtonStyle.green,
                        custom_id='persistent_view:verification', emoji='✔️')
     async def verify(self, interaction: discord.Interaction, button: discord.ui.Button):
+        # for testing await interaction.client.db_client.delete_guild(interaction.guild.id)
         # Check if the user is already verified
         if 694641646821703741 in [role.id for role in interaction.user.roles]:
             return await interaction.response.send_message("You are already verified!", ephemeral=True)
@@ -42,7 +43,7 @@ class VerificationView(discord.ui.View):
                 "user_id": interaction.user.id,
                 "status": "open",
                 "resolved_by": None,
-                "resolved_at": datetime.utcnow(),
+                "resolved_at": None,
                 "created_at": datetime.utcnow(),
                 "reason": "Verification"
             }

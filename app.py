@@ -11,6 +11,7 @@ from discord.ext import commands
 from motor import motor_asyncio
 
 from DataBase import DiscordDatabase
+from Views import tickets_view
 from Views.verification_view import VerificationView
 from config.config import Config
 from utils.Logger import setup_logger
@@ -32,7 +33,6 @@ if debug:
     log.info("Debug mode is on")
     bot_token = config.debug_token
     # logger.setLevel(logging.DEBUG)
-
 
 class Bot(commands.Bot):
     def __init__(
@@ -56,6 +56,7 @@ class Bot(commands.Bot):
     async def setup_hook(self) -> None:
 
         self.add_view(VerificationView())
+        self.add_view(tickets_view.TicketView())
         for extension in self.initial_extensions:
             self.log.info(f"Loading {extension}")
             await self.load_extension(extension)
