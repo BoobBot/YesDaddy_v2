@@ -1,3 +1,7 @@
+import os
+import subprocess
+import sys
+
 import discord
 import openai
 from discord.ext import commands
@@ -31,6 +35,19 @@ class Core(commands.Cog):
         🔴 Click the button below to verify 🔴
         """
         await ctx.send(message, view=VerificationView())
+
+    @commands.command()
+    @commands.is_owner()
+    async def pull(ctx):
+        try:
+            # Run git pull command
+            subprocess.run(['git', 'pull', 'origin', 'master'], check=True)
+            await ctx.send(f'Git pull successful. Restarting...with {sys.executable}, [\'python\'] + {sys.argv}')
+            await ctx.logout()
+            os.execv(sys.executable, ['python'] + sys.argv)
+        except subprocess.CalledProcessError:
+            await ctx.send('Git pull failed.')
+
     #
     #
     # @commands.command(name="hi", description="????")
