@@ -26,9 +26,11 @@ class TicketView(discord.ui.View):
                 ticket["status"] = "verified"
                 ticket["resolved_by"] = interaction.user.id
                 ticket["resolved_at"] = datetime.utcnow()
-
-                member = await interaction.guild.fetch_member(int(user_id))
-
+                try:
+                    member = await interaction.guild.fetch_member(int(user_id))
+                except discord.NotFound:
+                    return await interaction.response.send_message("User not found, did they leave the server?",
+                                                                   ephemeral=True)
                 # female = 694641646805057561 694641646821703740
                 # male = 694641646805057560 694641646813577267
                 # trans = 694641646805057562 694641646813577268
