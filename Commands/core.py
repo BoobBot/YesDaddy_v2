@@ -38,7 +38,7 @@ class Core(commands.Cog):
 
     @commands.command()
     @commands.is_owner()
-    async def pull(ctx):
+    async def pull(self, ctx):
         try:
             # Run git pull command
             subprocess.run(['git', 'pull', 'origin', 'master'], check=True)
