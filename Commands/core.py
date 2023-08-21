@@ -15,8 +15,22 @@ class Core(commands.Cog):
 
 
     @commands.command(name="test", description="????")
+    @commands.is_owner()
     async def test(self, ctx):
-        await ctx.send("stuff here", view=VerificationView())
+        message = """
+        __**STEPS**__
+
+        1. Write down today's current date on a sheet of paper. Write down the name of the server (BoobBot) as well as your user ID.
+
+        2. Take a photo of said sheet of paper with your photo ID on it. The ID must have DOB as well as an identification photo. You can censor all other info except DOB and ID photo.
+
+        3. Take a photo of yourself holding the sheet of paper with your face clearly shown.
+
+        **WE DO NOT ACCEPT BIRTH CERTIFICATES UNDER ANY CIRCUMSTANCES**
+
+        🔴 Click the button below to verify 🔴
+        """
+        await ctx.send(message, view=VerificationView())
     #
     #
     # @commands.command(name="hi", description="????")
