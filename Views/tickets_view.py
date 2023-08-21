@@ -52,7 +52,8 @@ class TicketView(discord.ui.View):
                 await member.add_roles(discord.utils.get(interaction.guild.roles, id=694641646821703741))  # Verified
                 # log the verification
                 ch = interaction.guild.get_channel(1142915549198823546)
-                await ch.send(f"verification ticket by {member.mention} was verified by {interaction.user.mention}")
+                user = await interaction.client.fetch_user(user_id)
+                await ch.send(f"verification ticket by {user.name} ({user.id}) was verified by {interaction.user.mention}")
                 # store the ticket
                 await interaction.client.db_client.update_guild(interaction.guild.id, {"tickets": data.tickets})
                 # respond to the user
@@ -83,7 +84,10 @@ class TicketView(discord.ui.View):
         # log the verification
         member = await interaction.guild.fetch_member(int(user_id))
         ch = interaction.guild.get_channel(1142915549198823546)
-        await ch.send(f"verification ticket by {member.mention} was closed by {interaction.user.mention}")
+        user = await interaction.client.fetch_user(user_id)
+        if user:
+            await ch.send(f"verification ticket by {user.name} ({user.id}) was closed by {interaction.user.mention}")
+        await ch.send(f"verification ticket by unknown/Deleted user was closed by {interaction.user.mention}")
         await interaction.response.send_message("Ticket Closed", ephemeral=True)
         await asyncio.sleep(5)
         await interaction.channel.delete()
@@ -118,7 +122,11 @@ class TicketView(discord.ui.View):
             await ch.send(
                 f"verification ticket by {user_id} was banned by {interaction.user.mention} but I don't have permissions to ban")
         ch = interaction.guild.get_channel(1142915549198823546)
-        await ch.send(f"verification ticket by {user_id} was banned by {interaction.user.mention}")
+        user = await interaction.client.fetch_user(user_id)
+        if user:
+            await ch.send(f"verification ticket by {user.name} ({user.id}) was banned by {interaction.user.mention}")
+        else:
+            await ch.send(f"verification ticket by unknown {user_id} was banned by {interaction.user.mention}")
         await interaction.response.send_message("Ticket Closed", ephemeral=True)
         await asyncio.sleep(5)
         await interaction.channel.delete()
