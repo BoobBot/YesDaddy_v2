@@ -40,14 +40,27 @@ class Core(commands.Cog):
     @commands.is_owner()
     async def pull(self, ctx):
         try:
-            # Run git pull command
-            subprocess.run(['git', 'pull', 'origin', 'master'], check=True)
-            await ctx.send(f'Git pull successful. Restarting...with {sys.executable}, [\'python\'] + {sys.argv}')
-            await ctx.logout()
-            os.execv(sys.executable, ['python'] + sys.argv)
-        except subprocess.CalledProcessError:
-            await ctx.send('Git pull failed.')
+            # Run git pull command and capture output
+            result = subprocess.run(['git', 'pull', 'origin', 'master'], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                    text=True)
 
+            # Get command output
+            command_output = result.stdout + result.stderr
+            # Send output to discord
+            if result.returncode == 0:
+                await ctx.send(f'```{command_output}```')
+                await ctx.send(f'Git pull successful. Restarting with {sys.executable} {sys.argv}')
+                # Restart the bot
+                await self.bot.logout()
+                os.execv(sys.executable, ['python'] + sys.argv)
+            else:
+                self.bot.logger.error(f'Git pull failed with error code {result.returncode} and output:\n{command_output}')
+                # if the bot is logged out, it will not be able to send the message
+                await ctx.send(f'Git pull failed. Output:\n```{command_output}```')
+        except subprocess.CalledProcessError as e:
+            self.bot.logger.error(f'Git pull failed with error code {e.returncode} and output:\n{e.output}')
+            # if the bot is logged out, it will not be able to send the message
+            await ctx.send(f'An error occurred: {e}')
     #
     #
     # @commands.command(name="hi", description="????")
