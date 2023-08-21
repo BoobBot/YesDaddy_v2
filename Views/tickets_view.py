@@ -82,7 +82,6 @@ class TicketView(discord.ui.View):
 
         await interaction.client.db_client.update_guild(interaction.guild.id, {"tickets": data.tickets})
         # log the verification
-        member = await interaction.guild.fetch_member(int(user_id))
         ch = interaction.guild.get_channel(1142915549198823546)
         user = await interaction.client.fetch_user(user_id)
         if user:
