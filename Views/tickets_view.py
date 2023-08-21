@@ -86,7 +86,8 @@ class TicketView(discord.ui.View):
         user = await interaction.client.fetch_user(user_id)
         if user:
             await ch.send(f"verification ticket by {user.name} ({user.id}) was closed by {interaction.user.mention}")
-        await ch.send(f"verification ticket by unknown/Deleted user was closed by {interaction.user.mention}")
+        else:
+            await ch.send(f"verification ticket by unknown/Deleted user was closed by {interaction.user.mention}")
         await interaction.response.send_message("Ticket Closed", ephemeral=True)
         await asyncio.sleep(5)
         await interaction.channel.delete()
