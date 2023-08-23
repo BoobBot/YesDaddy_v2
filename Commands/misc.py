@@ -21,6 +21,7 @@ class Misc(commands.Cog):
         em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
         em.add_field(name="Level", value=f"{user_data.level}")
         em.add_field(name="Experience", value=f"{user_data.xp}")
+        em.add_field(name="Balance", value=f"{user_data.balance}")
 
         await ctx.reply(embed=em)
 
