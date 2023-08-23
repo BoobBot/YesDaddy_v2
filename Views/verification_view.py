@@ -36,9 +36,11 @@ class VerificationView(discord.ui.View):
         # Create a new ticket
         category = discord.utils.get(interaction.guild.categories, name="🆘 Tickets")
         if category:
+            staff = discord.utils.get(interaction.guild.roles, id=694641646918434875)
             overwrites = {
                 interaction.user: discord.PermissionOverwrite(send_messages=True, read_messages=True, embeds=True, read_message_history=True, attach_files=True),
                 interaction.guild.default_role: discord.PermissionOverwrite(send_messages=False, read_messages=False),
+                staff: discord.PermissionOverwrite(send_messages=True, read_messages=True, embeds=True, read_message_history=True, attach_files=True)
             }
             new_channel = await interaction.guild.create_text_channel(interaction.user.name, category=category, overwrites=overwrites)
             await interaction.response.send_message(F"Opened ticket {new_channel.mention}", ephemeral=True)
