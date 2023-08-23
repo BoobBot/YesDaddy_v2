@@ -63,7 +63,6 @@ class Core(commands.Cog):
                 await ctx.send(f'```{command_output}```')
                 await ctx.send(f'Git pull successful. Restarting with {sys.executable} {sys.argv}')
                 # Restart the bot
-                await self.bot.logout()
                 os.execv(sys.executable, ['python'] + sys.argv)
             else:
                 self.bot.logger.error(f'Git pull failed with error code {result.returncode} and output:\n{command_output}')
