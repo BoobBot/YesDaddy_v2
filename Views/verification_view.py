@@ -38,11 +38,14 @@ class VerificationView(discord.ui.View):
         if category:
             staff = discord.utils.get(interaction.guild.roles, id=694641646918434875)
             overwrites = {
-                interaction.user: discord.PermissionOverwrite(send_messages=True, read_messages=True, embeds=True, read_message_history=True, attach_files=True),
+                interaction.user: discord.PermissionOverwrite(send_messages=True, read_messages=True, embed_links=True,
+                                                              read_message_history=True, attach_files=True),
                 interaction.guild.default_role: discord.PermissionOverwrite(send_messages=False, read_messages=False),
-                staff: discord.PermissionOverwrite(send_messages=True, read_messages=True, embeds=True, read_message_history=True, attach_files=True)
+                staff: discord.PermissionOverwrite(send_messages=True, read_messages=True, embed_links=True,
+                                                   read_message_history=True, attach_files=True)
             }
-            new_channel = await interaction.guild.create_text_channel(interaction.user.name, category=category, overwrites=overwrites)
+            new_channel = await interaction.guild.create_text_channel(interaction.user.name, category=category,
+                                                                      overwrites=overwrites)
             await interaction.response.send_message(F"Opened ticket {new_channel.mention}", ephemeral=True)
             ticket_data = {
                 "channel_id": new_channel.id,
