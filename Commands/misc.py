@@ -41,7 +41,8 @@ class Misc(commands.Cog):
             description = "\nGifted Currency: +1000"
             money += 1000
             em = discord.Embed(color=discord.Color.random(),
-                               title=f"{ctx.author} has given {user} their daily, plus a bonus!", description=description)
+                               title=f"{ctx.author} has given {user} their daily, plus a bonus!",
+                               description=description)
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
 
         em.add_field(name="Amount Added", value=f"{money}")
@@ -66,7 +67,8 @@ class Misc(commands.Cog):
         else:
             description = "\nGifted Currency: +10000"
             em = discord.Embed(color=discord.Color.random(),
-                               title=f"{ctx.author} has given {user} their weekly, plus a bonus!", description=description)
+                               title=f"{ctx.author} has given {user} their weekly, plus a bonus!",
+                               description=description)
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
 
         em.add_field(name="Amount Added", value=f"{money}")
