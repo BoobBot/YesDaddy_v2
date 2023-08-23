@@ -12,7 +12,6 @@ class Misc(commands.Cog):
         self.bot = bot
 
     @commands.hybrid_command(name="profile", description="Look at your profile.")
-    @persistent_cooldown(1, 4500, commands.BucketType.user)
     async def profile(self, ctx, user: discord.Member = None):
         user = user or ctx.author
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
