@@ -41,7 +41,7 @@ class TicketView(discord.ui.View):
                         await member.add_roles(
                             discord.utils.get(interaction.guild.roles, id=694641646821703740))  # Verified female
                     if 694641646805057560 in [role.id for role in member.roles]:
-                        # aad male role
+                        # add male role
                         await member.add_roles(
                             discord.utils.get(interaction.guild.roles, id=694641646813577267))  # Verified male
                     if 694641646805057562 in [role.id for role in member.roles]:

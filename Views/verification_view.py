@@ -36,7 +36,11 @@ class VerificationView(discord.ui.View):
         # Create a new ticket
         category = discord.utils.get(interaction.guild.categories, name="🆘 Tickets")
         if category:
-            new_channel = await interaction.guild.create_text_channel(interaction.user.name, category=category)
+            overwrites = {
+                interaction.user: discord.PermissionOverwrite(send_messages=True, read_messages=True, embeds=True, read_message_history=True, attach_files=True),
+                interaction.guild.default_role: discord.PermissionOverwrite(send_messages=False, read_messages=False),
+            }
+            new_channel = await interaction.guild.create_text_channel(interaction.user.name, category=category, overwrites=overwrites)
             await interaction.response.send_message(F"Opened ticket {new_channel.mention}", ephemeral=True)
             ticket_data = {
                 "channel_id": new_channel.id,
@@ -49,9 +53,9 @@ class VerificationView(discord.ui.View):
             }
             retrieved_guild.tickets.append(ticket_data)
             # Deny permissions for everyone
-            await new_channel.set_permissions(interaction.guild.default_role, send_messages=False, read_messages=False)
+            # await new_channel.set_permissions(interaction.guild.default_role, send_messages=False, read_messages=False)
             # Allow permissions for the specified user
-            await new_channel.set_permissions(interaction.user, send_messages=True, read_messages=True)
+            # await new_channel.set_permissions(interaction.user, send_messages=True, read_messages=True)
             # Send the ticket message
             await new_channel.send(f"<@&981426793925992448> Ticket by {interaction.user.mention}", view=TicketView())
             # Send the verification message
