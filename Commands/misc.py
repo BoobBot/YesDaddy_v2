@@ -31,27 +31,23 @@ class Misc(commands.Cog):
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
 
         money = 5000
-        await user_data.add_balance(5000, self.bot)
         newbal = user_data.balance + money
-        description = f"Daily: + {money}"
 
         if user.id == ctx.author.id:
-            # await log_transaction(bot, author, to_add, 'daily')
-            em = discord.Embed(color=discord.Color.random(), title=f"{ctx.author}'s daily")
+            description = f"Daily: + {money}"
+            em = discord.Embed(color=discord.Color.random(), title=f"{ctx.author}'s daily", description=description)
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
-            description += f"Daily: + {money}"
         else:
-            # await log_transaction(bot, author, to_add, f"{interaction.user} has given {author} their daily")
+            description = "\nGifted Currency: +1000"
+            money += 1000
             em = discord.Embed(color=discord.Color.random(),
-                               title=f"{ctx.author} has given {user} their daily, plus a bonus!")
+                               title=f"{ctx.author} has given {user} their daily, plus a bonus!", description=description)
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
-            description += "\nGifted Currency: +1000"
 
-        em = discord.Embed(title=f"{user}'s Daily!", color=discord.Color.random())
-        em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
         em.add_field(name="Amount Added", value=f"{money}")
         em.add_field(name="New Balance", value=f"{newbal}")
 
+        await user_data.add_balance(money, self.bot)
         await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="weekly", description="Get your weekly coins!.")
@@ -61,27 +57,22 @@ class Misc(commands.Cog):
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
 
         money = 20000
-        await user_data.add_balance(20000, self.bot)
         newbal = user_data.balance + money
-        description = f"Weekly: + {money}"
 
         if user.id == ctx.author.id:
-            # await log_transaction(bot, author, to_add, 'daily')
-            em = discord.Embed(color=discord.Color.random(), title=f"{ctx.author}'s weekly")
+            description = f"Weekly: + {money}"
+            em = discord.Embed(color=discord.Color.random(), title=f"{ctx.author}'s weekly", description=description)
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
-            description += f"Weekly: + {money}"
         else:
-            # await log_transaction(bot, author, to_add, f"{interaction.user} has given {author} their daily")
+            description = "\nGifted Currency: +10000"
             em = discord.Embed(color=discord.Color.random(),
-                               title=f"{ctx.author} has given {user} their weekly, plus a bonus!")
+                               title=f"{ctx.author} has given {user} their weekly, plus a bonus!", description=description)
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
-            description += "\nGifted Currency: +10000"
 
-        em = discord.Embed(title=f"{user}'s Weekly!", color=discord.Color.random())
-        em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
         em.add_field(name="Amount Added", value=f"{money}")
         em.add_field(name="New Balance", value=f"{newbal}")
 
+        await user_data.add_balance(money, self.bot)
         await ctx.reply(embed=em)
 
 
