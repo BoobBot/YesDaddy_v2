@@ -34,7 +34,7 @@ class VerificationView(discord.ui.View):
             return await interaction.response.send_message("You are already have a ticket", ephemeral=True)
 
         count = len([ticket for ticket in retrieved_guild.tickets if
-                     ticket.get("user_id") == interaction.user and
+                     ticket.get("user_id") == interaction.user.id and
                      ticket.get("status") == "closed" and
                      ticket.get("reason") == "Verification"])
 
