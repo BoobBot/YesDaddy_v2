@@ -33,8 +33,10 @@ class VerificationView(discord.ui.View):
                                    ticket.get("status") == "open"]:
             return await interaction.response.send_message("You are already have a ticket", ephemeral=True)
 
-        count = len([ticket.get("user_id") for ticket in retrieved_guild.tickets if
-                     ticket.get("status") == "closed" and ticket.get("reason") == "Verification"])
+        count = len([ticket for ticket in retrieved_guild.tickets if
+                     ticket.get("user_id") == interaction.user and
+                     ticket.get("status") == "closed" and
+                     ticket.get("reason") == "Verification"])
 
         # Create a new ticket
         category = discord.utils.get(interaction.guild.categories, name="🆘 Tickets")
