@@ -33,6 +33,9 @@ class VerificationView(discord.ui.View):
                                    ticket.get("status") == "open"]:
             return await interaction.response.send_message("You are already have a ticket", ephemeral=True)
 
+        count = len([ticket.get("user_id") for ticket in retrieved_guild.tickets if
+                     ticket.get("status") == "closed" and ticket.get("reason") == "Verification"])
+
         # Create a new ticket
         category = discord.utils.get(interaction.guild.categories, name="🆘 Tickets")
         if category:
@@ -62,7 +65,9 @@ class VerificationView(discord.ui.View):
             # Allow permissions for the specified user
             # await new_channel.set_permissions(interaction.user, send_messages=True, read_messages=True)
             # Send the ticket message
-            await new_channel.send(f"<@&981426793925992448> Ticket by {interaction.user.mention}", view=TicketView())
+            await new_channel.send(
+                f"<@&981426793925992448> Ticket by {interaction.user.mention}, {count} previous verification tickets",
+                view=TicketView())
             # Send the verification message
             embed = discord.Embed(title="Ticket",
                                   description=f"Welcome {interaction.user.mention}! Thank you for contacting BoobBot support. Please send the photos required to verify following the below guidelines. All images sent will be deleted upon completion of the ticket. Please note that if you do not follow the guidelines, your ticket will be closed and you will be banned from the server. \n\n",
