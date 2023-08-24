@@ -29,7 +29,7 @@ def persistent_cooldown(rate, per, type=commands.BucketType.user):
         print()
         if command_cooldown and (last_used := command_cooldown + datetime.timedelta(seconds=per)) > now:
             delta = last_used - now
-            await ctx.send(f'You are on cooldown. Try again in {datetime_to_discord_timestamp(delta)}.')
+            await ctx.send(f'You are on cooldown. Try again in {timedelta_to_discord_timestamp(delta)}.')
             return False
 
         await ctx.bot.db_client.user_collection.update_one(
