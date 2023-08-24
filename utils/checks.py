@@ -3,6 +3,10 @@ import datetime
 from discord.ext import commands
 
 
+def datetime_to_discord_timestamp(dt):
+    return dt.strftime("<t:%Y-%m-%d %H:%M:%S>")
+
+
 def persistent_cooldown(rate, per, type=commands.BucketType.user):
     async def predicate(ctx, *args, **kwargs):
         now = datetime.datetime.utcnow()
@@ -18,7 +22,7 @@ def persistent_cooldown(rate, per, type=commands.BucketType.user):
         print()
         if command_cooldown and (last_used := command_cooldown + datetime.timedelta(seconds=per)) > now:
             delta = last_used - now
-            await ctx.send(f'You are on cooldown. Try again in {delta.seconds} seconds.')
+            await ctx.send(f'You are on cooldown. Try again in {datetime_to_discord_timestamp(delta)}.')
             return False
 
         await ctx.bot.db_client.user_collection.update_one(
