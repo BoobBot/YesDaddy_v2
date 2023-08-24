@@ -3,8 +3,15 @@ import datetime
 from discord.ext import commands
 
 
-def datetime_to_discord_timestamp(dt):
-    return dt.strftime("<t:%Y-%m-%d %H:%M:%S>")
+def timedelta_to_discord_timestamp(delta):
+    total_seconds = delta.total_seconds()
+    days = int(total_seconds // (60 * 60 * 24))
+    hours = int((total_seconds % (60 * 60 * 24)) // (60 * 60))
+    minutes = int((total_seconds % (60 * 60)) // 60)
+    seconds = int(total_seconds % 60)
+
+    timestamp_str = f"{days}d {hours}h {minutes}m {seconds}s"
+    return timestamp_str
 
 
 def persistent_cooldown(rate, per, type=commands.BucketType.user):
