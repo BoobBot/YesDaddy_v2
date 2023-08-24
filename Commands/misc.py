@@ -86,7 +86,7 @@ class Misc(commands.Cog):
         random.shuffle(job_descriptions)
         job = random.choice(job_descriptions)
         cash = random.randint(100, 1000)
-        job.replace("{0}", ctx.author.mention)
+        job = job.replace("{0}", ctx.author.mention)
         user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
         new_bal = user_data.balance + cash
         description = f"{job}\n\nCash: + {cash}"
