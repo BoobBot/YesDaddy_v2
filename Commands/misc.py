@@ -1,9 +1,12 @@
 import os
+import random
 import subprocess
 import sys
 
 import discord
 from discord.ext import commands
+
+from config.lists import job_descriptions
 from utils.checks import persistent_cooldown
 
 
@@ -75,6 +78,21 @@ class Misc(commands.Cog):
         em.add_field(name="New Balance", value=f"{newbal}")
 
         await user_data.add_balance(money, self.bot)
+        await ctx.reply(embed=em)
+
+    @commands.hybrid_command(name="work", description="get a job")
+    @persistent_cooldown(1, 7200, commands.BucketType.user)
+    async def work(self, ctx):
+        random.shuffle(job_descriptions)
+        job = random.choice(job_descriptions)
+        cash = random.randint(100, 1000)
+        job.replace("{0}", ctx.author.mention)
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        new_bal = user_data.balance + cash
+        description = f"{job}\n\nCash: + {cash}"
+        em = discord.Embed(color=discord.Color.random(), title=f"{ctx.author}'s job", description=description)
+        em.set_thumbnail(url=ctx.author.display_avatar.with_static_format("png"))
+        em.add_field(name="New Balance", value=f"{new_bal}")
         await ctx.reply(embed=em)
 
 
