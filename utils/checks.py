@@ -1,17 +1,11 @@
 import datetime
 
+import discord
 from discord.ext import commands
 
 
-def timedelta_to_discord_timestamp(delta):
-    total_seconds = delta.total_seconds()
-    days = int(total_seconds // (60 * 60 * 24))
-    hours = int((total_seconds % (60 * 60 * 24)) // (60 * 60))
-    minutes = int((total_seconds % (60 * 60)) // 60)
-    seconds = int(total_seconds % 60)
-
-    timestamp_str = f"{days}d {hours}h {minutes}m {seconds}s"
-    return timestamp_str
+def datetime_to_discord_timestamp(dt):
+    return dt.strftime("<t:%Y-%m-%d %H:%M:%S>")
 
 
 def persistent_cooldown(rate, per, type=commands.BucketType.user):
@@ -29,7 +23,11 @@ def persistent_cooldown(rate, per, type=commands.BucketType.user):
         print()
         if command_cooldown and (last_used := command_cooldown + datetime.timedelta(seconds=per)) > now:
             delta = last_used - now
-            await ctx.send(f'You are on cooldown. Try again in {timedelta_to_discord_timestamp(delta)}.')
+            target_time = now + delta
+            embed = discord.Embed(
+                title=f'You are on cooldown. Try again in {datetime_to_discord_timestamp(target_time)}.',
+                description=datetime_to_discord_timestamp(target_time), color=0x00ff00)
+            await ctx.send(embed=embed)
             return False
 
         await ctx.bot.db_client.user_collection.update_one(
