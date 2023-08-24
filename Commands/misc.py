@@ -93,6 +93,7 @@ class Misc(commands.Cog):
         em = discord.Embed(color=discord.Color.random(), title=f"{ctx.author}'s job", description=description)
         em.set_thumbnail(url=ctx.author.display_avatar.with_static_format("png"))
         em.add_field(name="New Balance", value=f"{new_bal}")
+        await user_data.add_balance(cash, self.bot)
         await ctx.reply(embed=em)
 
 
