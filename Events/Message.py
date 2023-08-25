@@ -1,8 +1,15 @@
+import asyncio
+import contextlib
 import math
 import random
 
 from discord.ext import commands
 
+
+async def dump_delete(msg):
+    with contextlib.suppress(Exception):
+        await asyncio.sleep(120)
+        await msg.delete()
 
 class Message(commands.Cog):
     def __init__(self, bot):
@@ -23,6 +30,9 @@ class Message(commands.Cog):
         await user.update_messages(bot=self.bot)
         await user.add_xp(xp, bot=self.bot)
         await user.update_last_seen(bot=self.bot)
+
+        if msg.channel.id == 1141856931984715807:
+            await dump_delete(msg)
 
 
 async def setup(bot):
