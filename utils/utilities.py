@@ -49,9 +49,6 @@ async def generate_embed_color(member):
         return embed_color
 
 
-
-
-
 def progress_percentage(remain, total):
     assert remain <= total
     max_bare_size = 10  # 10 units for 100%
@@ -62,6 +59,3 @@ def progress_percentage(remain, total):
     bar_done = "[" + (icon * remain_percent)
     bar_remain = bar[remain_percent:]
     return f"\r{bar_done}{bar_remain} {remain_percent * 10}%"
-
-
-

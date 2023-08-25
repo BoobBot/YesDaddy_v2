@@ -30,6 +30,15 @@ class Core(commands.Cog):
         embed = discord.Embed(title="User Embed", description=s, color=avg_color)
         await ctx.send(embed=embed)
 
+    @commands.hybrid_command(name="clearcd", description="Look at your profile.")
+    @commands.is_owner()
+    async def cdclear(self, ctx, user: discord.Member = None):
+        user = user or ctx.author
+        user_data = await ctx.bot.db_client.get_user(user_id=user.id)
+        user_data.cooldowns = {}
+        await user_data.update_user({"cooldowns": user_data.cooldowns}, self.bot)
+        await ctx.reply("Cooldowns cleared.")
+
     @commands.command(name="attempt", description="????")
     @commands.is_owner()
     async def attempt(self, ctx):
