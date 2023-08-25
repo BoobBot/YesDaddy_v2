@@ -31,20 +31,19 @@ async def get_average_color(url):
                 return discord.Colour.from_rgb(avg_r, avg_g, avg_b)
 
 
-async def generate_embed_color(user):
-    top_role = user.top_role
-    print(top_role.color)
-    print(discord.Colour.default())
-    embed_color = top_role.color if top_role.color != discord.Colour.default() else None
-    print(embed_color)
-    if not embed_color and user.avatar:
-        avatar_url = user.avatar.url
-        avg_color = await get_average_color(avatar_url)
-    elif not embed_color and not user.avatar:
-        avg_color = discord.Colour(random.randint(0, 0xFFFFFF))
+async def generate_embed_color(member):
+    roles_with_color = [role for role in reversed(member.roles) if role.color != discord.Colour.default()]
+
+    if roles_with_color:
+        embed_color = roles_with_color[0].color
     else:
-        avg_color = embed_color
+        embed_color = None
 
-    return avg_color
-
-
+    if not embed_color and member.avatar:
+        avatar_url = member.avatar.url
+        avg_color = await get_average_color(avatar_url)
+        return avg_color
+    elif not embed_color and not member.avatar:
+        return discord.Colour(random.randint(0, 0xFFFFFF))
+    else:
+        return embed_color
