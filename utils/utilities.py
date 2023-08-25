@@ -33,7 +33,10 @@ async def get_average_color(url):
 
 async def generate_embed_color(user):
     top_role = user.top_role
+    print(top_role.color)
+    print(discord.Colour.default())
     embed_color = top_role.color if top_role.color != discord.Colour.default() else None
+    print(embed_color)
     if not embed_color and user.avatar:
         avatar_url = user.avatar.url
         avg_color = await get_average_color(avatar_url)
