@@ -22,7 +22,7 @@ def persistent_cooldown(rate, per, type=commands.BucketType.user):
             target_time = now + delta
             remaining_timestamp = discord.utils.format_dt(target_time, style="R"
             )
-            await ctx.send(f'You are on cooldown. Try again in {remaining_timestamp} seconds.')
+            await ctx.send(f'You are on cooldown. Try again in {remaining_timestamp}')
             return False
 
         await ctx.bot.db_client.user_collection.update_one(
