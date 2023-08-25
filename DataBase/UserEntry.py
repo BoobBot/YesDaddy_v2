@@ -12,7 +12,7 @@ class User:
         self.premium = premium
         self.balance = balance
         self.bank_balance = bank_balance
-        self.new_cooldowns = cooldowns
+        self.cooldowns = cooldowns
         self.messages = messages
 
     async def add_xp(self, amount, bot):
