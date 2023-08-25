@@ -14,6 +14,9 @@ def persistent_cooldown(rate, per, type=commands.BucketType.user):
             pass
 
         command_cooldown = document['cooldowns'].get(ctx.command.name)
+        if command_cooldown:
+            command_cooldown = command_cooldown.replace(tzinfo=datetime.timezone.utc)
+
         if command_cooldown and (last_used := command_cooldown + datetime.timedelta(seconds=per)) > now:
             delta = last_used - now
             target_time = now + delta
