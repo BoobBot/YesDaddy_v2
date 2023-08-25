@@ -11,6 +11,7 @@ async def dump_delete(msg):
         await asyncio.sleep(120)
         await msg.delete()
 
+
 class Message(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
