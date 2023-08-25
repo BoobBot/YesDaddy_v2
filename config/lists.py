@@ -182,3 +182,439 @@ job_descriptions = [
     "{0} specializes in composing symphonies for underwater piccolos.",
     "{0} is a certified expert in teaching seals to tango.",
     "{0} is a professional shadow puppeteer for campfires."]
+
+fake_robbery_scenarios = [
+    ("{0} attempted to steal {1}'s collection of rubber duckies but got chased away by a squirrel.", False),
+    ("In a daring heist, {0} tried to snatch {1}'s cookie jar, but it turned out to be a decoy filled with broccoli.",
+     False),
+    ("{0} disguised themselves as a penguin to swipe {1}'s snow cone, but slipped on a banana peel instead.", False),
+    ("During the grand heist, {0} went after {1}'s invisible treasure chest and accidentally knocked over a lamp.",
+     False),
+    ("{0} dressed up as a ninja to nab {1}'s pillow, only to realize it was a marshmallow-filled decoy.", False),
+    ("In an audacious move, {0} attempted to steal {1}'s fake gold coins, but they were just chocolate wrappers.",
+     False),
+    ("{0} plotted to take {1}'s invisible sandwich, but their getaway vehicle was a slow-moving turtle.", False),
+    (
+        "During the master plan, {0} aimed to snatch {1}'s secret banana stash, but got caught in a game of hide-and-seek.",
+        False),
+    ("{0} hatched a cunning scheme to steal {1}'s rubber chicken collection, but tripped over a feather.", False),
+    ("In a comedic twist, {0} tried to take {1}'s invisible pet rock, only to discover it was made of air.", False),
+    ("{0} schemed to nab {1}'s fake mustache collection, but got tangled in the disguise.", False),
+    ("During the elaborate caper, {0} attempted to steal {1}'s bubble wrap, but ended up popping half of it.", False),
+    ("{0} orchestrated a plan to take {1}'s toy spaceship, but got stuck in a pile of building blocks.", False),
+    ("In a daring plot, {0} tried to snatch {1}'s invisible hat, but was foiled by a gust of wind.", False),
+    ("{0} disguised themselves as a superhero to nab {1}'s rubber band ball, but it bounced away.", False),
+    ("During the grand heist, {0} went after {1}'s pretend pirate treasure, only to find plastic coins.", False),
+    ("{0} plotted to steal {1}'s cardboard castle, but got trapped in a cardboard dragon's jaws.", False),
+    ("In an audacious move, {0} attempted to take {1}'s collection of invisible stamps, but lost their map.", False),
+    ("{0} dressed up as a cowboy to snatch {1}'s imaginary lasso, but tripped over a tumbleweed.", False),
+    ("During the master plan, {0} aimed to steal {1}'s toy crown, but got stuck in a toy robot's grip.", False),
+    ("{0} hatched a cunning scheme to take {1}'s fake treasure map, but got lost in the crayon-drawn maze.", False),
+    ("In a comedic twist, {0} tried to nab {1}'s invisible sunglasses, but couldn't find them.", False),
+    ("{0} schemed to steal {1}'s toy race car, but accidentally triggered a toy car avalanche.", False),
+    (
+        "During the elaborate caper, {0} attempted to snatch {1}'s pretend detective kit, but left a trail of toy footprints.",
+        False),
+    ("{0} orchestrated a plan to take {1}'s collection of toy bugs, but they scattered everywhere.", False),
+    ("In a daring plot, {0} tried to steal {1}'s imaginary friend's favorite toy, but it vanished.", False),
+    ("{0} disguised themselves as a magician to nab {1}'s magic wand, but it turned into a rubber chicken.", False),
+    ("During the grand heist, {0} went after {1}'s toy telescope, but saw only clouds.", False),
+    ("{0} plotted to steal {1}'s invisible jetpack, but ended up floating away.", False),
+    (
+        "In an audacious move, {0} attempted to take {1}'s pretend crown, but got caught in a paper crown's strap.",
+        False),
+    ("{0} dressed up as a spy to snatch {1}'s toy spy gear, but triggered all the alarms.", False),
+    (
+        "During the master plan, {0} aimed to steal {1}'s collection of toy dinosaurs, but they came to life and chased them.",
+        False),
+    ("{0} hatched a cunning scheme to nab {1}'s invisible ninja sword, but it turned into a pool noodle.", False),
+    ("In a comedic twist, {0} tried to steal {1}'s magic potion kit, but spilled it all over themselves.", False),
+    ("{0} schemed to take {1}'s toy rocket, but got stuck in the launch pad.", False),
+    ("During the elaborate caper, {0} attempted to snatch {1}'s superhero cape, but got tangled in it.", False),
+    ("{0} orchestrated a plan to steal {1}'s collection of toy robots, but they rebelled against them.", False),
+    ("In a daring plot, {0} tried to steal {1}'s invisible time machine, but ended up in a cardboard box.", False),
+    ("{0} disguised themselves as a pirate to nab {1}'s toy treasure chest, but it was filled with candy.", False),
+    ("During the grand heist, {0} went after {1}'s pretend chef kit, but ended up covered in toy spaghetti.", False),
+    ("{0} plotted to steal {1}'s toy magic carpet, but it got caught on a doorknob.", False),
+    (
+        "In an audacious move, {0} attempted to take {1}'s collection of toy trains, but they went off the tracks.",
+        False),
+    ("{0} dressed up as a wizard to snatch {1}'s magic wand, but turned themselves into a frog.", False),
+    ("During the master plan, {0} aimed to steal {1}'s invisible superhero suit, but it was too slippery.", False),
+    ("{0} hatched a cunning scheme to nab {1}'s toy pirate ship, but it sailed away in a tub.", False),
+    ("In a comedic twist, {0} tried to steal {1}'s toy detective magnifying glass, but looked the wrong way.", False),
+    ("{0} schemed to take {1}'s collection of toy aliens, but they zapped them with toy ray guns.", False),
+    ("During the elaborate caper, {0} attempted to snatch {1}'s pretend knight armor, but got stuck in it.", False),
+    ("{0} orchestrated a plan to steal {1}'s toy space shuttle, but it crash-landed on a book.", False),
+    ("In a daring plot, {0} tried to steal {1}'s invisible pirate treasure, but it was guarded by an invisible dragon.",
+     False),
+    ("{0} plotted to steal {1}'s toy race car track, but the cars kept crashing into each other.", False),
+    (
+        "In an audacious move, {0} attempted to take {1}'s collection of toy animals, but they all escaped to the backyard.",
+        False),
+    ("{0} dressed up as a pilot to snatch {1}'s toy airplane, but it got stuck in a tree.", False),
+    ("During the master plan, {0} aimed to steal {1}'s invisible knight sword, but it was too heavy.", False),
+    ("{0} hatched a cunning scheme to nab {1}'s toy firefighter hat, but got caught in a game of 'put out the fire.'",
+     False),
+    ("In a comedic twist, {0} tried to steal {1}'s toy doctor kit, but ended up with a toy thermometer in their ear.",
+     False),
+    ("{0} schemed to take {1}'s collection of toy construction vehicles, but they all started 'building' a sandcastle.",
+     False),
+    (
+        "During the elaborate caper, {0} attempted to snatch {1}'s pretend scientist goggles, but they were stuck to their forehead.",
+        False),
+    ("{0} orchestrated a plan to steal {1}'s toy robot dog, but it kept chasing its tail.", False),
+    ("In a daring plot, {0} tried to steal {1}'s invisible superhero cape, but it turned into a blanket.", False),
+    ("{0} disguised themselves as a chef to nab {1}'s toy kitchen set, but got tangled in a spaghetti mess.", False),
+    ("During the grand heist, {0} went after {1}'s pretend explorer backpack, but got lost in the living room.", False),
+    ("{0} plotted to steal {1}'s toy spy glasses, but couldn't see a thing through them.", False),
+    (
+        "In an audacious move, {0} attempted to take {1}'s collection of toy musical instruments, but all they got was a kazoo.",
+        False),
+    ("{0} dressed up as a superhero to snatch {1}'s toy mask, but it got stuck on their head.", False),
+    ("During the master plan, {0} aimed to steal {1}'s invisible pirate hat, but it vanished into thin air.", False),
+    ("{0} hatched a cunning scheme to nab {1}'s toy firefighter hose, but it squirted them instead.", False),
+    ("In a comedic twist, {0} tried to steal {1}'s toy magician's hat, but pulled out a rubber chicken.", False),
+    ("{0} schemed to take {1}'s collection of toy sports equipment, but they all bounced away.", False),
+    ("During the elaborate caper, {0} attempted to snatch {1}'s pretend artist beret, but it got stuck in their hair.",
+     False),
+    ("{0} orchestrated a plan to steal {1}'s toy chef apron, but got tangled in the strings.", False),
+    ("In a daring plot, {0} tried to steal {1}'s invisible astronaut helmet, but it was just a clear bowl.", False),
+    ("{0} disguised themselves as a spy to nab {1}'s toy magnifying glass, but it showed everything upside down.",
+     False),
+    (
+        "During the grand heist, {0} went after {1}'s pretend scientist lab coat, but spilled fake potions all over themselves.",
+        False),
+    ("{0} plotted to steal {1}'s toy firefighter boots, but they were too big to fit.", False),
+    ("In an audacious move, {0} attempted to take {1}'s collection of toy building blocks, but they toppled over.",
+     False),
+    ("{0} dressed up as a magician to snatch {1}'s toy wand, but it turned into a rubber chicken.", False),
+    ("During the master plan, {0} aimed to steal {1}'s invisible explorer hat, but it was see-through.", False),
+    ("{0} hatched a cunning scheme to nab {1}'s toy detective pipe, but blew bubbles instead.", False),
+    ("In a comedic twist, {0} tried to steal {1}'s toy rock collection, but they all rolled away.", False),
+    ("{0} schemed to take {1}'s collection of toy animal figures, but they all went on strike.", False),
+    ("During the elaborate caper, {0} attempted to snatch {1}'s pretend chef spoon, but stirred up a mess.", False),
+    ("{0} orchestrated a plan to steal {1}'s toy astronaut helmet, but it got stuck on their foot.", False),
+    ("In a daring plot, {0} tried to steal {1}'s invisible scientist glasses, but they couldn't see through them.",
+     False),
+    ("{0} disguised themselves as a superhero to nab {1}'s toy cape, but it was too short.", False),
+    ("During the grand heist, {0} went after {1}'s pretend artist paintbrush, but ended up with colorful fingers.",
+     False),
+    ("{0} plotted to steal {1}'s toy pirate hat, but it blew away in the wind.", False),
+    ("In an audacious move, {0} attempted to take {1}'s toy firefighter helmet, but got stuck with their head inside.",
+     False),
+    ("{0} dressed up as a pirate to snatch {1}'s toy treasure chest, but it was filled with costume jewelry.", False),
+    (
+        "During the master plan, {0} aimed to steal {1}'s invisible doctor stethoscope, but it tickled their ears.",
+        False),
+    ("{0} hatched a cunning scheme to nab {1}'s pretend explorer map, but it led them in circles.", False),
+    ("In a comedic twist, {0} tried to steal {1}'s collection of toy vehicles, but they all had flat tires.", False),
+    ("{0} schemed to take {1}'s toy astronaut gloves, but they were too slippery to hold.", False),
+    (
+        "During the elaborate caper, {0} attempted to snatch {1}'s pretend scientist test tubes, but they were filled with glitter.",
+        False),
+    ("{0} orchestrated a plan to steal {1}'s toy detective notebook, but it was full of doodles.", False),
+    ("In a daring plot, {0} tried to steal {1}'s invisible chef hat, but it turned into a feather boa.", False),
+    ("{0} disguised themselves as a scientist to nab {1}'s toy lab coat, but got caught in the sleeves.", False),
+    ("During the grand heist, {0} went after {1}'s pretend superhero belt, but it was too tight.", False),
+    ("{0} plotted to steal {1}'s toy construction helmet, but it fell over their eyes.", False),
+    ("{0} managed to stealthily swipe {1}'s collection of rubber duckies and escaped without a trace.", True),
+    ("In a daring heist, {0} successfully nabbed {1}'s cookie jar and left behind a trail of crumbs.", True),
+    ("{0} disguised themselves as a penguin and skillfully snatched {1}'s snow cone before melting away.", True),
+    ("During the grand heist, {0} managed to unlock {1}'s invisible treasure chest and made off with the loot.", True),
+    ("{0} dressed up as a ninja and swiftly took {1}'s pillow without leaving a sound.", True),
+    (
+        "In an audacious move, {0} pulled off a heist to steal {1}'s fake gold coins, leaving behind a note that said 'chocolate wrappers won't fool me.'",
+        True),
+    ("{0} successfully swiped {1}'s invisible sandwich and left a note saying 'thanks for the air.'", True),
+    (
+        "During the master plan, {0} cleverly outwitted {1} in a game of hide-and-seek and claimed their secret banana stash.",
+        True),
+    ("{0} managed to snatch {1}'s rubber chicken collection with finesse and disappeared in a puff of feathers.", True),
+    (
+        "In a comedic twist, {0} swiftly nabbed {1}'s invisible pet rock and left a note saying 'now I have an imaginary friend.'",
+        True),
+    ("{0} schemed to steal {1}'s cardboard castle, but used their cunning to outsmart the cardboard dragon.", True),
+    ("In an audacious move, {0} successfully navigated through the invisible stamp collection and secured the loot.",
+     True),
+    ("During the elaborate caper, {0} carefully swiped {1}'s bubble wrap, leaving behind a symphony of pops.", True),
+    ("{0} orchestrated a plan to take {1}'s toy spaceship and embarked on a cosmic adventure.", True),
+    (
+        "In a daring plot, {0} aimed to steal {1}'s toy telescope and gazed at the stars from the comfort of their hideout.",
+        True),
+    (
+        "{0} disguised themselves as a superhero and skillfully snatched {1}'s rubber band ball before it could bounce away.",
+        True),
+    (
+        "During the grand heist, {0} managed to outwit {1} and claimed the pretend pirate treasure, leaving behind a trail of laughter.",
+        True),
+    (
+        "{0} plotted to steal {1}'s invisible jetpack and soared through the imaginary skies, leaving a trail of 'invisible' contrails.",
+        True),
+    (
+        "In an audacious move, {0} successfully nabbed {1}'s pretend crown and declared themselves the ruler of the playroom.",
+        True),
+    ("During the master plan, {0} skillfully outmaneuvered {1}'s toy dinosaurs and made off with the prehistoric loot.",
+     True),
+    ("{0} hatched a cunning scheme to steal {1}'s invisible ninja sword and vanished like a shadow.", True),
+    ("In a comedic twist, {0} slyly swiped {1}'s magic potion kit and concocted laughter-inducing mixtures.", True),
+    ("{0} schemed to take {1}'s toy rocket and launched it on a high-flying adventure.", True),
+    (
+        "During the elaborate caper, {0} cleverly nabbed {1}'s pretend detective kit and left behind a trail of toy footprints as a diversion.",
+        True),
+    (
+        "{0} orchestrated a plan to steal {1}'s collection of toy bugs, leaving behind a miniature 'bug-sized' thank-you note.",
+        True),
+    (
+        "In a daring plot, {0} managed to outsmart {1} and secured the invisible friend's favorite toy, leaving behind a friendly wink.",
+        True),
+    (
+        "{0} disguised themselves as a magician and skillfully swiped {1}'s magic wand, leaving behind a bouquet of rubber chickens.",
+        True),
+    (
+        "During the grand heist, {0} cleverly swiped {1}'s toy telescope and left a note saying 'now I can see the universe.'",
+        True),
+    ("{0} plotted to steal {1}'s toy magic carpet and whisked themselves away on an enchanted ride.", True),
+    (
+        "In an audacious move, {0} successfully nabbed {1}'s collection of toy aliens and declared themselves the new extraterrestrial leader.",
+        True),
+    ("{0} dressed up as a knight and managed to secure {1}'s pretend knight armor, leaving behind a trail of chivalry.",
+     True),
+    (
+        "During the master plan, {0} skillfully swiped {1}'s toy space shuttle and embarked on a mission to explore the playroom galaxy.",
+        True),
+    (
+        "In a daring plot, {0} managed to outwit {1} and claimed the invisible pirate treasure, leaving behind a note that said 'x marks the spot.'",
+        True),
+    (
+        "{0} disguised themselves as a chef and successfully nabbed {1}'s toy kitchen set, leaving behind a gourmet imaginary feast.",
+        True),
+    (
+        "During the grand heist, {0} cleverly swiped {1}'s pretend explorer backpack and embarked on an imaginary adventure of their own.",
+        True),
+    ("{0} plotted to steal {1}'s toy spy glasses and left a cryptic note that said 'I spy with my little eye.'", True),
+    (
+        "In an audacious move, {0} successfully secured {1}'s collection of toy musical instruments and orchestrated a playful symphony.",
+        True),
+    (
+        "{0} dressed up as a superhero and skillfully swiped {1}'s toy mask, leaving behind a note that said 'now I have the power.'",
+        True),
+    (
+        "During the master plan, {0} managed to outwit {1} and claimed the invisible explorer hat, leaving behind an 'invisible' thank-you note.",
+        True),
+    ("{0} hatched a cunning scheme to steal {1}'s toy firefighter hose and extinguished imaginary fires all around.",
+     True),
+    (
+        "In a comedic twist, {0} slyly swiped {1}'s toy magician's hat and left behind a trail of floating rabbits.",
+        True),
+    ("{0} schemed to take {1}'s collection of toy sports equipment and organized an epic playroom championship.", True),
+    (
+        "During the elaborate caper, {0} skillfully nabbed {1}'s pretend artist beret and created a masterpiece of silliness.",
+        True),
+    ("{0} orchestrated a plan to steal {1}'s toy chef apron and cooked up a feast of imagination.", True),
+    (
+        "In a daring plot, {0} managed to secure {1}'s invisible astronaut helmet and embarked on an intergalactic adventure.",
+        True),
+    (
+        "{0} disguised themselves as a spy and successfully nabbed {1}'s toy magnifying glass, leaving behind a trail of mystery.",
+        True),
+    (
+        "During the grand heist, {0} cleverly swiped {1}'s pretend scientist lab coat and concocted laughter-inducing 'potions.'",
+        True),
+    ("{0} plotted to steal {1}'s toy firefighter boots and left behind a trail of imaginary 'footprints.'", True),
+    (
+        "In an audacious move, {0} skillfully managed to secure {1}'s collection of toy building blocks and constructed a tower of imagination.",
+        True),
+    (
+        "{0} dressed up as a magician and skillfully swiped {1}'s toy wand, leaving behind a flurry of magically appearing rubber chickens.",
+        True),
+    (
+        "During the master plan, {0} outwitted {1} and claimed the invisible explorer hat, leaving behind an 'invisible' thank-you note.",
+        True),
+    ("{0} hatched a cunning scheme to steal {1}'s toy firefighter hose and extinguished imaginary fires all around.",
+     True),
+    (
+        "In a comedic twist, {0} slyly swiped {1}'s toy magician's hat and left behind a trail of floating rabbits.",
+        True),
+    ("{0} schemed to take {1}'s collection of toy sports equipment and organized an epic playroom championship.", True),
+    (
+        "During the elaborate caper, {0} skillfully nabbed {1}'s pretend artist beret and created a masterpiece of silliness.",
+        True),
+    ("{0} orchestrated a plan to steal {1}'s toy chef apron and cooked up a feast of imagination.", True),
+    (
+        "In a daring plot, {0} managed to secure {1}'s invisible astronaut helmet and embarked on an intergalactic adventure.",
+        True),
+    (
+        "{0} disguised themselves as a spy and successfully nabbed {1}'s toy magnifying glass, leaving behind a trail of mystery.",
+        True),
+    (
+        "During the grand heist, {0} cleverly swiped {1}'s pretend scientist lab coat and concocted laughter-inducing 'potions.'",
+        True),
+    ("{0} plotted to steal {1}'s toy firefighter boots and left behind a trail of imaginary 'footprints.'", True),
+    (
+        "In an audacious move, {0} skillfully managed to secure {1}'s collection of toy building blocks and constructed a tower of imagination.",
+        True),
+    (
+        "{0} dressed up as a magician and skillfully swiped {1}'s toy wand, leaving behind a flurry of magically appearing rubber chickens.",
+        True),
+    (
+        "During the master plan, {0} skillfully managed to secure {1}'s collection of toy animals, creating a zoo of imagination.",
+        True),
+    ("{0} orchestrated a plan to steal {1}'s toy airplane and took an imaginary flight to new heights.", True),
+    (
+        "In a daring plot, {0} managed to outwit {1} and claimed the invisible knight sword, becoming the champion of the playroom.",
+        True),
+    (
+        "{0} disguised themselves as a scientist and skillfully swiped {1}'s toy volcano, conducting 'eruptions' of laughter.",
+        True),
+    (
+        "During the grand heist, {0} cleverly nabbed {1}'s pretend superhero mask and left behind a note saying 'I'm now the masked giggler.'",
+        True),
+    ("{0} plotted to steal {1}'s toy race car track and raced away with imaginary speed.", True),
+    (
+        "In an audacious move, {0} skillfully secured {1}'s collection of toy musical instruments, orchestrating a symphony of silliness.",
+        True),
+    (
+        "{0} dressed up as a superhero and successfully swiped {1}'s toy cape, leaving behind a trail of invisible heroics.",
+        True),
+    (
+        "During the master plan, {0} managed to outwit {1} and claimed the invisible pirate hat, leaving a note that said 'Arrr, I've got it now.'",
+        True),
+    (
+        "{0} hatched a cunning scheme to steal {1}'s toy firefighter hat and extinguished imaginary blazes throughout the playroom.",
+        True),
+    ("In a comedic twist, {0} skillfully swiped {1}'s toy doctor kit and administered laughter-inducing 'checkups.'",
+     True),
+    ("{0} schemed to take {1}'s collection of toy construction vehicles and embarked on a whimsical building project.",
+     True),
+    (
+        "During the elaborate caper, {0} cleverly nabbed {1}'s pretend scientist goggles and examined a world of silliness.",
+        True),
+    ("{0} orchestrated a plan to steal {1}'s toy robot dog and played fetch with an invisible ball.", True),
+    (
+        "In a daring plot, {0} managed to secure {1}'s invisible superhero cape and became the guardian of imaginative adventures.",
+        True),
+    (
+        "{0} disguised themselves as a chef and skillfully swiped {1}'s toy kitchen set, creating a feast of pretend delicacies.",
+        True),
+    ("During the grand heist, {0} cleverly swiped {1}'s pretend explorer backpack and embarked on an imaginary quest.",
+     True),
+    ("{0} plotted to steal {1}'s toy spy glasses and left a note that said 'I've got my eyes on the fun.'", True),
+    (
+        "In an audacious move, {0} successfully secured {1}'s collection of toy musical instruments and orchestrated a symphony of silliness.",
+        True),
+    ("{0} dressed up as a superhero and skillfully swiped {1}'s toy mask, leaving behind a trail of invisible heroics.",
+     True),
+    (
+        "During the master plan, {0} managed to outwit {1} and claimed the invisible explorer hat, leaving a note that said 'Discovering laughter.'",
+        True),
+    (
+        "{0} hatched a cunning scheme to steal {1}'s toy firefighter hose and extinguished imaginary blazes throughout the playroom.",
+        True),
+    ("In a comedic twist, {0} skillfully swiped {1}'s toy magician's hat and left behind a trail of floating laughter.",
+     True),
+    ("{0} schemed to take {1}'s collection of toy sports equipment and organized an epic playroom championship.", True),
+    (
+        "During the elaborate caper, {0} cleverly nabbed {1}'s pretend artist beret and created a masterpiece of silliness.",
+        True),
+    ("{0} orchestrated a plan to steal {1}'s toy chef apron and cooked up a feast of imagination.", True),
+    (
+        "In a daring plot, {0} managed to secure {1}'s invisible astronaut helmet and embarked on an intergalactic adventure.",
+        True),
+    (
+        "{0} disguised themselves as a spy and successfully nabbed {1}'s toy magnifying glass, leaving behind a trail of mystery.",
+        True),
+    (
+        "During the grand heist, {0} cleverly swiped {1}'s pretend scientist lab coat and concocted laughter-inducing 'potions.'",
+        True),
+    ("{0} plotted to steal {1}'s toy firefighter boots and left behind a trail of imaginary 'footprints.'", True),
+    (
+        "In an audacious move, {0} skillfully managed to secure {1}'s collection of toy building blocks and constructed a tower of imagination.",
+        True),
+    (
+        "{0} dressed up as a magician and skillfully swiped {1}'s toy wand, leaving behind a flurry of magically appearing rubber chickens.",
+        True), (
+    "During the master plan, {0} skillfully swiped {1}'s toy pirate hat and left a note saying 'Ahoy, matey, the caper was a success!'",
+    True),
+    ("{0} managed to outsmart {1} and secured the invisible superhero belt, becoming the champion of imagination.",
+     True),
+    ("In a daring plot, {0} skillfully nabbed {1}'s toy construction helmet and became the 'chief architect' of fun.",
+     True),
+    ("{0} disguised themselves as a scientist and managed to secure {1}'s toy volcano, creating eruptions of laughter.",
+     True),
+    (
+    "During the grand heist, {0} successfully swiped {1}'s pretend artist paintbrush, leaving behind a trail of colorful creativity.",
+    True),
+    ("{0} plotted to steal {1}'s toy pirate hat and set sail on an imaginary treasure-seeking adventure.", True),
+    (
+    "In an audacious move, {0} skillfully secured {1}'s toy firefighter helmet and became the hero of playroom safety.",
+    True),
+    ("{0} managed to outwit {1} and claimed the pretend pirate treasure, leaving behind a map of laughter.", True),
+    ("During the master plan, {0} skillfully nabbed {1}'s invisible jetpack and soared through their imagination.",
+     True),
+    (
+    "{0} disguised themselves as a king and managed to secure {1}'s toy crown, declaring themselves the ruler of playroom fun.",
+    True),
+    (
+    "In a daring plot, {0} skillfully swiped {1}'s collection of toy dinosaurs, leading them on an epic prehistoric adventure.",
+    True),
+    ("{0} orchestrated a plan to steal {1}'s toy knight armor and became the defender of the playroom kingdom.", True),
+    (
+    "During the grand heist, {0} cleverly managed to outwit {1} and claimed the toy space shuttle, launching their creativity into orbit.",
+    True),
+    (
+    "{0} plotted to steal {1}'s invisible treasure chest and left behind a note that said 'I've uncovered a chest of laughter.'",
+    True),
+    (
+    "In an audacious move, {0} skillfully secured {1}'s toy magic carpet and embarked on an imaginary journey to magical lands.",
+    True),
+    (
+    "{0} managed to outsmart {1} and claimed the collection of toy aliens, declaring themselves the new commander of the toy universe.",
+    True),
+    (
+    "During the master plan, {0} skillfully nabbed {1}'s pretend knight sword and became the legendary swordmaster of playroom legends.",
+    True),
+    (
+    "{0} disguised themselves as a scientist and successfully secured {1}'s toy rocket, launching a mission to explore the unknown.",
+    True),
+    (
+    "In a daring plot, {0} skillfully swiped {1}'s invisible pirate treasure and left behind an 'invisible' thank-you note.",
+    True),
+    (
+    "{0} managed to outwit {1} and claimed the toy firefighter hat, becoming the fearless guardian of imaginative adventures.",
+    True),
+    (
+    "During the grand heist, {0} cleverly swiped {1}'s toy doctor kit and left behind a note that said 'Doctor {0} reporting for fun duty!'",
+    True),
+    (
+    "{0} plotted to steal {1}'s collection of toy construction vehicles and created a bustling playroom construction site.",
+    True),
+    (
+    "In an audacious move, {0} skillfully secured {1}'s pretend scientist goggles and discovered a world of laughter and curiosity.",
+    True),
+    (
+    "{0} orchestrated a plan to steal {1}'s toy robot dog and embarked on a robotic adventure through their imagination.",
+    True),
+    (
+    "During the master plan, {0} managed to outsmart {1} and claimed the invisible superhero cape, becoming the playroom's true hero.",
+    True),
+    (
+    "{0} disguised themselves as a chef and skillfully swiped {1}'s toy kitchen set, creating a feast of imaginative delights.",
+    True),
+    (
+    "In a daring plot, {0} skillfully secured {1}'s pretend explorer backpack and embarked on an adventure of pretend discoveries.",
+    True),
+    ("{0} plotted to steal {1}'s toy spy glasses and left a note saying 'I've got my eyes on the fun!'", True),
+    (
+    "In an audacious move, {0} skillfully nabbed {1}'s collection of toy musical instruments and orchestrated a symphony of playroom joy.",
+    True),
+    ("{0} dressed up as a superhero and managed to secure {1}'s toy mask, becoming the mysterious playroom guardian.",
+     True),
+    (
+    "During the master plan, {0} skillfully swiped {1}'s invisible explorer hat and embarked on a journey of laughter and adventure.",
+    True),
+    (
+    "{0} managed to outwit {1} and claimed the toy firefighter hose, extinguishing imaginary fires with playful flair.",
+    True),
+
+]
