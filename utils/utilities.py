@@ -47,3 +47,21 @@ async def generate_embed_color(member):
         return discord.Colour(random.randint(0, 0xFFFFFF))
     else:
         return embed_color
+
+
+
+
+
+def progress_percentage(remain, total):
+    assert remain <= total
+    max_bare_size = 10  # 10 units for 100%
+    remain_percent = 100 * remain // total // max_bare_size
+    default_char = '◯'
+    icon = "⬤"
+    bar = (default_char * max_bare_size) + "]"
+    bar_done = "[" + (icon * remain_percent)
+    bar_remain = bar[remain_percent:]
+    return f"\r{bar_done}{bar_remain} {remain_percent * 10}%"
+
+
+

@@ -8,7 +8,7 @@ from discord.ext import commands
 
 from Views.rule_button_view import RuleButton
 from Views.verification_view import VerificationView
-from utils.utilities import generate_embed_color
+from utils.utilities import generate_embed_color, progress_percentage
 
 
 class Core(commands.Cog):
@@ -23,7 +23,11 @@ class Core(commands.Cog):
     async def lol(self, ctx):
         user = ctx.author  # Replace with the desired user
         avg_color = await generate_embed_color(user)
-        embed = discord.Embed(title="User Embed", description="This is a user's embed.", color=avg_color)
+        user_data = await ctx.bot.db_client.get_user(user_id=user.id)
+        e = int(((user_data.level + 1) * 10) ** 2)
+
+        s = progress_percentage(user_data.xp, e)
+        embed = discord.Embed(title="User Embed", description=s, color=avg_color)
         await ctx.send(embed=embed)
 
     @commands.command(name="attempt", description="????")
