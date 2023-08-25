@@ -1,5 +1,6 @@
 import datetime
 
+import discord
 from discord.ext import commands
 
 
@@ -18,7 +19,11 @@ def persistent_cooldown(rate, per, type=commands.BucketType.user):
         print()
         if command_cooldown and (last_used := command_cooldown + datetime.timedelta(seconds=per)) > now:
             delta = last_used - now
-            await ctx.send(f'You are on cooldown. Try again in {delta.seconds} seconds.')
+            remaining_seconds = delta.seconds
+            remaining_timestamp = discord.utils.format_dt(
+                discord.Object(id=remaining_seconds), style="R"
+            )
+            await ctx.send(f'You are on cooldown. Try again in {remaining_timestamp} seconds.')
             return False
 
         await ctx.bot.db_client.user_collection.update_one(
