@@ -20,8 +20,7 @@ def persistent_cooldown(rate, per, type=commands.BucketType.user):
         if command_cooldown and (last_used := command_cooldown + datetime.timedelta(seconds=per)) > now:
             delta = last_used - now
             remaining_seconds = delta.seconds
-            remaining_timestamp = discord.utils.format_dt(
-                discord.Object(id=remaining_seconds), style="R"
+            remaining_timestamp = discord.utils.format_dt(delta, style="R"
             )
             await ctx.send(f'You are on cooldown. Try again in {remaining_timestamp} seconds.')
             return False
