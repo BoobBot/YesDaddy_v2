@@ -1,6 +1,7 @@
 import datetime
 
 import discord
+import pytz
 from discord.ext import commands
 
 
@@ -19,7 +20,9 @@ def persistent_cooldown(rate, per, type=commands.BucketType.user):
             target_time = command_cooldown + datetime.timedelta(seconds=per)
             print(target_time)
             print(per)
-            epoch = round(target_time.timestamp())
+            local_tz = pytz.timezone('US/Eastern')  # Replace with the actual time zone
+            target_time_local = target_time.astimezone(local_tz)
+            epoch = round(target_time_local.timestamp())
             print(epoch)
             embed = discord.Embed(
                 title=f'You are on cooldown. Try again in <t:{epoch}:R>.',
