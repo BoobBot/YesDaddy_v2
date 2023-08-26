@@ -8,7 +8,7 @@ from discord.ext import commands
 
 from config.lists import job_descriptions, fake_robbery_scenarios, funny_crime_scenarios
 from utils.checks import persistent_cooldown
-from utils.utilities import subtraction_percentage
+from utils.utilities import subtraction_percentage, generate_embed_color
 
 
 class Misc(commands.Cog):
@@ -98,7 +98,7 @@ class Misc(commands.Cog):
         await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="crime", description="do some crime")
-    # @persistent_cooldown(1, 7200, commands.BucketType.user)
+    @persistent_cooldown(1, 21600, commands.BucketType.user)
     async def crime(self, ctx):
         random.shuffle(funny_crime_scenarios)
         crime = random.choice(funny_crime_scenarios)
@@ -115,7 +115,8 @@ class Misc(commands.Cog):
 
             em = discord.Embed(color=discord.Color.green(), description=crime_scenario)
             em.add_field(name="Crime Result", value=f"{ctx.author.mention} did some crime gaining {amount}")
-            em.set_thumbnail(url="https://cdn.discordapp.com/attachments/1145112557414264892/1145112660208275528/dc.png")
+            em.set_thumbnail(
+                url="https://cdn.discordapp.com/attachments/1145112557414264892/1145112660208275528/dc.png")
             return await ctx.reply(embed=em)
         else:
             user_total = (user_balance - amount)
@@ -124,7 +125,8 @@ class Misc(commands.Cog):
             em = discord.Embed(color=discord.Color.red(), description=crime_scenario)
             em.add_field(name="Crime Result",
                          value=f"{ctx.author.mention} attempted to do some crime and got caught losing {amount}, your lawyer will see you now.")
-            em.set_thumbnail(url="https://cdn.discordapp.com/attachments/1145112557414264892/1145115052505042974/ndc.png")
+            em.set_thumbnail(
+                url="https://cdn.discordapp.com/attachments/1145112557414264892/1145115052505042974/ndc.png")
             return await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="rob", description="woke up and chose to be a thief")
@@ -165,7 +167,8 @@ class Misc(commands.Cog):
             await author_data.update_balance(author_total, self.bot)
 
             em = discord.Embed(color=discord.Color.green(), description=rob_scenario)
-            em.add_field(name="Robbery Result", value=f"{ctx.author.mention} attempted to rob {user.mention} and they succeeded gaining {user_loss_total}, congrats on being a bad person")
+            em.add_field(name="Robbery Result",
+                         value=f"{ctx.author.mention} attempted to rob {user.mention} and they succeeded gaining {user_loss_total}, congrats on being a bad person")
             return await ctx.reply(embed=em)
         else:
             author_balance = author_data.balance
@@ -175,7 +178,8 @@ class Misc(commands.Cog):
             await author_data.update_balance(total, self.bot)
 
             em = discord.Embed(color=discord.Color.red(), description=rob_scenario)
-            em.add_field(name="Robbery Result", value=f"{ctx.author.mention} attempted to rob {user.mention} and they failed miserably losing {author_loss_total}")
+            em.add_field(name="Robbery Result",
+                         value=f"{ctx.author.mention} attempted to rob {user.mention} and they failed miserably losing {author_loss_total}")
             return await ctx.reply(embed=em)
 
     @commands.hybrid_group(name="transactions", description="Manage transactions.")
@@ -194,7 +198,7 @@ class Misc(commands.Cog):
         await ctx.send(f"")
 
     @transactions.command(name="deposit", description="Deposit money into your bank.")
-    async def deposit(self, ctx: commands.Context,) -> None:
+    async def deposit(self, ctx: commands.Context, ) -> None:
         """
         This subcommand can now be invoked with `?parent sub <arg>` or `/parent sub <arg>` (once synced).
         """
@@ -224,13 +228,13 @@ class Misc(commands.Cog):
         await ctx.send(f"")
 
     @transactions.command(name="balance", description="Check your balance.")
-    async def balance(self, ctx: commands.Context) -> None:
-        """
-        This subcommand can now be invoked with `?parent sub <arg>` or `/parent sub <arg>` (once synced).
-        """
+    async def balance(self, ctx: commands.Context, user: discord.Member = None) -> None:
+        user = user or ctx.author
+        user_data = await ctx.bot.db_client.get_user(user_id=user.id)
+        user_color = await generate_embed_color(user)
 
-        await ctx.send(f"")
-
+        em = discord.Embed(title=f"{user}'s Balance", description=f"{user.mention} has {user_data.balance}", color=user_color)
+        em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
 
 
 async def setup(bot):
