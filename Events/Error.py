@@ -11,7 +11,7 @@ class ErrorHandlerCog(commands.Cog):
 
     async def send_error_to_webhook(self, error_message):
         print(error_message)
-        async with self.bot.self.web_client.post(self.webhook_url,
+        async with self.bot.web_client.post(self.webhook_url,
                                                  json={"content": error_message, "username": self.webhook_username}):
             pass
 
