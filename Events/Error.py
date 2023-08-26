@@ -93,4 +93,4 @@ class ErrorHandlerCog(commands.Cog):
 
 
 async def setup(bot):
-    bot.add_cog(ErrorHandlerCog(bot))
+    await bot.add_cog(ErrorHandlerCog(bot))
