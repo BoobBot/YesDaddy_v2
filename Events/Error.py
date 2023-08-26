@@ -1,3 +1,5 @@
+import traceback
+
 import discord
 from discord.ext import commands
 
@@ -90,7 +92,9 @@ class ErrorHandlerCog(commands.Cog):
             # Handle other unexpected errors
             await ctx.send("An error occurred while processing the command.")
             self.logger.error(f"An error occurred: {error}")
-            await self.send_error_to_webhook(f"An error occurred: {error}")
+            traceback_info = traceback.format_exc()
+            self.logger.error(f"Traceback:\n{traceback_info}")
+            await self.send_error_to_webhook(f"An error occurred: {error}\n\nTraceback:\n{traceback_info}")
 
 
 async def setup(bot):
