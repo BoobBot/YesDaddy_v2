@@ -70,8 +70,6 @@ class Core(commands.Cog):
     async def delete_commands(self, ctx):
         guild = discord.Object(self.bot.config.testing_guild_id)
         self.bot.tree.clear_commands(guild=guild)
-        #await self.bot.tree.sync(guild=guild)
-        self.bot.tree.clear_commands()
         await self.bot.tree.sync()
         await ctx.send('Commands deleted.')
 
