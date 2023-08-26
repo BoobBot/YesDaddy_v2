@@ -48,7 +48,10 @@ class Core(commands.Cog):
     @commands.command(name="sync")
     @commands.is_owner()
     async def sync(self, ctx, guild: str = None):
-        result = True if "true" in guild.lower() else Fals
+        if guild is None:
+            result = False
+        else:
+            result = True if "true" in guild.lower() else False
         await ctx.send(f"Syncing commands for guild {self.bot.config.testing_guild_id}")
         guild = discord.Object(self.bot.config.testing_guild_id)
         self.bot.tree.copy_global_to(guild=guild)
