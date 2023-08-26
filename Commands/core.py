@@ -69,8 +69,10 @@ class Core(commands.Cog):
     @commands.is_owner()
     async def delete_commands(self, ctx):
         self.bot.tree.clear_commands(guild=ctx.guild)
-        await self.bot.tree.sync()
+        self.bot.tree.clear_commands(guild=None)
+        await self.bot.tree.sync(guild=None)
         await ctx.send('Commands deleted.')
+
 
     @commands.command(name="attempt", description="????")
     @commands.is_owner()
