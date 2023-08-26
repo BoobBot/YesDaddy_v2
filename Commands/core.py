@@ -58,7 +58,7 @@ class Core(commands.Cog):
         if result:
             await ctx.send("Syncing guild")
             await self.bot.tree.sync(guild=guild)
-            await ctx.send("Synced commands for guild {self.bot.config.testing_guild_id}")
+            await ctx.send(f"Synced commands for guild {self.bot.config.testing_guild_id}")
         else:
             await ctx.send("Syncing global")
             await self.bot.tree.sync()
