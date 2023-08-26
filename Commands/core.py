@@ -66,7 +66,7 @@ class Core(commands.Cog):
             await ctx.send(f"```py\n{output}```", embed=embed)
         except discord.HTTPException:
             data = BytesIO(output.encode('utf-8'))
-            await ctx.send(content="Way to long, have a file instead!",
+            await ctx.send(content="Too long to send, here's a text file instead.",
                            file=discord.File(data, filename="Result.txt"))
 
     @commands.hybrid_command(name="ping", description="Show bot and API latency.")
@@ -189,13 +189,13 @@ class Core(commands.Cog):
             formatted_input += output_text + "\n"
 
         if output_result is None:
-            return formatted_input, None
+            return formatted_input
 
         if isinstance(output_result, discord.Embed):
-            return formatted_input + "<Embed>", (formatted_input, output_result)
+            return formatted_input + "\n<Embed>"
         else:
             formatted_input += str(output_result)
-            return formatted_input, (formatted_input, None)
+            return formatted_input
 
 
 async def setup(bot):
