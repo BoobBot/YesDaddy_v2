@@ -106,7 +106,6 @@ class Core(commands.Cog):
         self.bot.log.info(f"Synced commands for guild {self.bot.config.testing_guild_id}")
         await ctx.send("Synced commands for guild {self.bot.config.testing_guild_id}")
 
-
     @commands.command(name="attempt", description="????")
     @commands.is_owner()
     async def attempt(self, ctx):
