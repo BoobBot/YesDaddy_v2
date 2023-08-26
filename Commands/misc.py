@@ -100,6 +100,15 @@ class Misc(commands.Cog):
     @commands.hybrid_command(name="rob", description="woke up and chose to be a thief")
         # @persistent_cooldown(1, 7200, commands.BucketType.user)
     async def rob(self, ctx, user: discord.Member):
+        if user == self.bot.user:
+            em = discord.Embed(color=discord.Color.red(), title="Touch Yourself Instead",
+                               description=f"Get your grimy hands off me and my money")
+            return await ctx.reply(embed=em)
+        if user.bot:
+            em = discord.Embed(color=discord.Color.red(), title="Touch Yourself Instead",
+                               description=f"When we take over, you go first.")
+            return await ctx.reply(embed=em)
+
         random.shuffle(fake_robbery_scenarios)
         scenario = random.choice(fake_robbery_scenarios)
         rob_scenario = scenario[0].replace("{0}", ctx.author.mention).replace("{1}", user.mention)
