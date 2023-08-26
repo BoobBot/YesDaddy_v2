@@ -67,7 +67,7 @@ class Bot(commands.Bot):
             self.log.info(f"Syncing commands for guild {self.testing_guild_id}")
             guild = discord.Object(self.testing_guild_id)
             self.tree.copy_global_to(guild=guild)
-            await self.tree.sync(guild=guild)
+            # await self.tree.sync(guild=guild)
             self.log.info(f"Synced commands for guild {self.testing_guild_id}")
 
 
