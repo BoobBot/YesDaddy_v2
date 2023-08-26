@@ -6,7 +6,7 @@ import sys
 import discord
 from discord.ext import commands
 
-from config.lists import job_descriptions, fake_robbery_scenarios
+from config.lists import job_descriptions, fake_robbery_scenarios, funny_crime_scenarios
 from utils.checks import persistent_cooldown
 from utils.utilities import subtraction_percentage
 
@@ -96,6 +96,36 @@ class Misc(commands.Cog):
         em.add_field(name="New Balance", value=f"{new_bal}")
         await user_data.add_balance(cash, self.bot)
         await ctx.reply(embed=em)
+
+    @commands.hybrid_command(name="crime", description="do some crime")
+    # @persistent_cooldown(1, 7200, commands.BucketType.user)
+    async def crime(self, ctx):
+        random.shuffle(funny_crime_scenarios)
+        crime = random.choice(funny_crime_scenarios)
+        amount = random.randint(100, 10000)
+        crime_scenario = crime[0].replace("{0}", ctx.author.mention)
+        crime_outcome = crime[1]
+
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_balance = user_data.balance
+
+        if crime_outcome:
+            user_total = (user_balance + amount)
+            await user_data.update_balance(user_total, self.bot)
+
+            em = discord.Embed(color=discord.Color.green(), description=crime_scenario)
+            em.add_field(name="Crime Result", value=f"{ctx.author.mention} did some crime gaining {amount}")
+            em.set_thumbnail(url="https://cdn.discordapp.com/attachments/1145112557414264892/1145112660208275528/dc.png")
+            return await ctx.reply(embed=em)
+        else:
+            user_total = (user_balance - amount)
+            await user_data.update_balance(user_total, self.bot)
+
+            em = discord.Embed(color=discord.Color.red(), description=crime_scenario)
+            em.add_field(name="Crime Result",
+                         value=f"{ctx.author.mention} attempted to do some crime and got caught losing {amount}, your lawyer will see you now.")
+            em.set_thumbnail(url="https://cdn.discordapp.com/attachments/1145112557414264892/1145115052505042974/ndc.png")
+            return await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="rob", description="woke up and chose to be a thief")
     @persistent_cooldown(1, 43200, commands.BucketType.user)
