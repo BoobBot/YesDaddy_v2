@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 class User:
-    def __init__(self, user_id, blacklist, last_seen, xp, level, premium, balance, bank_balance, cooldowns, messages):
+    def __init__(self, user_id, blacklist, last_seen, xp, level, premium, balance, bank_balance, cooldowns, messages, jail):
         self.user_id = user_id
         self.blacklist = blacklist
         self.last_seen = last_seen
@@ -14,6 +14,7 @@ class User:
         self.bank_balance = bank_balance
         self.cooldowns = cooldowns
         self.messages = messages
+        self.jail = jail
 
     async def add_xp(self, amount, bot):
         self.xp += amount
@@ -25,6 +26,14 @@ class User:
 
     async def add_balance(self, amount, bot):
         self.balance += amount
+        await self.update_user({"balance": self.balance}, bot)
+
+    async def subtract_balance(self, amount, bot):
+        self.balance -= max(amount, 0)
+        await self.update_user({"balance": self.balance}, bot)
+
+    async def update_balance(self, amount, bot):
+        self.balance = amount
         await self.update_user({"balance": self.balance}, bot)
 
     async def add_bank_balance(self, amount, bot):

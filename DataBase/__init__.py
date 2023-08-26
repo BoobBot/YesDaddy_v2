@@ -27,7 +27,7 @@ class DiscordDatabase:
         user_data = await self.user_collection.find_one({"user_id": user_id}, {"_id": 0})
         if user_data:
             return User(**user_data)
-        user = User(user_id, False, f'{datetime.utcnow()}', 0, 0, False, 0, 0, {}, 0)
+        user = User(user_id, False, f'{datetime.utcnow()}', 0, 0, False, 0, 0, {}, 0, {})
         await self.add_user(user)
         user_data = await self.user_collection.find_one({"user_id": user_id}, {"_id": 0})
         return User(**user_data)
