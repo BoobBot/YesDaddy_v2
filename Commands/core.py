@@ -61,9 +61,10 @@ class Core(commands.Cog):
         except Exception as e:
             result = traceback.format_exc()
 
-        output, embed = self._format(code, result)
+        output = self._format(code, result)
         try:
-            await ctx.send(f"```py\n{output}```", embed=embed)
+            await ctx.send(f"```py\n{output}```")
+
         except discord.HTTPException:
             data = BytesIO(output.encode('utf-8'))
             await ctx.send(content="Too long to send, here's a text file instead.",
