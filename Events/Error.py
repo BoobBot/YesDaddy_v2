@@ -12,7 +12,7 @@ class ErrorHandlerCog(commands.Cog):
     async def send_error_to_webhook(self, error_message):
         print(error_message)
         async with self.bot.web_client.post(self.webhook_url,
-                                                 json={"content": error_message, "username": self.webhook_username}):
+                                            json={"content": error_message, "username": self.webhook_username}):
             pass
 
     @commands.Cog.listener()
@@ -38,9 +38,7 @@ class ErrorHandlerCog(commands.Cog):
             self.logger.error(f"An error occurred: {error}")
             await self.send_error_to_webhook(f"An error occurred: {error}")
         elif isinstance(error, commands.CheckFailure):
-            if hasattr(ctx.command.callback, 'persistent_cooldown'):
-                return  # Ignore if the command has its own error handler
-            await ctx.send("You don't have permission to use this command.")
+            return
         elif isinstance(error, commands.CommandOnCooldown):
             await ctx.send(f"This command is on cooldown. Try again in {error.retry_after:.2f} seconds.")
         elif isinstance(error, commands.MaxConcurrencyReached):
