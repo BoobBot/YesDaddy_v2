@@ -5,8 +5,8 @@ from discord.ext import commands
 class ErrorHandlerCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.webhook_url = ''
-        self.webhook_username = ''
+        self.webhook_url = self.bot.config.error_webhook
+        self.webhook_username = "Reeeeeeeeeeeeeeeeeeeee"
         self.logger = bot.log
 
     async def send_error_to_webhook(self, error_message):

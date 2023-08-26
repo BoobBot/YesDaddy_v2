@@ -22,13 +22,14 @@ class Config:
                                                "guilds")  # Use environment variable as guild_collection_name
         self.testing_guild_id = os.getenv('TESTING_GUILD_ID',
                                           "")  # Use environment variable as testing_guild_id
-        self.initial_extensions = ['Commands.core', 'Events.Ready', 'Events.Message', 'Commands.misc']  # List of initial extensions
+        self.initial_extensions = ['Commands.core', 'Events.Ready', 'Events.Message', 'Commands.misc', 'Events.Error']  # List of initial extensions
         self.prefix = os.getenv('PREFIX', "")  # Use environment variable as prefix
         self.owner_ids = os.getenv('OWNER_IDS', "")  # Use environment variable as owner_ids
         self.open_ai_key = os.getenv('OPEN_AI_KEY', "")  # Use environment variable as open_ai_key
         self.member_role_id = os.getenv('MEMBER_ROLE_ID', "")  # Use environment variable as member_role_id
         self.verification_image = os.getenv('VERIFICATION_IMAGE',
                                             "")  # Use environment variable as verification_image
+        self.error_webhook = os.getenv('ERROR_WEBHOOK', "")  # Use environment variable as error_webhook
 
     def get_token(self, debug=False):  # Get token
         if self.debug_mode or debug:  # If debug_mode is True
