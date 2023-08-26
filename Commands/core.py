@@ -192,7 +192,8 @@ class Core(commands.Cog):
 
     def cleanup_code(self, body):
         """Automatically removes code blocks from the code."""
-        # remove ```py\n```
+        if body.startswith('```py') and body.endswith('```'):
+            body = body[5:-3]
         if body.startswith('```') and body.endswith('```'):
             body = body[3:-3]
         # remove `foo`
