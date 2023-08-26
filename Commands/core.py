@@ -20,55 +20,6 @@ from utils.utilities import generate_embed_color, progress_percentage
 class Core(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.process = psutil.Process(os.getpid())
-        self.env = {}
-        self.stdout = io.StringIO()
-
-    async def _eval(self, ctx, code):
-        if code == "exit()":
-            self.env = {}
-            return await ctx.send("History reset.")
-
-        env = {
-            "message": ctx.message,
-            "author": ctx.author,
-            "channel": ctx.channel,
-            "guild": ctx.guild,
-            "ctx": ctx,
-            "self": self,
-            "bot": self.bot,
-            "inspect": inspect,
-            "discord": discord,
-            "contextlib": contextlib
-        }
-
-        self.env.update(env)
-
-        async def func():
-            try:
-                with contextlib.redirect_stdout(self.stdout):
-                    exec(code, self.env)
-                if '_' in self.env:
-                    result = self.env['_']
-                    if inspect.isawaitable(result):
-                        result = await result
-                    return result
-            finally:
-                self.env.update(locals())
-
-        try:
-            result = await func()
-        except Exception as e:
-            result = traceback.format_exc()
-
-        output = self._format(code, result)
-        try:
-            await ctx.send(f"```py\n{output}```")
-
-        except discord.HTTPException:
-            data = BytesIO(output.encode('utf-8'))
-            await ctx.send(content="Too long to send, here's a text file instead.",
-                           file=discord.File(data, filename="Result.txt"))
 
     @commands.hybrid_command(name="ping", description="Show bot and API latency.")
     async def ping(self, ctx):
@@ -180,40 +131,74 @@ class Core(commands.Cog):
 
     @commands.command(name="eval")
     @commands.is_owner()
-    async def __eval(self, ctx, *, code):
-        """ Run eval in a REPL-like format. """
-        code = code.strip("`")
-        if code.startswith("py\n"):
-            code = "\n".join(code.split("\n")[1:])
+    async def eval(self, ctx, *, body: str):
+        """Evaluates a code"""
 
-        if not re.search(r"^(return|import|for|while|def|class|"
-                         r"from|exit|[a-zA-Z0-9]+\s*=)",
-                         code, re.M) and len(code.split("\n")) == 1:
-            code = "_ = " + code
+        env = {
+            'ctx': ctx,
+            'bot': self.bot,
+            'guild': ctx.guild,
+            'channel': ctx.channel,
+            'author': ctx.author,
+            'message': ctx.message,
+            'source': inspect.getsource,
+            'discord': discord,
+            'commands': commands,
+            'os': os,
+            'sys': sys,
+            'psutil': psutil,
+            're': re,
+            'textwrap': textwrap,
+            'traceback': traceback,
+            'io': io,
+            'BytesIO': BytesIO
+        }
 
-        await self._eval(ctx, code)
+        env.update(globals())
 
-    def _format(self, input_code, output_result):
-        self.env["_"] = output_result
+        body = self.cleanup_code(body)
+        stdout = io.StringIO()
 
-        formatted_input = textwrap.dedent(input_code)
+        to_compile = f'async def func():\n{textwrap.indent(body, "  ")}'
 
-        self.stdout.seek(0)
-        output_text = self.stdout.read()
-        self.stdout.close()
-        self.stdout = io.StringIO()
+        try:
+            exec(to_compile, env)
+        except Exception as e:
+            return await ctx.send(f'```py\n{e.__class__.__name__}: {e}\n```')
 
-        if output_text:
-            formatted_input += output_text + "\n"
+        func = env['func']
+        try:
+            with contextlib.redirect_stdout(stdout):
+                ret = await func()
+        except Exception as e:
+            value = stdout.getvalue()
+            em = discord.Embed(title="Error", description=f"```py\n{value}{traceback.format_exc()}\n```",
+                               color=discord.Color.red())
+            return await ctx.send(embed=em)
 
-        if output_result is None:
-            return formatted_input
+        value = stdout.getvalue()
 
-        if isinstance(output_result, discord.Embed):
-            return formatted_input + "\n<Embed>"
+        if ret is None:
+            if value:
+                em = discord.Embed(title="Success", description=f"```py\n{value}\n```", color=discord.Color.green())
+                return await ctx.send(embed=em)
+            else:
+                em = discord.Embed(title="Success", description="```py\nNo output\n```",
+                                   color=discord.Color.green())
+                return await ctx.send(embed=em)
         else:
-            formatted_input += str(output_result)
-            return formatted_input
+            em = discord.Embed(title="Success", description=f"```py\n{value}{ret}\n```", color=discord.Color.green())
+            return await ctx.send(embed=em)
+
+    def cleanup_code(self, body):
+        """Automatically removes code blocks from the code."""
+        # remove ```py\n```
+        if body.startswith('```') and body.endswith('```'):
+            body = body[3:-3]
+        # remove `foo`
+        if body.startswith('`') and body.endswith('`'):
+            body = body[1:-1]
+        return body
 
 
 async def setup(bot):
