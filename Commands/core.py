@@ -52,7 +52,7 @@ class Core(commands.Cog):
             result = False
         else:
             result = True if "true" in guild.lower() else False
-        await ctx.send(f"Syncing commands for guild {self.bot.config.testing_guild_id}")
+        await ctx.send(f"Syncing commands")
         guild = discord.Object(self.bot.config.testing_guild_id)
         self.bot.tree.copy_global_to(guild=guild)
         if result:
