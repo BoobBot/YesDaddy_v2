@@ -12,13 +12,20 @@ class ErrorHandlerCog(commands.Cog):
         self.logger = bot.log
 
     async def send_error_to_webhook(self, error_message):
-        print(error_message)
         async with self.bot.web_client.post(self.webhook_url,
                                             json={"content": error_message, "username": self.webhook_username}):
             pass
 
     @commands.Cog.listener()
-    async def on_command_error(self, ctx, error):
+    async def on_error(self, event, *args, **kwargs):
+        error = args[0]
+        if isinstance(error, discord.HTTPException):
+            return
+        self.logger.error(f"An error occurred: {event}")
+        await self.send_error_to_webhook(f"An error occurred: {event}, {error}")
+
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx: commands.Context, error: commands.CommandError):
         if hasattr(ctx.command, 'on_error'):
             return  # Ignore if the command has its own error handler
 
