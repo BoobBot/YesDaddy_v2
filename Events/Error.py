@@ -38,7 +38,12 @@ class ErrorHandlerCog(commands.Cog):
             self.logger.error(f"An error occurred: {error}")
             await self.send_error_to_webhook(f"An error occurred: {error}")
         elif isinstance(error, commands.CheckFailure):
-            return
+            if hasattr(ctx.command.checks, 'persistent_cooldown'):
+                return # Ignore persistent cooldown errors
+            print(error)
+            print(ctx)
+            print(dir(ctx.command.checks))
+            return await ctx.send("You do not have permission to use this command.")
         elif isinstance(error, commands.CommandOnCooldown):
             await ctx.send(f"This command is on cooldown. Try again in {error.retry_after:.2f} seconds.")
         elif isinstance(error, commands.MaxConcurrencyReached):
