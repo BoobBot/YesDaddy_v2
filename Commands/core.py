@@ -105,6 +105,23 @@ class Core(commands.Cog):
     #     await ctx.send(chat_completion.choices[0].message.content)
     #
 
+    @commands.hybrid_command(name="eval", description="Evaluate code.")
+    @commands.is_owner()
+    async def eval(self, ctx, *, code):
+        if code.startswith("```") and code.endswith("```"):
+            code = code[3:-3]
+        elif code.startswith("`") and code.endswith("`"):
+            code = code[1:-1]
+        else:
+            return await ctx.reply("Invalid code block.")
+
+        result = await self.bot.loop.run_in_executor(None, subprocess.run, [sys.executable, "-c", code],
+                                                     {"stdout": subprocess.PIPE, "stderr": subprocess.PIPE})
+
+        if result.returncode != 0:
+            return await ctx.reply(f"```{result.stderr.decode()}```")
+        await ctx.reply(f"```{result.stdout.decode()}```")
+
 
 async def setup(bot):
     await bot.add_cog(Core(bot))

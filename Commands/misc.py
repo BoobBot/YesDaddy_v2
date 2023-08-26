@@ -98,7 +98,7 @@ class Misc(commands.Cog):
         await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="rob", description="woke up and chose to be a thief")
-        # @persistent_cooldown(1, 7200, commands.BucketType.user)
+    @persistent_cooldown(1, 43200, commands.BucketType.user)
     async def rob(self, ctx, user: discord.Member):
         if user == self.bot.user:
             em = discord.Embed(color=discord.Color.red(), title="Touch Yourself Instead",
@@ -147,6 +147,60 @@ class Misc(commands.Cog):
             em = discord.Embed(color=discord.Color.red(), description=rob_scenario)
             em.add_field(name="Robbery Result", value=f"{ctx.author.mention} attempted to rob {user.mention} and they failed miserably losing {author_loss_total}")
             return await ctx.reply(embed=em)
+
+    @commands.hybrid_group(name="transactions", description="Manage transactions.")
+    async def transactions(self, ctx: commands.Context) -> None:
+        """
+        This is a parent command. It can be invoked with `?parent` or `/parent` (once synced).
+        """
+        if ctx.invoked_subcommand is None:
+            await ctx.send_help(ctx.command)
+
+    @transactions.command(name="pay", description="Pay someone.")
+    async def pay(self, ctx: commands.Context) -> None:
+        """
+        This subcommand can now be invoked with `?parent sub` or `/parent sub` (once synced).
+        """
+        await ctx.send(f"")
+
+    @transactions.command(name="deposit", description="Deposit money into your bank.")
+    async def deposit(self, ctx: commands.Context,) -> None:
+        """
+        This subcommand can now be invoked with `?parent sub <arg>` or `/parent sub <arg>` (once synced).
+        """
+        await ctx.send(f"")
+
+    @transactions.command(name="depall", description="Deposit all money into your bank.")
+    async def depall(self, ctx: commands.Context, ) -> None:
+        """
+        This subcommand can now be invoked with `?parent sub <arg>` or `/parent sub <arg>` (once synced).
+        """
+        await ctx.send(f"")
+
+    @transactions.command(name="withdraw", description="Withdraw money from your bank.")
+    async def withdraw(self, ctx: commands.Context) -> None:
+        """
+        This subcommand can now be invoked with `?parent sub <arg>` or `/parent sub <arg>` (once synced).
+        """
+
+        await ctx.send(f"")
+
+    @transactions.command(name="withall", description="Withdraw all money from your bank.")
+    async def withall(self, ctx: commands.Context) -> None:
+        """
+        This subcommand can now be invoked with `?parent sub <arg>` or `/parent sub <arg>` (once synced).
+        """
+
+        await ctx.send(f"")
+
+    @transactions.command(name="balance", description="Check your balance.")
+    async def balance(self, ctx: commands.Context) -> None:
+        """
+        This subcommand can now be invoked with `?parent sub <arg>` or `/parent sub <arg>` (once synced).
+        """
+
+        await ctx.send(f"")
+
 
 
 async def setup(bot):
