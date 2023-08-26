@@ -59,3 +59,10 @@ def progress_percentage(remain, total):
     bar_done = "[" + (icon * remain_percent)
     bar_remain = bar[remain_percent:]
     return f"\r{bar_done}{bar_remain} {remain_percent * 10}%"
+
+
+def subtraction_percentage(bal, percentage_to_subtract):
+    fraction = percentage_to_subtract / 100
+    subtraction_amount = int(fraction * bal)
+    result = bal - subtraction_amount
+    return max(result, 0)
