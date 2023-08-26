@@ -93,6 +93,20 @@ class Core(commands.Cog):
         await user_data.update_user({"cooldowns": user_data.cooldowns}, self.bot)
         await ctx.reply("Cooldowns cleared.")
 
+    @commands.command(name="sync")
+    @commands.is_owner()
+    async def sync(self, ctx, guild: bool = False):
+        await ctx.send(f"Syncing commands for guild {self.bot.config.testing_guild_id}")
+        guild = discord.Object(self.bot.config.testing_guild_id)
+        self.bot.tree.copy_global_to(guild=guild)
+        if guild:
+            await ctx.send("Syncing guild")
+            await self.bot.tree.sync(guild=guild)
+        await self.bot.tree.sync_global()
+        self.bot.log.info(f"Synced commands for guild {self.bot.config.testing_guild_id}")
+        await ctx.send("Synced commands for guild {self.bot.config.testing_guild_id}")
+
+
     @commands.command(name="attempt", description="????")
     @commands.is_owner()
     async def attempt(self, ctx):
