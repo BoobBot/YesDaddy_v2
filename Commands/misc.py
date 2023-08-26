@@ -114,7 +114,7 @@ class Misc(commands.Cog):
         if user_data.balance == 0:
             await author_data.subtract_balance(250, self.bot)
             em = discord.Embed(color=discord.Color.red(), title="You're Dumb",
-                               description=f"{ctx.author} attempted to rob {ctx.user} who was so very poor, as retribution they've lost 250")
+                               description=f"{ctx.author.mention} attempted to rob {user.mention} who was so very poor, as retribution they've lost 250")
             return await ctx.reply(embed=em)
 
         if rob_outcome:
@@ -126,7 +126,7 @@ class Misc(commands.Cog):
             await author_data.update_balance(author_total, self.bot)
 
             em = discord.Embed(color=discord.Color.green(), description=rob_scenario)
-            em.add_field(name="Robbery Result", value=f"{ctx.author} attempted to rob {ctx.user} and they succeeded gaining {user_loss_total}, congrats on being a bad person")
+            em.add_field(name="Robbery Result", value=f"{ctx.author.mention} attempted to rob {user.mention} and they succeeded gaining {user_loss_total}, congrats on being a bad person")
             return await ctx.reply(embed=em)
         else:
             author_balance = author_data.balance
@@ -136,7 +136,7 @@ class Misc(commands.Cog):
             await author_data.update_balance(total, self.bot)
 
             em = discord.Embed(color=discord.Color.red(), description=rob_scenario)
-            em.add_field(name="Robbery Result", value=f"{ctx.author} attempted to rob {ctx.user} and they failed miserably losing {author_loss_total}")
+            em.add_field(name="Robbery Result", value=f"{ctx.author.mention} attempted to rob {user.mention} and they failed miserably losing {author_loss_total}")
             return await ctx.reply(embed=em)
 
 
