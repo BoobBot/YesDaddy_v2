@@ -95,16 +95,20 @@ class Core(commands.Cog):
 
     @commands.command(name="sync")
     @commands.is_owner()
-    async def sync(self, ctx, guild: bool = False):
+    async def sync(self, ctx, guild: str = None):
+        result = True if "true" in guild.lower() else Fals
         await ctx.send(f"Syncing commands for guild {self.bot.config.testing_guild_id}")
         guild = discord.Object(self.bot.config.testing_guild_id)
         self.bot.tree.copy_global_to(guild=guild)
-        if guild:
+        if result:
             await ctx.send("Syncing guild")
             await self.bot.tree.sync(guild=guild)
-        await self.bot.tree.sync_global()
-        self.bot.log.info(f"Synced commands for guild {self.bot.config.testing_guild_id}")
-        await ctx.send("Synced commands for guild {self.bot.config.testing_guild_id}")
+            await ctx.send("Synced commands for guild {self.bot.config.testing_guild_id}")
+        else:
+            await ctx.send("Syncing global")
+            await self.bot.tree.sync()
+            self.bot.log.info(f"Synced commands for global")
+            await ctx.send("Synced commands for global")
 
     @commands.command(name="attempt", description="????")
     @commands.is_owner()
