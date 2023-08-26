@@ -235,6 +235,7 @@ class Misc(commands.Cog):
 
         em = discord.Embed(title=f"{user}'s Balance", description=f"{user.mention} has {user_data.balance}", color=user_color)
         em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
+        await ctx.reply(embed=em)
 
 
 async def setup(bot):
