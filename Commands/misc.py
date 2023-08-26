@@ -233,9 +233,44 @@ class Misc(commands.Cog):
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
         user_color = await generate_embed_color(user)
 
-        em = discord.Embed(title=f"{user}'s Balance", description=f"{user.mention} has {user_data.balance}", color=user_color)
+        em = discord.Embed(title=f"{user}'s Balance", description=f"{user.mention} has {user_data.balance}",
+                           color=user_color)
         em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
         await ctx.reply(embed=em)
+
+    @commands.command(description="Flip a coin.", aliases=["flip"])
+    async def coin(self, ctx, side, bet: int):
+        side = side.lower()
+        if side not in ['heads', 'tails']:
+            return await ctx.send("Specify `heads` or `tails`, whore.")
+
+        if not 1 <= bet <= 500:
+            return await ctx.send("Hey whore, Only bets of 1 - 500 are allowed")
+
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_balance = user_data.balance
+
+        if bet > user_balance:
+            return await ctx.send(
+                f"Hey Whore, You don't have enough money to do this lul, your balance is ${user_balance}")
+
+        coin_tails = ("Tails", "<:tails:681651438664810502>")
+        coin_heads = ("Heads", "<:heads:681651442171510812>")
+
+        rng = random.randint(0, 9)
+        res = coin_heads if rng > 4 else coin_tails
+
+        if side == res[0].lower():
+            user_balance += bet
+            msg = f"You Won ${bet}"
+        else:
+            user_balance -= bet
+            msg = f"You Lost ${bet}"
+
+        await user_data.update_balance(user_balance, self.bot)
+        # TODO Dyna make better, Thanks
+        await ctx.send(f"`{res[0]}`" + msg)
+        await ctx.channel.send(res[1])
 
 
 async def setup(bot):
