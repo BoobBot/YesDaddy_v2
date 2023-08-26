@@ -97,9 +97,9 @@ class Misc(commands.Cog):
         await user_data.add_balance(cash, self.bot)
         await ctx.reply(embed=em)
 
-        @commands.hybrid_command(name="rob", description="woke up and chose to be a thief")
+    @commands.hybrid_command(name="rob", description="woke up and chose to be a thief")
         # @persistent_cooldown(1, 7200, commands.BucketType.user)
-     async def rob(self, ctx, user: discord.Member):
+    async def rob(self, ctx, user: discord.Member):
         random.shuffle(fake_robbery_scenarios)
         scenario = random.choice(fake_robbery_scenarios)
         rob_scenario = scenario[0].replace("{0}", ctx.author.mention).replace("{1}", user.mention)
