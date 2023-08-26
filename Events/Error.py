@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 
+from utils.checks import persistent_cooldown
+
 
 class ErrorHandlerCog(commands.Cog):
     def __init__(self, bot):
@@ -38,12 +40,7 @@ class ErrorHandlerCog(commands.Cog):
             self.logger.error(f"An error occurred: {error}")
             await self.send_error_to_webhook(f"An error occurred: {error}")
         elif isinstance(error, commands.CheckFailure):
-            if hasattr(ctx.command.checks, 'persistent_cooldown'):
-                return # Ignore persistent cooldown errors
-            print(error)
-            print(ctx)
-            print(dir(ctx.command.checks))
-            return await ctx.send("You do not have permission to use this command.")
+            return  # Ignore if the user doesn't have the required permissions
         elif isinstance(error, commands.CommandOnCooldown):
             await ctx.send(f"This command is on cooldown. Try again in {error.retry_after:.2f} seconds.")
         elif isinstance(error, commands.MaxConcurrencyReached):
