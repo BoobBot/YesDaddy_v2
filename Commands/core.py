@@ -84,7 +84,7 @@ class Core(commands.Cog):
         embed = discord.Embed(title="User Embed", description=s, color=avg_color)
         await ctx.send(embed=embed)
 
-    @commands.hybrid_command(name="clearcd", description="Look at your profile.")
+    @commands.command(name="clearcd")
     @commands.is_owner()
     async def cdclear(self, ctx, user: discord.Member = None):
         user = user or ctx.author
