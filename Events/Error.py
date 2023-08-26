@@ -10,8 +10,9 @@ class ErrorHandlerCog(commands.Cog):
         self.logger = bot.log
 
     async def send_error_to_webhook(self, error_message):
-        async with self.bot.session.post(self.webhook_url,
-                                         json={"content": error_message, "username": self.webhook_username}):
+        print(error_message)
+        async with self.bot.self.web_client.post(self.webhook_url,
+                                                 json={"content": error_message, "username": self.webhook_username}):
             pass
 
     @commands.Cog.listener()
@@ -64,15 +65,6 @@ class ErrorHandlerCog(commands.Cog):
             await ctx.send("Extension is not loaded.")
         elif isinstance(error, commands.NoEntryPointError):
             await ctx.send("Extension does not have a proper entry point.")
-        elif isinstance(error, commands.HTTPException):
-            await ctx.send("An HTTP-related error occurred.")
-            await self.send_error_to_webhook(f"An HTTP-related error occurred: {error}")
-        elif isinstance(error, commands.Forbidden):
-            await ctx.send("Bot does not have permission to perform this action.")
-        elif isinstance(error, commands.NotFound):
-            await ctx.send("Requested resource was not found.")
-        elif isinstance(error, commands.ServerError):
-            await ctx.send("Discord API server returned a 5xx HTTP status code.")
         elif isinstance(error, commands.CommandRegistrationError):
             await ctx.send("Error occurred while registering a command.")
         elif isinstance(error, commands.GuildNotFound):

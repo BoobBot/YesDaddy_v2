@@ -26,6 +26,17 @@ class DiscordDatabase:
     async def get_user(self, user_id):
         user_data = await self.user_collection.find_one({"user_id": user_id}, {"_id": 0})
         if user_data:
+            # Provide default values for missing attributes
+            user_data.setdefault("blacklist", False)
+            user_data.setdefault("last_seen", f'{datetime.utcnow()}')
+            user_data.setdefault("xp", 0)
+            user_data.setdefault("level", 0)
+            user_data.setdefault("premium", False)
+            user_data.setdefault("balance", 0)
+            user_data.setdefault("bank_balance", 0)
+            user_data.setdefault("cooldowns", {})
+            user_data.setdefault("messages", 0)
+            user_data.setdefault("jail", {})  # Provide a default value for 'jail' attribute
             return User(**user_data)
         user = User(user_id, False, f'{datetime.utcnow()}', 0, 0, False, 0, 0, {}, 0, {})
         await self.add_user(user)
