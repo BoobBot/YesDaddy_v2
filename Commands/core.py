@@ -1,19 +1,73 @@
+import contextlib
+import inspect
+import io
 import os
+import re
 import subprocess
 import sys
+import textwrap
+import traceback
+from io import BytesIO
 
 import discord
-import openai
+import psutil
 from discord.ext import commands
 
 from Views.rule_button_view import RuleButton
-from Views.verification_view import VerificationView
 from utils.utilities import generate_embed_color, progress_percentage
 
 
 class Core(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.process = psutil.Process(os.getpid())
+        self.env = {}
+        self.stdout = io.StringIO()
+
+    async def _eval(self, ctx, code):
+        if code == "exit()":
+            self.env = {}
+            return await ctx.send("History reset.")
+
+        env = {
+            "message": ctx.message,
+            "author": ctx.author,
+            "channel": ctx.channel,
+            "guild": ctx.guild,
+            "ctx": ctx,
+            "self": self,
+            "bot": self.bot,
+            "inspect": inspect,
+            "discord": discord,
+            "contextlib": contextlib
+        }
+
+        self.env.update(env)
+
+        async def func():
+            try:
+                with contextlib.redirect_stdout(self.stdout):
+                    exec(code, self.env)
+                if '_' in self.env:
+                    result = self.env['_']
+                    if inspect.isawaitable(result):
+                        result = await result
+                    return result
+            finally:
+                self.env.update(locals())
+
+        try:
+            result = await func()
+        except Exception as e:
+            result = traceback.format_exc()
+
+        output, embed = self._format(code, result)
+        try:
+            await ctx.send(f"```py\n{output}```", embed=embed)
+        except discord.HTTPException:
+            data = BytesIO(output.encode('utf-8'))
+            await ctx.send(content="Way to long, have a file instead!",
+                           file=discord.File(data, filename="Result.txt"))
 
     @commands.hybrid_command(name="ping", description="Show bot and API latency.")
     async def ping(self, ctx):
@@ -93,6 +147,7 @@ class Core(commands.Cog):
             self.bot.logger.error(f'Git pull failed with error code {e.returncode} and output:\n{e.output}')
             # if the bot is logged out, it will not be able to send the message
             await ctx.send(f'An error occurred: {e}')
+
     #
     #
     # @commands.command(name="hi", description="????")
@@ -105,22 +160,42 @@ class Core(commands.Cog):
     #     await ctx.send(chat_completion.choices[0].message.content)
     #
 
-    @commands.hybrid_command(name="eval", description="Evaluate code.")
+    @commands.command(name="eval")
     @commands.is_owner()
-    async def eval(self, ctx, *, code):
-        if code.startswith("```") and code.endswith("```"):
-            code = code[3:-3]
-        elif code.startswith("`") and code.endswith("`"):
-            code = code[1:-1]
+    async def __eval(self, ctx, *, code):
+        """ Run eval in a REPL-like format. """
+        code = code.strip("`")
+        if code.startswith("py\n"):
+            code = "\n".join(code.split("\n")[1:])
+
+        if not re.search(r"^(return|import|for|while|def|class|"
+                         r"from|exit|[a-zA-Z0-9]+\s*=)",
+                         code, re.M) and len(code.split("\n")) == 1:
+            code = "_ = " + code
+
+        await self._eval(ctx, code)
+
+    def _format(self, input_code, output_result):
+        self.env["_"] = output_result
+
+        formatted_input = textwrap.dedent(input_code)
+
+        self.stdout.seek(0)
+        output_text = self.stdout.read()
+        self.stdout.close()
+        self.stdout = io.StringIO()
+
+        if output_text:
+            formatted_input += output_text + "\n"
+
+        if output_result is None:
+            return formatted_input, None
+
+        if isinstance(output_result, discord.Embed):
+            return formatted_input + "<Embed>", (formatted_input, output_result)
         else:
-            return await ctx.reply("Invalid code block.")
-
-        result = await self.bot.loop.run_in_executor(None, subprocess.run, [sys.executable, "-c", code],
-                                                     {"stdout": subprocess.PIPE, "stderr": subprocess.PIPE})
-
-        if result.returncode != 0:
-            return await ctx.reply(f"```{result.stderr.decode()}```")
-        await ctx.reply(f"```{result.stdout.decode()}```")
+            formatted_input += str(output_result)
+            return formatted_input, (formatted_input, None)
 
 
 async def setup(bot):
