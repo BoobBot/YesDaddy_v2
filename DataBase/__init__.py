@@ -24,6 +24,17 @@ class DiscordDatabase:
     async def get_all_users(self):
         all_users = []
         async for user_data in self.user_collection.find({}, {"_id": 0}):
+            # Provide default values for missing attributes
+            user_data.setdefault("blacklist", False)
+            user_data.setdefault("last_seen", f'{datetime.utcnow()}')
+            user_data.setdefault("xp", 0)
+            user_data.setdefault("level", 0)
+            user_data.setdefault("premium", False)
+            user_data.setdefault("balance", 0)
+            user_data.setdefault("bank_balance", 0)
+            user_data.setdefault("cooldowns", {})
+            user_data.setdefault("messages", 0)
+            user_data.setdefault("jail", {})  # Provide a default value for 'jail' attribute
             all_users.append(user_data)
         return all_users
 
