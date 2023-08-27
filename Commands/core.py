@@ -1,4 +1,5 @@
 import contextlib
+import datetime
 import inspect
 import io
 import os
@@ -27,7 +28,6 @@ class Core(commands.Cog):
     async def ping(self, ctx):
         await ctx.reply(f"Pong! Bot latency: {self.bot.latency * 1000:.2f} ms")
 
-
     @commands.command(name="test", description="test stuff")
     async def lol(self, ctx):
         # user = ctx.author  # Replace with the desired user
@@ -48,12 +48,12 @@ class Core(commands.Cog):
         # Set the author information
         embed.set_author(
             name="Author Name",
-            icon_url="https://example.com/author_icon.png",
-            url="https://example.com/author_profile"
+            icon_url=ctx.author.default_avatar_url,
+            url=ctx.author.default_avatar_url
         )
 
         # Set a thumbnail for the embed
-        embed.set_thumbnail(url="https://example.com/thumbnail.png")
+        embed.set_thumbnail(url=ctx.author.default_avatar_url)
 
         # Add fields to the embed
         embed.add_field(name="Field 1", value="Value 1", inline=True)
@@ -66,7 +66,7 @@ class Core(commands.Cog):
         embed.add_field(name="Inline Field", value="This field is inline.", inline=True)
 
         # Set an image for the embed
-        embed.set_image(url="https://example.com/image.png")
+        embed.set_image(url=ctx.author.default_avatar_url)
 
         # Add more fields
         embed.add_field(name="Field 6", value="Value 6", inline=True)
@@ -74,9 +74,10 @@ class Core(commands.Cog):
         embed.add_field(name="Field 8", value="Value 8", inline=False)
 
         # Set the footer information
+        timestamp = discord.utils.format_dt(datetime.datetime.now(datetime.timezone.utc), style="R")
         embed.set_footer(
-            text="Footer Text",
-            icon_url="https://example.com/footer_icon.png"
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.default_avatar_url
         )
 
         # Send the embed
