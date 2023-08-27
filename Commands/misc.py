@@ -10,7 +10,7 @@ from discord.ext import commands, tasks
 from DataBase import User
 from config.lists import job_descriptions, fake_robbery_scenarios, funny_crime_scenarios
 from utils.checks import persistent_cooldown
-from utils.utilities import subtraction_percentage, generate_embed_color
+from utils.utilities import subtraction_percentage, generate_embed_color, progress_percentage
 
 emoji_payouts = {
     "⚽": 5,
@@ -103,12 +103,22 @@ class Misc(commands.Cog):
     async def profile(self, ctx, user: discord.Member = None):
         user = user or ctx.author
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
+        user_color = await generate_embed_color(user)
+        exp_needed = int(((user_data.level + 1) * 10) ** 2)
+        bar = progress_percentage(user_data.xp, exp_needed)
 
-        em = discord.Embed(title=f"{user}'s Profile", color=discord.Color.random())
+
+        em = discord.Embed(title=f"{user}'s Profile", color=user_color)
         em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
-        em.add_field(name="Level", value=f"{user_data.level}")
-        em.add_field(name="Experience", value=f"{user_data.xp}")
+        em.add_field(name="Level", value=f"{user_data.level} {bar} {user_data.level + 1}")
+        em.add_field(name="Experience", value=f"{user_data.xp} / {exp_needed}")
         em.add_field(name="Balance", value=f"{user_data.balance}")
+        em.add_field(name="Bank Balance", value=f"{user_data.bank_balance}")
+        if user_data.is_in_jail():
+            release_time = user_data.is_in_jail()
+            remaining_timestamp = discord.utils.format_dt(release_time, style="R"
+                                                          )
+            em.add_field(name="Jail?", value=f"experience freedom in {remaining_timestamp}")
 
         await ctx.reply(embed=em)
 
@@ -117,18 +127,20 @@ class Misc(commands.Cog):
     async def daily(self, ctx, user: discord.Member = None):
         user = user or ctx.author
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
+        user_color = await generate_embed_color(user)
+
 
         money = 5000
         newbal = user_data.balance + money
 
         if user.id == ctx.author.id:
             description = f"Daily: + {money}"
-            em = discord.Embed(color=discord.Color.random(), title=f"{ctx.author}'s daily", description=description)
+            em = discord.Embed(color=user_color, title=f"{ctx.author}'s daily", description=description)
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
         else:
             description = "\nGifted Currency: +1000"
             money += 1000
-            em = discord.Embed(color=discord.Color.random(),
+            em = discord.Embed(color=user_color,
                                title=f"{ctx.author} has given {user} their daily, plus a bonus!",
                                description=description)
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
@@ -144,17 +156,19 @@ class Misc(commands.Cog):
     async def weekly(self, ctx, user: discord.Member = None):
         user = user or ctx.author
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
+        user_color = await generate_embed_color(user)
+
 
         money = 20000
         newbal = user_data.balance + money
 
         if user.id == ctx.author.id:
             description = f"Weekly: + {money}"
-            em = discord.Embed(color=discord.Color.random(), title=f"{ctx.author}'s weekly", description=description)
+            em = discord.Embed(color=user_color, title=f"{ctx.author}'s weekly", description=description)
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
         else:
             description = "\nGifted Currency: +10000"
-            em = discord.Embed(color=discord.Color.random(),
+            em = discord.Embed(color=user_color,
                                title=f"{ctx.author} has given {user} their weekly, plus a bonus!",
                                description=description)
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
@@ -178,7 +192,7 @@ class Misc(commands.Cog):
             remaining_timestamp = discord.utils.format_dt(release_time, style="R"
                                                           )
             return await ctx.send(
-                f"Look at you all handcuffed and shit, you'll get out of those in {remaining_timestamp}")
+                f"Look at you all handcuffed and shit, you'll get out of those {remaining_timestamp}")
         new_bal = user_data.balance + cash
         description = f"{job}\n\nCash: + {cash}"
         em = discord.Embed(color=discord.Color.random(), title=f"{ctx.author}'s job", description=description)
@@ -204,7 +218,7 @@ class Misc(commands.Cog):
             remaining_timestamp = discord.utils.format_dt(release_time, style="R"
                                                           )
             return await ctx.send(
-                f"Look at you all handcuffed and shit, you'll get out of those in {remaining_timestamp}")
+                f"Look at you all handcuffed and shit, you'll get out of those {remaining_timestamp}")
 
         if crime_outcome:
             user_total = (user_balance + amount)
@@ -263,7 +277,7 @@ class Misc(commands.Cog):
             remaining_timestamp = discord.utils.format_dt(release_time, style="R"
                                                           )
             return await ctx.send(
-                f"Look at you all handcuffed and shit, you'll get out of those in {remaining_timestamp}")
+                f"Look at you all handcuffed and shit, you'll get out of those {remaining_timestamp}")
 
         if user_data.balance == 0:
             await author_data.subtract_balance(250, self.bot)
@@ -368,7 +382,7 @@ class Misc(commands.Cog):
             remaining_timestamp = discord.utils.format_dt(release_time, style="R"
                                                           )
             return await ctx.send(
-                f"Look at you all handcuffed and shit, you'll get out of those in {remaining_timestamp}")
+                f"Look at you all handcuffed and shit, you'll get out of those {remaining_timestamp}")
 
         if bet > user_balance:
             return await ctx.send(
