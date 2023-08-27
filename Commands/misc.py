@@ -86,7 +86,8 @@ class Misc(commands.Cog):
         await user_data.update_balance(balance, self.bot)
 
     @commands.hybrid_command(name="bail", description="get you or someone else out of jail")
-    async def bail(self, ctx, user: discord.Member = None):
+    @app_commands.describe(user="User to bailout")
+    async def bail(self, ctx, user: Optional[discord.Member]):
         user = user or ctx.author
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
         if not user_data.is_in_jail():
@@ -125,7 +126,8 @@ class Misc(commands.Cog):
 
     @commands.hybrid_command(name="daily", description="Get your daily coins!.")
     @persistent_cooldown(1, 86400, commands.BucketType.user)
-    async def daily(self, ctx, user: discord.Member = None):
+    @app_commands.describe(user="The user to give the daily to.")
+    async def daily(self, ctx, user: Optional[discord.Member]):
         user = user or ctx.author
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
         user_color = await generate_embed_color(user)
@@ -154,7 +156,7 @@ class Misc(commands.Cog):
     @commands.hybrid_command(name="weekly", description="Get your weekly coins!.")
     @persistent_cooldown(1, 604800, commands.BucketType.user)
     @app_commands.describe(user="The user to give the weekly to.")
-    async def weekly(self, ctx, user: discord.Member = None):
+    async def weekly(self, ctx, user: Optional[discord.Member]):
         user = user or ctx.author
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
         user_color = await generate_embed_color(user)
@@ -202,7 +204,7 @@ class Misc(commands.Cog):
         await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="crime", description="do some crime")
-    # @persistent_cooldown(1, 21600, commands.BucketType.user)
+    @persistent_cooldown(1, 21600, commands.BucketType.user)
     async def crime(self, ctx):
         random.shuffle(funny_crime_scenarios)
         crime = random.choice(funny_crime_scenarios)
