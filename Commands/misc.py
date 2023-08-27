@@ -52,6 +52,7 @@ class Misc(commands.Cog):
     async def slots(self, ctx):
         # TODO check if user has enough money
         # TODO subtract money from user
+
         emojis = ["⚽", "🎱", "🎰", "🍀", "🎮", jackpot_emoji]
         result = [random.choice(emojis) for _ in range(3)]
 
@@ -289,11 +290,11 @@ class Misc(commands.Cog):
         em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
         await ctx.reply(embed=em)
 
-    @commands.command(description="Flip a coin.", aliases=["flip"])
-    async def coin(self, ctx, side, bet: int):
+    @commands.command(description="Flip a coin.", aliases=["coin"])
+    async def coinflip(self, ctx, side, bet: int):
         side = side.lower()
         if side not in ['heads', 'tails']:
-            return await ctx.send("Specify `heads` or `tails`, whore.")
+            return await ctx.send("consider playing this game right and choosing `heads` or `tails`, dumbass.")
 
         if not 1 <= bet <= 500:
             return await ctx.send("Hey whore, Only bets of 1 - 500 are allowed")
@@ -305,8 +306,8 @@ class Misc(commands.Cog):
             return await ctx.send(
                 f"Hey Whore, You don't have enough money to do this lul, your balance is ${user_balance}")
 
-        coin_tails = ("Tails", "<:tails:681651438664810502>")
-        coin_heads = ("Heads", "<:heads:681651442171510812>")
+        coin_tails = ("Tails", "<:cointails:1145284840644694066>")
+        coin_heads = ("Heads", "<:coinheads:1145283300009713775>")
 
         rng = random.randint(0, 9)
         res = coin_heads if rng > 4 else coin_tails
