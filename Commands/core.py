@@ -48,12 +48,12 @@ class Core(commands.Cog):
         # Set the author information
         embed.set_author(
             name="Author Name",
-            icon_url=ctx.author.default_avatar_url,
-            url=ctx.author.default_avatar_url
+            icon_url=ctx.author.display_avatar.with_static_format("png"),
+            url=ctx.author.display_avatar.with_static_format("png")
         )
 
         # Set a thumbnail for the embed
-        embed.set_thumbnail(url=ctx.author.default_avatar_url)
+        embed.set_thumbnail(url=ctx.author.display_avatar.with_static_format("png"))
 
         # Add fields to the embed
         embed.add_field(name="Field 1", value="Value 1", inline=True)
@@ -66,7 +66,7 @@ class Core(commands.Cog):
         embed.add_field(name="Inline Field", value="This field is inline.", inline=True)
 
         # Set an image for the embed
-        embed.set_image(url=ctx.author.default_avatar_url)
+        embed.set_image(url=ctx.author.display_avatar.with_static_format("png"))
 
         # Add more fields
         embed.add_field(name="Field 6", value="Value 6", inline=True)
@@ -77,7 +77,7 @@ class Core(commands.Cog):
         timestamp = discord.utils.format_dt(datetime.datetime.now(datetime.timezone.utc), style="R")
         embed.set_footer(
             text=f"Command ran by {ctx.author.display_name} at {timestamp}",
-            icon_url=ctx.author.default_avatar_url
+            icon_url=ctx.author.display_avatar.with_static_format("png")
         )
 
         # Send the embed
