@@ -8,10 +8,12 @@ import sys
 import textwrap
 import traceback
 from io import BytesIO
+from typing import Optional, Literal
 
 import discord
 import psutil
 from discord.ext import commands
+from discord.ext.commands import Context, Greedy
 
 from Views.rule_button_view import RuleButton
 from utils.utilities import generate_embed_color, progress_percentage
@@ -45,34 +47,40 @@ class Core(commands.Cog):
         await user_data.update_user({"cooldowns": user_data.cooldowns}, self.bot)
         await ctx.reply("Cooldowns cleared.")
 
-    @commands.command(name="sync")
+    # stolen from random gist
+    @commands.command()
+    @commands.guild_only()
     @commands.is_owner()
-    async def sync(self, ctx, guild: str = None):
-        if guild is None:
-            result = False
-        else:
-            result = True if "true" in guild.lower() else False
-        await ctx.send(f"Syncing commands")
-        guild = discord.Object(self.bot.config.testing_guild_id)
-        self.bot.tree.copy_global_to(guild=guild)
-        if result:
-            await ctx.send("Syncing guild")
-            await self.bot.tree.sync(guild=guild)
-            await ctx.send(f"Synced commands for guild {self.bot.config.testing_guild_id}")
-        else:
-            await ctx.send("Syncing global")
-            await self.bot.tree.sync()
-            self.bot.log.info(f"Synced commands for global")
-            await ctx.send("Synced commands for global")
+    async def sync(self, ctx: Context, guilds: Greedy[discord.Object],
+                   spec: Optional[Literal["~", "*", "^"]] = None) -> None:
+        if not guilds:
+            if spec == "~":
+                synced = await ctx.bot.tree.sync(guild=ctx.guild)
+            elif spec == "*":
+                ctx.bot.tree.copy_global_to(guild=ctx.guild)
+                synced = await ctx.bot.tree.sync(guild=ctx.guild)
+            elif spec == "^":
+                ctx.bot.tree.clear_commands(guild=ctx.guild)
+                await ctx.bot.tree.sync(guild=ctx.guild)
+                synced = []
+            else:
+                synced = await ctx.bot.tree.sync()
 
-    @commands.command(name='deletecommands', aliases=['clear'])
-    @commands.is_owner()
-    async def delete_commands(self, ctx):
-        self.bot.tree.clear_commands(guild=ctx.guild)
-        self.bot.tree.clear_commands(guild=None)
-        await self.bot.tree.sync(guild=None)
-        await ctx.send('Commands deleted.')
+            await ctx.send(
+                f"Synced {len(synced)} commands {'globally' if spec is None else 'to the current guild.'}"
+            )
+            return
 
+        ret = 0
+        for guild in guilds:
+            try:
+                await ctx.bot.tree.sync(guild=guild)
+            except discord.HTTPException:
+                pass
+            else:
+                ret += 1
+
+        await ctx.send(f"Synced the tree to {ret}/{len(guilds)}.")
 
     @commands.command(name="attempt", description="????")
     @commands.is_owner()
@@ -202,7 +210,8 @@ class Core(commands.Cog):
             em = discord.Embed(title="Success", description=f"```py\n{value}{ret}\n```", color=discord.Color.green())
             return await ctx.send(embed=em)
 
-    def cleanup_code(self, body):
+    @staticmethod
+    def cleanup_code(body):
         """Automatically removes code blocks from the code."""
         if body.startswith('```py') and body.endswith('```'):
             body = body[5:-3]
