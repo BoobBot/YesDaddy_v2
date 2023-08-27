@@ -395,9 +395,7 @@ class Misc(commands.Cog):
         users_in_jail = await self.bot.db_client.get_users_in_jail()
 
         for user_id in users_in_jail:
-            user_data = await self.bot.db_client.get_user(user_id)
-            user = User(**user_data)
-
+            user = await self.bot.db_client.get_user(user_id)
             if user.is_in_jail():
                 release_time = user.jail["start_time"].replace(tzinfo=datetime.timezone.utc) + datetime.timedelta(
                     hours=user.jail["duration_hours"])

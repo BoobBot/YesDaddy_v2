@@ -23,7 +23,7 @@ class DiscordDatabase:
 
     async def get_all_users(self):
         all_users = []
-        async for user_data in self.user_collection.find({}):
+        async for user_data in self.user_collection.find({}, {"_id": 0}):
             all_users.append(user_data)
         return all_users
 
