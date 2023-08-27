@@ -6,7 +6,7 @@ import sys
 from typing import Optional, Literal
 
 import discord
-from discord import app_commands
+from discord import app_commands, Embed
 from discord.ext import commands, tasks
 
 from DataBase import User
@@ -46,6 +46,15 @@ def calculate_payout(result):
     if is_jackpot:
         return jackpot_payout, True, False
     return total_payout, False, is_bonus
+
+
+async def create_leaderboard_embed(ctx, title, entries):
+    embed = Embed(title=title)
+    for index, (user, member) in enumerate(entries[:10], start=1):
+        emoji = "🥇" if index == 1 else "🥈" if index == 2 else "🥉" if index == 3 else "  "
+        value = f"{emoji} {member.display_name}: {user.level if title == 'Leaderboard - Levels:' else user.balance + user.bank_balance}"
+        embed.add_field(name=f"#{index}", value=value, inline=False)
+    return embed
 
 
 class Misc(commands.Cog):
@@ -534,27 +543,42 @@ class Misc(commands.Cog):
     @leaderboard.command(name="level", aliases=["lvl"], description="View the level leaderboard.")
     async def leaderboard_level(self, ctx):
         all_users = await self.bot.db_client.get_all_users()
-        sorted_users = sorted(all_users, key=lambda user: user["level"], reverse=True)
 
-        leaderboard_text = "Leaderboard - Levels:\n"
-        for index, user_data in enumerate(sorted_users[:10], start=1):
+        guild = ctx.guild
+        await guild.fetch_members(limit=None)  # Fetch all members in the guild
+
+        sorted_users = []
+        for user_data in all_users:
             user = User(**user_data)
-            leaderboard_text += f"{index}. {user.user_id}: Level {user.level}\n"
+            member = guild.get_member(user.user_id)
 
-        await ctx.send(leaderboard_text)
+            if member:
+                sorted_users.append((user, member))
+
+        sorted_users.sort(key=lambda entry: entry[0].level, reverse=True)
+
+        embed = await create_leaderboard_embed(ctx, "Leaderboard - Levels:", sorted_users)
+        await ctx.send(embed=embed)
 
     @leaderboard.command(name="combined", aliases=["comb"], description="View the combined balance leaderboard.")
     async def leaderboard_combined(self, ctx):
         all_users = await self.bot.db_client.get_all_users()
-        sorted_users = sorted(all_users, key=lambda user: user["balance"] + user["bank_balance"], reverse=True)
 
-        leaderboard_text = "Leaderboard - Combined Balance:\n"
-        for index, user_data in enumerate(sorted_users[:10], start=1):
+        guild = ctx.guild
+        await guild.fetch_members(limit=None)  # Fetch all members in the guild
+
+        sorted_users = []
+        for user_data in all_users:
             user = User(**user_data)
-            combined_balance = user.balance + user.bank_balance
-            leaderboard_text += f"{index}. {user.user_id}: Combined Balance {combined_balance}\n"
+            member = guild.get_member(user.user_id)
 
-        await ctx.send(leaderboard_text)
+            if member:
+                sorted_users.append((user, member))
+
+        sorted_users.sort(key=lambda entry: entry[0].balance + entry[0].bank_balance, reverse=True)
+
+        embed = await create_leaderboard_embed(ctx, "Leaderboard - Combined Balance:", sorted_users)
+        await ctx.send(embed=embed)
 
 
 async def setup(bot):
