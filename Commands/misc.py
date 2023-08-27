@@ -489,7 +489,7 @@ class Misc(commands.Cog):
                 icon_url="https://cdn.discordapp.com/attachments/1145071029954297888/1145449093326442526/coinflip-removebg-preview.png",
                 url="https://cdn.discordapp.com/attachments/1145071029954297888/1145449093326442526/coinflip-removebg-preview.png"
             )
-            timestamp = discord.utils.format_dt(datetime.datetime.now(datetime.timezone.utc), style="f")
+            timestamp = datetime.datetime.now(datetime.timezone.utc)
             em.set_footer(
                 text=f"Command ran by {ctx.author.display_name} at {timestamp}",
                 icon_url=ctx.author.display_avatar.with_static_format("png")
