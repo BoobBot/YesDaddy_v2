@@ -370,7 +370,7 @@ class Misc(commands.Cog):
 
         if not 1 <= bet <= 500:
             return await ctx.send("Hey whore, Only bets of 1 - 500 are allowed")
-        user = ctx.author.id
+        user = ctx.author
         user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
         user_balance = user_data.balance
 
@@ -394,7 +394,7 @@ class Misc(commands.Cog):
         if side == res[0].lower():
             user_balance += bet
             msg = f"You Won ${bet}"
-            em = discord.Embed(title=f"{user}'s Coinflip", description=f"`{res[0]}`" + msg,
+            em = discord.Embed(title=f"{user}'s Coinflip", description=f"{msg}",
                                color=discord.Color.green())
             em.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/1145071029954297888/1145280717421559828/coinheads-removebg-preview.png")
@@ -402,7 +402,7 @@ class Misc(commands.Cog):
         else:
             user_balance -= bet
             msg = f"You Lost ${bet}"
-            em = discord.Embed(title=f"{user}'s Coinflip", description=f"`{res[0]}`" + msg,
+            em = discord.Embed(title=f"{user}'s Coinflip", description=f"{msg}",
                                color=discord.Color.red())
             em.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/1145071029954297888/1145284778929704990/cointails-removebg-preview_1.png")
