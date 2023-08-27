@@ -81,7 +81,7 @@ class Misc(commands.Cog):
                 f"{slot_message}\n🎉 Bonus! You won {payout} coins with a bonus multiplier of {bonus_multiplier}!")
         else:
             await ctx.send(f"{slot_message}\nYou won {payout} coins!")
-        await user_data.update_balance(payout, self.bot)
+        await user_data.update_balance(balance, self.bot)
 
     @commands.hybrid_command(name="bail", description="get you or someone else out of jail")
     async def bail(self, ctx, user: discord.Member = None):
