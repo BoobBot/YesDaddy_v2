@@ -61,7 +61,7 @@ class User:
         await bot.db_client.update_user(self.user_id, new_data)
 
     async def update_last_seen(self, bot):
-        self.last_seen = datetime.utcnow()
+        self.last_seen = datetime.datetime.now(datetime.timezone.utc)
         await self.update_user({"last_seen": self.last_seen}, bot)
 
     # async def update_cool_down(self, bot):
