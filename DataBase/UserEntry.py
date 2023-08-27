@@ -1,5 +1,5 @@
 import math
-from datetime import datetime
+import datetime
 
 
 class User:
@@ -14,7 +14,23 @@ class User:
         self.bank_balance = bank_balance
         self.cooldowns = cooldowns
         self.messages = messages
-        self.jail = jail
+        self.jail = self.jail = jail if jail is not None else {}
+
+    async def jail_user(self, hours, fine, bot):
+        self.jail = {
+            "start_time": datetime.datetime.now(datetime.timezone.utc),
+            "duration_hours": hours,
+            "fine": fine
+        }
+        await self.update_user({"jail": self.jail}, bot)
+
+    def is_in_jail(self):
+        if "jail" in self.jail:
+            start_time = self.jail["start_time"].replace(tzinfo=datetime.timezone.utc)
+            duration = self.jail["duration_hours"]
+            end_time = start_time + datetime.timedelta(hours=duration)
+            return datetime.datetime.now(datetime.timezone.utc) < end_time
+        return False
 
     async def add_xp(self, amount, bot):
         self.xp += amount

@@ -20,6 +20,24 @@ class DiscordDatabase:
         self.log = logging.getLogger()
 
     # User operations
+
+    async def get_all_users(self):
+        all_users = []
+        async for user_data in self.user_collection.find({}):
+            all_users.append(user_data)
+        return all_users
+
+    async def get_users_in_jail(self):
+        users_in_jail = []
+        all_users = await self.get_all_users()
+
+        for user_data in all_users:
+            user = User(**user_data)
+            if user.is_in_jail():
+                users_in_jail.append(user.user_id)
+
+        return users_in_jail
+
     async def add_user(self, user):
         await self.user_collection.insert_one(user.__dict__)
 

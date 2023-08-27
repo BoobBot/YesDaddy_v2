@@ -1,11 +1,13 @@
+import datetime
 import os
 import random
 import subprocess
 import sys
 
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 
+from DataBase import User
 from config.lists import job_descriptions, fake_robbery_scenarios, funny_crime_scenarios
 from utils.checks import persistent_cooldown
 from utils.utilities import subtraction_percentage, generate_embed_color
@@ -47,6 +49,10 @@ def calculate_payout(result):
 class Misc(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.check_jail_loop.start()
+
+    def cog_unload(self):
+        self.check_jail_loop.cancel()
 
     @commands.hybrid_command(name="slots", description="what happens in vegas...")
     async def slots(self, ctx):
@@ -76,6 +82,20 @@ class Misc(commands.Cog):
         else:
             await ctx.send(f"{slot_message}\nYou won {payout} coins!")
         await user_data.update_balance(payout, self.bot)
+
+    @commands.hybrid_command(name="bail", description="get you or someone else out of jail")
+    async def bail(self, ctx, user: discord.Member = None):
+        user = user or ctx.author
+        user_data = await ctx.bot.db_client.get_user(user_id=user.id)
+        user_balance = user_data.balance + user_data.bank_balance
+        cost = user_data.jail.get("fine", 0)
+        # TODO add higher fine for longer jail time
+        cost_total = subtraction_percentage(user_balance, 10) + cost
+        if cost_total > user_data.balance:
+            return await ctx.reply(f":x: {user.mention} needs ${cost_total} to get out of jail.")
+        await user_data.subtract_balance(cost_total, self.bot)
+        await user_data.update_user({"jail": {}}, self.bot)
+        await ctx.reply(f":white_check_mark: {user.mention} has been released from jail.")
 
     @commands.hybrid_command(name="profile", description="Look at your profile.")
     async def profile(self, ctx, user: discord.Member = None):
@@ -182,11 +202,16 @@ class Misc(commands.Cog):
             return await ctx.reply(embed=em)
         else:
             user_total = (user_balance - amount)
+            jail_time = random.randint(1, 3)
+            fine = random.randint(100, 1000)
+            await user_data.jail_user(jail_time, fine, self.bot)
             await user_data.update_balance(user_total, self.bot)
-
             em = discord.Embed(color=discord.Color.red(), description=crime_scenario)
             em.add_field(name="Crime Result",
                          value=f"{ctx.author.mention} attempted to do some crime and got caught losing {amount}, your lawyer will see you now.")
+            em.add_field(name="Punishment",
+                         value=f"You are in jail for {jail_time} hours and have to pay a fine of {fine}.")
+
             em.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/1145112557414264892/1145115052505042974/ndc.png")
             return await ctx.reply(embed=em)
@@ -333,6 +358,25 @@ class Misc(commands.Cog):
         # TODO Dyna make better, Thanks
         await ctx.send(f"`{res[0]}`" + msg)
         await ctx.channel.send(res[1])
+
+    @tasks.loop(minutes=5)
+    async def check_jail_loop(self):
+        users_in_jail = await self.bot.db_client.get_users_in_jail()
+
+        for user_id in users_in_jail:
+            user_data = await self.bot.db_client.get_user(user_id)
+            user = User(**user_data)
+
+            if user.is_in_jail():
+                release_time = user.jail["start_time"].replace(tzinfo=datetime.timezone.utc) + datetime.timedelta(
+                    hours=user.jail["duration_hours"])
+                current_time = datetime.datetime.now(datetime.timezone.utc)
+
+                if current_time >= release_time:
+                    fine = user.jail.get("fine", 0)
+                    await user.subtract_balance(fine, self.bot)
+                    await user.update_user({"jail": {}}, self.bot)
+                    self.bot.log.info(f"User {user_id} has been released from jail.")
 
 
 async def setup(bot):
