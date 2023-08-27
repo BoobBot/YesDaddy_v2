@@ -32,6 +32,16 @@ class DiscordDatabase:
         all_users = await self.get_all_users()
 
         for user_data in all_users:
+            user_data.setdefault("blacklist", False)
+            user_data.setdefault("last_seen", f'{datetime.utcnow()}')
+            user_data.setdefault("xp", 0)
+            user_data.setdefault("level", 0)
+            user_data.setdefault("premium", False)
+            user_data.setdefault("balance", 0)
+            user_data.setdefault("bank_balance", 0)
+            user_data.setdefault("cooldowns", {})
+            user_data.setdefault("messages", 0)
+            user_data.setdefault("jail", {})  # Provide a default value for 'jail' attribute
             user = User(**user_data)
             if user.is_in_jail():
                 users_in_jail.append(user.user_id)
