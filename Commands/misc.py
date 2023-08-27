@@ -63,7 +63,7 @@ class Misc(commands.Cog):
         if bet > user_balance:
             return await ctx.send(
                 f"You don't have enough money to do this, your balance is ${user_balance}, maybe go earn some money lazy fuck",
-                ephemral=True)
+                ephemeral=True)
 
         emojis = ["⚽", "🎱", "🎰", "🍀", "🎮", jackpot_emoji]
         result = [random.choice(emojis) for _ in range(3)]
