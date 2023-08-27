@@ -55,6 +55,10 @@ class User:
         self.balance = max(amount, 0)
         await self.update_user({"balance": self.balance}, bot)
 
+    async def update_bank_balance(self, amount, bot):
+        self.balance = max(amount, 0)
+        await self.update_user({"bank_balance": self.balance}, bot)
+
     async def add_bank_balance(self, amount, bot):
         self.bank_balance += amount
         await self.update_user({"bank_balance": self.bank_balance}, bot)

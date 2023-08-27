@@ -315,41 +315,109 @@ class Misc(commands.Cog):
             await ctx.send_help(ctx.command)
 
     @transactions.command(name="pay", description="Pay someone.")
-    async def pay(self, ctx: commands.Context) -> None:
+    async def pay(self, ctx: commands.Context, member: discord.Member, amount: int) -> None:
         """
         This subcommand can now be invoked with `?parent sub` or `/parent sub` (once synced).
         """
-        await ctx.send(f"")
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_balance = user_data.balance
+        if amount > user_balance:
+            await ctx.reply(f":x: You don't have enough money to do this, your balance is ${user_balance}.")
+            return
+        if amount < 0:
+            await ctx.reply(f":x: You can't pay someone a negative amount of money.")
+            return
+        if member.bot:
+            await ctx.reply(f":x: You can't pay a bot.")
+            return
+        if member.id == ctx.author.id:
+            await ctx.reply(f":x: You can't pay yourself.")
+            return
+
+        recipient_data = await ctx.bot.db_client.get_user(user_id=member.id)
+        recipient_balance = recipient_data.balance
+        new_recipient_balance = recipient_balance + amount
+        new_user_balance = user_balance - amount
+        await recipient_data.update_balance(new_recipient_balance, self.bot)
+        await user_data.update_balance(new_user_balance, self.bot)
+        await ctx.reply(f":white_check_mark: You paid {member.mention} {amount} coins.")
 
     @transactions.command(name="deposit", description="Deposit money into your bank.")
-    async def deposit(self, ctx: commands.Context, ) -> None:
+    async def deposit(self, ctx: commands.Context, amount: int) -> None:
         """
         This subcommand can now be invoked with `?parent sub <arg>` or `/parent sub <arg>` (once synced).
         """
-        await ctx.send(f"")
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_balance = user_data.balance
+        if amount > user_balance:
+            await ctx.reply(f":x: You don't have enough money to do this, your balance is ${user_balance}.")
+            return
+        if amount < 0:
+            await ctx.reply(f":x: You can't deposit a negative amount of money.")
+            return
+
+        user_bank_balance = user_data.bank_balance
+        new_user_bank_balance = user_bank_balance + amount
+        new_user_balance = user_balance - amount
+        await user_data.update_balance(new_user_balance, self.bot)
+        await user_data.update_bank_balance(new_user_bank_balance, self.bot)
+        await ctx.reply(f":white_check_mark: You deposited {amount} coins into your bank.")
 
     @transactions.command(name="depall", description="Deposit all money into your bank.")
     async def depall(self, ctx: commands.Context, ) -> None:
         """
         This subcommand can now be invoked with `?parent sub <arg>` or `/parent sub <arg>` (once synced).
         """
-        await ctx.send(f"")
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_balance = user_data.balance
+        if user_balance == 0:
+            await ctx.reply(f":x: You don't have any money to deposit.")
+            return
+
+        user_bank_balance = user_data.bank_balance
+        new_user_bank_balance = user_bank_balance + user_balance
+        await user_data.update_balance(0, self.bot)
+        await user_data.update_bank_balance(new_user_bank_balance, self.bot)
+        await ctx.reply(f":white_check_mark: You deposited {user_balance} coins into your bank.")
 
     @transactions.command(name="withdraw", description="Withdraw money from your bank.")
-    async def withdraw(self, ctx: commands.Context) -> None:
+    async def withdraw(self, ctx: commands.Context, amount: int) -> None:
         """
         This subcommand can now be invoked with `?parent sub <arg>` or `/parent sub <arg>` (once synced).
         """
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_bank_balance = user_data.bank_balance
+        if amount > user_bank_balance:
+            await ctx.reply(f":x: You don't have enough money to do this, your bank balance is ${user_bank_balance}.")
+            return
+        if amount < 0:
+            await ctx.reply(f":x: You can't withdraw a negative amount of money.")
+            return
 
-        await ctx.send(f"")
+        user_balance = user_data.balance
+        new_user_bank_balance = user_bank_balance - amount
+        new_user_balance = user_balance + amount
+        await user_data.update_balance(new_user_balance, self.bot)
+        await user_data.update_bank_balance(new_user_bank_balance, self.bot)
+        await ctx.reply(f":white_check_mark: You withdrew {amount} coins from your bank.")
 
     @transactions.command(name="withall", description="Withdraw all money from your bank.")
     async def withall(self, ctx: commands.Context) -> None:
         """
         This subcommand can now be invoked with `?parent sub <arg>` or `/parent sub <arg>` (once synced).
         """
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_bank_balance = user_data.bank_balance
+        if user_bank_balance == 0:
+            await ctx.reply(f":x: You don't have any money to withdraw.")
+            return
 
-        await ctx.send(f"")
+        user_balance = user_data.balance
+        new_user_bank_balance = user_bank_balance - user_bank_balance
+        new_user_balance = user_balance + user_bank_balance
+        await user_data.update_balance(new_user_balance, self.bot)
+        await user_data.update_bank_balance(new_user_bank_balance, self.bot)
+        await ctx.reply(f":white_check_mark: You withdrew {user_bank_balance} coins from your bank.")
 
     @transactions.command(name="balance", description="Check your balance.")
     async def balance(self, ctx: commands.Context, user: discord.Member = None) -> None:
