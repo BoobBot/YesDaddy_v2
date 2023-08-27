@@ -3,8 +3,10 @@ import os
 import random
 import subprocess
 import sys
+from typing import Optional, Literal
 
 import discord
+from discord import app_commands
 from discord.ext import commands, tasks
 
 from DataBase import User
@@ -151,6 +153,7 @@ class Misc(commands.Cog):
 
     @commands.hybrid_command(name="weekly", description="Get your weekly coins!.")
     @persistent_cooldown(1, 604800, commands.BucketType.user)
+    @app_commands.describe(user="The user to give the weekly to.")
     async def weekly(self, ctx, user: discord.Member = None):
         user = user or ctx.author
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
@@ -243,6 +246,7 @@ class Misc(commands.Cog):
             return await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="rob", description="woke up and chose to be a thief")
+    @app_commands.describe(user="The user to rob.")
     @persistent_cooldown(1, 43200, commands.BucketType.user)
     async def rob(self, ctx, user: discord.Member):
         if user == self.bot.user:
@@ -315,6 +319,8 @@ class Misc(commands.Cog):
             await ctx.send_help(ctx.command)
 
     @transactions.command(name="pay", description="Pay someone.")
+    @app_commands.describe(member="The member to pay.")
+    @app_commands.describe(amount="The amount to pay.")
     async def pay(self, ctx: commands.Context, member: discord.Member, amount: int) -> None:
         """
         This subcommand can now be invoked with `?parent sub` or `/parent sub` (once synced).
@@ -343,6 +349,7 @@ class Misc(commands.Cog):
         await ctx.reply(f":white_check_mark: You paid {member.mention} {amount} coins.")
 
     @transactions.command(name="deposit", description="Deposit money into your bank.")
+    @app_commands.describe(amount="The amount to deposit.")
     async def deposit(self, ctx: commands.Context, amount: int) -> None:
         """
         This subcommand can now be invoked with `?parent sub <arg>` or `/parent sub <arg>` (once synced).
@@ -364,7 +371,7 @@ class Misc(commands.Cog):
         await ctx.reply(f":white_check_mark: You deposited {amount} coins into your bank.")
 
     @transactions.command(name="depall", description="Deposit all money into your bank.")
-    async def depall(self, ctx: commands.Context, ) -> None:
+    async def depall(self, ctx: commands.Context) -> None:
         """
         This subcommand can now be invoked with `?parent sub <arg>` or `/parent sub <arg>` (once synced).
         """
@@ -381,6 +388,7 @@ class Misc(commands.Cog):
         await ctx.reply(f":white_check_mark: You deposited {user_balance} coins into your bank.")
 
     @transactions.command(name="withdraw", description="Withdraw money from your bank.")
+    @app_commands.describe(amount="The amount to withdraw.")
     async def withdraw(self, ctx: commands.Context, amount: int) -> None:
         """
         This subcommand can now be invoked with `?parent sub <arg>` or `/parent sub <arg>` (once synced).
@@ -420,7 +428,8 @@ class Misc(commands.Cog):
         await ctx.reply(f":white_check_mark: You withdrew {user_bank_balance} coins from your bank.")
 
     @transactions.command(name="balance", description="Check your balance.")
-    async def balance(self, ctx: commands.Context, user: discord.Member = None) -> None:
+    @app_commands.describe(user="The user to check the balance of.")
+    async def balance(self, ctx: commands.Context, user: Optional[discord.Member]) -> None:
         user = user or ctx.author
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
         user_color = await generate_embed_color(user)
@@ -431,7 +440,9 @@ class Misc(commands.Cog):
         await ctx.reply(embed=em)
 
     @commands.command(description="Flip a coin.", aliases=["coin"])
-    async def coinflip(self, ctx, side, bet: int):
+    @app_commands.describe(side='pick a side, heads or tails')
+    @app_commands.describe(bet='the amount of money to bet')
+    async def coinflip(self, ctx, side: Literal['heads', 'tails'], bet: int):
         side = side.lower()
         if side not in ['heads', 'tails']:
             return await ctx.send("consider playing this game right and choosing `heads` or `tails`, dumbass.")
