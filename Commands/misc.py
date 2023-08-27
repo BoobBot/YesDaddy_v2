@@ -87,6 +87,8 @@ class Misc(commands.Cog):
     async def bail(self, ctx, user: discord.Member = None):
         user = user or ctx.author
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
+        if not user_data.is_in_jail():
+            return await ctx.reply(f":x: {user.mention} is not in jail.")
         user_balance = user_data.balance + user_data.bank_balance
         cost = user_data.jail.get("fine", 0)
         # TODO add higher fine for longer jail time
