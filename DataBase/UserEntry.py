@@ -29,7 +29,7 @@ class User:
             start_time = self.jail["start_time"].replace(tzinfo=datetime.timezone.utc)
             duration = self.jail["duration_hours"]
             end_time = start_time + datetime.timedelta(hours=duration)
-            return datetime.datetime.now(datetime.timezone.utc) < end_time
+            return end_time
         return False
 
     async def add_xp(self, amount, bot):
