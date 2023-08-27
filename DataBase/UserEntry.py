@@ -31,6 +31,7 @@ class User:
             end_time = start_time + datetime.timedelta(hours=duration)
             print("we did it")
             return end_time
+        print("why are we working")
         return False
 
     async def add_xp(self, amount, bot):
