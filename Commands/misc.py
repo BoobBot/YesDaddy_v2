@@ -16,7 +16,7 @@ emoji_payouts = {
     "🎰": 20,
     "🍀": 50,
     "🎮": 100,
-    "💰": 0  # Jackpot payout is handled separately
+    "💰": 200  # Jackpot payout is handled separately
 }
 
 jackpot_emoji = "💰"
@@ -48,17 +48,26 @@ class Misc(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.hybrid_command(name="slots", description="what happens in vegas...")
     async def slots(self, ctx):
-        # TODO check if user has enough money
-        # TODO subtract money from user
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_balance = user_data.balance
+        bet = 500
+
+        if bet > user_balance:
+            return await ctx.send(
+                f"You don't have enough money to do this, your balance is ${user_balance}, maybe go earn some money lazy fuck",
+                ephemral=True)
 
         emojis = ["⚽", "🎱", "🎰", "🍀", "🎮", jackpot_emoji]
         result = [random.choice(emojis) for _ in range(3)]
+        user_bet = (user_data.balance - bet)
+        await user_data.update_balance(user_bet, self.bot)
 
         slot_message = " ".join(result)
         payout, is_jackpot, is_bonus = calculate_payout(result)
-        #TODO add money to user
+        balance = (user_data.balance + payout)
+
         if is_jackpot:
             await ctx.send(f"{slot_message}\n🎉 Jackpot! You won {jackpot_payout} coins!")
         elif is_bonus:
@@ -66,6 +75,7 @@ class Misc(commands.Cog):
                 f"{slot_message}\n🎉 Bonus! You won {payout} coins with a bonus multiplier of {bonus_multiplier}!")
         else:
             await ctx.send(f"{slot_message}\nYou won {payout} coins!")
+        await user_data.update_balance(payout, self.bot)
 
     @commands.hybrid_command(name="profile", description="Look at your profile.")
     async def profile(self, ctx, user: discord.Member = None):
