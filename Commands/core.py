@@ -27,15 +27,59 @@ class Core(commands.Cog):
     async def ping(self, ctx):
         await ctx.reply(f"Pong! Bot latency: {self.bot.latency * 1000:.2f} ms")
 
+
     @commands.command(name="test", description="test stuff")
     async def lol(self, ctx):
-        user = ctx.author  # Replace with the desired user
-        avg_color = await generate_embed_color(user)
-        user_data = await ctx.bot.db_client.get_user(user_id=user.id)
-        e = int(((user_data.level + 1) * 10) ** 2)
+        # user = ctx.author  # Replace with the desired user
+        # avg_color = await generate_embed_color(user)
+        # user_data = await ctx.bot.db_client.get_user(user_id=user.id)
+        # e = int(((user_data.level + 1) * 10) ** 2)
+        #
+        # s = progress_percentage(user_data.xp, e)
+        # embed = discord.Embed(title="User Embed", description=s, color=avg_color)
+        # await ctx.send(embed=embed)
+        # # Create an embed instance
+        embed = discord.Embed(
+            title="Comprehensive Embed",
+            description="This is a comprehensive example of Discord.py embed options.",
+            color=discord.Color.gold()  # Set the color of the embed
+        )
 
-        s = progress_percentage(user_data.xp, e)
-        embed = discord.Embed(title="User Embed", description=s, color=avg_color)
+        # Set the author information
+        embed.set_author(
+            name="Author Name",
+            icon_url="https://example.com/author_icon.png",
+            url="https://example.com/author_profile"
+        )
+
+        # Set a thumbnail for the embed
+        embed.set_thumbnail(url="https://example.com/thumbnail.png")
+
+        # Add fields to the embed
+        embed.add_field(name="Field 1", value="Value 1", inline=True)
+        embed.add_field(name="Field 2", value="Value 2", inline=True)
+        embed.add_field(name="Field 3", value="Value 3", inline=False)
+        embed.add_field(name="Field 4", value="Value 4", inline=False)
+        embed.add_field(name="Field 5", value="Value 5", inline=False)
+
+        # Add an inline field
+        embed.add_field(name="Inline Field", value="This field is inline.", inline=True)
+
+        # Set an image for the embed
+        embed.set_image(url="https://example.com/image.png")
+
+        # Add more fields
+        embed.add_field(name="Field 6", value="Value 6", inline=True)
+        embed.add_field(name="Field 7", value="Value 7", inline=True)
+        embed.add_field(name="Field 8", value="Value 8", inline=False)
+
+        # Set the footer information
+        embed.set_footer(
+            text="Footer Text",
+            icon_url="https://example.com/footer_icon.png"
+        )
+
+        # Send the embed
         await ctx.send(embed=embed)
 
     @commands.command(name="clearcd")
