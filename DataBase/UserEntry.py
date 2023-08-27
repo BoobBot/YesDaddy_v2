@@ -29,6 +29,7 @@ class User:
             start_time = self.jail["start_time"].replace(tzinfo=datetime.timezone.utc)
             duration = self.jail["duration_hours"]
             end_time = start_time + datetime.timedelta(hours=duration)
+            print("we did it")
             return end_time
         return False
 
