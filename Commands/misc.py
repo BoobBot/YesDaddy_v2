@@ -466,6 +466,16 @@ class Misc(commands.Cog):
                                color=discord.Color.green())
             em.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/1145071029954297888/1145280717421559828/coinheads-removebg-preview.png")
+            em.set_author(
+                name=f"{user}'s Coinflip",
+                icon_url="https://cdn.discordapp.com/attachments/1145071029954297888/1145449093326442526/coinflip-removebg-preview.png",
+                url="https://cdn.discordapp.com/attachments/1145071029954297888/1145449093326442526/coinflip-removebg-preview.png"
+            )
+            timestamp = discord.utils.format_dt(datetime.datetime.now(datetime.timezone.utc), style="f")
+            em.set_footer(
+                text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+                icon_url=ctx.author.display_avatar.with_static_format("png")
+            )
             await ctx.reply(embed=em)
         else:
             user_balance -= bet
