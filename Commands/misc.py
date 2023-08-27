@@ -527,6 +527,35 @@ class Misc(commands.Cog):
                     await user.update_user({"jail": {}}, self.bot)
                     self.bot.log.info(f"User {user_id} has been released from jail.")
 
+    @commands.hybrid_group(name="leaderboard", aliases=["lb"], description="View the leaderboard.")
+    async def leaderboard(self, ctx):
+        await ctx.send("Please use a valid subcommand: `level` or `balance`.")
+
+    @leaderboard.command(name="level", aliases=["lvl"], description="View the level leaderboard.")
+    async def leaderboard_level(self, ctx):
+        all_users = await self.bot.db_client.get_all_users()
+        sorted_users = sorted(all_users, key=lambda user: user["level"], reverse=True)
+
+        leaderboard_text = "Leaderboard - Levels:\n"
+        for index, user_data in enumerate(sorted_users[:10], start=1):
+            user = User(**user_data)
+            leaderboard_text += f"{index}. {user.user_id}: Level {user.level}\n"
+
+        await ctx.send(leaderboard_text)
+
+    @leaderboard.command(name="combined", aliases=["comb"], description="View the combined balance leaderboard.")
+    async def leaderboard_combined(self, ctx):
+        all_users = await self.bot.db_client.get_all_users()
+        sorted_users = sorted(all_users, key=lambda user: user["balance"] + user["bank_balance"], reverse=True)
+
+        leaderboard_text = "Leaderboard - Combined Balance:\n"
+        for index, user_data in enumerate(sorted_users[:10], start=1):
+            user = User(**user_data)
+            combined_balance = user.balance + user.bank_balance
+            leaderboard_text += f"{index}. {user.user_id}: Combined Balance {combined_balance}\n"
+
+        await ctx.send(leaderboard_text)
+
 
 async def setup(bot):
     await bot.add_cog(Misc(bot))
