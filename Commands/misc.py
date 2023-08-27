@@ -107,10 +107,9 @@ class Misc(commands.Cog):
         exp_needed = int(((user_data.level + 1) * 10) ** 2)
         bar = progress_percentage(user_data.xp, exp_needed)
 
-
         em = discord.Embed(title=f"{user}'s Profile", color=user_color)
         em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
-        em.add_field(name="Level", value=f"{user_data.level}{bar}{user_data.level + 1}", inline=False)
+        em.add_field(name="Level", value=f"{user_data.level} {bar} {user_data.level + 1}", inline=False)
         em.add_field(name="Experience", value=f"{user_data.xp} / {exp_needed}")
         em.add_field(name="Balance", value=f"{user_data.balance}")
         em.add_field(name="Bank Balance", value=f"{user_data.bank_balance}")
@@ -128,7 +127,6 @@ class Misc(commands.Cog):
         user = user or ctx.author
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
         user_color = await generate_embed_color(user)
-
 
         money = 5000
         newbal = user_data.balance + money
@@ -157,7 +155,6 @@ class Misc(commands.Cog):
         user = user or ctx.author
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
         user_color = await generate_embed_color(user)
-
 
         money = 20000
         newbal = user_data.balance + money
@@ -373,7 +370,7 @@ class Misc(commands.Cog):
 
         if not 1 <= bet <= 500:
             return await ctx.send("Hey whore, Only bets of 1 - 500 are allowed")
-
+        user = ctx.author.id
         user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
         user_balance = user_data.balance
 
@@ -397,14 +394,20 @@ class Misc(commands.Cog):
         if side == res[0].lower():
             user_balance += bet
             msg = f"You Won ${bet}"
+            em = discord.Embed(title=f"{user}'s Coinflip", description=f"`{res[0]}`" + msg,
+                               color=discord.Color.green())
+            em.set_thumbnail(
+                url="https://cdn.discordapp.com/attachments/1145071029954297888/1145280717421559828/coinheads-removebg-preview.png")
+            await ctx.reply(embed=em)
         else:
             user_balance -= bet
             msg = f"You Lost ${bet}"
-
+            em = discord.Embed(title=f"{user}'s Coinflip", description=f"`{res[0]}`" + msg,
+                               color=discord.Color.red())
+            em.set_thumbnail(
+                url="https://cdn.discordapp.com/attachments/1145071029954297888/1145284778929704990/cointails-removebg-preview_1.png")
+            await ctx.reply(embed=em)
         await user_data.update_balance(user_balance, self.bot)
-        # TODO Dyna make better, Thanks
-        await ctx.send(f"`{res[0]}`" + msg)
-        await ctx.channel.send(res[1])
 
     @tasks.loop(minutes=5)
     async def check_jail_loop(self):
