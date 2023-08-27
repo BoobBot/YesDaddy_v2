@@ -97,7 +97,7 @@ class Misc(commands.Cog):
             return await ctx.reply(f":x: {user.mention} needs ${cost_total} to get out of jail.")
         await user_data.subtract_balance(cost_total, self.bot)
         await user_data.update_user({"jail": {}}, self.bot)
-        await ctx.reply(f":white_check_mark: {user.mention} has been released from jail.")
+        await ctx.reply(f":white_check_mark: {user.mention} has been released from jail for {cost_total}.")
 
     @commands.hybrid_command(name="profile", description="Look at your profile.")
     async def profile(self, ctx, user: discord.Member = None):
@@ -188,7 +188,7 @@ class Misc(commands.Cog):
         await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="crime", description="do some crime")
-    @persistent_cooldown(1, 21600, commands.BucketType.user)
+    # @persistent_cooldown(1, 21600, commands.BucketType.user)
     async def crime(self, ctx):
         random.shuffle(funny_crime_scenarios)
         crime = random.choice(funny_crime_scenarios)

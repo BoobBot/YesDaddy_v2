@@ -25,7 +25,8 @@ class User:
         await self.update_user({"jail": self.jail}, bot)
 
     def is_in_jail(self):
-        if "jail" in self.jail:
+        print(self.jail)
+        if self.jail:
             start_time = self.jail["start_time"].replace(tzinfo=datetime.timezone.utc)
             duration = self.jail["duration_hours"]
             end_time = start_time + datetime.timedelta(hours=duration)
