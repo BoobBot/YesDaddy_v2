@@ -462,7 +462,7 @@ class Misc(commands.Cog):
         if side == res[0].lower():
             user_balance += bet
             msg = f"You Won ${bet}"
-            em = discord.Embed(title=f"{user}'s Coinflip", description=f"{msg}",
+            em = discord.Embed(title="", description=f"{msg}",
                                color=discord.Color.green())
             em.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/1145071029954297888/1145280717421559828/coinheads-removebg-preview.png")
@@ -470,10 +470,20 @@ class Misc(commands.Cog):
         else:
             user_balance -= bet
             msg = f"You Lost ${bet}"
-            em = discord.Embed(title=f"{user}'s Coinflip", description=f"{msg}",
+            em = discord.Embed(title="", description=f"{msg}",
                                color=discord.Color.red())
             em.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/1145071029954297888/1145284778929704990/cointails-removebg-preview_1.png")
+            em.set_author(
+                name=f"{user}'s Coinflip",
+                icon_url="https://cdn.discordapp.com/attachments/1145071029954297888/1145449093326442526/coinflip-removebg-preview.png",
+                url="https://cdn.discordapp.com/attachments/1145071029954297888/1145449093326442526/coinflip-removebg-preview.png"
+            )
+            timestamp = discord.utils.format_dt(datetime.datetime.now(datetime.timezone.utc), style="f")
+            em.set_footer(
+                text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+                icon_url=ctx.author.display_avatar.with_static_format("png")
+            )
             await ctx.reply(embed=em)
         await user_data.update_balance(user_balance, self.bot)
 

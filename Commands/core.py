@@ -48,8 +48,8 @@ class Core(commands.Cog):
         # Set the author information
         embed.set_author(
             name="Author Name",
-            icon_url=ctx.author.display_avatar.with_static_format("png"),
-            url=ctx.author.display_avatar.with_static_format("png")
+            icon_url="https://cdn.discordapp.com/attachments/1145071029954297888/1145449093326442526/coinflip-removebg-preview.png",
+            url="https://cdn.discordapp.com/attachments/1145071029954297888/1145449093326442526/coinflip-removebg-preview.png"
         )
 
         # Set a thumbnail for the embed
