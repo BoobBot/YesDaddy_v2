@@ -10,10 +10,61 @@ from config.lists import job_descriptions, fake_robbery_scenarios, funny_crime_s
 from utils.checks import persistent_cooldown
 from utils.utilities import subtraction_percentage, generate_embed_color
 
+emoji_payouts = {
+    "⚽": 5,
+    "🎱": 10,
+    "🎰": 20,
+    "🍀": 50,
+    "🎮": 100,
+    "💰": 0  # Jackpot payout is handled separately
+}
+
+jackpot_emoji = "💰"
+jackpot_payout = 500
+bonus_multiplier = 2
+
+
+def calculate_payout(result):
+    total_payout = 0
+    is_jackpot = False
+    is_bonus = False
+    if len(set(result)) == 1:  # All three slots are the same
+        is_bonus = True
+        emoji = result[0]
+        if emoji in emoji_payouts:
+            total_payout = emoji_payouts[emoji] * bonus_multiplier
+    else:
+        for emoji in result:
+            if emoji in emoji_payouts:
+                total_payout += emoji_payouts[emoji]
+            if emoji == jackpot_emoji:
+                is_jackpot = True
+    if is_jackpot:
+        return jackpot_payout, True, False
+    return total_payout, False, is_bonus
+
 
 class Misc(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+
+    @commands.command()
+    async def slots(self, ctx):
+        # TODO check if user has enough money
+        # TODO subtract money from user
+        emojis = ["⚽", "🎱", "🎰", "🍀", "🎮", jackpot_emoji]
+        result = [random.choice(emojis) for _ in range(3)]
+
+        slot_message = " ".join(result)
+        payout, is_jackpot, is_bonus = calculate_payout(result)
+        #TODO add money to user
+        if is_jackpot:
+            await ctx.send(f"{slot_message}\n🎉 Jackpot! You won {jackpot_payout} coins!")
+        elif is_bonus:
+            await ctx.send(
+                f"{slot_message}\n🎉 Bonus! You won {payout} coins with a bonus multiplier of {bonus_multiplier}!")
+        else:
+            await ctx.send(f"{slot_message}\nYou won {payout} coins!")
 
     @commands.hybrid_command(name="profile", description="Look at your profile.")
     async def profile(self, ctx, user: discord.Member = None):
