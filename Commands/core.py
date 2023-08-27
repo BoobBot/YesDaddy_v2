@@ -74,7 +74,7 @@ class Core(commands.Cog):
         embed.add_field(name="Field 8", value="Value 8", inline=False)
 
         # Set the footer information
-        timestamp = discord.utils.format_dt(datetime.datetime.now(datetime.timezone.utc), style="R")
+        timestamp = discord.utils.format_dt(datetime.datetime.now(datetime.timezone.utc), style="f")
         embed.set_footer(
             text=f"Command ran by {ctx.author.display_name} at {timestamp}",
             icon_url=ctx.author.display_avatar.with_static_format("png")
