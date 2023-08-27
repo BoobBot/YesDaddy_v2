@@ -175,7 +175,8 @@ class Misc(commands.Cog):
             release_time = user_data.is_in_jail()
             remaining_timestamp = discord.utils.format_dt(release_time, style="R"
                                                           )
-            return await ctx.send(f"Look at you all handcuffed and shit, you'll get out of those in {remaining_timestamp}")
+            return await ctx.send(
+                f"Look at you all handcuffed and shit, you'll get out of those in {remaining_timestamp}")
         new_bal = user_data.balance + cash
         description = f"{job}\n\nCash: + {cash}"
         em = discord.Embed(color=discord.Color.random(), title=f"{ctx.author}'s job", description=description)
@@ -200,7 +201,8 @@ class Misc(commands.Cog):
             release_time = user_data.is_in_jail()
             remaining_timestamp = discord.utils.format_dt(release_time, style="R"
                                                           )
-            return await ctx.send(f"Look at you all handcuffed and shit, you'll get out of those in {remaining_timestamp}")
+            return await ctx.send(
+                f"Look at you all handcuffed and shit, you'll get out of those in {remaining_timestamp}")
 
         if crime_outcome:
             user_total = (user_balance + amount)
@@ -238,6 +240,10 @@ class Misc(commands.Cog):
             em = discord.Embed(color=discord.Color.red(), title="Touch Yourself Instead",
                                description=f"When we take over, you go first.")
             return await ctx.reply(embed=em)
+        if ctx.author.id == user.id:
+            em = discord.Embed(color=discord.Color.red(), title="This is stupid",
+                               description=f"How do you plan on stealing money from yourself? Fuck off.")
+            return await ctx.reply(embed=em)
 
         random.shuffle(fake_robbery_scenarios)
         scenario = random.choice(fake_robbery_scenarios)
@@ -254,7 +260,8 @@ class Misc(commands.Cog):
             release_time = author_data.is_in_jail()
             remaining_timestamp = discord.utils.format_dt(release_time, style="R"
                                                           )
-            return await ctx.send(f"Look at you all handcuffed and shit, you'll get out of those in {remaining_timestamp}")
+            return await ctx.send(
+                f"Look at you all handcuffed and shit, you'll get out of those in {remaining_timestamp}")
 
         if user_data.balance == 0:
             await author_data.subtract_balance(250, self.bot)
@@ -358,8 +365,9 @@ class Misc(commands.Cog):
             release_time = user_data.is_in_jail()
             remaining_timestamp = discord.utils.format_dt(release_time, style="R"
                                                           )
-            return await ctx.send(f"Look at you all handcuffed and shit, you'll get out of those in {remaining_timestamp}")
-        
+            return await ctx.send(
+                f"Look at you all handcuffed and shit, you'll get out of those in {remaining_timestamp}")
+
         if bet > user_balance:
             return await ctx.send(
                 f"Hey Whore, You don't have enough money to do this lul, your balance is ${user_balance}")
