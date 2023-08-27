@@ -110,7 +110,7 @@ class Misc(commands.Cog):
 
         em = discord.Embed(title=f"{user}'s Profile", color=user_color)
         em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
-        em.add_field(name="Level", value=f"{user_data.level} {bar} {user_data.level + 1}", inline=True)
+        em.add_field(name="Level", value=f"{user_data.level} {bar} {user_data.level + 1}", inline=False)
         em.add_field(name="Experience", value=f"{user_data.xp} / {exp_needed}")
         em.add_field(name="Balance", value=f"{user_data.balance}")
         em.add_field(name="Bank Balance", value=f"{user_data.bank_balance}")
