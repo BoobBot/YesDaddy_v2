@@ -24,7 +24,8 @@ class DiscordDatabase:
     async def get_top_users_by_level(self, limit):
         pipeline = [
             {"$sort": {"level": -1}},
-            {"$limit": limit}
+            {"$limit": limit},
+            {"$project": {"_id": 0}}
         ]
         top_users = await self.user_collection.aggregate(pipeline).to_list(None)
         return top_users
@@ -33,7 +34,8 @@ class DiscordDatabase:
         pipeline = [
             {"$addFields": {"combined_balance": {"$add": ["$balance", "$bank_balance"]}}},
             {"$sort": {"combined_balance": -1}},
-            {"$limit": limit}
+            {"$limit": limit},
+            {"$project": {"_id": 0}}
         ]
         top_users = await self.user_collection.aggregate(pipeline).to_list(None)
         return top_users
