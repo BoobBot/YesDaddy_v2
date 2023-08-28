@@ -549,6 +549,7 @@ class Misc(commands.Cog):
 
         sorted_users = []
         for user_data in top_users:
+            user_data.setdefault("jail", {})  # Provide a default value for 'jail' attribute
             user = User(**user_data)
             member = ctx.guild.get_member(user.user_id)
 
@@ -569,6 +570,7 @@ class Misc(commands.Cog):
         guild = ctx.guild
         sorted_users = []
         for user_data in top_users:
+            user_data.setdefault("jail", {})  # Provide a default value for 'jail' attribute
             user = User(**user_data)
             member = ctx.guild.get_member(user.user_id)
 
