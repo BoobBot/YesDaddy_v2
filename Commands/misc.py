@@ -112,7 +112,7 @@ class Misc(commands.Cog):
         await ctx.reply(f":white_check_mark: {user.mention} has been released from jail for {cost_total}.")
 
     @commands.hybrid_command(name="profile", description="Look at your profile.")
-    async def profile(self, ctx, user: discord.Member = None):
+    async def profile(self, ctx, user: Optional[discord.Member]):
         user = user or ctx.author
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
         user_color = await generate_embed_color(user)
@@ -131,6 +131,15 @@ class Misc(commands.Cog):
                                                           )
             em.add_field(name="Jail?", value=f"experience freedom in {remaining_timestamp}")
 
+        await ctx.reply(embed=em)
+
+    @commands.hybrid_command(name="avatar", description="Look at someone's avatar.")
+    @app_commands.describe(user="The user to get the avatar of.")
+    async def avatar(self, ctx, user: Optional[discord.Member]):
+        user = user or ctx.author
+        user_color = await generate_embed_color(user)
+        em = discord.Embed(title=f"{user}'s Avatar", color=user_color)
+        em.set_image(url=user.display_avatar.with_static_format("png"))
         await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="daily", description="Get your daily coins!.")
