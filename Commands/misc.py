@@ -581,7 +581,7 @@ class Misc(commands.Cog):
 
         sorted_users.sort(key=lambda entry: entry[0].balance + entry[0].bank_balance, reverse=True)
 
-        embed = await self.create_leaderboard_embed(ctx, "Leaderboard - Combined Balance:", sorted_users)
+        embed = await create_leaderboard_embed(ctx, "Leaderboard - Combined Balance:", sorted_users)
         await ctx.send(embed=embed)
 
 
