@@ -536,12 +536,6 @@ class Misc(commands.Cog):
                     await user.update_user({"jail": {}}, self.bot)
                     self.bot.log.info(f"User {user_id} has been released from jail.")
 
-    async def fetch_all_members(self, guild):
-        members = []
-        async for member in guild.fetch_members(limit=None):
-            members.append(member)
-        return members
-
     @commands.hybrid_group(name="leaderboard", aliases=["lb"], description="View the leaderboard.")
     async def leaderboard(self, ctx):
         await ctx.send("Please use a valid subcommand: `level` or `balance`.")
@@ -549,15 +543,14 @@ class Misc(commands.Cog):
     @leaderboard.command(name="level", aliases=["lvl"], description="View the level leaderboard.")
     async def leaderboard_level(self, ctx):
         await ctx.defer()
-        all_users = await self.bot.db_client.get_all_users()
+        top_users = await self.bot.db_client.get_top_users_by_level(limit=20)  # Change this to your database function
 
         guild = ctx.guild
-        members = await self.fetch_all_members(guild)
 
         sorted_users = []
-        for user_data in all_users:
+        for user_data in top_users:
             user = User(**user_data)
-            member = discord.utils.get(members, id=user.user_id)
+            member = ctx.guild.get_member(user.user_id)
 
             if member:
                 sorted_users.append((user, member))
@@ -570,22 +563,21 @@ class Misc(commands.Cog):
     @leaderboard.command(name="combined", aliases=["comb"], description="View the combined balance leaderboard.")
     async def leaderboard_combined(self, ctx):
         await ctx.defer()
-        all_users = await self.bot.db_client.get_all_users()
+        top_users = await self.bot.db_client.get_top_users_by_combined_balance(
+            limit=20)  # Change this to your database function
 
         guild = ctx.guild
-        members = await self.fetch_all_members(guild)
-
         sorted_users = []
-        for user_data in all_users:
+        for user_data in top_users:
             user = User(**user_data)
-            member = discord.utils.get(members, id=user.user_id)
+            member = ctx.guild.get_member(user.user_id)
 
             if member:
                 sorted_users.append((user, member))
 
         sorted_users.sort(key=lambda entry: entry[0].balance + entry[0].bank_balance, reverse=True)
 
-        embed = await create_leaderboard_embed(ctx, "Leaderboard - Combined Balance:", sorted_users)
+        embed = await self.create_leaderboard_embed(ctx, "Leaderboard - Combined Balance:", sorted_users)
         await ctx.send(embed=embed)
 
 
