@@ -536,20 +536,20 @@ class Misc(commands.Cog):
                     await user.update_user({"jail": {}}, self.bot)
                     self.bot.log.info(f"User {user_id} has been released from jail.")
 
+    async def fetch_all_members(self, guild):
+        members = await guild.fetch_members(limit=None).flatten()
+        return members
+
     @commands.hybrid_group(name="leaderboard", aliases=["lb"], description="View the leaderboard.")
     async def leaderboard(self, ctx):
         await ctx.send("Please use a valid subcommand: `level` or `balance`.")
-
-    async def fetch_all_members(self, guild):
-        async for member in guild.fetch_members(limit=None):
-            yield member
 
     @leaderboard.command(name="level", aliases=["lvl"], description="View the level leaderboard.")
     async def leaderboard_level(self, ctx):
         all_users = await self.bot.db_client.get_all_users()
 
         guild = ctx.guild
-        members = [member for member in await self.fetch_all_members(guild)]
+        members = await self.fetch_all_members(guild)
 
         sorted_users = []
         for user_data in all_users:
@@ -569,7 +569,7 @@ class Misc(commands.Cog):
         all_users = await self.bot.db_client.get_all_users()
 
         guild = ctx.guild
-        members = [member for member in await self.fetch_all_members(guild)]
+        members = await self.fetch_all_members(guild)
 
         sorted_users = []
         for user_data in all_users:
