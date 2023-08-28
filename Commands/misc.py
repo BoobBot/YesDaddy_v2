@@ -540,17 +540,21 @@ class Misc(commands.Cog):
     async def leaderboard(self, ctx):
         await ctx.send("Please use a valid subcommand: `level` or `balance`.")
 
+    async def fetch_all_members(self, guild):
+        async for member in guild.fetch_members(limit=None):
+            yield member
+
     @leaderboard.command(name="level", aliases=["lvl"], description="View the level leaderboard.")
     async def leaderboard_level(self, ctx):
         all_users = await self.bot.db_client.get_all_users()
 
         guild = ctx.guild
-        await guild.fetch_members(limit=None)  # Fetch all members in the guild
+        members = [member for member in await self.fetch_all_members(guild)]
 
         sorted_users = []
         for user_data in all_users:
             user = User(**user_data)
-            member = guild.get_member(user.user_id)
+            member = discord.utils.get(members, id=user.user_id)
 
             if member:
                 sorted_users.append((user, member))
@@ -565,19 +569,19 @@ class Misc(commands.Cog):
         all_users = await self.bot.db_client.get_all_users()
 
         guild = ctx.guild
-        await guild.fetch_members(limit=None)  # Fetch all members in the guild
+        members = [member for member in await self.fetch_all_members(guild)]
 
         sorted_users = []
         for user_data in all_users:
             user = User(**user_data)
-            member = guild.get_member(user.user_id)
+            member = discord.utils.get(members, id=user.user_id)
 
             if member:
                 sorted_users.append((user, member))
 
         sorted_users.sort(key=lambda entry: entry[0].balance + entry[0].bank_balance, reverse=True)
 
-        embed = await create_leaderboard_embed(ctx, "Leaderboard - Combined Balance:", sorted_users)
+        embed = await self.create_leaderboard_embed(ctx, "Leaderboard - Combined Balance:", sorted_users)
         await ctx.send(embed=embed)
 
 
