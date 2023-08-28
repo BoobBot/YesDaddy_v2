@@ -548,6 +548,7 @@ class Misc(commands.Cog):
 
     @leaderboard.command(name="level", aliases=["lvl"], description="View the level leaderboard.")
     async def leaderboard_level(self, ctx):
+        await ctx.defer()
         all_users = await self.bot.db_client.get_all_users()
 
         guild = ctx.guild
@@ -568,6 +569,7 @@ class Misc(commands.Cog):
 
     @leaderboard.command(name="combined", aliases=["comb"], description="View the combined balance leaderboard.")
     async def leaderboard_combined(self, ctx):
+        await ctx.defer()
         all_users = await self.bot.db_client.get_all_users()
 
         guild = ctx.guild
