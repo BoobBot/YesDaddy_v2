@@ -537,7 +537,9 @@ class Misc(commands.Cog):
                     self.bot.log.info(f"User {user_id} has been released from jail.")
 
     async def fetch_all_members(self, guild):
-        members = await guild.fetch_members(limit=None).flatten()
+        members = []
+        async for member in guild.fetch_members(limit=None):
+            members.append(member)
         return members
 
     @commands.hybrid_group(name="leaderboard", aliases=["lb"], description="View the leaderboard.")
