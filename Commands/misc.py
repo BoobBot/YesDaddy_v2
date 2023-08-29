@@ -582,7 +582,7 @@ class Misc(commands.Cog):
 
         sorted_users.sort(key=lambda entry: entry[0].level, reverse=True)
 
-        pages = await create_leaderboard_pages(sorted_users)
+        pages = create_leaderboard_pages(sorted_users)
         await Paginator().start(ctx, pages=pages)
 
     @leaderboard.command(name="combined", aliases=["comb"], description="View the total balance leaderboard.")
@@ -603,7 +603,7 @@ class Misc(commands.Cog):
 
         sorted_users.sort(key=lambda entry: entry[0]['balance'] + entry[0]['bank_balance'], reverse=True)
 
-        embed = await create_leaderboard_embed(ctx, "Leaderboard - Combined Balance:", sorted_users)
+        embed = create_leaderboard_embed(ctx, "Leaderboard - Combined Balance:", sorted_users)
         await ctx.send(embed=embed)
 
 
