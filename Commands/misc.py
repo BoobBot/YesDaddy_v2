@@ -24,6 +24,15 @@ emoji_payouts = {
     "💰": 200  # Jackpot payout is handled separately
 }
 
+fish_info = {
+    'Salmon': '🐟',
+    'Trout': '🐠',
+    'Bass': '🎣',
+    'Tuna': '🐬',
+    'Mackerel': '🦈',
+    'Cod': '🐡'
+}
+
 jackpot_emoji = "💰"
 jackpot_payout = 500
 bonus_multiplier = 2
@@ -88,6 +97,22 @@ class Misc(commands.Cog):
 
     def cog_unload(self):
         self.check_jail_loop.cancel()
+
+    # Fishing command
+    @commands.hybrid_command(name="fish", description="Go fishing!")
+    async def fish(self, ctx):
+        fish_name = random.choice(list(fish_info.keys()))
+        fish_value = random.randint(10, 100)
+
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_balance = user_data.balance
+        await user_data.add_balance(fish_value, self.bot)
+        color = await generate_embed_color(ctx.author)
+
+        embed = discord.Embed(title="You caught a fish!",
+                              description=f"You caught a {fish_info[fish_name]} {fish_name} worth {fish_value} gold!, you now have {user_balance + fish_value} gold!",
+                              color=color)
+        await ctx.send(embed=embed)
 
     @commands.hybrid_command(name="slots", description="what happens in vegas...")
     async def slots(self, ctx):
