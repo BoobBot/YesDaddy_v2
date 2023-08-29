@@ -209,7 +209,7 @@ class Misc(commands.Cog):
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
         if not user_data.is_in_jail():
             return await ctx.reply(f":x: {user.mention} is not in jail.")
-        user_balance = max(user_data.balance + user_data.bank_balance)
+        user_balance = max(user_data.balance + user_data.bank_balance, 0)
         cost = user_data.jail.get("fine", 0)
         # TODO add higher fine for longer jail time
         cost_total = subtraction_percentage(user_balance, 10) + cost
