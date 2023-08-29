@@ -55,7 +55,7 @@ def create_leaderboard_pages(sorted_users):
 
     for page_number, i in enumerate(range(0, len(sorted_users), chunk_size), start=1):
         chunk = sorted_users[i:i + chunk_size]
-        embed = self.create_leaderboard_embed(chunk, page_number)
+        embed = create_leaderboard_embed(chunk, page_number)
         pages.append(embed)
 
     return pages
