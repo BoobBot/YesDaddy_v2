@@ -66,12 +66,27 @@ def create_leaderboard_embed(title, entries, page_number):
 
     for index, (user, member) in enumerate(entries, start=page_number * 10 - 9):
         emoji = "🥇" if index == 1 else "🥈" if index == 2 else "🥉" if index == 3 else f"{index}"
-        value = f"{emoji} {member.display_name}: {user.level}"
+
+        if title == "Leaderboard - Levels: Page":
+            value = f"{emoji} {member.display_name}: {user.level}"
+        elif title == "Leaderboard - Balance: Page":
+            value = f"{emoji} {member.display_name}: {user['balance']}"
+        elif title == "Leaderboard - Bank Balance: Page":
+            value = f"{emoji} {member.display_name}: {user['bank_balance']}"
+        else:
+            value = f"{emoji} {member.display_name}: {user['balance'] + user['bank_balance']}"
+
         embed.add_field(name=f"#{index}", value=value, inline=False)
 
     return embed
 
-
+async def create_leaderboard_embed(ctx, title, entries):
+    embed = Embed(title=title)
+    for index, (user, member) in enumerate(entries[:10], start=1):
+        emoji = "🥇" if index == 1 else "🥈" if index == 2 else "🥉" if index == 3 else "  "
+        value = f"{emoji} {member.display_name}: {user.level if title == 'Leaderboard - Levels:' else user.balance + user.bank_balance}"
+        embed.add_field(name=f"#{index}", value=value, inline=False)
+    return embed
 class Misc(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -601,7 +616,7 @@ class Misc(commands.Cog):
                 sorted_users.append((user, member))
 
         sorted_users.sort(key=lambda entry: entry[0]['balance'], reverse=True)
-        pages = create_leaderboard_pages(sorted_users, "Leaderboard - Balance:")
+        pages = create_leaderboard_pages(sorted_users, "Leaderboard - Balance: Page")
         await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
 
     @leaderboard.command(name="bank", description="View the bank balance leaderboard.")
@@ -619,8 +634,8 @@ class Misc(commands.Cog):
             if member:
                 sorted_users.append((user, member))
 
-        sorted_users.sort(key=lambda entry: entry[0]['balance'], reverse=True)
-        pages = create_leaderboard_pages(sorted_users, "Leaderboard - Bank Balance:")
+        sorted_users.sort(key=lambda entry: entry[0]['bank_balance'], reverse=True)
+        pages = create_leaderboard_pages(sorted_users, "Leaderboard - Bank Balance: Page")
         await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
 
     @leaderboard.command(name="total", aliases=["net"], description="View the total balance leaderboard.")
@@ -639,7 +654,7 @@ class Misc(commands.Cog):
                 sorted_users.append((user, member))
 
         sorted_users.sort(key=lambda entry: entry[0]['balance'] + entry[0]['bank_balance'], reverse=True)
-        pages = create_leaderboard_pages(sorted_users, "Leaderboard - total Balance:")
+        pages = create_leaderboard_pages(sorted_users, "Leaderboard - Total Balance: Page")
         await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
 
 
