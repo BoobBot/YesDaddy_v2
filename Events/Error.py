@@ -18,6 +18,45 @@ class ErrorHandlerCog(commands.Cog):
                                             json={"content": error_message, "username": self.webhook_username}):
             pass
 
+    def extract_traceback_info(self, traceback_obj):
+        traceback_info = {
+            'error_type': traceback_obj.__class__.__name__,
+            'error_message': str(traceback_obj),
+            'file_name': '',
+            'line_number': 0,
+            'function_calls': [],
+            'local_variables': {},
+            'stack_context': '',
+        }
+
+        if traceback_obj.__traceback__:
+            tb = traceback_obj.__traceback__
+            tb_frame = tb.tb_frame
+            traceback_info['file_name'] = tb_frame.f_code.co_filename
+            traceback_info['line_number'] = tb.tb_lineno
+
+            # Extract function calls
+            while tb_frame:
+                traceback_info['function_calls'].append(tb_frame.f_code.co_name)
+                tb_frame = tb_frame.f_back
+
+            # Extract local variables from the most recent frame
+            if traceback_info['function_calls']:
+                locals_dict = traceback_info['local_variables']
+                locals_dict.update(tb.tb_frame.f_locals)
+
+        return traceback_info
+
+    def format_traceback_info(self, traceback_info):
+        calls = '\n'.join(traceback_info['function_calls'])
+        vars = '\n'.join([f'{var_name}: {var_value}' for var_name, var_value in traceback_info['local_variables'].items()])
+        error_message = f"**Error Type:** {traceback_info['error_type']}\n**Error Message:** {traceback_info['error_message']}\n"
+        error_message += f"**File:** {traceback_info['file_name']}, Line: {traceback_info['line_number']}\n\n"
+        error_message += f"**Function Calls:**\n{calls}\n\n"
+        error_message += f"**Local Variables:**\n{vars}\n\n"
+        error_message += f"**Stack Context:** {traceback_info['stack_context']}\n\n"
+        return error_message
+
     @commands.Cog.listener()
     async def on_error(self, event, *args, **kwargs):
         error = args[0]
@@ -90,11 +129,14 @@ class ErrorHandlerCog(commands.Cog):
             await ctx.send("Specified user was not found.")
         else:
             # Handle other unexpected errors
+            traceback_info = self.extract_traceback_info(traceback_obj=error)
+            error_message = self.format_traceback_info(traceback_info)
+
             await ctx.send("An error occurred while processing the command.")
             self.logger.error(f"An error occurred: {error}")
             traceback_info = traceback.format_exc()
             self.logger.error(f"Traceback:\n{traceback_info}")
-            await self.send_error_to_webhook(f"An error occurred: {error}\n\nTraceback:```\n{traceback_info}```")
+            await self.send_error_to_webhook(f"An error occurred: {error}\n\nTraceback:```\n{error_message}```")
 
 
 async def setup(bot):
