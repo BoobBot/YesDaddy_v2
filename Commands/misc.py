@@ -49,20 +49,20 @@ def calculate_payout(result):
     return total_payout, False, is_bonus
 
 
-def create_leaderboard_pages(sorted_users):
+def create_leaderboard_pages(sorted_users, title):
     pages = []
     chunk_size = 10
 
     for page_number, i in enumerate(range(0, len(sorted_users), chunk_size), start=1):
         chunk = sorted_users[i:i + chunk_size]
-        embed = create_leaderboard_embed(chunk, page_number)
+        embed = create_leaderboard_embed(title, chunk, page_number)
         pages.append(embed)
 
     return pages
 
 
-def create_leaderboard_embed(entries, page_number):
-    embed = Embed(title=f"Leaderboard - Levels: Page {page_number}")
+def create_leaderboard_embed(title, entries, page_number):
+    embed = Embed(title=f"{title} {page_number}")
 
     for index, (user, member) in enumerate(entries, start=page_number * 10 - 9):
         emoji = "🥇" if index == 1 else "🥈" if index == 2 else "🥉" if index == 3 else f"{index}"
@@ -582,19 +582,56 @@ class Misc(commands.Cog):
 
         sorted_users.sort(key=lambda entry: entry[0].level, reverse=True)
 
-        pages = create_leaderboard_pages(sorted_users)
-        await Paginator().start(ctx, pages=pages)
+        pages = create_leaderboard_pages(sorted_users, "Leaderboard - Levels: Page")
+        await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
 
-    @leaderboard.command(name="combined", aliases=["comb"], description="View the total balance leaderboard.")
-    async def leaderboard_combined(self, ctx):
+    @leaderboard.command(name="balance", aliases=["bal"], description="View the balance leaderboard.")
+    async def leaderboard_balance(self, ctx):
         await ctx.defer()
-        top_users = await self.bot.db_client.get_top_users_by_combined_balance(
-            limit=20)  # Change this to your database function
+        top_users = await self.bot.db_client.get_top_users_by_balance(
+            limit=200)
 
         guild = ctx.guild
         sorted_users = []
         for user_data in top_users:
-            #user_data.setdefault("jail", {})  # Provide a default value for 'jail' attribute
+            user = user_data
+            member = ctx.guild.get_member(user['user_id'])
+
+            if member:
+                sorted_users.append((user, member))
+
+        sorted_users.sort(key=lambda entry: entry[0]['balance'], reverse=True)
+        pages = create_leaderboard_pages(sorted_users, "Leaderboard - Balance:")
+        await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
+
+    @leaderboard.command(name="bank", description="View the bank balance leaderboard.")
+    async def leaderboard_balance(self, ctx):
+        await ctx.defer()
+        top_users = await self.bot.db_client.get_top_users_by_bank_balance(
+            limit=200)
+
+        guild = ctx.guild
+        sorted_users = []
+        for user_data in top_users:
+            user = user_data
+            member = ctx.guild.get_member(user['user_id'])
+
+            if member:
+                sorted_users.append((user, member))
+
+        sorted_users.sort(key=lambda entry: entry[0]['balance'], reverse=True)
+        pages = create_leaderboard_pages(sorted_users, "Leaderboard - Bank Balance:")
+        await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
+
+    @leaderboard.command(name="total", aliases=["net"], description="View the total balance leaderboard.")
+    async def leaderboard_combined(self, ctx):
+        await ctx.defer()
+        top_users = await self.bot.db_client.get_top_users_by_combined_balance(
+            limit=200)
+
+        guild = ctx.guild
+        sorted_users = []
+        for user_data in top_users:
             user = user_data
             member = ctx.guild.get_member(user['user_id'])
 
@@ -602,9 +639,8 @@ class Misc(commands.Cog):
                 sorted_users.append((user, member))
 
         sorted_users.sort(key=lambda entry: entry[0]['balance'] + entry[0]['bank_balance'], reverse=True)
-
-        embed = create_leaderboard_embed(ctx, "Leaderboard - Combined Balance:", sorted_users)
-        await ctx.send(embed=embed)
+        pages = create_leaderboard_pages(sorted_users, "Leaderboard - total Balance:")
+        await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
 
 
 async def setup(bot):
