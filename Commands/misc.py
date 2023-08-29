@@ -21,37 +21,37 @@ emoji_payouts = {
     "🎰": 20,
     "🍀": 50,
     "🎮": 100,
-    "💰": 200  # Jackpot payout is handled separately
+    "<a:coins:1146124100369137666>": 200  # Jackpot payout is handled separately
 }
 
-jackpot_emoji = "💰"
+jackpot_emoji = "<a:coins:1146124100369137666>"
 jackpot_payout = 500
 bonus_multiplier = 2
 
-# TODO indo make better emotes
+
 fish_info = {
-    'Salmon': '🐟',
-    'Trout': '🐠',
-    'Bass': '🎣',
-    'Tuna': '🐬',
-    'Mackerel': '🦈',
-    'Cod': '🐡'
-}
-# TODO indo make better emotes
-mine_resource_info = {
-    'Coal': {'emote': '⛏️', 'min_value': 5, 'max_value': 15, 'rarity': 0.6},
-    'Iron': {'emote': '🔗', 'min_value': 10, 'max_value': 20, 'rarity': 0.5},
-    'Gold': {'emote': '💰', 'min_value': 15, 'max_value': 25, 'rarity': 0.4},
-    'Diamond': {'emote': '💎', 'min_value': 50, 'max_value': 500, 'rarity': 0.2},
-    'Emerald': {'emote': '💚', 'min_value': 20, 'max_value': 250, 'rarity': 0.3}
+    'Salmon': '<:salmon:1146118005273677904>',
+    'Trout': '<:trout:1146116187600715946>',
+    'Bass': '<:bass:1146117268690960436>',
+    'Tuna': '<:tuna:1146115466503409696>',
+    'Mackerel': '<:mackerel:1146118655889912030>',
+    'Cod': '<:cod:1146119455215194132>'
 }
 
-# TODO indo make better emotes
+mine_resource_info = {
+    'Coal': {'emote': '<:coal:1146120671949226045>', 'min_value': 5, 'max_value': 15, 'rarity': 0.6},
+    'Iron': {'emote': '<:Iron:1146120977114222633>', 'min_value': 10, 'max_value': 20, 'rarity': 0.5},
+    'Gold': {'emote': '<:gold:1146121325912522785>', 'min_value': 15, 'max_value': 25, 'rarity': 0.4},
+    'Diamond': {'emote': '<:diamond:1146121876381384744>', 'min_value': 50, 'max_value': 500, 'rarity': 0.2},
+    'Emerald': {'emote': '<:Emerald:1146121911986819073>', 'min_value': 20, 'max_value': 250, 'rarity': 0.3}
+}
+
+
 chop_resource_info = {
-    'Wood': {'emote': '🌳', 'min_value': 5, 'max_value': 15, 'rarity': 0.7},
-    'Oak': {'emote': '🌲', 'min_value': 10, 'max_value': 20, 'rarity': 0.6},
-    'Maple': {'emote': '🍁', 'min_value': 15, 'max_value': 25, 'rarity': 0.4},
-    'Birch': {'emote': '🌳', 'min_value': 20, 'max_value': 30, 'rarity': 0.3},
+    'Wood': {'emote': '<:wood:1146123952662515832>', 'min_value': 5, 'max_value': 15, 'rarity': 0.7},
+    'Oak': {'emote': '<:oak:1146125043550650399>', 'min_value': 10, 'max_value': 20, 'rarity': 0.6},
+    'Maple': {'emote': '<:maple:1146126198901047366>', 'min_value': 15, 'max_value': 25, 'rarity': 0.4},
+    'Birch': {'emote': '<:birch:1146125694313697330>', 'min_value': 20, 'max_value': 30, 'rarity': 0.3},
 }
 
 
