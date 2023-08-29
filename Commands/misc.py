@@ -364,14 +364,14 @@ class Misc(commands.Cog):
             probability = 0.3
             random_number = random.random()
 
-            if random_number < probability:
-                await user_data.jail_user(jail_time, fine, self.bot)
-            await user_data.update_balance(user_total, self.bot)
             em = discord.Embed(color=discord.Color.red(), description=crime_scenario)
             em.add_field(name="Crime Result",
                          value=f"{ctx.author.mention} attempted to do some crime and got caught losing {amount}, your lawyer will see you now.")
-            em.add_field(name="Punishment",
-                         value=f"You are in jail for {jail_time} hours and have to pay a fine of {fine}.")
+            if random_number < probability:
+                await user_data.jail_user(jail_time, fine, self.bot)
+                em.add_field(name="Punishment",
+                             value=f"You are in jail for {jail_time} hours and have to pay a fine of {fine}.")
+            await user_data.update_balance(user_total, self.bot)
 
             em.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/1145112557414264892/1145115052505042974/ndc.png")
@@ -440,13 +440,14 @@ class Misc(commands.Cog):
             probability = 0.3
             random_number = random.random()
 
-            if random_number < probability:
-                await user_data.jail_user(jail_time, fine, self.bot)
-            await author_data.update_balance(total, self.bot)
-
             em = discord.Embed(color=discord.Color.red(), description=rob_scenario)
             em.add_field(name="Robbery Result",
                          value=f"{ctx.author.mention} attempted to rob {user.mention} and they failed miserably losing {author_loss_total}")
+            if random_number < probability:
+                await user_data.jail_user(jail_time, fine, self.bot)
+                em.add_field(name="Punishment",
+                             value=f"You are in jail for {jail_time} hours and have to pay a fine of {fine}.")
+            await author_data.update_balance(total, self.bot)
             return await ctx.reply(embed=em)
 
     @commands.hybrid_group(name="transactions", description="Manage transactions.")
