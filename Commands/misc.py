@@ -24,6 +24,11 @@ emoji_payouts = {
     "💰": 200  # Jackpot payout is handled separately
 }
 
+jackpot_emoji = "💰"
+jackpot_payout = 500
+bonus_multiplier = 2
+
+# TODO indo make better emotes
 fish_info = {
     'Salmon': '🐟',
     'Trout': '🐠',
@@ -32,10 +37,14 @@ fish_info = {
     'Mackerel': '🦈',
     'Cod': '🐡'
 }
-
-jackpot_emoji = "💰"
-jackpot_payout = 500
-bonus_multiplier = 2
+# TODO indo make better emotes
+resource_info = {
+    'Coal': {'emote': '⛏️', 'min_value': 5, 'max_value': 15, 'rarity': 0.6},
+    'Iron': {'emote': '🔗', 'min_value': 10, 'max_value': 20, 'rarity': 0.5},
+    'Gold': {'emote': '💰', 'min_value': 15, 'max_value': 25, 'rarity': 0.4},
+    'Diamond': {'emote': '💎', 'min_value': 50, 'max_value': 500, 'rarity': 0.2},
+    'Emerald': {'emote': '💚', 'min_value': 20, 'max_value': 250, 'rarity': 0.3}
+}
 
 
 def calculate_payout(result):
@@ -97,6 +106,25 @@ class Misc(commands.Cog):
 
     def cog_unload(self):
         self.check_jail_loop.cancel()
+
+    # mining command
+    @commands.hybrid_command(name="mine", description="Go mining!")
+    async def mine(self, ctx):
+        chosen_resource = \
+        random.choices(list(resource_info.keys()), weights=[info['rarity'] for info in resource_info.values()], k=1)[0]
+        resource = resource_info[chosen_resource]
+        resource_amount = random.randint(1, 10)
+        resource_value = random.randint(resource['min_value'], resource['max_value'])
+
+        user_id = ctx.author.id
+        user_data = await ctx.bot.db_client.get_user(user_id=user_id)
+        user_balance = user_data.balance
+        await user_data.add_balance(resource_value, self.bot)
+        color = await generate_embed_color(ctx.author)
+        embed = discord.Embed(title="You mined some resources!",
+                              description=f"You mined {resource['emote']} {chosen_resource} x{resource_amount} worth ${resource_value}! You now have ${user_balance + resource_value}!",
+                              color=color)
+        await ctx.send(embed=embed)
 
     # Fishing command
     @commands.hybrid_command(name="fish", description="Go fishing!")
@@ -577,7 +605,6 @@ class Misc(commands.Cog):
             await ctx.reply(embed=em)
         await user_data.update_balance(user_balance, self.bot)
 
-
     @commands.hybrid_group(name="leaderboard", aliases=["lb"], description="View the leaderboard.")
     async def leaderboard(self, ctx):
         await ctx.send("Please use a valid subcommand: `level` or `balance`.")
@@ -660,7 +687,6 @@ class Misc(commands.Cog):
         pages = create_leaderboard_pages(sorted_users, "Leaderboard - Total Balance: Page")
         await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
 
-
     @tasks.loop(minutes=5)
     async def check_jail_loop(self):
         users_in_jail = await self.bot.db_client.get_users_in_jail()
@@ -677,6 +703,7 @@ class Misc(commands.Cog):
                     await user.subtract_balance(fine, self.bot)
                     await user.update_user({"jail": {}}, self.bot)
                     self.bot.log.info(f"User {user_id} has been released from jail.")
+
 
 async def setup(bot):
     await bot.add_cog(Misc(bot))
