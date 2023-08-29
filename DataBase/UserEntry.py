@@ -44,7 +44,7 @@ class User:
         await self.update_user({"level": self.level}, bot)
 
     async def add_balance(self, amount, bot):
-        self.balance += amount
+        self.balance += max(amount, 0)
         await self.update_user({"balance": self.balance}, bot)
 
     async def subtract_balance(self, amount, bot):
@@ -60,7 +60,7 @@ class User:
         await self.update_user({"bank_balance": self.balance}, bot)
 
     async def add_bank_balance(self, amount, bot):
-        self.bank_balance += amount
+        self.bank_balance += max(amount, 0)
         await self.update_user({"bank_balance": self.bank_balance}, bot)
 
     async def update_user(self, new_data, bot):

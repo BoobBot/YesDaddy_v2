@@ -577,22 +577,6 @@ class Misc(commands.Cog):
             await ctx.reply(embed=em)
         await user_data.update_balance(user_balance, self.bot)
 
-    @tasks.loop(minutes=5)
-    async def check_jail_loop(self):
-        users_in_jail = await self.bot.db_client.get_users_in_jail()
-
-        for user_id in users_in_jail:
-            user = await self.bot.db_client.get_user(user_id)
-            if user.is_in_jail():
-                release_time = user.jail["start_time"].replace(tzinfo=datetime.timezone.utc) + datetime.timedelta(
-                    hours=user.jail["duration_hours"])
-                current_time = datetime.datetime.now(datetime.timezone.utc)
-
-                if current_time >= release_time:
-                    fine = user.jail.get("fine", 0)
-                    await user.subtract_balance(fine, self.bot)
-                    await user.update_user({"jail": {}}, self.bot)
-                    self.bot.log.info(f"User {user_id} has been released from jail.")
 
     @commands.hybrid_group(name="leaderboard", aliases=["lb"], description="View the leaderboard.")
     async def leaderboard(self, ctx):
@@ -676,6 +660,23 @@ class Misc(commands.Cog):
         pages = create_leaderboard_pages(sorted_users, "Leaderboard - Total Balance: Page")
         await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
 
+
+    @tasks.loop(minutes=5)
+    async def check_jail_loop(self):
+        users_in_jail = await self.bot.db_client.get_users_in_jail()
+
+        for user_id in users_in_jail:
+            user = await self.bot.db_client.get_user(user_id)
+            if user.is_in_jail():
+                release_time = user.jail["start_time"].replace(tzinfo=datetime.timezone.utc) + datetime.timedelta(
+                    hours=user.jail["duration_hours"])
+                current_time = datetime.datetime.now(datetime.timezone.utc)
+
+                if current_time >= release_time:
+                    fine = user.jail.get("fine", 0)
+                    await user.subtract_balance(fine, self.bot)
+                    await user.update_user({"jail": {}}, self.bot)
+                    self.bot.log.info(f"User {user_id} has been released from jail.")
 
 async def setup(bot):
     await bot.add_cog(Misc(bot))
