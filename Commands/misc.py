@@ -110,7 +110,7 @@ class Misc(commands.Cog):
         color = await generate_embed_color(ctx.author)
 
         embed = discord.Embed(title="You caught a fish!",
-                              description=f"You caught a {fish_info[fish_name]} {fish_name} worth {fish_value} gold!, you now have {user_balance + fish_value} gold!",
+                              description=f"You caught a {fish_info[fish_name]} {fish_name} worth ${fish_value}!, you now have ${user_balance + fish_value} gold!",
                               color=color)
         await ctx.send(embed=embed)
 
