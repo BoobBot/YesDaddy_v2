@@ -80,13 +80,7 @@ def create_leaderboard_embed(title, entries, page_number):
 
     return embed
 
-async def create_leaderboard_embed(ctx, title, entries):
-    embed = Embed(title=title)
-    for index, (user, member) in enumerate(entries[:10], start=1):
-        emoji = "🥇" if index == 1 else "🥈" if index == 2 else "🥉" if index == 3 else "  "
-        value = f"{emoji} {member.display_name}: {user.level if title == 'Leaderboard - Levels:' else user.balance + user.bank_balance}"
-        embed.add_field(name=f"#{index}", value=value, inline=False)
-    return embed
+
 class Misc(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
