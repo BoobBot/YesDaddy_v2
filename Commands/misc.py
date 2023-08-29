@@ -49,24 +49,26 @@ def calculate_payout(result):
     return total_payout, False, is_bonus
 
 
-async def create_leaderboard_pages( sorted_users):
+def create_leaderboard_pages(sorted_users):
     pages = []
     chunk_size = 10
 
-    for i in range(0, len(sorted_users), chunk_size):
+    for page_number, i in enumerate(range(0, len(sorted_users), chunk_size), start=1):
         chunk = sorted_users[i:i + chunk_size]
-        embed = await create_leaderboard_embed(chunk)
+        embed = self.create_leaderboard_embed(chunk, page_number)
         pages.append(embed)
 
     return pages
 
 
-async def create_leaderboard_embed(entries):
-    embed = Embed(title="Leaderboard - Levels:")
-    for index, (user, member) in enumerate(entries, start=1):
-        emoji = "🥇" if index == 1 else "🥈" if index == 2 else "🥉" if index == 3 else "  "
+def create_leaderboard_embed(entries, page_number):
+    embed = Embed(title=f"Leaderboard - Levels: Page {page_number}")
+
+    for index, (user, member) in enumerate(entries, start=page_number * 10 - 9):
+        emoji = "🥇" if index == 1 else "🥈" if index == 2 else "🥉" if index == 3 else f"{index}"
         value = f"{emoji} {member.display_name}: {user.level}"
         embed.add_field(name=f"#{index}", value=value, inline=False)
+
     return embed
 
 
