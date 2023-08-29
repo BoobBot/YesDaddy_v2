@@ -209,7 +209,7 @@ class Misc(commands.Cog):
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
         if not user_data.is_in_jail():
             return await ctx.reply(f":x: {user.mention} is not in jail.")
-        user_balance = user_data.balance + user_data.bank_balance
+        user_balance = max(user_data.balance + user_data.bank_balance)
         cost = user_data.jail.get("fine", 0)
         # TODO add higher fine for longer jail time
         cost_total = subtraction_percentage(user_balance, 10) + cost
@@ -361,7 +361,11 @@ class Misc(commands.Cog):
             user_total = (user_balance - amount)
             jail_time = random.randint(1, 3)
             fine = random.randint(100, 1000)
-            await user_data.jail_user(jail_time, fine, self.bot)
+            probability = 0.3
+            random_number = random.random()
+
+            if random_number < probability:
+                await user_data.jail_user(jail_time, fine, self.bot)
             await user_data.update_balance(user_total, self.bot)
             em = discord.Embed(color=discord.Color.red(), description=crime_scenario)
             em.add_field(name="Crime Result",
@@ -431,6 +435,13 @@ class Misc(commands.Cog):
             total_percentage = loss_percent + אחוז_הפסד
             author_loss_total = subtraction_percentage(author_balance, total_percentage)
             total = max(author_balance - author_loss_total, 0)
+            jail_time = random.randint(1, 3)
+            fine = random.randint(100, 1000)
+            probability = 0.3
+            random_number = random.random()
+
+            if random_number < probability:
+                await user_data.jail_user(jail_time, fine, self.bot)
             await author_data.update_balance(total, self.bot)
 
             em = discord.Embed(color=discord.Color.red(), description=rob_scenario)
