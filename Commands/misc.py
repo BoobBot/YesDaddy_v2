@@ -12,6 +12,7 @@ from discord.ext import commands, tasks
 from DataBase import User
 from config.lists import job_descriptions, fake_robbery_scenarios, funny_crime_scenarios
 from utils.checks import persistent_cooldown
+from utils.paginator import Paginator
 from utils.utilities import subtraction_percentage, generate_embed_color, progress_percentage
 
 emoji_payouts = {
@@ -48,11 +49,23 @@ def calculate_payout(result):
     return total_payout, False, is_bonus
 
 
-async def create_leaderboard_embed(ctx, title, entries):
-    embed = Embed(title=title)
-    for index, (user, member) in enumerate(entries[:10], start=1):
+async def create_leaderboard_pages( sorted_users):
+    pages = []
+    chunk_size = 10
+
+    for i in range(0, len(sorted_users), chunk_size):
+        chunk = sorted_users[i:i + chunk_size]
+        embed = await create_leaderboard_embed(chunk)
+        pages.append(embed)
+
+    return pages
+
+
+async def create_leaderboard_embed(entries):
+    embed = Embed(title="Leaderboard - Levels:")
+    for index, (user, member) in enumerate(entries, start=1):
         emoji = "🥇" if index == 1 else "🥈" if index == 2 else "🥉" if index == 3 else "  "
-        value = f"{emoji} {member.display_name}: {user.level if title == 'Leaderboard - Levels:' else user['balance'] + user['bank_balance']}"
+        value = f"{emoji} {member.display_name}: {user.level}"
         embed.add_field(name=f"#{index}", value=value, inline=False)
     return embed
 
@@ -552,7 +565,7 @@ class Misc(commands.Cog):
     @leaderboard.command(name="level", aliases=["lvl"], description="View the level leaderboard.")
     async def leaderboard_level(self, ctx):
         await ctx.defer()
-        top_users = await self.bot.db_client.get_top_users_by_level(limit=20)  # Change this to your database function
+        top_users = await self.bot.db_client.get_top_users_by_level(limit=200)
 
         guild = ctx.guild
 
@@ -567,8 +580,8 @@ class Misc(commands.Cog):
 
         sorted_users.sort(key=lambda entry: entry[0].level, reverse=True)
 
-        embed = await create_leaderboard_embed(ctx, "Leaderboard - Levels:", sorted_users)
-        await ctx.send(embed=embed)
+        pages = await create_leaderboard_pages(sorted_users)
+        await Paginator().start(ctx, pages=pages)
 
     @leaderboard.command(name="combined", aliases=["comb"], description="View the total balance leaderboard.")
     async def leaderboard_combined(self, ctx):
