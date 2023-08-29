@@ -38,12 +38,20 @@ fish_info = {
     'Cod': '🐡'
 }
 # TODO indo make better emotes
-resource_info = {
+mine_resource_info = {
     'Coal': {'emote': '⛏️', 'min_value': 5, 'max_value': 15, 'rarity': 0.6},
     'Iron': {'emote': '🔗', 'min_value': 10, 'max_value': 20, 'rarity': 0.5},
     'Gold': {'emote': '💰', 'min_value': 15, 'max_value': 25, 'rarity': 0.4},
     'Diamond': {'emote': '💎', 'min_value': 50, 'max_value': 500, 'rarity': 0.2},
     'Emerald': {'emote': '💚', 'min_value': 20, 'max_value': 250, 'rarity': 0.3}
+}
+
+# TODO indo make better emotes
+chop_resource_info = {
+    'Wood': {'emote': '🌳', 'min_value': 5, 'max_value': 15, 'rarity': 0.7},
+    'Oak': {'emote': '🌲', 'min_value': 10, 'max_value': 20, 'rarity': 0.6},
+    'Maple': {'emote': '🍁', 'min_value': 15, 'max_value': 25, 'rarity': 0.4},
+    'Birch': {'emote': '🌳', 'min_value': 20, 'max_value': 30, 'rarity': 0.3},
 }
 
 
@@ -107,19 +115,42 @@ class Misc(commands.Cog):
     def cog_unload(self):
         self.check_jail_loop.cancel()
 
+    # chop command
+    @commands.hybrid_command(name="chop", description="Go chopping!")
+    async def chop(self, ctx):
+        chosen_resource = \
+            random.choices(list(chop_resource_info.keys()),
+                           weights=[info['rarity'] for info in chop_resource_info.values()], k=1)[0]
+        resource = chop_resource_info[chosen_resource]
+        resource_amount = random.randint(1, 5)
+        resource_value = random.randint(resource['min_value'], resource['max_value'])
+
+        user_id = ctx.author.id
+        user_data = await ctx.bot.db_client.get_user(user_id=user_id)
+        user_balance = user_data.balance
+        await user_data.add_balance(resource_value * resource_amount, self.bot)
+        color = await generate_embed_color(ctx.author)
+
+        embed = discord.Embed(title="You chopped some resources!",
+                              description=f"You chopped {resource['emote']} {chosen_resource} x{resource_amount} worth ${resource_value}!, you now have ${user_balance + resource_value * resource_amount}!",
+                              color=color)
+        await ctx.send(embed=embed)
+
     # mining command
     @commands.hybrid_command(name="mine", description="Go mining!")
     async def mine(self, ctx):
         chosen_resource = \
-        random.choices(list(resource_info.keys()), weights=[info['rarity'] for info in resource_info.values()], k=1)[0]
-        resource = resource_info[chosen_resource]
+            random.choices(list(mine_resource_info.keys()),
+                           weights=[info['rarity'] for info in mine_resource_info.values()],
+                           k=1)[0]
+        resource = mine_resource_info[chosen_resource]
         resource_amount = random.randint(1, 10)
         resource_value = random.randint(resource['min_value'], resource['max_value'])
 
         user_id = ctx.author.id
         user_data = await ctx.bot.db_client.get_user(user_id=user_id)
         user_balance = user_data.balance
-        await user_data.add_balance(resource_value, self.bot)
+        await user_data.add_balance(resource_value * resource_amount, self.bot)
         color = await generate_embed_color(ctx.author)
         embed = discord.Embed(title="You mined some resources!",
                               description=f"You mined {resource['emote']} {chosen_resource} x{resource_amount} worth ${resource_value}! You now have ${user_balance + resource_value}!",
