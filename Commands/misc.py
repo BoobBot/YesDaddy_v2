@@ -28,7 +28,6 @@ jackpot_emoji = "<a:coins:1146124100369137666>"
 jackpot_payout = 500
 bonus_multiplier = 2
 
-
 fish_info = {
     'Salmon': '<:salmon:1146118005273677904>',
     'Trout': '<:trout:1146116187600715946>',
@@ -45,7 +44,6 @@ mine_resource_info = {
     'Diamond': {'emote': '<:diamond:1146121876381384744>', 'min_value': 50, 'max_value': 500, 'rarity': 0.2},
     'Emerald': {'emote': '<:Emerald:1146121911986819073>', 'min_value': 20, 'max_value': 250, 'rarity': 0.3}
 }
-
 
 chop_resource_info = {
     'Wood': {'emote': '<:wood:1146123952662515832>', 'min_value': 5, 'max_value': 15, 'rarity': 0.7},
@@ -111,9 +109,11 @@ class Misc(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.check_jail_loop.start()
+        self.change_role_color.start()
 
     def cog_unload(self):
         self.check_jail_loop.cancel()
+        self.change_role_color.cancel()
 
     # chop command
     @commands.hybrid_command(name="chop", description="Go chopping!")
@@ -746,6 +746,41 @@ class Misc(commands.Cog):
                     await user.subtract_balance(fine, self.bot)
                     await user.update_user({"jail": {}}, self.bot)
                     self.bot.log.info(f"User {user_id} has been released from jail.")
+
+    @tasks.loop(minutes=5)  # Run the task every 5 minutes
+    async def change_role_color(self):
+        guild = self.bot.get_guild(694641646780022818)  # Replace with your guild ID
+
+        role_id_1 = 694641646901395506  # Replace with the first role ID
+        role_id_2 = 694641646922498068  # Replace with the second role ID
+
+        role_1 = guild.get_role(role_id_1)
+        role_2 = guild.get_role(role_id_2)
+
+        if role_1 and role_2:
+            roles = [role_1, role_2]
+
+            # Filter out yellow role (30° <= hue < 60°)
+            roles = [role for role in roles if not self.is_yellow(role.color)]
+
+            if roles:
+                selected_role = random.choice(roles)
+                new_color = discord.Color.random()
+                await selected_role.edit(color=new_color)
+                print(f"Changed '{selected_role.name}' color to {new_color}.")
+
+    @staticmethod
+    def is_yellow(color):
+        hsv = color.to_hsv()
+        return 30 <= hsv[0] < 60
+
+    @change_role_color.before_loop
+    async def before_change_role_color(self):
+        await self.bot.wait_until_ready()
+        # Start the loop after the bot is ready
+        print("Starting the role color change loop")
+        # Run the loop once to initialize the role color
+        await self.change_role_color()
 
 
 async def setup(bot):
