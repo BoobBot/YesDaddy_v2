@@ -52,7 +52,7 @@ async def create_leaderboard_embed(ctx, title, entries):
     embed = Embed(title=title)
     for index, (user, member) in enumerate(entries[:10], start=1):
         emoji = "🥇" if index == 1 else "🥈" if index == 2 else "🥉" if index == 3 else "  "
-        value = f"{emoji} {member.display_name}: {user.level if title == 'Leaderboard - Levels:' else user.balance + user.bank_balance}"
+        value = f"{emoji} {member.display_name}: {user.level if title == 'Leaderboard - Levels:' else user['balance'] + user['bank_balance']}"
         embed.add_field(name=f"#{index}", value=value, inline=False)
     return embed
 
@@ -581,12 +581,12 @@ class Misc(commands.Cog):
         for user_data in top_users:
             #user_data.setdefault("jail", {})  # Provide a default value for 'jail' attribute
             user = user_data
-            member = ctx.guild.get_member(user.user_id)
+            member = ctx.guild.get_member(user['user_id'])
 
             if member:
                 sorted_users.append((user, member))
 
-        sorted_users.sort(key=lambda entry: entry[0].balance + entry[0].bank_balance, reverse=True)
+        sorted_users.sort(key=lambda entry: entry[0]['balance'] + entry[0]['bank_balance'], reverse=True)
 
         embed = await create_leaderboard_embed(ctx, "Leaderboard - Combined Balance:", sorted_users)
         await ctx.send(embed=embed)
