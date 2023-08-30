@@ -748,7 +748,7 @@ class Misc(commands.Cog):
                     await user.update_user({"jail": {}}, self.bot)
                     self.bot.log.info(f"User {user_id} has been released from jail.")
 
-    @tasks.loop(minutes=1)  # Run the task every 5 minutes
+    @tasks.loop(minutes=5)  # Run the task every 5 minutes
     async def change_role_color(self):
         print("Changing role color")
         guild = self.bot.get_guild(694641646780022818)
@@ -756,16 +756,12 @@ class Misc(commands.Cog):
         role_id_2 = 694641646922498068
         role_1 = guild.get_role(role_id_1)
         role_2 = guild.get_role(role_id_2)
-        #print(role_1)
-        #print(role_2)
         print(f"has {guild}")
 
         if role_1 and role_2:
             roles = [role_1, role_2]
-            print(roles)
             # Filter out yellow role (30° <= hue < 60°)
             roles = [role for role in roles if not self.is_yellow(role.color)]
-            print(roles)
 
             if roles:
                 selected_role = random.choice(roles)
