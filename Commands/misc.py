@@ -767,7 +767,7 @@ class Misc(commands.Cog):
                 selected_role = random.choice(roles)
                 new_color = discord.Color.random()
                 await selected_role.edit(color=new_color)
-                print(f"Changed '{selected_role.name}' color to {new_color}.")
+                print(f"Changed '{selected_role.id}' color to {new_color}.")
 
     @staticmethod
     def is_yellow(color):
