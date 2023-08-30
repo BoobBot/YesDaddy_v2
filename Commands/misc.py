@@ -370,7 +370,7 @@ class Misc(commands.Cog):
             if random_number < probability:
                 await user_data.jail_user(jail_time, fine, self.bot)
                 em.add_field(name="Punishment",
-                             value=f"You are in jail for {jail_time} hours and have to pay a fine of {fine}.")
+                             value=f"You are in jail for {jail_time} hours and have to pay a fine of {fine}. Run </bail:1145445177092231341> to do so.")
             await user_data.update_balance(user_total, self.bot)
 
             em.set_thumbnail(
@@ -446,7 +446,7 @@ class Misc(commands.Cog):
             if random_number < probability:
                 await user_data.jail_user(jail_time, fine, self.bot)
                 em.add_field(name="Punishment",
-                             value=f"You are in jail for {jail_time} hours and have to pay a fine of {fine}.")
+                             value=f"You are in jail for {jail_time} hours and have to pay a fine of {fine}. Run </bail:1145445177092231341> to do so.")
             await author_data.update_balance(total, self.bot)
             return await ctx.reply(embed=em)
 
