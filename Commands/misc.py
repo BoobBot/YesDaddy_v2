@@ -769,7 +769,6 @@ class Misc(commands.Cog):
 
             if roles:
                 selected_role = random.choice(roles)
-                print(selected_role)
                 new_color = discord.Color.random()
                 await selected_role.edit(color=new_color)
                 print(f"Changed '{selected_role.name}' color to {new_color}.")
