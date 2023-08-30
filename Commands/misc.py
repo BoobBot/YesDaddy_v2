@@ -748,8 +748,9 @@ class Misc(commands.Cog):
                     await user.update_user({"jail": {}}, self.bot)
                     self.bot.log.info(f"User {user_id} has been released from jail.")
 
-    @tasks.loop(minutes=5)  # Run the task every 5 minutes
+    @tasks.loop(minutes=1)  # Run the task every 5 minutes
     async def change_role_color(self):
+        print("Changing role color")
         guild = self.bot.get_guild(694641646780022818)
         role_id_1 = 694641646901395506
         role_id_2 = 694641646922498068
