@@ -771,8 +771,21 @@ class Misc(commands.Cog):
 
     @staticmethod
     def is_yellow(color):
-        hsv = color.to_hsv()
-        return 30 <= hsv[0] < 60
+        r, g, b = color.r / 255, color.g / 255, color.b / 255
+
+        max_value = max(r, g, b)
+        min_value = min(r, g, b)
+
+        if max_value == min_value:
+            hue = 0
+        elif max_value == r:
+            hue = 60 * ((g - b) / (max_value - min_value))
+        elif max_value == g:
+            hue = 60 * (2 + (b - r) / (max_value - min_value))
+        else:
+            hue = 60 * (4 + (r - g) / (max_value - min_value))
+
+        return 30 <= hue < 60
 
     @change_role_color.before_loop
     async def before_change_role_color(self):
