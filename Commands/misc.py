@@ -125,6 +125,7 @@ class Misc(commands.Cog):
         resource_amount = random.randint(1, 5)
         resource_value = random.randint(resource['min_value'], resource['max_value'])
 
+
         user_id = ctx.author.id
         user_data = await ctx.bot.db_client.get_user(user_id=user_id)
         user_balance = user_data.balance
@@ -749,22 +750,25 @@ class Misc(commands.Cog):
 
     @tasks.loop(minutes=5)  # Run the task every 5 minutes
     async def change_role_color(self):
-        guild = self.bot.get_guild(694641646780022818)  # Replace with your guild ID
-
-        role_id_1 = 694641646901395506  # Replace with the first role ID
-        role_id_2 = 694641646922498068  # Replace with the second role ID
-
+        guild = self.bot.get_guild(694641646780022818)
+        role_id_1 = 694641646901395506
+        role_id_2 = 694641646922498068
         role_1 = guild.get_role(role_id_1)
         role_2 = guild.get_role(role_id_2)
+        print(role_1)
+        print(role_2)
+        print(guild)
 
         if role_1 and role_2:
             roles = [role_1, role_2]
-
+            print(roles)
             # Filter out yellow role (30° <= hue < 60°)
             roles = [role for role in roles if not self.is_yellow(role.color)]
+            print(roles)
 
             if roles:
                 selected_role = random.choice(roles)
+                print(selected_role)
                 new_color = discord.Color.random()
                 await selected_role.edit(color=new_color)
                 print(f"Changed '{selected_role.name}' color to {new_color}.")
