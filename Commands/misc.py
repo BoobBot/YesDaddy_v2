@@ -756,9 +756,9 @@ class Misc(commands.Cog):
         role_id_2 = 694641646922498068
         role_1 = guild.get_role(role_id_1)
         role_2 = guild.get_role(role_id_2)
-        print(role_1)
-        print(role_2)
-        print(guild)
+        #print(role_1)
+        #print(role_2)
+        print(f"has {guild}")
 
         if role_1 and role_2:
             roles = [role_1, role_2]
