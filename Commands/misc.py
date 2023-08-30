@@ -125,7 +125,6 @@ class Misc(commands.Cog):
         resource_amount = random.randint(1, 5)
         resource_value = random.randint(resource['min_value'], resource['max_value'])
 
-
         user_id = ctx.author.id
         user_data = await ctx.bot.db_client.get_user(user_id=user_id)
         user_balance = user_data.balance
@@ -759,15 +758,14 @@ class Misc(commands.Cog):
         print(f"has {guild}")
 
         if role_1 and role_2:
-            roles = [role_1, role_2]
-            # Filter out yellow role (30° <= hue < 60°)
-            roles = [role for role in roles if not self.is_yellow(role.color)]
+            non_yellow_color = None
 
-            if roles:
-                selected_role = random.choice(roles)
-                new_color = discord.Color.random()
-                await selected_role.edit(color=new_color)
-                print(f"Changed '{selected_role.id}' color to {new_color}.")
+            while not non_yellow_color or self.is_yellow(non_yellow_color):
+                non_yellow_color = discord.Color.random()
+
+            await role_1.edit(color=non_yellow_color)
+            await role_2.edit(color=discord.Color.random())
+        print("Changed color.")
 
     @staticmethod
     def is_yellow(color):
