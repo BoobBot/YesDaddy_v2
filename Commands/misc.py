@@ -132,7 +132,7 @@ class Misc(commands.Cog):
         color = await generate_embed_color(ctx.author)
 
         embed = discord.Embed(title="You chopped some resources!",
-                              description=f"You chopped {resource['emote']} {chosen_resource} x{resource_amount} worth ${resource_value}!, you now have ${user_balance + resource_value * resource_amount}!",
+                              description=f"You chopped x{resource_amount} {resource['emote']} {chosen_resource} worth ${resource_value}!, you now have ${user_balance + resource_value * resource_amount}!",
                               color=color)
         await ctx.send(embed=embed)
 
@@ -153,7 +153,7 @@ class Misc(commands.Cog):
         await user_data.add_balance(resource_value * resource_amount, self.bot)
         color = await generate_embed_color(ctx.author)
         embed = discord.Embed(title="You mined some resources!",
-                              description=f"You mined {resource['emote']} {chosen_resource} x{resource_amount} worth ${resource_value}! You now have ${user_balance + resource_value}!",
+                              description=f"You mined x{resource_amount} {resource['emote']} {chosen_resource} worth ${resource_value}! You now have ${user_balance + resource_value}!",
                               color=color)
         await ctx.send(embed=embed)
 
