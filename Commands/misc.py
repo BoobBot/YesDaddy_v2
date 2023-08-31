@@ -363,7 +363,7 @@ class Misc(commands.Cog):
             probability = 0.3
             random_number = random.random()
 
-            em = discord.Embed(color=discord.Color.red(), description=crime_scenario + f" and got cuaght losing ${amount}, your lawyer will see you now.")
+            em = discord.Embed(color=discord.Color.red(), description=crime_scenario + f" and got caught losing ${amount}, your lawyer will see you now.")
             if random_number < probability:
                 await user_data.jail_user(jail_time, fine, self.bot)
                 em.add_field(name="Punishment",
