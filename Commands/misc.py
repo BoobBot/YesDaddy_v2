@@ -352,7 +352,7 @@ class Misc(commands.Cog):
             user_total = (user_balance + amount)
             await user_data.update_balance(user_total, self.bot)
 
-            em = discord.Embed(color=discord.Color.green(), description=crime_scenario + f"gaining ${amount}, congrats on getting away with it")
+            em = discord.Embed(color=discord.Color.green(), description=crime_scenario + f" gaining ${amount}, congrats on getting away with it")
             em.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/1145112557414264892/1145112660208275528/dc.png")
             return await ctx.reply(embed=em)
@@ -423,7 +423,7 @@ class Misc(commands.Cog):
             await user_data.update_balance(user_total, self.bot)
             await author_data.update_balance(author_total, self.bot)
 
-            em = discord.Embed(color=discord.Color.green(), description=rob_scenario + f"gaining ${user_loss_total}, congrats on being a bad person")
+            em = discord.Embed(color=discord.Color.green(), description=rob_scenario + f" gaining ${user_loss_total}, congrats on being a bad person")
             return await ctx.reply(embed=em)
         else:
             author_balance = author_data.balance
@@ -435,7 +435,7 @@ class Misc(commands.Cog):
             probability = 0.3
             random_number = random.random()
 
-            em = discord.Embed(color=discord.Color.red(), description=rob_scenario + f"failing miserably and losing ${author_loss_total}")
+            em = discord.Embed(color=discord.Color.red(), description=rob_scenario + f" failing miserably and losing ${author_loss_total}")
             if random_number < probability:
                 await user_data.jail_user(jail_time, fine, self.bot)
                 em.add_field(name="Punishment",
