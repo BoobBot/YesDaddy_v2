@@ -4,7 +4,7 @@ import random
 import subprocess
 import sys
 from typing import Optional, Literal
-from random import random
+import random
 
 import discord
 from discord import app_commands, Embed
