@@ -145,13 +145,18 @@ class Misc(commands.Cog):
         is_successful = random.random() <= monster["success_rate"]
 
         if is_successful:
+            user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+            cash = monster["value"]*random.randint(5, 10)
+            await user_data.add_balance(cash, self.bot)
             scenario = random.choice(success_list)
             scenario_text = scenario[0].format(author, monster["emoji"])
+            outcome = f"you were successful, You found ${cash}!"
         else:
             scenario = random.choice(fail_list)
             scenario_text = scenario[0].format(author, monster["emoji"])
+            outcome = "\nyou were unsuccessful, you fucking died, lol"
 
-        await ctx.send(scenario_text)
+        await ctx.send(scenario_text+outcome)
 
     # chop command
     @commands.hybrid_command(name="chop", description="Go chopping!")
@@ -184,7 +189,6 @@ class Misc(commands.Cog):
         resource = mine_resource_info[chosen_resource]
         resource_amount = random.randint(1, 10)
         resource_value = random.randint(resource['min_value'], resource['max_value'])
-
         user_id = ctx.author.id
         user_data = await ctx.bot.db_client.get_user(user_id=user_id)
         user_balance = user_data.balance
