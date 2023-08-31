@@ -199,7 +199,7 @@ class Core(commands.Cog):
     async def jail(self, ctx):
         await ctx.send("Please use subcommands: check, clear, or add.")
 
-    @jail.command(name="check", description="Check jail time of a user.")
+    @jail.command(name="check", description="Check jail time of a user.")0
     async def check_jail(self, ctx, user: commands.UserConverter):
         user_data = await self.bot.db_client.get_user(user.id)
         jail_info = user_data.jail
@@ -208,7 +208,9 @@ class Core(commands.Cog):
             await ctx.send(f"{user.display_name} is not in jail.")
         else:
             remaining_time = jail_info.get("remaining_time", 0)
-            await ctx.send(f"{user.display_name} is in jail for {remaining_time} seconds.")
+            release_time = user_data.is_in_jail()
+            remaining_timestamp = discord.utils.format_dt(release_time, style="R")
+            await ctx.send(f"{user.display_name} is in jail till {remaining_timestamp} seconds.")
 
     @jail.command(name="clear", description="Clear jail time of a user.")
     async def clear_jail(self, ctx, user: commands.UserConverter):
