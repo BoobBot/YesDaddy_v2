@@ -51,19 +51,18 @@ chop_resource_info = {
     'Maple': {'emote': '<:maple:1146126198901047366>', 'min_value': 15, 'max_value': 25, 'rarity': 0.4},
     'Birch': {'emote': '<:birch:1146125694313697330>', 'min_value': 20, 'max_value': 30, 'rarity': 0.3},
 }
-#TODO indo make more fix emotes
+# TODO indo make more fix emotes
 monsters = [
-    {"emoji": "🐉 Dragon", "value": 100, "success_rate": 0.7},
-    {"emoji": "🦊 Kitsune", "value": 50, "success_rate": 0.9},
-    {"emoji": "👻 Ancient Spirit", "value": 80, "success_rate": 0.6},
-    {"emoji": "🗡️ Rogue Bandit", "value": 20, "success_rate": 0.95},
-    {"emoji": "🧚‍♂️ Pixie", "value": 30, "success_rate": 0.85},
-    {"emoji": "🌊 Shapeshifter", "value": 70, "success_rate": 0.75},
-    {"emoji": "🪨 Rock Golem", "value": 90, "success_rate": 0.5},
-    {"emoji": "👻 Haunted Spirit", "value": 60, "success_rate": 0.8},
-    {"emoji": "🌀 Interdimensional Entity", "value": 120, "success_rate": 0.4},
-    {"emoji": "🗡️ Band of Bandits", "value": 40, "success_rate": 0.9},
-    # Add more monsters here...
+    {"emoji": "🐉 Dragon", "value": 100, "success_rate": 0.7, "rarity": 0.4},  # Legendary
+    {"emoji": "🦊 Kitsune", "value": 50, "success_rate": 0.9, "rarity": 0.5},  # Rare
+    {"emoji": "👻 Ancient Spirit", "value": 80, "success_rate": 0.6, "rarity": 0.3},  # Epic
+    {"emoji": "🗡️ Rogue Bandit", "value": 20, "success_rate": 0.95, "rarity": 0.9},  # Common
+    {"emoji": "🧚‍♂️ Pixie", "value": 30, "success_rate": 0.85, "rarity": 0.7},  # Uncommon
+    {"emoji": "🌊 Shapeshifter", "value": 70, "success_rate": 0.75, "rarity": 0.5},  # Rare
+    {"emoji": "🪨 Rock Golem", "value": 90, "success_rate": 0.5, "rarity": 0.7},  # Uncommon
+    {"emoji": "👻 Haunted Spirit", "value": 60, "success_rate": 0.8, "rarity": 0.9},  # Common
+    {"emoji": "🌀 Interdimensional Entity", "value": 120, "success_rate": 0.4, "rarity": 0.2},  # Mythical
+    {"emoji": "🗡️ Band of Bandits", "value": 40, "success_rate": 0.9, "rarity": 0.9}  # Common
 ]
 
 
@@ -391,7 +390,8 @@ class Misc(commands.Cog):
             user_total = (user_balance + amount)
             await user_data.update_balance(user_total, self.bot)
 
-            em = discord.Embed(color=discord.Color.green(), description=crime_scenario + f" gaining ${amount}, congrats on getting away with it")
+            em = discord.Embed(color=discord.Color.green(),
+                               description=crime_scenario + f" gaining ${amount}, congrats on getting away with it")
             em.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/1145112557414264892/1145112660208275528/dc.png")
             return await ctx.reply(embed=em)
@@ -402,7 +402,8 @@ class Misc(commands.Cog):
             probability = 0.3
             random_number = random.random()
 
-            em = discord.Embed(color=discord.Color.red(), description=crime_scenario + f" and got caught losing ${amount}, your lawyer will see you now.")
+            em = discord.Embed(color=discord.Color.red(),
+                               description=crime_scenario + f" and got caught losing ${amount}, your lawyer will see you now.")
             if random_number < probability:
                 await user_data.jail_user(jail_time, fine, self.bot)
                 em.add_field(name="Punishment",
@@ -462,7 +463,8 @@ class Misc(commands.Cog):
             await user_data.update_balance(user_total, self.bot)
             await author_data.update_balance(author_total, self.bot)
 
-            em = discord.Embed(color=discord.Color.green(), description=rob_scenario + f" gaining ${user_loss_total}, congrats on being a bad person")
+            em = discord.Embed(color=discord.Color.green(),
+                               description=rob_scenario + f" gaining ${user_loss_total}, congrats on being a bad person")
             return await ctx.reply(embed=em)
         else:
             author_balance = author_data.balance
@@ -474,7 +476,8 @@ class Misc(commands.Cog):
             probability = 0.3
             random_number = random.random()
 
-            em = discord.Embed(color=discord.Color.red(), description=rob_scenario + f" failing miserably and losing ${author_loss_total}")
+            em = discord.Embed(color=discord.Color.red(),
+                               description=rob_scenario + f" failing miserably and losing ${author_loss_total}")
             if random_number < probability:
                 await user_data.jail_user(jail_time, fine, self.bot)
                 em.add_field(name="Punishment",
