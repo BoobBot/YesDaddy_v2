@@ -356,7 +356,8 @@ class Gambling(commands.Cog):
     @app_commands.describe(bet='the amount of money to bet')
     @app_commands.describe(choice='the number to bet on')
     @app_commands.describe(color='the color to bet on')
-    async def roulette(self, ctx, bet: int, choice: Optional[int] = None, color: Optional[Literal['red', 'black']] = None):
+    async def roulette(self, ctx, bet: int, choice: Optional[int] = None,
+                       color: Optional[Literal['red', 'black']] = None):
         if bet <= 0:
             await ctx.send("Invalid bet. Please bet a positive amount.")
             return
@@ -459,6 +460,56 @@ class Gambling(commands.Cog):
         else:
             await ctx.send(
                 f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. It's a tie!")
+
+    @commands.hybrid_command(name="wheel", description="Spin the wheel of fortune.")
+    @app_commands.describe(bet='the amount of money to bet')
+    async def wheel(self, ctx, bet: int):
+        if bet <= 0:
+            await ctx.send("Invalid bet. Please bet a positive amount.")
+            return
+        if bet >= 500:
+            await ctx.send("Invalid bet. Please bet under 500.")
+            return
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_balance = user_data.balance
+        if bet > user_balance:
+            await ctx.send("You don't have enough money to do this.")
+            return
+
+        # Generate the wheel
+        wheel = ["red", "blue", "green", "yellow", "orange", "purple", "pink"]
+
+        # Spin the wheel
+        result = random.choice(wheel)
+
+        # Determine the payout
+        if result == "red":
+            winnings_multiplier = 2
+        elif result in ["blue", "green", "yellow"]:
+            winnings_multiplier = 3
+        elif result in ["orange", "purple", "pink"]:
+            winnings_multiplier = 5
+
+        # Determine the winner
+        if result == "red":
+            result = "win"
+        elif result in ["blue", "green", "yellow"]:
+            result = "win"
+        elif result in ["orange", "purple", "pink"]:
+            result = "win"
+        else:
+            result = "lose"
+
+        if result == "win":
+            winnings = bet * winnings_multiplier
+            await user_data.update_balance(user_balance + winnings, self.bot)
+            await ctx.send(f"The result was {result}, you win {winnings} coins!")
+        elif result == "lose":
+            await user_data.update_balance(user_balance - bet, self.bot)
+            await ctx.send(f"The result was {result}, you lose {bet} coins.")
+        else:
+            await ctx.send(f"The result was {result}, it's a tie!")
+
 
 async def setup(bot):
     await bot.add_cog(Gambling(bot))
