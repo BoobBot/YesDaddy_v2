@@ -193,8 +193,8 @@ class Gambling(commands.Cog):
             return await ctx.send(
                 f"Hey Whore, You don't have enough money to do this lul, your balance is ${user_balance}")
 
-        coin_tails = ("Tails", "<:cointails:1145284840644694066>")
-        coin_heads = ("Heads", "<:coinheads:1145283300009713775>")
+        coin_tails = ("Tails", "<:cointails:1145284840644694066>", "https://cdn.discordapp.com/attachments/1145071029954297888/1145280717421559828/coinheads-removebg-preview.png")
+        coin_heads = ("Heads", "<:coinheads:1145283300009713775>", "https://cdn.discordapp.com/attachments/1145071029954297888/1145284778929704990/cointails-removebg-preview_1.png")
 
         rng = random.randint(0, 9)
         res = coin_heads if rng > 4 else coin_tails
@@ -204,8 +204,7 @@ class Gambling(commands.Cog):
             msg = f"You Won ${bet}"
             em = discord.Embed(title="", description=f"{msg}",
                                color=discord.Color.green())
-            em.set_thumbnail(
-                url="https://cdn.discordapp.com/attachments/1145071029954297888/1145280717421559828/coinheads-removebg-preview.png")
+            em.set_thumbnail(url=res[2])
             em.set_author(
                 name=f"{user}'s Coinflip",
                 icon_url="https://cdn.discordapp.com/attachments/1145071029954297888/1145449093326442526/coinflip-removebg-preview.png",
@@ -222,8 +221,7 @@ class Gambling(commands.Cog):
             msg = f"You Lost ${bet}"
             em = discord.Embed(title="", description=f"{msg}",
                                color=discord.Color.red())
-            em.set_thumbnail(
-                url="https://cdn.discordapp.com/attachments/1145071029954297888/1145284778929704990/cointails-removebg-preview_1.png")
+            em.set_thumbnail(url=res[2])
             em.set_author(
                 name=f"{user}'s Coinflip",
                 icon_url="https://cdn.discordapp.com/attachments/1145071029954297888/1145449093326442526/coinflip-removebg-preview.png",
