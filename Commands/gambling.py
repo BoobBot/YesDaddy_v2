@@ -409,5 +409,56 @@ class Gambling(commands.Cog):
         else:
             await ctx.send(f"The result was {result}, it's a tie!")
 
+    @commands.hybrid_command(name="blackjack", description="Play a game of blackjack.")
+    @app_commands.describe(bet='the amount of money to bet')
+    async def blackjack(self, ctx, bet: int):
+        if bet <= 0:
+            await ctx.send("Invalid bet. Please bet a positive amount.")
+            return
+        if bet >= 500:
+            await ctx.send("Invalid bet. Please bet under 500.")
+            return
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_balance = user_data.balance
+        if bet > user_balance:
+            await ctx.send("You don't have enough money to do this.")
+            return
+
+        # Generate the cards
+        cards = [2, 3, 4, 5, 6, 7, 8, 9, 10] * 4 + [11, 12, 13, 14] * 4
+
+        # Draw the cards
+        user_card1 = random.choice(cards)
+        user_card2 = random.choice(cards)
+        bot_card1 = random.choice(cards)
+        bot_card2 = random.choice(cards)
+
+        # Determine the winner
+        if user_card1 + user_card2 > 21:
+            user_result = "lose"
+        elif user_card1 + user_card2 == 21:
+            user_result = "win"
+        elif bot_card1 + bot_card2 > 21:
+            user_result = "win"
+        elif bot_card1 + bot_card2 == 21:
+            user_result = "lose"
+        else:
+            user_result = "tie"
+
+        winnings_multiplier = 2
+
+        if user_result == "win":
+            winnings = bet * winnings_multiplier
+            await user_data.update_balance(user_balance + winnings, self.bot)
+            await ctx.send(
+                f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. You win {winnings} coins!")
+        elif user_result == "lose":
+            await user_data.update_balance(user_balance - bet, self.bot)
+            await ctx.send(
+                f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. You lose {bet} coins.")
+        else:
+            await ctx.send(
+                f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. It's a tie!")
+
 async def setup(bot):
     await bot.add_cog(Gambling(bot))
