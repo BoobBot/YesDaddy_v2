@@ -619,376 +619,1666 @@ fake_robbery_scenarios = [
 
 ]
 
-funny_crime_scenarios = [
-    ("{0} Attempted to steal the concept of 'personal space,' but got too close to everyone's comfort zone,", False),
-    ("In a quirky move, {0} tried to steal all the 'lost socks' in town, causing laundry day chaos,", False),
-    ("{0} Successfully staged a 'banana peel' heist, leaving a trail of hilarious slip-ups in their wake,", True),
-    ("In a playful twist, {0} attempted to rob a prank store, but got pranked by the employees instead,", False),
-    ("{0} Tried to steal the town's supply of ice cream, but the ice cream truck drove away before they could escape,",
-     False),
-    ("In a daring scheme, {0} tried to steal a rainbow's end, only to find a pot of glitter instead of gold,", False),
-    ("{0} Attempted to rob a comedy club's open mic night, but got caught up in the laughter of the audience,", False),
-    ("In an ambitious endeavor, {0} tried to steal the concept of 'good vibes,' leaving behind a trail of positivity,",
-     False),
-    ("{0} Successfully organized a 'silly string' heist during a parade, coating the entire route in colorful chaos,",
-     True),
-    (
-        "In a mischievous move, {0} tried to steal a street performer's hat full of tips, but it was filled with rubber ducks,",
-        False),
-    ("{0} Attempted to rob a joke shop, but ended up setting off a chain reaction of laughter instead,", False),
-    ("In an audacious twist, {0} tried to steal the concept of 'awkward silence,' leaving everyone speechless,", False),
-    (
-        "{0} Successfully staged a 'whoopie cushion' heist during a formal event, leading to unexpected bursts of laughter,",
-        True),
-    (
-        "In a whimsical move, {0} attempted to steal a magician's top hat, but pulled out endless amounts of scarves instead,",
-        False),
-    ("{0} Tried to steal a cloud shaped like a treasure chest, but got rained on and lost their loot,", False),
-    ("In a creative plot, {0} tried to rob a bubblegum factory, only to end up in a sticky situation,", False),
-    ("{0} Attempted to steal the moon from the night sky, but ended up with a handful of stardust,", False),
-    ("In a hilarious move, {0} tried to rob a hair salon, but got tangled up in their own wig collection,", False),
-    ("{0} Successfully organized a 'slow-motion' heist at a snail racing event, leaving everyone in stitches,", True),
-    (
-        "In a playful twist, {0} attempted to steal the 'Do Not Disturb' signs from a hotel, claiming to be the master of solitude,",
-        False),
-    ("{0} Tried to rob a balloon animal convention, but ended up with a room full of inflated animals instead,", False),
-    ("In an audacious scheme, {0} tried to steal the concept of 'Monday blues,' but ended up with a case of bad luck,",
-     False),
-    ("{0} Attempted to steal the Eiffel Tower during a vacation, claiming it as a 'souvenir,'", False),
-    ("In a daring heist, {0} tried to steal the scent of freshly baked cookies, but ended up smelling like vanilla,",
-     False),
-    ("{0} Successfully staged a 'reverse robbery' where they handed out candy and balloons to bank customers,", True),
-    ("In a mischievous twist, {0} tried to steal the spotlight at a comedy show, but became the punchline instead,",
-     False),
-    ("{0} Attempted to rob a rubber duck store, but their escape plan involved floating away in a giant rubber ducky,",
-     False),
-    ("In a creative move, {0} tried to steal the 'last piece of cake' from a birthday party, leading to a cake war,",
-     False),
-    ("{0} Successfully organized a 'pillow pet' parade during their attempt to steal a pillow factory's inventory,",
-     True),
-    ("In an imaginative endeavor, {0} tried to steal the concept of 'daydreaming,' leaving everyone lost in thought,",
-     False),
-    ("{0} Attempted to rob a tickle fight tournament, but couldn't stop laughing long enough to execute the plan,",
-     False),
-    ("In a whimsical twist, {0} tried to steal all the clown noses in town, causing a wave of laughter,", False),
-    ("{0} Successfully organized a 'whoopie cushion' heist during an event, leaving everyone laughing in surprise,",
-     True),
-    (
-        "In a light-hearted move, {0} tried to steal the concept of 'Monday blues,' but got stuck in a loop of fun instead,",
-        False),
-    ("{0} Attempted to rob a laughter yoga class, but left laughing too hard to continue,", False),
-    ("In a playful endeavor, {0} tried to steal the concept of 'smiles,' leaving everyone grinning from ear to ear,",
-     False),
-    (
-        "{0} Successfully staged a 'giant whoopie cushion' heist, leaving the city's landmarks with surprise sound effects,",
-        True),
-    (
-        "In an audacious move, {0} tried to steal the world's largest rubber chicken, but it turned out to be an 'egg-streme' decoy,",
-        False),
-    ("{0} Attempted to rob a music store, but ended up leading an impromptu dance party instead,", False),
-    (
-        "In a whimsical twist, {0} tried to steal the concept of 'rainbows,' leaving everyone searching the sky for colors,",
-        False),
-    ("{0} Successfully organized a 'laughter yoga' heist, leaving everyone in fits of laughter,", True),
-    ("In a quirky move, {0} attempted to steal all the 'lost socks' in town, causing laundry day chaos,", False),
-    ("{0} Tried to steal the concept of 'personal space,' but got too close to everyone's comfort zone,", False),
-    (
-        "In a playful plot, {0} tried to steal the 'recipe for laughter' from a comedy club, but it was too secret to find,",
-        False),
-    ("{0} Attempted to rob a pillow fight tournament, but got caught up in the feather frenzy,", False),
-    ("In a daring move, {0} tried to steal the concept of 'good vibes,' leaving behind a trail of positivity,", False),
-    ("{0} Successfully organized a 'silly string' heist during a parade, coating the entire route in colorful chaos,",
-     True),
-    (
-        "In a mischievous endeavor, {0} tried to steal a street performer's hat full of tips, but it was filled with rubber ducks,",
-        False),
-    ("{0} Attempted to rob a tickle fight tournament, but got caught up in the laughter and couldn't continue,", False),
-    ("In a playful twist, {0} tried to steal a magician's top hat, but pulled out endless amounts of scarves instead,",
-     False),
-    ("{0} Successfully staged a 'banana peel' heist, leaving a trail of hilarious slip-ups in their wake,", True),
-    ("In a quirky move, {0} attempted to steal the 'Lost and Found' box, claiming it as their own treasure chest,",
-     False),
-    ("{0} Tried to steal the town's supply of ice cream, but the ice cream truck drove away before they could escape,",
-     False),
-    (
-        "In a whimsical scheme, {0} tried to steal the concept of 'daydreaming,' leaving everyone lost in thought,",
-        False),
-    ("{0} Successfully organized a 'pie throwing' event during their attempt to rob a bakery,", True),
-    ("In a playful move, {0} tried to steal the 'last slice of pizza,' igniting a pizza-loving frenzy,", False),
-    ("{0} Attempted to rob a comedy movie marathon, but got caught up in the hilarity on screen,", False),
-    ("In a daring endeavor, {0} tried to steal the concept of 'tickling,' leaving everyone giggling uncontrollably,",
-     False),
-    ("{0} Successfully staged a 'chocolate fountain' heist, turning a party into a sweet mess,", True),
-    (
-        "In an imaginative move, {0} tried to steal the concept of 'daylight saving time,' leaving everyone an hour behind,",
-        False),
-    ("{0} Attempted to rob a balloon animal convention, but got caught in a balloon animal knot,", False),
-    ("In a hilarious twist, {0} tried to steal the concept of 'Monday blues,' but everyone celebrated instead,", False),
-    ("{0} Successfully organized a 'carnival game' heist, leaving the fairgrounds buzzing with laughter,", True),
-    ("In a whimsical move, {0} attempted to steal a magician's wand, but could only produce rubber chickens,", False),
-    (
-        "{0} Tried to steal a cloud shaped like a treasure chest, but it slipped through their fingers like watercolor paint,",
-        False),
-    ("In a creative scheme, {0} tried to steal the 'Do Not Disturb' signs from a hotel, only to be caught napping,",
-     False),
+funny_crime_scenarios = [(
+    "In an imaginative endeavor, {0} tried to steal the concept of 'daydreaming,' leaving everyone lost in thought,",
+    False), (
+    "In a quirky move, {0} tried to steal all the 'lost socks' in town, causing laundry day chaos,",
+    False), (
+    '{0} Attempted to rob a comedy movie marathon, but got caught up in the hilarity on screen,',
+    False), (
+    "{0} Successfully organized a 'whoopie cushion' heist during an event, leaving everyone laughing in surprise,",
+    True), (
+    "{0} Successfully organized a 'prank war' heist, turning an ordinary day into a hilarious battleground,",
+    True), (
+    "In a light-hearted move, {0} tried to steal the concept of 'Monday blues,' but got stuck in a loop of fun instead,",
+    False), (
+    "In a playful move, {0} attempted to steal the 'Recipe for Happiness,' but it required too many ingredients,",
+    False), (
+    "{0} Attempted to steal the Eiffel Tower during a vacation, claiming it as a 'souvenir,'",
+    False), (
+    "In a playful move, {0} tried to steal the 'Recipe for Happiness,' but it required too many ingredients,",
+    False), (
+    "{0} Attempted to rob a tickle fight tournament, but got caught up in the laughter and couldn't continue,",
+    False), (
+    '{0} Attempted to steal the moon from the night sky, but ended up with a handful of stardust,',
+    False), (
+    "In an audacious twist, {0} tried to steal a clown's horn, leading to a parade of honking cars,",
+    False), (
+    "In a daring scheme, {0} tried to steal a rainbow's end, only to find a pot of glitter instead of gold,",
+    False), (
+    "{0} Successfully organized a 'pillow pet' parade during their attempt to steal a pillow factory's inventory,",
+    True), (
+    "In a quirky move, {0} attempted to steal the 'Lost and Found' box, claiming it as their own treasure chest,",
+    False), (
+    "In a whimsical move, {0} tried to steal a mime's invisible props, but ended up pretending to be trapped in a box,",
+    False), (
+    "In a playful twist, {0} tried to steal a magician's top hat, but pulled out endless amounts of scarves instead,",
+    False), (
+    "{0} Attempted to steal the concept of 'personal space,' but got too close to everyone's comfort zone,",
+    False), (
+    "In a daring move, {0} tried to steal the concept of 'good vibes,' leaving behind a trail of positivity,",
+    False), (
+    "{0} Successfully organized a 'silly string' heist during a parade, coating the entire route in colorful chaos,",
+    True), (
+    "{0} Successfully organized a 'slow-motion' heist at a snail racing event, leaving everyone in stitches,",
+    True), (
+    'In a whimsical twist, {0} tried to steal all the clown noses in town, causing a wave of laughter,',
+    False), (
+    "In a mischievous move, {0} tried to steal a street performer's hat full of tips, but it was filled with rubber ducks,",
+    False), (
+    "{0} Successfully organized a 'laughter yoga' heist, leaving everyone in fits of laughter,",
+    True), (
+    "{0} Successfully staged a 'silly string' heist, leaving the entire city covered in vibrant chaos,",
+    True), (
+    "In an audacious twist, {0} tried to steal the concept of 'good vibes,' but got caught in a wave of positivity,",
+    False),
+    ("{0} Successfully staged a 'tug-of-war' heist, pitting laughter against seriousness,", True),
     (
         "{0} Successfully staged a 'hot dog eating contest' heist, leaving everyone with full bellies and laughter,",
         True),
-    (
+    ('{0} Attempted to rob a laughter yoga class, but left feeling lighter than air,', False), (
+        "In a playful move, {0} tried to steal the world's largest rubber band ball, but it bounced back,",
+        False), (
+        '{0} Attempted to rob a pillow fight flash mob, but got caught in a flurry of feathers,',
+        False), (
+        "In a quirky move, {0} attempted to steal all the 'lost socks' in town, causing laundry day chaos,",
+        False), (
+        '{0} Attempted to rob a joke shop, but ended up setting off a chain reaction of laughter instead,',
+        False), (
+        "{0} Successfully staged a 'giant bubble' heist, leaving the streets filled with floating fun,",
+        True), (
+        "In a playful move, {0} tried to steal the 'last slice of pizza,' igniting a pizza-loving frenzy,",
+        False), (
+        "{0} Successfully staged a 'giant whoopie cushion' heist, leaving the city's landmarks with surprise sound effects,",
+        True), (
+        "{0} Successfully organized a 'pie throwing' event during their attempt to rob a bakery,",
+        True), (
+        "In a whimsical move, {0} attempted to steal a magician's top hat, but pulled out endless amounts of scarves instead,",
+        False), (
+        "In a playful move, {0} attempted to steal a mime's invisible props, but got tangled in imaginary ropes,",
+        False), (
+        "{0} Successfully organized a 'carnival game' heist, leaving the fairgrounds buzzing with laughter,",
+        True), (
         "In a light-hearted twist, {0} attempted to steal a street performer's tip jar, but ended up juggling coins instead,",
+        False), (
+        '{0} Tried to steal a cloud shaped like a treasure chest, but got rained on and lost their loot,',
+        False), (
+        "{0} Attempted to rob a comedy club's open mic night, but got caught up in the laughter of the audience,",
+        False), (
+        "In a daring heist, {0} tried to steal the concept of 'awkward silence,' but ended up in an endless loop of conversations,",
         False),
-    ("{0} Attempted to rob a laughter yoga class, but left feeling lighter than air,", False),
-    ("In a playful move, {0} tried to steal the world's largest rubber band ball, but it bounced back,", False),
-    ("{0} Successfully organized a 'prank war' heist, turning an ordinary day into a hilarious battleground,", True),
-    ("In an audacious twist, {0} tried to steal a clown's horn, leading to a parade of honking cars,", False),
-    ("{0} Attempted to rob a pillow fight flash mob, but got caught in a flurry of feathers,", False),
+    ('{0} Attempted to rob a laughter yoga class, but left laughing too hard to continue,', False),
     (
-        "In a whimsical move, {0} tried to steal a mime's invisible props, but ended up pretending to be trapped in a box,",
-        False),
-    ("{0} Successfully staged a 'giant bubble' heist, leaving the streets filled with floating fun,", True),
-    ("In a mischievous twist, {0} tried to steal the 'Recipe for Disaster,' but it was too complicated to follow,",
-     False),
-    ("{0} Attempted to rob a 'bad joke' stand, but all the jokes were so bad that they ran away instead,", False),
-    (
+        "In a creative move, {0} tried to steal the 'last piece of cake' from a birthday party, leading to a cake war,",
+        False), (
+        "In a whimsical move, {0} attempted to steal a magician's wand, but could only produce rubber chickens,",
+        False), (
+        "{0} Tried to steal the town's supply of ice cream, but the ice cream truck drove away before they could escape,",
+        False), (
+        "In an imaginative move, {0} tried to steal the concept of 'daylight saving time,' leaving everyone an hour behind,",
+        False), (
+        "In a whimsical scheme, {0} tried to steal the concept of 'daydreaming,' leaving everyone lost in thought,",
+        False), (
+        "In a playful twist, {0} attempted to steal the 'Do Not Disturb' signs from a hotel, claiming to be the master of solitude,",
+        False), (
+        '{0} Attempted to rob a pillow fight tournament, but got caught up in the feather frenzy,',
+        False), (
+        "{0} Successfully staged a 'reverse robbery' where they handed out candy and balloons to bank customers,",
+        True), (
+        "In a hilarious twist, {0} tried to steal the concept of 'Monday blues,' but everyone celebrated instead,",
+        False), (
+        "{0} Tried to steal the concept of 'personal space,' but got too close to everyone's comfort zone,",
+        False), (
+        "{0} Attempted to rob a tickle fight tournament, but couldn't stop laughing long enough to execute the plan,",
+        False), (
+        "In a daring endeavor, {0} tried to steal the concept of 'tickling,' leaving everyone giggling uncontrollably,",
+        False), (
+        "In a creative scheme, {0} tried to steal the 'Do Not Disturb' signs from a hotel, only to be caught napping,",
+        False), (
+        'In a daring heist, {0} tried to steal the scent of freshly baked cookies, but ended up smelling like vanilla,',
+        False), (
+        "In an audacious scheme, {0} tried to steal the concept of 'Monday blues,' but ended up with a case of bad luck,",
+        False), (
+        "{0} Successfully staged a 'banana peel' heist, leaving a trail of hilarious slip-ups in their wake,",
+        True), (
+        "In an audacious twist, {0} tried to steal the concept of 'awkward silence,' leaving everyone speechless,",
+        False), (
+        "{0} Successfully organized a 'silly walk' heist, turning the streets into a whimsical parade,",
+        True), (
+        "{0} Attempted to rob a 'bad joke' stand, but all the jokes were so bad that they gave up,",
+        False), (
+        "In a mischievous endeavor, {0} tried to steal a street performer's hat full of tips, but it was filled with rubber ducks,",
+        False), (
+        '{0} Tried to steal a cloud shaped like a treasure chest, but it slipped through their fingers like watercolor paint,',
+        False), (
+        '{0} Attempted to rob a balloon animal convention, but got caught in a balloon animal knot,',
+        False), (
+        "{0} Successfully staged a 'chocolate fountain' heist, turning a party into a sweet mess,",
+        True), (
+        '{0} Attempted to rob a music store, but ended up leading an impromptu dance party instead,',
+        False), (
+        "In a playful endeavor, {0} tried to steal the concept of 'smiles,' leaving everyone grinning from ear to ear,",
+        False), (
         "In a daring heist, {0} tried to steal the concept of 'awkward silence,' but ended up in an endless loop of conversation,",
-        False),
-    ("{0} Successfully organized a 'tug-of-war' heist, pitting laughter against seriousness,", True),
-    ("In a playful move, {0} attempted to steal the 'Recipe for Happiness,' but it required too many ingredients,",
-     False),
-    ("{0} Attempted to rob a 'cheesy joke' competition, but the puns proved too much to handle,", False),
-    ("In a comedic twist, {0} tried to steal a comedian's microphone, but all they got was feedback,", False),
-    ("{0} Successfully staged a 'silly string' heist, leaving the entire city covered in vibrant chaos,", True),
-    ("In a quirky move, {0} attempted to steal a street musician's tambourine, but it ended up leading a parade,",
-     False),
-    ("{0} Tried to steal a cloud shaped like a treasure chest, but it drifted away like a dream,", False),
-    ("In a lighthearted plot, {0} tried to steal all the 'lost socks' in town, leaving everyone puzzled,", False),
-    ("{0} Attempted to rob a circus, but got distracted by juggling and tightrope walking,", False),
-    ("In an audacious twist, {0} tried to steal the concept of 'good vibes,' but got caught in a wave of positivity,",
-     False),
-    ("{0} Successfully organized a 'silly walk' heist, turning the streets into a whimsical parade,", True),
-    ("In a playful move, {0} attempted to steal a mime's invisible props, but got tangled in imaginary ropes,", False),
-    ("{0} Attempted to rob a 'bad joke' stand, but all the jokes were so bad that they gave up,", False),
+        False), (
+        "{0} Successfully organized a 'tug-of-war' heist, pitting laughter against seriousness,",
+        True), (
+        "In an audacious move, {0} tried to steal the world's largest rubber chicken, but it turned out to be an 'egg-streme' decoy,",
+        False), (
+        "In a whimsical twist, {0} tried to steal the concept of 'rainbows,' leaving everyone searching the sky for colors,",
+        False), (
+        "In a comedic twist, {0} tried to steal a comedian's microphone, but all they got was feedback,",
+        False), (
+        'In a creative plot, {0} tried to rob a bubblegum factory, only to end up in a sticky situation,',
+        False), (
+        '{0} Tried to rob a balloon animal convention, but ended up with a room full of inflated animals instead,',
+        False), (
+        '{0} Tried to steal a cloud shaped like a treasure chest, but it drifted away like a dream,',
+        False), (
+        '{0} Attempted to rob a circus, but got distracted by juggling and tightrope walking,', False),
     (
-        "In a daring heist, {0} tried to steal the concept of 'awkward silence,' but ended up in an endless loop of conversations,",
-        False),
-    ("{0} Successfully staged a 'tug-of-war' heist, pitting laughter against seriousness,", True),
-    ("In a playful move, {0} tried to steal the 'Recipe for Happiness,' but it required too many ingredients,", False),
-    ("{0} Attempted to rob a 'cheesy joke' competition, but the puns proved too much to handle,", False),
-    ("In a comedic twist, {0} tried to steal a comedian's microphone, but all they got was feedback,", False),
-    ("{0} Successfully organized a 'silly string' heist, leaving the entire city covered in vibrant chaos,", True),
-    ("In a quirky move, {0} attempted to steal a street musician's tambourine, but it ended up leading a parade,",
-     False),
-    ("{0} Tried to steal a cloud shaped like a treasure chest, but it drifted away like a dream,", False),
-    ("In a lighthearted plot, {0} tried to steal all the 'lost socks' in town, leaving everyone puzzled,", False),
-    ("{0} Attempted to rob a circus, but got distracted by juggling and tightrope walking,", False),
-    ("In an audacious twist, {0} tried to steal the concept of 'good vibes,' but got caught in a wave of positivity,",
-     False),
-    ("{0} Successfully organized a 'silly walk' heist, turning the streets into a whimsical parade,", True),
-    ("In a playful move, {0} attempted to steal a mime's invisible props, but got tangled in imaginary ropes,", False),
-    ("{0} Attempted to rob a 'bad joke' stand, but all the jokes were so bad that they gave up,", False),
+        'In a hilarious move, {0} tried to rob a hair salon, but got tangled up in their own wig collection,',
+        False), (
+        "{0} Successfully staged a 'whoopie cushion' heist during a formal event, leading to unexpected bursts of laughter,",
+        True), (
+        "In a playful plot, {0} tried to steal the 'recipe for laughter' from a comedy club, but it was too secret to find,",
+        False), (
+        'In a playful twist, {0} attempted to rob a prank store, but got pranked by the employees instead,',
+        False), (
+        "In an ambitious endeavor, {0} tried to steal the concept of 'good vibes,' leaving behind a trail of positivity,",
+        False), (
+        '{0} Attempted to rob a rubber duck store, but their escape plan involved floating away in a giant rubber ducky,',
+        False), (
+        "{0} Attempted to rob a 'bad joke' stand, but all the jokes were so bad that they ran away instead,",
+        False), (
+        "In a lighthearted plot, {0} tried to steal all the 'lost socks' in town, leaving everyone puzzled,",
+        False), (
+        "{0} Attempted to rob a 'cheesy joke' competition, but the puns proved too much to handle,",
+        False), (
+        "{0} Successfully organized a 'silly string' heist, leaving the entire city covered in vibrant chaos,",
+        True), (
+        "In a quirky move, {0} attempted to steal a street musician's tambourine, but it ended up leading a parade,",
+        False), (
+        'In a mischievous twist, {0} tried to steal the spotlight at a comedy show, but became the punchline instead,',
+        False), (
+        "In a mischievous twist, {0} tried to steal the 'Recipe for Disaster,' but it was too complicated to follow,",
+        False)]
+
+adv_scenarios = [
     (
-        "In a daring heist, {0} tried to steal the concept of 'awkward silence,' but ended up in an endless loop of conversations,",
-        False),
-    ("{0} Successfully staged a 'tug-of-war' heist, pitting laughter against seriousness,", True),
-    ("In a playful move, {0} tried to steal the 'Recipe for Happiness,' but it required too many ingredients,", False),
-    ("{0} Attempted to rob a 'cheesy joke' competition, but the puns proved too much to handle,", False),
-    ("In a comedic twist, {0} tried to steal a comedian's microphone, but all they got was feedback,", False),
-    ("{0} Successfully organized a 'silly string' heist, leaving the entire city covered in vibrant chaos,", True),
-    ("In a quirky move, {0} attempted to steal a street musician's tambourine, but it ended up leading a parade,",
-     False),
-    ("{0} Tried to steal a cloud shaped like a treasure chest, but it drifted away like a dream,", False),
-    ("In a lighthearted plot, {0} tried to steal all the 'lost socks' in town, leaving everyone puzzled,", False),
-    ("{0} Attempted to rob a circus, but got distracted by juggling and tightrope walking,", False),
-    ("In an audacious twist, {0} tried to steal the concept of 'good vibes,' but got caught in a wave of positivity,",
-     False),
-    ("{0} Successfully organized a 'silly walk' heist, turning the streets into a whimsical parade,", True),
-    ("In a playful move, {0} attempted to steal a mime's invisible props, but got tangled in imaginary ropes,", False),
-    ("{0} Attempted to rob a 'bad joke' stand, but all the jokes were so bad that they gave up,", False),
+        "{0} bravely enters a dark cave, but is suddenly attacked by {1}! With determination and skill, {0} manages to defeat the fearsome creature and emerges victorious. The cave's walls tremble as the echoes of {0}'s triumph resound, and the air is thick with a sense of accomplishment and newfound strength.",
+        True),
     (
-        "In a daring heist, {0} tried to steal the concept of 'awkward silence,' but ended up in an endless loop of conversations,",
+        "While exploring a forgotten temple, {0} accidentally awakens {1}, an ancient guardian. A fierce battle ensues, leaving the temple in ruins and a sense of urgency to restore it before its mystical power is lost forever. With every clash of sword against stone, the temple's history seems to reverberate through time, leaving {0} to ponder the consequences of their actions.",
         False),
-    ("{0} Successfully staged a 'tug-of-war' heist, pitting laughter against seriousness,", True),
-    ("In a playful move, {0} tried to steal the 'Recipe for Happiness,' but it required too many ingredients,", False),
-    ("{0} Attempted to rob a 'cheesy joke' competition, but the puns proved too much to handle,", False),
-    ("In a comedic twist, {0} tried to steal a comedian's microphone, but all they got was feedback,", False),
-    ("{0} Successfully organized a 'silly string' heist, leaving the entire city covered in vibrant chaos,", True),
-    ("In a quirky move, {0} attempted to steal a street musician's tambourine, but it ended up leading a parade,",
-     False),
-    ("{0} Tried to steal a cloud shaped like a treasure chest, but it drifted away like a dream,", False),
-    ("In a lighthearted plot, {0} tried to steal all the 'lost socks' in town, leaving everyone puzzled,", False),
-    ("{0} Attempted to rob a circus, but got distracted by juggling and tightrope walking,", False),
-    ("In an audacious twist, {0} tried to steal the concept of 'good vibes,' but got caught in a wave of positivity,",
-     False),
-    ("{0} Successfully organized a 'silly walk' heist, turning the streets into a whimsical parade,", True),
-    ("In a playful move, {0} attempted to steal a mime's invisible props, but got tangled in imaginary ropes,", False),
-    ("{0} Attempted to rob a 'bad joke' stand, but all the jokes were so bad that they gave up,", False),
     (
-        "In a daring heist, {0} tried to steal the concept of 'awkward silence,' but ended up in an endless loop of conversations,",
-        False),
-    ("{0} Successfully staged a 'tug-of-war' heist, pitting laughter against seriousness,", True),
-    ("In a playful move, {0} tried to steal the 'Recipe for Happiness,' but it required too many ingredients,", False),
-    ("{0} Attempted to rob a 'cheesy joke' competition, but the puns proved too much to handle,", False),
-    ("In a comedic twist, {0} tried to steal a comedian's microphone, but all they got was feedback,", False),
-    ("{0} Successfully organized a 'silly string' heist, leaving the entire city covered in vibrant chaos,", True),
-    ("In a quirky move, {0} attempted to steal a street musician's tambourine, but it ended up leading a parade,",
-     False),
-    ("{0} Tried to steal a cloud shaped like a treasure chest, but it drifted away like a dream,", False),
-    ("In a lighthearted plot, {0} tried to steal all the 'lost socks' in town, leaving everyone puzzled,", False),
-    ("{0} Attempted to rob a circus, but got distracted by juggling and tightrope walking,", False),
-    ("In an audacious twist, {0} tried to steal the concept of 'good vibes,' but got caught in a wave of positivity,",
-     False),
-    ("{0} Successfully organized a 'silly walk' heist, turning the streets into a whimsical parade,", True),
-    ("In a playful move, {0} attempted to steal a mime's invisible props, but got tangled in imaginary ropes,", False),
-    ("{0} Attempted to rob a 'bad joke' stand, but all the jokes were so bad that they gave up,", False),
+        "In a mystical realm, {0} encounters a mischievous {1} who offers a riddle. Solving the riddle earns {0} a valuable reward, and the {1} disappears in a burst of laughter, leaving a trail of sparkles behind. As the trail fades, {0} reflects on the whimsical encounter and wonders about the secrets that lie hidden within the realm's enchanting boundaries.",
+        True),
     (
-        "In a daring heist, {0} tried to steal the concept of 'awkward silence,' but ended up in an endless loop of conversations,",
-        False),
-    ("{0} Successfully staged a 'tug-of-war' heist, pitting laughter against seriousness,", True),
-    ("In a playful move, {0} tried to steal the 'Recipe for Happiness,' but it required too many ingredients,", False),
-    ("{0} Attempted to rob a 'cheesy joke' competition, but the puns proved too much to handle,", False),
-    ("In a comedic twist, {0} tried to steal a comedian's microphone, but all they got was feedback,", False),
-    ("{0} Successfully organized a 'silly string' heist, leaving the entire city covered in vibrant chaos,", True),
-    ("In a quirky move, {0} attempted to steal a street musician's tambourine, but it ended up leading a parade,",
-     False),
-    ("{0} Tried to steal a cloud shaped like a treasure chest, but it drifted away like a dream,", False),
-    ("In a lighthearted plot, {0} tried to steal all the 'lost socks' in town, leaving everyone puzzled,", False),
-    ("{0} Attempted to rob a circus, but got distracted by juggling and tightrope walking,", False),
-    ("In an audacious twist, {0} tried to steal the concept of 'good vibes,' but got caught in a wave of positivity,",
-     False),
-    ("{0} Successfully organized a 'silly walk' heist, turning the streets into a whimsical parade,", True),
-    ("In a playful move, {0} attempted to steal a mime's invisible props, but got tangled in imaginary ropes,", False),
-    ("{0} Attempted to rob a 'bad joke' stand, but all the jokes were so bad that they gave up,", False),
+        "{0} is transported to a magical land where {1}, a legendary and rare creature, challenges them to a duel. A clash of powers ensues as {0} fights valiantly, channeling their inner strength and determination to claim victory against all odds. The land itself seems to hold its breath as {0}'s actions shape the outcome of the battle, leaving behind an undeniable mark of heroism.",
+        True),
     (
-        "In a daring heist, {0} tried to steal the concept of 'awkward silence,' but ended up in an endless loop of conversations,",
-        False),
-    ("{0} Successfully staged a 'tug-of-war' heist, pitting laughter against seriousness,", True),
-    ("In a playful move, {0} tried to steal the 'Recipe for Happiness,' but it required too many ingredients,", False),
-    ("{0} Attempted to rob a 'cheesy joke' competition, but the puns proved too much to handle,", False),
-    ("In a comedic twist, {0} tried to steal a comedian's microphone, but all they got was feedback,", False),
-    ("{0} Successfully organized a 'silly string' heist, leaving the entire city covered in vibrant chaos,", True),
-    ("In a quirky move, {0} attempted to steal a street musician's tambourine, but it ended up leading a parade,",
-     False),
-    ("{0} Tried to steal a cloud shaped like a treasure chest, but it drifted away like a dream,", False),
-    ("In a lighthearted plot, {0} tried to steal all the 'lost socks' in town, leaving everyone puzzled,", False),
-    ("{0} Attempted to rob a circus, but got distracted by juggling and tightrope walking,", False),
-    ("In an audacious twist, {0} tried to steal the concept of 'good vibes,' but got caught in a wave of positivity,",
-     False),
-    ("{0} Successfully organized a 'silly walk' heist, turning the streets into a whimsical parade,", True),
-    ("In a playful move, {0} attempted to steal a mime's invisible props, but got tangled in imaginary ropes,", False),
-    ("{0} Attempted to rob a 'bad joke' stand, but all the jokes were so bad that they gave up,", False),
+        "Amidst a haunted forest, {0} encounters an {1}. With bravery and skill, {0} banishes the malevolent spirit, bringing peace back to the land and earning the respect and gratitude of forest creatures who had long lived in fear. As sunlight filters through the once-dense canopy, {0} finds solace in knowing they've broken the chains of darkness that gripped the forest's heart.",
+        True),
     (
-        "In a daring heist, {0} tried to steal the concept of 'awkward silence,' but ended up in an endless loop of conversations,",
-        False),
-    ("{0} Successfully staged a 'tug-of-war' heist, pitting laughter against seriousness,", True),
-    ("In a playful move, {0} tried to steal the 'Recipe for Happiness,' but it required too many ingredients,", False),
-    ("{0} Attempted to rob a 'cheesy joke' competition, but the puns proved too much to handle,", False),
-    ("In a comedic twist, {0} tried to steal a comedian's microphone, but all they got was feedback,", False),
-    ("{0} Successfully organized a 'silly string' heist, leaving the entire city covered in vibrant chaos,", True),
-    ("In a quirky move, {0} attempted to steal a street musician's tambourine, but it ended up leading a parade,",
-     False),
-    ("{0} Tried to steal a cloud shaped like a treasure chest, but it drifted away like a dream,", False),
-    ("In a lighthearted plot, {0} tried to steal all the 'lost socks' in town, leaving everyone puzzled,", False),
-    ("{0} Attempted to rob a circus, but got distracted by juggling and tightrope walking,", False),
-    ("In an audacious twist, {0} tried to steal the concept of 'good vibes,' but got caught in a wave of positivity,",
-     False),
-    ("{0} Successfully organized a 'silly walk' heist, turning the streets into a whimsical parade,", True),
-    ("In a playful move, {0} attempted to steal a mime's invisible props, but got tangled in imaginary ropes,", False),
-    ("{0} Attempted to rob a 'bad joke' stand, but all the jokes were so bad that they gave up,", False),
+        "{0} discovers an ancient prophecy involving {1}. Through unwavering courage and steadfast determination, {0} fulfills the prophecy, overcoming insurmountable challenges and ensuring a bright future for their realm. The wind seems to carry whispers of {0}'s tale across the lands, inspiring hope and igniting a fire of change that will be remembered for generations to come.",
+        True),
     (
-        "In a daring heist, {0} tried to steal the concept of 'awkward silence,' but ended up in an endless loop of conversations,",
-        False),
-    ("{0} Successfully staged a 'tug-of-war' heist, pitting laughter against seriousness,", True),
-    ("In a playful move, {0} tried to steal the 'Recipe for Happiness,' but it required too many ingredients,", False),
-    ("{0} Attempted to rob a 'cheesy joke' competition, but the puns proved too much to handle,", False),
-    ("In a comedic twist, {0} tried to steal a comedian's microphone, but all they got was feedback,", False),
-    ("{0} Successfully organized a 'silly string' heist, leaving the entire city covered in vibrant chaos,", True),
-    ("In a quirky move, {0} attempted to steal a street musician's tambourine, but it ended up leading a parade,",
-     False),
-    ("{0} Tried to steal a cloud shaped like a treasure chest, but it drifted away like a dream,", False),
-    ("In a lighthearted plot, {0} tried to steal all the 'lost socks' in town, leaving everyone puzzled,", False),
-    ("{0} Attempted to rob a circus, but got distracted by juggling and tightrope walking,", False),
-    ("In an audacious twist, {0} tried to steal the concept of 'good vibes,' but got caught in a wave of positivity,",
-     False),
-    ("{0} Successfully organized a 'silly walk' heist, turning the streets into a whimsical parade,", True),
-    ("In a playful move, {0} attempted to steal a mime's invisible props, but got tangled in imaginary ropes,", False),
-    ("{0} Attempted to rob a 'bad joke' stand, but all the jokes were so bad that they gave up,", False),
+        "{0} stumbles upon an ancient forest where {1}, a guardian of nature, tests their bond with the land. Through feats of strength, wisdom, and humility, {0} earns the guardian's blessing and a deeper connection with the natural world.",
+        True
+    ),
     (
-        "In a daring heist, {0} tried to steal the concept of 'awkward silence,' but ended up in an endless loop of conversations,",
-        False),
-    ("{0} Successfully staged a 'tug-of-war' heist, pitting laughter against seriousness,", True),
-    ("In a playful move, {0} tried to steal the 'Recipe for Happiness,' but it required too many ingredients,", False),
-    ("{0} Attempted to rob a 'cheesy joke' competition, but the puns proved too much to handle,", False),
-    ("In a comedic twist, {0} tried to steal a comedian's microphone, but all they got was feedback,", False),
-    ("{0} Successfully organized a 'silly string' heist, leaving the entire city covered in vibrant chaos,", True),
-    ("In a quirky move, {0} attempted to steal a street musician's tambourine, but it ended up leading a parade,",
-     False),
-    ("{0} Tried to steal a cloud shaped like a treasure chest, but it drifted away like a dream,", False),
-    ("In a lighthearted plot, {0} tried to steal all the 'lost socks' in town, leaving everyone puzzled,", False),
-    ("{0} Attempted to rob a circus, but got distracted by juggling and tightrope walking,", False),
-    ("In an audacious twist, {0} tried to steal the concept of 'good vibes,' but got caught in a wave of positivity,",
-     False),
-    ("{0} Successfully organized a 'silly walk' heist, turning the streets into a whimsical parade,", True),
-    ("In a playful move, {0} attempted to steal a mime's invisible props, but got tangled in imaginary ropes,", False),
-    ("{0} Attempted to rob a 'bad joke' stand, but all the jokes were so bad that they gave up,", False),
+        "A legendary tournament is held in a distant realm, and {0} is invited to compete. Facing powerful opponents and enduring grueling challenges, {0} fights their way to the finals, where a showdown with {1} awaits.",
+        True
+    ),
     (
-        "In a daring heist, {0} tried to steal the concept of 'awkward silence,' but ended up in an endless loop of conversations,",
-        False),
-    ("{0} Successfully staged a 'tug-of-war' heist, pitting laughter against seriousness,", True),
-    ("In a playful move, {0} tried to steal the 'Recipe for Happiness,' but it required too many ingredients,", False),
-    ("{0} Attempted to rob a 'cheesy joke' competition, but the puns proved too much to handle,", False),
-    ("In a comedic twist, {0} tried to steal a comedian's microphone, but all they got was feedback,", False),
-    ("{0} Successfully organized a 'silly string' heist, leaving the entire city covered in vibrant chaos,", True),
-    ("In a quirky move, {0} attempted to steal a street musician's tambourine, but it ended up leading a parade,",
-     False),
-    ("{0} Tried to steal a cloud shaped like a treasure chest, but it drifted away like a dream,", False),
-    ("In a lighthearted plot, {0} tried to steal all the 'lost socks' in town, leaving everyone puzzled,", False),
-    ("{0} Attempted to rob a circus, but got distracted by juggling and tightrope walking,", False),
-    ("In an audacious twist, {0} tried to steal the concept of 'good vibes,' but got caught in a wave of positivity,",
-     False),
-    ("{0} Successfully organized a 'silly walk' heist, turning the streets into a whimsical parade,", True),
-    ("In a playful move, {0} attempted to steal a mime's invisible props, but got tangled in imaginary ropes,", False),
-    ("{0} Attempted to rob a 'bad joke' stand, but all the jokes were so bad that they gave up,", False),
+        "{0} discovers an abandoned observatory that once belonged to a renowned astronomer. Inside, they find a celestial map that leads to a constellation-linked quest. With each constellation they decipher, they uncover a piece of forgotten lore.",
+        True
+    ),
     (
-        "In a daring heist, {0} tried to steal the concept of 'awkward silence,' but ended up in an endless loop of conversations,",
-        False),
-    ("{0} Successfully staged a 'tug-of-war' heist, pitting laughter against seriousness,", True),
-    ("In a playful move, {0} tried to steal the 'Recipe for Happiness,' but it required too many ingredients,", False),
-    ("{0} Attempted to rob a 'cheesy joke' competition, but the puns proved too much to handle,", False),
-    ("In a comedic twist, {0} tried to steal a comedian's microphone, but all they got was feedback,", False),
-    ("{0} Successfully organized a 'silly string' heist, leaving the entire city covered in vibrant chaos,", True),
-    ("In a quirky move, {0} attempted to steal a street musician's tambourine, but it ended up leading a parade,",
-     False),
-    ("{0} Tried to steal a cloud shaped like a treasure chest, but it drifted away like a dream,", False),
-    ("In a lighthearted plot, {0} tried to steal all the 'lost socks' in town, leaving everyone puzzled,", False),
-    ("{0} Attempted to rob a circus, but got distracted by juggling and tightrope walking,", False),
-    ("In an audacious twist, {0} tried to steal the concept of 'good vibes,' but got caught in a wave of positivity,",
-     False),
-    ("{0} Successfully organized a 'silly walk' heist, turning the streets into a whimsical parade,", True),
-    ("In a playful move, {0} attempted to steal a mime's invisible props, but got tangled in imaginary ropes,", False),
-    ("{0} Attempted to rob a 'bad joke' stand, but all the jokes were so bad that they gave up,", False),
+        "In the heart of a desert, {0} uncovers an ancient temple dedicated to {1}, the God of Sandstorms. A trial of endurance and perseverance awaits them as they navigate treacherous sand dunes and face the wrath of the desert.",
+        True
+    ),
     (
-        "In a daring heist, {0} tried to steal the concept of 'awkward silence,' but ended up in an endless loop of conversations,",
-        False),
-    ("{0} Successfully staged a 'tug-of-war' heist, pitting laughter against seriousness,", True),
-    ("In a playful move, {0} tried to steal the 'Recipe for Happiness,' but it required too many ingredients,", False),
-    ("{0} Attempted to rob a 'cheesy joke' competition, but the puns proved too much to handle,", False),
-    ("In a comedic twist, {0} tried to steal a comedian's microphone, but all they got was feedback,", False),
-    ("{0} Successfully organized a 'silly string' heist, leaving the entire city covered in vibrant chaos,", True),
-    ("In a quirky move, {0} attempted to steal a street musician's tambourine, but it ended up leading a parade,",
-     False),
-    ("{0} Tried to steal a cloud shaped like a treasure chest, but it drifted away like a dream,", False),
-    ("In a lighthearted plot, {0} tried to steal all the 'lost socks' in town, leaving everyone puzzled,", False),
-    ("{0} Attempted to rob a circus, but got distracted by juggling and tightrope walking,", False),
-    ("In an audacious twist, {0} tried to steal the concept of 'good vibes,' but got caught in a wave of positivity,",
-     False),
-    ("{0} Successfully organized a 'silly walk' heist, turning the streets into a whimsical parade,", True),
-    ("In a playful move, {0} attempted to steal a mime's invisible props, but got tangled in imaginary ropes,", False),
-    ("{0} Attempted to rob a 'bad joke' stand, but all the jokes were so bad that they gave up,", False),
+        "A magical relic is said to grant the power to control time. {0} embarks on a journey to retrieve the relic from a hidden sanctuary. Guided by clues and ancient writings, they solve puzzles that challenge their intellect and wit.",
+        True
+    ),
     (
-        "In a daring heist, {0} tried to steal the concept of 'awkward silence,' but ended up in an endless loop of conversations,",
+        "{0} receives a mysterious map from a stranger, leading them to an island shrouded in mist. On the island, they find {1}, a keeper of forgotten stories. To earn their respect, {0} must share a tale of their own that carries a lesson.",
+        True
+    ),
+    (
+        "An enchanted forest is in peril as {1} threatens to consume its magic. {0} must embark on a quest to restore balance by seeking the guidance of forest spirits and uncovering the secret to calming the raging elemental forces.",
+        True
+    ),
+    (
+        "{0} becomes entangled in a rivalry between two rival factions: one seeking to unlock the power of {1}, and the other striving to protect it. {0} must choose a side and navigate a complex web of alliances and betrayals.",
+        True
+    ), (
+        "{0} stumbles upon an ancient ritual site where {1} is about to be summoned. With quick thinking and resourcefulness, {0} disrupts the ritual just in time, preventing a catastrophe and earning the gratitude of the spirits.",
+        True
+    ),
+    (
+        "The moon's glow reveals a hidden waterfall in the enchanted forest. As {0} approaches, {1} emerges from the water, offering a choice: share a secret to gain a treasure, or remain silent and face a challenge. {0} makes their decision, and the journey unfolds.",
+        True
+    ),
+    (
+        "A long-forgotten prophecy speaks of {0} as the chosen one to face {1}, a formidable foe threatening the realm. The encounter is epic and intense, leaving both sides exhausted. But in the end, it is {0} who emerges victorious, fulfilling their destiny.",
+        True
+    ),
+    (
+        "{0} enters a magical carnival that appears in the realm once a century. The carnival is a realm of illusions and enchantments. After navigating through a series of whimsical challenges, {0} wins a prize that holds a hidden power.",
+        True
+    ),
+    (
+        "A mysterious portal transports {0} to a realm of dreams, where reality shifts and twists. {1} is the guardian of this realm, and they challenge {0} to embrace the dreamlike nature and solve enigmatic puzzles to return home.",
+        True
+    ),
+    (
+        "{0} sails to a remote island where {1} is said to dwell. The island is shrouded in mist and mystery. {0} must decipher ancient runes and prove their respect for the island's spirits to be granted an audience with {1}.",
+        True
+    ),
+    (
+        "A celestial event causes stars to fall to the earth, each carrying a fragment of {1}. {0} embarks on a quest to collect these fragments, facing trials that test their courage, intelligence, and kindness.",
+        True
+    ),
+    (
+        "During a storm, {0} finds refuge in an abandoned castle. Within, they encounter {1}, a spirit cursed to wander. To break the curse, {0} must piece together the spirit's past and help them find closure.",
+        True
+    ),
+
+    (
+        "{0} bravely enters a dark cave, but is suddenly attacked by {1}! With determination and skill, {0} manages to defeat the fearsome creature and emerges victorious. The cave's walls tremble as the echoes of {0}'s triumph resound, and the air is thick with a sense of accomplishment and newfound strength.",
+        True),
+    (
+        "While exploring a forgotten temple, {0} accidentally awakens {1}, an ancient guardian. A fierce battle ensues, leaving the temple in ruins and a sense of urgency to restore it before its mystical power is lost forever. With every clash of sword against stone, the temple's history seems to reverberate through time, leaving {0} to ponder the consequences of their actions.",
         False),
-    ("{0} Successfully staged a 'tug-of-war' heist, pitting laughter against seriousness,", True),
-    ("In a playful move, {0} tried to steal the 'Recipe for Happiness,' but it required too many ingredients,", False),
-    ("{0} Attempted to rob a 'cheesy joke' competition, but the puns proved too much to handle,", False),
-    ("In a comedic twist, {0} tried to steal a comedian's microphone, but all they got was feedback,", False),
-    ("{0} Successfully organized a 'silly string' heist, leaving the entire city covered in vibrant chaos,", True)]
+    (
+        "In a mystical realm, {0} encounters a mischievous {1} who offers a riddle. Solving the riddle earns {0} a valuable reward, and the {1} disappears in a burst of laughter, leaving a trail of sparkles behind. As the trail fades, {0} reflects on the whimsical encounter and wonders about the secrets that lie hidden within the realm's enchanting boundaries.",
+        True),
+    (
+        "{0} is transported to a magical land where {1}, a legendary and rare creature, challenges them to a duel. A clash of powers ensues as {0} fights valiantly, channeling their inner strength and determination to claim victory against all odds. The land itself seems to hold its breath as {0}'s actions shape the outcome of the battle, leaving behind an undeniable mark of heroism.",
+        True),
+    (
+        "Amidst a haunted forest, {0} encounters an {1}. With bravery and skill, {0} banishes the malevolent spirit, bringing peace back to the land and earning the respect and gratitude of forest creatures who had long lived in fear. As sunlight filters through the once-dense canopy, {0} finds solace in knowing they've broken the chains of darkness that gripped the forest's heart.",
+        True),
+    (
+        "{0} discovers an ancient prophecy involving {1}. Through unwavering courage and steadfast determination, {0} fulfills the prophecy, overcoming insurmountable challenges and ensuring a bright future for their realm. The wind seems to carry whispers of {0}'s tale across the lands, inspiring hope and igniting a fire of change that will be remembered for generations to come.",
+        True),
+
+    (
+    "{0} discovers an ancient library guarded by {1}. They delve into its tomes and gain a wealth of knowledge, uncovering secrets that shape their destiny.",
+    True),
+    (
+    "A sudden earthquake traps {0} in a cave with {1}. Working together, they find a way to escape, forging an unlikely bond in the process.",
+    True),
+    (
+    "While crossing a rickety bridge, {0} encounters {1}, a mischievous trickster. A battle of wits ensues, leaving {0} questioning the nature of reality.",
+    False),
+    (
+    "A long-lost artifact said to possess untold power lies within a treacherous maze. {0} navigates the labyrinth, but finds only disappointment as the artifact proves to be a myth.",
+    False),
+    (
+    "{0} stumbles upon an ancient artifact that holds a curse. They must solve riddles and break a complex enchantment to free themselves from its grip.",
+    True),
+    (
+    "In the heart of a snow-covered forest, {0} encounters {1}, a guardian of winter. They must prove their respect for nature before being granted a glimpse of the guardian's power.",
+    True),
+    (
+    "A peculiar door appears in the midst of a meadow. {0} opens it and is transported to a realm of dreams, where they confront {1}'s illusions.",
+    False),
+    (
+    "{0} is challenged to a friendly cooking contest by {1}, a culinary master. The dishes are exquisite, but ultimately, the competition ends in a draw.",
+    False),
+    (
+    "A luminous comet passes overhead, and {0} follows its trail to discover a hidden grove. {1} appears, offering them a chance to make a wish.",
+    True),
+    (
+    "{0} encounters a pack of wild creatures led by {1}. To earn their trust, {0} must navigate the delicate balance of nature and prove themselves as a friend, not a foe.",
+    True),
+    (
+    "A celestial alignment reveals a secret portal. {0} enters and faces {1}, a cosmic guardian who tests their understanding of the universe's mysteries.",
+    False),
+    (
+    "{0} stumbles upon an ancient puzzle that, when solved, opens a portal to a realm of forgotten legends. In this realm, they must choose between aiding {1} or pursuing their own desires.",
+    True),
+    (
+    "A legend speaks of {0} as the hero who will tame {1}, a mythical beast of the skies. Through courage and compassion, they forge a bond that transcends species.",
+    True),
+    (
+    "While exploring a cave system, {0} disturbs a nest of creatures, including {1}. They must navigate darkness and danger to escape the cavern's depths.",
+    False),
+    (
+    "{0} finds themselves in a twisted mirror world where they encounter an alternate version of {1}. They must solve the mystery of this doppelgänger to restore balance.",
+    True),
+    (
+    "The realm is plagued by an eternal winter caused by {1}. {0} embarks on a journey to end the curse, facing frosty landscapes and formidable ice guardians.",
+    True),
+    (
+    "{0} becomes trapped in a labyrinth created by {1}, a trickster spirit. They must solve riddles to navigate the maze's shifting walls and escape its grasp.",
+    False),
+    (
+    "A massive tree reveals itself as {1}, a guardian of nature. {0} must seek its wisdom to heal a blighted forest and prove their commitment to preservation.",
+    True),
+    (
+    "In a forgotten ruin, {0} encounters a time-traveling artifact. They witness historical events involving {1} and must decide whether to alter the past.",
+    False),
+    (
+    "{0} is chosen by the spirits to retrieve {1}, an elemental gem stolen by thieves. Their journey leads them through desolate deserts and treacherous mountains.",
+    True),
+    (
+    "A mysterious rift opens, connecting {0}'s world to an alternate realm ruled by {1}. The two must collaborate to close the rift and restore balance.",
+    False),
+    (
+    "A magical storm sweeps {0} to a realm where {1} reigns. They face elemental trials to prove their worthiness and return home with newfound power.",
+    True),
+    (
+    "A forgotten prophecy tells of {0}'s encounter with {1}. The outcome shapes the balance between light and darkness, as well as their own path.",
+    True),
+    (
+    "{0} discovers a hidden underwater cavern guarded by {1}. To earn passage through the cavern, they must solve riddles that test their mental agility.",
+    True),
+    (
+    "During a lunar eclipse, {0} encounters {1}, a guardian of dreams. They journey through surreal landscapes and uncover hidden truths about themselves.",
+    False),
+    (
+    "A mystical portal transports {0} to a realm where they must challenge {1} to a game of wit and strategy. The outcome determines their fate in the realm.",
+    False),
+    (
+    "{0} encounters {1}, a reclusive sage known for their wisdom. To gain their guidance, {0} must solve riddles and answer thought-provoking questions.",
+    True),
+    (
+    "A traveling carnival appears, led by {1}, the enigmatic ringmaster. {0} must navigate illusions and choose whether to pursue the carnival's mysteries.",
+    False),
+    (
+    "In a city plagued by corruption, {0} teams up with {1}, a rogue thief seeking redemption. Together, they uncover a conspiracy that threatens the realm.",
+    True),
+    (
+    "A sudden portal whisks {0} to an alternate dimension ruled by {1}. They must navigate this distorted realm to find a way back to their own world.",
+    False),
+    (
+    "{0} encounters an ancient spirit of chaos, {1}, who offers them a choice: embrace chaos or restore balance to the realm.",
+    True),
+    (
+    "A shimmering portal opens in the night sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+    False),
+    (
+    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+    True),
+    (
+    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+    True),
+    (
+    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+    True),
+    (
+    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+    True),
+    (
+    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+    False),
+    (
+    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+    False),
+    (
+    "During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}, a cosmic guardian of wisdom.",
+    True),
+    (
+    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+    True),
+    (
+    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+    False),
+    (
+    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+    False),
+    (
+    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+    False),
+    (
+    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+    True),
+    (
+    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+    True),
+    (
+    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+    False),
+    (
+    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+    False),
+    (
+    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+    True),
+    (
+    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+    True),
+    (
+    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+    False),
+    (
+    "A forgotten prophecy foretells {0}'s duel with {1}, a legendary warrior. Their clash of swords shapes the destiny of both the realm and their own.",
+    True),
+    (
+    "During a meteor shower, {0} encounters {1}, a celestial being. They must decipher the language of the stars to earn the being's guidance.",
+    False),
+    (
+    "A mysterious door appears in the midst of a dense forest. {0} opens it and enters a surreal realm where they must confront {1}'s illusions.",
+    False),
+    (
+    "{0} receives an ancient map leading to a hidden island inhabited by {1}. They must solve riddles and navigate dangerous waters to find the island.",
+    False),
+    (
+    "A cursed gem has transformed {1} into a monstrous creature. {0} embarks on a quest to break the curse and restore the gem's true power.",
+    True),
+    (
+    "{0} discovers an abandoned laboratory where {1}, a scientist, once conducted experiments. They must solve puzzles to uncover the scientist's legacy.",
+    True),
+    (
+    "During a celestial alignment, {0} encounters {1}, a guardian of starlight. They must prove their understanding of the cosmos to earn the guardian's blessing.",
+    True),
+    (
+    "An enchanted forest reveals its mysteries to {0}, including a pact with {1}, the spirit of the land. Together, they restore balance to the realm.",
+    True),
+    (
+    "{0} stumbles upon an ancient prophecy involving {1}. Through a series of trials, they determine whether the prophecy leads to glory or deception.",
+    False),
+    (
+    "A hidden realm opens its doors to {0}, revealing a city shaped by {1}'s magic. They must navigate illusions and uncover the city's true nature.",
+    True),
+    (
+    "{0} discovers a time-worn book containing the story of {1}, a forgotten hero. They must solve riddles to bring the hero's legacy to life once more.",
+    False),
+    (
+    "A mysterious portal transports {0} to a realm of dreams, where they face {1}, the guardian of illusions. Their journey tests the boundaries of reality.",
+    False),
+    (
+    "{0} receives a summons to a realm ruled by {1}, a monarch of shadows. To prove their worth, they must navigate a labyrinth of darkness and despair.",
+    True),
+    (
+    "A legendary creature, {1}, is rumored to inhabit a secluded valley. {0} embarks on a journey to find the creature and learn its ancient wisdom.",
+    True),
+    (
+    "{0} awakens in a realm between dreams and reality, where they encounter {1}, a guardian of the mind. They must face their inner fears to escape.",
+    False),
+    (
+    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+    True),
+    (
+    "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
+    True),
+    (
+    "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
+    True),
+    (
+    "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
+    False),
+    (
+    "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
+    True),
+    (
+    "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
+    False),
+    (
+    "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
+    False),
+    (
+    "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
+    True),
+    (
+    "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
+    True),
+    (
+    "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
+    False),
+    (
+    "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
+    False),
+    (
+    "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
+    True),
+    (
+    "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
+    True),
+    (
+    "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
+    False),
+    (
+    "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
+    True),
+    (
+    "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
+    False),
+    (
+    "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
+    True),
+    (
+    "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+    False),
+    (
+    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+    True),
+    (
+    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+    True),
+    (
+    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+    True),
+    (
+    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+    True),
+    (
+    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+    False),
+    (
+    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+    False),
+    ("During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}",
+     ", a cosmic guardian of wisdom.", True),
+    (
+    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+    True),
+    (
+    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+    False),
+    (
+    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+    False),
+    (
+    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+    False),
+    (
+    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+    True),
+    (
+    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+    True),
+    (
+    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+    False),
+    (
+    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+    False),
+    (
+    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+    True),
+    (
+    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+    True),
+    (
+    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+    False),
+    (
+    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+    True),
+    (
+    "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
+    True),
+    (
+    "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
+    True),
+    (
+    "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
+    False),
+    (
+    "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
+    True),
+    (
+    "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
+    False),
+    (
+    "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
+    False),
+    (
+    "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
+    True),
+    (
+    "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
+    True),
+    (
+    "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
+    False),
+    (
+    "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
+    False),
+    (
+    "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
+    True),
+    (
+    "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
+    True),
+    (
+    "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
+    False),
+    (
+    "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
+    True),
+    (
+    "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
+    False),
+    (
+    "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
+    True),
+    (
+    "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+    False),
+    (
+    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+    True),
+    (
+    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+    True),
+    (
+    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+    True),
+    (
+    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+    True),
+    (
+    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+    False),
+    (
+    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+    False),
+    ("During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}",
+     ", a cosmic guardian of wisdom.", True),
+    (
+    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+    True),
+    (
+    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+    False),
+    (
+    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+    False),
+    (
+    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+    False),
+    (
+    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+    True),
+    (
+    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+    True),
+    (
+    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+    False),
+    (
+    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+    False),
+    (
+    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+    True),
+    (
+    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+    True),
+    (
+    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+    False),
+    (
+    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+    True),
+    (
+    "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
+    True),
+    (
+    "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
+    True),
+    (
+    "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
+    False),
+    (
+    "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
+    True),
+    (
+    "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
+    False),
+    (
+    "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
+    False),
+    (
+    "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
+    True),
+    (
+    "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
+    True),
+    (
+    "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
+    False),
+    (
+    "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
+    False),
+    (
+    "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
+    True),
+    (
+    "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
+    True),
+    (
+    "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
+    False),
+    (
+    "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
+    True),
+    (
+    "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
+    False),
+    (
+    "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
+    True),
+    (
+    "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+    False),
+    (
+    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+    True),
+    (
+    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+    True),
+    (
+    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+    True),
+    (
+    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+    True),
+    (
+    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+    False),
+    (
+    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+    False),
+    ("During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}",
+     " the cosmic guardian of wisdom.", True),
+    (
+    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+    True),
+    (
+    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+    False),
+    (
+    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+    False),
+    (
+    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+    False),
+    (
+    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+    True),
+    (
+    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+    True),
+    (
+    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+    False),
+    (
+    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+    False),
+    (
+    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+    True),
+    (
+    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+    True),
+    (
+    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+    False),
+    (
+    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+    True),
+    (
+    "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
+    True),
+    (
+    "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
+    True),
+    (
+    "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
+    False),
+    (
+    "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
+    True),
+    (
+    "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
+    False),
+    (
+    "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
+    False),
+    (
+    "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
+    True),
+    (
+    "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
+    True),
+    (
+    "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
+    False),
+    (
+    "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
+    False),
+    (
+    "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
+    True),
+    (
+    "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
+    True),
+    (
+    "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
+    False),
+    (
+    "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
+    True),
+    (
+    "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
+    False),
+    (
+    "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
+    True),
+    (
+    "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+    False),
+    (
+    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+    True),
+    (
+    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+    True),
+    (
+    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+    True),
+    (
+    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+    True),
+    (
+    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+    False),
+    (
+    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+    False),
+    ("During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}",
+     " the cosmic guardian of wisdom.", True),
+    (
+    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+    True),
+    (
+    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+    False),
+    (
+    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+    False),
+    (
+    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+    False),
+    (
+    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+    True),
+    (
+    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+    True),
+    (
+    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+    False),
+    (
+    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+    False),
+    (
+    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+    True),
+    (
+    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+    True),
+    (
+    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+    False),
+    (
+    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+    True),
+    (
+    "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
+    True),
+    (
+    "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
+    True),
+    (
+    "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
+    False),
+    (
+    "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
+    True),
+    (
+    "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
+    False),
+    (
+    "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
+    False),
+    (
+    "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
+    True),
+    (
+    "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
+    True),
+    (
+    "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
+    False),
+    (
+    "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
+    False),
+    (
+    "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
+    True),
+    (
+    "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
+    True),
+    (
+    "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
+    False),
+    (
+    "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
+    True),
+    (
+    "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
+    False),
+    (
+    "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
+    True),
+    (
+    "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+    False),
+    (
+    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+    True),
+    (
+    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+    True),
+    (
+    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+    True),
+    (
+    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+    True),
+    (
+    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+    False),
+    (
+    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+    False),
+    ("During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}",
+     " the cosmic guardian of wisdom.", True),
+    (
+    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+    True),
+    (
+    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+    False),
+    (
+    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+    False),
+    (
+    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+    False),
+    (
+    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+    True),
+    (
+    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+    True),
+    (
+    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+    False),
+    (
+    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+    False),
+    (
+    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+    True),
+    (
+    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+    True),
+    (
+    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+    False),
+    (
+    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+    True),
+    (
+    "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
+    True),
+    (
+    "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
+    True),
+    (
+    "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
+    False),
+    (
+    "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
+    True),
+    (
+    "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
+    False),
+    (
+    "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
+    False),
+    (
+    "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
+    True),
+    (
+    "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
+    True),
+    (
+    "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
+    False),
+    (
+    "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
+    False),
+    (
+    "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
+    True),
+    (
+    "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
+    True),
+    (
+    "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
+    False),
+    (
+    "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
+    True),
+    (
+    "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
+    False),
+    (
+    "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
+    True),
+    (
+    "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+    False),
+    (
+    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+    True),
+    (
+    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+    True),
+    (
+    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+    True),
+    (
+    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+    True),
+    (
+    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+    False),
+    (
+    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+    False),
+    ("During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}",
+     " the cosmic guardian of wisdom.", True),
+    (
+    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+    True),
+    (
+    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+    False),
+    (
+    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+    False),
+    (
+    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+    False),
+    (
+    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+    True),
+    (
+    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+    True),
+    (
+    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+    False),
+    (
+    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+    False),
+    (
+    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+    True),
+    (
+    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+    True),
+    (
+    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+    False),
+    (
+    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+    True),
+    (
+    "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
+    True),
+    (
+    "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
+    True),
+    (
+    "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
+    False),
+    (
+    "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
+    True),
+    (
+    "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
+    False),
+    (
+    "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
+    False),
+    (
+    "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
+    True),
+    (
+    "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
+    True),
+    (
+    "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
+    False),
+    (
+    "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
+    False),
+    (
+    "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
+    True),
+    (
+    "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
+    True),
+    (
+    "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
+    False),
+    (
+    "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
+    True),
+    (
+    "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
+    False),
+    (
+    "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
+    True),
+    (
+    "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+    False),
+    (
+    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+    True),
+    (
+    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+    True),
+    (
+    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+    True),
+    (
+    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+    True),
+    (
+    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+    False),
+    (
+    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+    False),
+    ("During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}",
+     " the cosmic guardian of wisdom.", True),
+    (
+    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+    True),
+    (
+    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+    False),
+    (
+    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+    False),
+    (
+    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+    False),
+    (
+    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+    True),
+    (
+    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+    True),
+    (
+    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+    False),
+    (
+    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+    False),
+    (
+    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+    True),
+    (
+    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+    True),
+    (
+    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+    False),
+    (
+    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+    True),
+    (
+    "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
+    True),
+    (
+    "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
+    True),
+    (
+    "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
+    False),
+    (
+    "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
+    True),
+    (
+    "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
+    False),
+    (
+    "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
+    False),
+    (
+    "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
+    True),
+    (
+    "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
+    True),
+    (
+    "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
+    False),
+    (
+    "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
+    False),
+    (
+    "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
+    True),
+    (
+    "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
+    True),
+    (
+    "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
+    False),
+    (
+    "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
+    True),
+    (
+    "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
+    False),
+    (
+    "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
+    True),
+    (
+    "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+    False),
+    (
+    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+    True),
+    (
+    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+    True),
+    (
+    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+    True),
+    (
+    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+    True),
+    (
+    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+    False),
+    (
+    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+    False),
+    ("During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}",
+     " the cosmic guardian of wisdom.", True),
+    (
+    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+    True),
+    (
+    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+    False),
+    (
+    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+    False),
+    (
+    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+    False),
+    (
+    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+    True),
+    (
+    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+    True),
+    (
+    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+    False),
+    (
+    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+    False),
+    (
+    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+    True),
+    (
+    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+    True),
+    (
+    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+    False),
+    (
+    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+    True),
+    (
+    "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
+    True),
+    (
+    "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
+    True),
+    (
+    "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
+    False),
+    (
+    "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
+    True),
+    (
+    "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
+    False),
+    (
+    "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
+    False),
+    (
+    "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
+    True),
+    (
+    "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
+    True),
+    (
+    "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
+    False),
+    (
+    "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
+    False),
+    (
+    "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
+    True),
+    (
+    "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
+    True),
+    (
+    "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
+    False),
+    (
+    "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
+    True),
+    (
+    "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
+    False),
+    (
+    "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
+    True),
+    (
+    "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+    False),
+    (
+    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+    True),
+    (
+    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+    True),
+    (
+    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+    True),
+    (
+    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+    True),
+    (
+    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+    False),
+    (
+    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+    False),
+    ("During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}",
+     " the cosmic guardian of wisdom.", True),
+    (
+    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+    True),
+    (
+    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+    False),
+    (
+    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+    False),
+    (
+    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+    False),
+    (
+    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+    True),
+    (
+    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+    True),
+    (
+    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+    False),
+    (
+    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+    False),
+    (
+    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+    True),
+    (
+    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+    True),
+    (
+    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+    False),
+    (
+    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+    True),
+    (
+    "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
+    True),
+    (
+    "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
+    True),
+    (
+    "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
+    False),
+    (
+    "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
+    True),
+    (
+    "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
+    False),
+    (
+    "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
+    False),
+    (
+    "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
+    True),
+    (
+    "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
+    True),
+    (
+    "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
+    False),
+    (
+    "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
+    False),
+    (
+    "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
+    True),
+    (
+    "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
+    True),
+    (
+    "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
+    False),
+    (
+    "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
+    True),
+    (
+    "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
+    False),
+    (
+    "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
+    True),
+    (
+    "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+    False),
+    (
+    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+    True),
+    (
+    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+    True),
+    (
+    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+    True),
+    (
+    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+    True),
+    (
+    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+    False),
+    (
+    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+    False),
+    ("During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}",
+     " the cosmic guardian of wisdom.", True),
+    (
+    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+    True),
+    (
+    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+    False),
+    (
+    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+    False),
+    (
+    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+    False),
+    (
+    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+    True),
+    (
+    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+    True),
+    (
+    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+    False),
+    (
+    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+    False),
+    (
+    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+    True),
+    (
+    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+    True),
+    (
+    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+    False),
+    (
+    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+    True),
+    (
+    "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
+    True),
+    (
+    "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
+    True),
+    (
+    "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
+    False),
+    (
+    "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
+    True),
+    (
+    "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
+    False),
+    (
+    "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
+    False),
+    (
+    "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
+    True),
+    (
+    "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
+    True),
+    (
+    "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
+    False),
+    (
+    "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
+    False),
+    (
+    "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
+    True),
+    (
+    "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
+    True),
+    (
+    "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
+    False),
+    (
+    "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
+    True),
+    (
+    "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
+    False),
+    (
+    "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
+    True),
+    (
+    "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+    False),
+    (
+    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+    True),
+    (
+    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+    True),
+    (
+    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+    True),
+    (
+    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+    True),
+    (
+    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+    False),
+    (
+    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+    False),
+    ("During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}",
+     " the cosmic guardian of wisdom.", True),
+    (
+    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+    True),
+    (
+    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+    False),
+    (
+    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+    False),
+    (
+    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+    False),
+    (
+    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+    True),
+    (
+    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+    True),
+    (
+    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+    False),
+    (
+    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+    False),
+    (
+    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+    True),
+    (
+    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+    True),
+    (
+    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+    False),
+    (
+    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+    True)
+]

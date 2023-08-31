@@ -10,7 +10,7 @@ from discord import app_commands, Embed
 from discord.ext import commands, tasks
 
 from DataBase import User
-from config.lists import job_descriptions, fake_robbery_scenarios, funny_crime_scenarios
+from config.lists import job_descriptions, fake_robbery_scenarios, funny_crime_scenarios, adv_scenarios
 from utils.checks import persistent_cooldown
 from utils.paginator import Paginator
 from utils.utilities import subtraction_percentage, generate_embed_color, progress_percentage
@@ -51,6 +51,20 @@ chop_resource_info = {
     'Maple': {'emote': '<:maple:1146126198901047366>', 'min_value': 15, 'max_value': 25, 'rarity': 0.4},
     'Birch': {'emote': '<:birch:1146125694313697330>', 'min_value': 20, 'max_value': 30, 'rarity': 0.3},
 }
+#TODO indo make more fix emotes
+monsters = [
+    {"emoji": "🐉 Dragon", "value": 100, "success_rate": 0.7},
+    {"emoji": "🦊 Kitsune", "value": 50, "success_rate": 0.9},
+    {"emoji": "👻 Ancient Spirit", "value": 80, "success_rate": 0.6},
+    {"emoji": "🗡️ Rogue Bandit", "value": 20, "success_rate": 0.95},
+    {"emoji": "🧚‍♂️ Pixie", "value": 30, "success_rate": 0.85},
+    {"emoji": "🌊 Shapeshifter", "value": 70, "success_rate": 0.75},
+    {"emoji": "🪨 Rock Golem", "value": 90, "success_rate": 0.5},
+    {"emoji": "👻 Haunted Spirit", "value": 60, "success_rate": 0.8},
+    {"emoji": "🌀 Interdimensional Entity", "value": 120, "success_rate": 0.4},
+    {"emoji": "🗡️ Band of Bandits", "value": 40, "success_rate": 0.9},
+    # Add more monsters here...
+]
 
 
 def calculate_payout(result):
@@ -114,6 +128,31 @@ class Misc(commands.Cog):
     def cog_unload(self):
         self.check_jail_loop.cancel()
         self.change_role_color.cancel()
+
+    @commands.hybrid_command(name="adventure", description="Go on an adventure!")
+    async def adventure(self, ctx):
+        author = ctx.author.mention
+        success_list = []
+        fail_list = []
+        [success_list.append(i) if i[1] else fail_list.append(i) for i in adv_scenarios]
+        monster_rarity_threshold = random.uniform(0.1, 1)
+        available_monsters = [monster for monster in monsters if monster["rarity"] >= monster_rarity_threshold]
+
+        if not available_monsters:
+            available_monsters = monsters  # Use all monsters if none available for the selected rarity threshold
+
+        monster = random.choice(available_monsters)
+
+        is_successful = random.random() <= monster["success_rate"]
+
+        if is_successful:
+            scenario = random.choice(success_list)
+            scenario_text = scenario.format(author, monster["emoji"])
+        else:
+            scenario = random.choice(fail_list)
+            scenario_text = scenario.format(author, monster["emoji"])
+
+        await ctx.send(scenario_text)
 
     # chop command
     @commands.hybrid_command(name="chop", description="Go chopping!")
