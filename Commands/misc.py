@@ -145,11 +145,11 @@ class Misc(commands.Cog):
         is_successful = random.random() <= monster["success_rate"]
 
         if is_successful:
-            scenario[0] = random.choice(success_list)
-            scenario_text = scenario.format(author, monster["emoji"])
+            scenario = random.choice(success_list)
+            scenario_text = scenario[0].format(author, monster["emoji"])
         else:
-            scenario[0] = random.choice(fail_list)
-            scenario_text = scenario.format(author, monster["emoji"])
+            scenario = random.choice(fail_list)
+            scenario_text = scenario[0].format(author, monster["emoji"])
 
         await ctx.send(scenario_text)
 
