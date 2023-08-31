@@ -193,8 +193,8 @@ class Gambling(commands.Cog):
             return await ctx.send(
                 f"Hey Whore, You don't have enough money to do this lul, your balance is ${user_balance}")
 
-        coin_tails = ("Tails", "<:cointails:1145284840644694066>", "https://cdn.discordapp.com/attachments/1145071029954297888/1145280717421559828/coinheads-removebg-preview.png")
-        coin_heads = ("Heads", "<:coinheads:1145283300009713775>", "https://cdn.discordapp.com/attachments/1145071029954297888/1145284778929704990/cointails-removebg-preview_1.png")
+        coin_tails = ("Tails", "<:cointails:1145284840644694066>", "https://cdn.discordapp.com/attachments/1145071029954297888/1145284778929704990/cointails-removebg-preview_1.png")
+        coin_heads = ("Heads", "<:coinheads:1145283300009713775>", "https://cdn.discordapp.com/attachments/1145071029954297888/1145280717421559828/coinheads-removebg-preview.png")
 
         rng = random.randint(0, 9)
         res = coin_heads if rng > 4 else coin_tails
