@@ -193,8 +193,10 @@ class Gambling(commands.Cog):
             return await ctx.send(
                 f"Hey Whore, You don't have enough money to do this lul, your balance is ${user_balance}")
 
-        coin_tails = ("Tails", "<:cointails:1145284840644694066>", "https://cdn.discordapp.com/attachments/1145071029954297888/1145284778929704990/cointails-removebg-preview_1.png")
-        coin_heads = ("Heads", "<:coinheads:1145283300009713775>", "https://cdn.discordapp.com/attachments/1145071029954297888/1145280717421559828/coinheads-removebg-preview.png")
+        coin_tails = ("Tails", "<:cointails:1145284840644694066>",
+                      "https://cdn.discordapp.com/attachments/1145071029954297888/1145284778929704990/cointails-removebg-preview_1.png")
+        coin_heads = ("Heads", "<:coinheads:1145283300009713775>",
+                      "https://cdn.discordapp.com/attachments/1145071029954297888/1145280717421559828/coinheads-removebg-preview.png")
 
         rng = random.randint(0, 9)
         res = coin_heads if rng > 4 else coin_tails
@@ -235,7 +237,7 @@ class Gambling(commands.Cog):
             await ctx.reply(embed=em)
         await user_data.update_balance(user_balance, self.bot)
 
-# rps
+    # rps
     @commands.hybrid_command(description="Play rock paper scissors.", aliases=["rockpaperscissors"])
     @app_commands.describe(choice="rock, paper, or scissors")
     @app_commands.describe(bet='the amount of money to bet')
@@ -259,8 +261,8 @@ class Gambling(commands.Cog):
         if choice == bot_choice:
             result = "tie"
         elif (choice == "rock" and bot_choice == "scissors") or \
-             (choice == "paper" and bot_choice == "rock") or \
-             (choice == "scissors" and bot_choice == "paper"):
+                (choice == "paper" and bot_choice == "rock") or \
+                (choice == "scissors" and bot_choice == "paper"):
             result = "win"
         else:
             result = "lose"
@@ -278,10 +280,134 @@ class Gambling(commands.Cog):
         else:
             await ctx.send(f"You chose {choice}, the bot chose {bot_choice}. It's a tie!")
 
+    @commands.hybrid_command(description="Play rock paper scissors lizard spock.", aliases=["rpsls"])
+    @app_commands.describe(choice="rock, paper, scissors, lizard, or spock")
+    @app_commands.describe(bet='the amount of money to bet')
+    async def rpsls(self, ctx, choice: Literal['rock', 'paper', 'scissors', 'lizard', 'spock'], bet: int):
+        if bet <= 0:
+            await ctx.send("Invalid bet. Please bet a positive amount.")
+            return
+        if bet >= 500:
+            await ctx.send("Invalid bet. Please bet under 500.")
+            return
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_balance = user_data.balance
+        if bet > user_balance:
+            await ctx.send("You don't have enough money to do this.")
+            return
 
+        valid_choices = ['rock', 'paper', 'scissors', 'lizard', 'spock']
+        bot_choice = random.choice(valid_choices)  # You'll need to import 'random'
 
+        # Determine the winner
+        if choice == bot_choice:
+            result = "tie"
+        elif (choice == "rock" and bot_choice in ["scissors", "lizard"]) or \
+                (choice == "paper" and bot_choice in ["rock", "spock"]) or \
+                (choice == "scissors" and bot_choice in ["paper", "lizard"]) or \
+                (choice == "lizard" and bot_choice in ["paper", "spock"]) or \
+                (choice == "spock" and bot_choice in ["rock", "scissors"]):
+            result = "win"
+        else:
+            result = "lose"
 
+        # Adjust the winnings multiplier as needed
+        winnings_multiplier = 2
 
+        if result == "win":
+            winnings = bet * winnings_multiplier
+            await user_data.update_balance(user_balance + winnings, self.bot)
+            await ctx.send(f"You chose {choice}, the bot chose {bot_choice}. You win {winnings} coins!")
+        elif result == "lose":
+            await user_data.update_balance(user_balance - bet, self.bot)
+            await ctx.send(f"You chose {choice}, the bot chose {bot_choice}. You lose {bet} coins.")
+        else:
+            await ctx.send(f"You chose {choice}, the bot chose {bot_choice}. It's a tie!")
+
+    @commands.hybrid_command(name="dice", description="Roll a dice.")
+    @app_commands.describe(bet='the amount of money to bet')
+    async def dice(self, ctx, bet: int):
+        if bet <= 0:
+            await ctx.send("Invalid bet. Please bet a positive amount.")
+            return
+        if bet >= 500:
+            await ctx.send("Invalid bet. Please bet under 500.")
+            return
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_balance = user_data.balance
+        if bet > user_balance:
+            await ctx.send("You don't have enough money to do this.")
+            return
+
+        user_roll = random.randint(1, 6)
+        bot_roll = random.randint(1, 6)
+
+        if user_roll > bot_roll:
+            winnings = bet * 2
+            await user_data.update_balance(user_balance + winnings, self.bot)
+            await ctx.send(f"You rolled {user_roll}, the bot rolled {bot_roll}. You win {winnings} coins!")
+        elif user_roll < bot_roll:
+            await user_data.update_balance(user_balance - bet, self.bot)
+            await ctx.send(f"You rolled {user_roll}, the bot rolled {bot_roll}. You lose {bet} coins.")
+        else:
+            await ctx.send(f"You rolled {user_roll}, the bot rolled {bot_roll}. It's a tie!")
+
+    @commands.hybrid_command(name="roulette", description="Spin the roulette wheel.")
+    @app_commands.describe(bet='the amount of money to bet')
+    @app_commands.describe(choice='the number to bet on')
+    @app_commands.describe(color='the color to bet on')
+    async def roulette(self, ctx, bet: int, choice: Optional[int] = None, color: Optional[Literal['red', 'black']] = None):
+        if bet <= 0:
+            await ctx.send("Invalid bet. Please bet a positive amount.")
+            return
+        if bet >= 500:
+            await ctx.send("Invalid bet. Please bet under 500.")
+            return
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_balance = user_data.balance
+        if bet > user_balance:
+            await ctx.send("You don't have enough money to do this.")
+            return
+        if choice is not None and color is not None:
+            await ctx.send("You can only bet on a number or a color, not both.")
+            return
+
+        # Generate the result
+        result = random.randint(0, 36)
+
+        # Determine the color
+        if result == 0:
+            result_color = "green"
+        elif result in range(1, 11) or result in range(19, 29):
+            result_color = "black"
+        else:
+            result_color = "red"
+
+        # Determine the payout
+        if choice is None and color is None:
+            winnings_multiplier = 2
+        elif choice is not None and color is not None:
+            winnings_multiplier = 36
+        else:
+            winnings_multiplier = 18
+
+        # Determine the winner
+        if choice is not None and choice == result:
+            result = "win"
+        elif color is not None and color == result_color:
+            result = "win"
+        else:
+            result = "lose"
+
+        if result == "win":
+            winnings = bet * winnings_multiplier
+            await user_data.update_balance(user_balance + winnings, self.bot)
+            await ctx.send(f"The result was {result}, you win {winnings} coins!")
+        elif result == "lose":
+            await user_data.update_balance(user_balance - bet, self.bot)
+            await ctx.send(f"The result was {result}, you lose {bet} coins.")
+        else:
+            await ctx.send(f"The result was {result}, it's a tie!")
 
 async def setup(bot):
     await bot.add_cog(Gambling(bot))
