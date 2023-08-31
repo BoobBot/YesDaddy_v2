@@ -76,3 +76,7 @@ class Loops(commands.Cog):
         print("Starting the role color change loop")
         # Run the loop once to initialize the role color
         await self.change_role_color()
+
+
+async def setup(bot):
+    await bot.add_cog(Loops(bot))
