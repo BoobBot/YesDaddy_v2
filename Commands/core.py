@@ -194,6 +194,40 @@ class Core(commands.Cog):
     #     # Send the response as a message
     #     await ctx.send(chat_completion.choices[0].message.content)
     #
+    @commands.group(name="jail", description="Manage jail time for users.", invoke_without_command=True)
+    @commands.is_owner()
+    async def jail(self, ctx):
+        await ctx.send("Please use subcommands: check, clear, or add.")
+
+    @jail.command(name="check", description="Check jail time of a user.")
+    async def check_jail(self, ctx, user: commands.UserConverter):
+        user_data = await self.bot.db_client.get_user(user.id)
+        jail_info = user_data.jail
+
+        if not jail_info:
+            await ctx.send(f"{user.display_name} is not in jail.")
+        else:
+            remaining_time = jail_info.get("remaining_time", 0)
+            await ctx.send(f"{user.display_name} is in jail for {remaining_time} seconds.")
+
+    @jail.command(name="clear", description="Clear jail time of a user.")
+    async def clear_jail(self, ctx, user: commands.UserConverter):
+        user_data = await self.bot.db_client.get_user(user.id)
+
+        if not user_data.jail:
+            await ctx.send(f"{user.display_name} is not in jail.")
+        else:
+            await user_data.update_user({"jail": {}}, self.bot)
+            await ctx.send(f"Cleared jail time for {user.display_name}.")
+
+    @jail.command(name="add", description="Add jail time for a user.")
+    async def add_jail(self, ctx, user: commands.UserConverter, time_in_seconds: int):
+        user_data = await self.bot.db_client.get_user(user.id)
+        current_jail_info = user_data.jail or {}
+
+        remaining_time = current_jail_info.get("remaining_time", 0) + time_in_seconds
+        await user_data.update_user({"jail": {"remaining_time": remaining_time}}, self.bot)
+        await ctx.send(f"Added {time_in_seconds} seconds of jail time for {user.display_name}.")
 
     @commands.command(name="eval")
     @commands.is_owner()
