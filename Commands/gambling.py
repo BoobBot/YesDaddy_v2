@@ -168,7 +168,7 @@ class Gambling(commands.Cog):
             await author_data.update_balance(total, self.bot)
             return await ctx.reply(embed=em)
 
-    @commands.command(description="Flip a coin.", aliases=["coin"])
+    @commands.hybrid_command(description="Flip a coin.", aliases=["coin"])
     @app_commands.describe(side='pick a side, heads or tails')
     @app_commands.describe(bet='the amount of money to bet')
     async def coinflip(self, ctx, side: Literal['heads', 'tails'], bet: int):
