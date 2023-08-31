@@ -235,6 +235,53 @@ class Gambling(commands.Cog):
             await ctx.reply(embed=em)
         await user_data.update_balance(user_balance, self.bot)
 
+# rps
+    @commands.hybrid_command(description="Play rock paper scissors.", aliases=["rockpaperscissors"])
+    @app_commands.describe(choice="rock, paper, or scissors")
+    @app_commands.describe(bet='the amount of money to bet')
+    async def rps(self, ctx, choice: Literal['rock', 'paper', 'scissors'], bet: int):
+        if bet <= 0:
+            await ctx.send("Invalid bet. Please bet a positive amount.")
+            return
+        if bet >= 500:
+            await ctx.send("Invalid bet. Please bet under 500.")
+            return
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_balance = user_data.balance
+        if bet > user_balance:
+            await ctx.send("You don't have enough money to do this.")
+            return
+
+        valid_choices = ['rock', 'paper', 'scissors']
+        bot_choice = random.choice(valid_choices)  # You'll need to import 'random'
+
+        # Determine the winner
+        if choice == bot_choice:
+            result = "tie"
+        elif (choice == "rock" and bot_choice == "scissors") or \
+             (choice == "paper" and bot_choice == "rock") or \
+             (choice == "scissors" and bot_choice == "paper"):
+            result = "win"
+        else:
+            result = "lose"
+
+        # Adjust the winnings multiplier as needed
+        winnings_multiplier = 2
+
+        if result == "win":
+            winnings = bet * winnings_multiplier
+            await user_data.update_balance(user_balance + winnings, self.bot)
+            await ctx.send(f"You chose {choice}, the bot chose {bot_choice}. You win {winnings} coins!")
+        elif result == "lose":
+            await user_data.update_balance(user_balance - bet, self.bot)
+            await ctx.send(f"You chose {choice}, the bot chose {bot_choice}. You lose {bet} coins.")
+        else:
+            await ctx.send(f"You chose {choice}, the bot chose {bot_choice}. It's a tie!")
+
+
+
+
+
 
 async def setup(bot):
     await bot.add_cog(Gambling(bot))
