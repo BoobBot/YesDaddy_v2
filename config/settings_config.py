@@ -37,6 +37,20 @@ chop_resource_info = {
     'Birch': {'emote': '<:birch:1146125694313697330>', 'min_value': 20, 'max_value': 30, 'rarity': 0.3},
 }
 
+# TODO indo make more fix emotes
+monsters = [
+    {"emoji": "🐉 Dragon", "value": 100, "success_rate": 0.7, "rarity": 0.4},  # Legendary
+    {"emoji": "🦊 Kitsune", "value": 50, "success_rate": 0.9, "rarity": 0.5},  # Rare
+    {"emoji": "👻 Ancient Spirit", "value": 80, "success_rate": 0.6, "rarity": 0.3},  # Epic
+    {"emoji": "🗡️ Rogue Bandit", "value": 20, "success_rate": 0.95, "rarity": 0.9},  # Common
+    {"emoji": "🧚‍♂️ Pixie", "value": 30, "success_rate": 0.85, "rarity": 0.7},  # Uncommon
+    {"emoji": "🌊 Shapeshifter", "value": 70, "success_rate": 0.75, "rarity": 0.5},  # Rare
+    {"emoji": "🪨 Rock Golem", "value": 90, "success_rate": 0.5, "rarity": 0.7},  # Uncommon
+    {"emoji": "👻 Haunted Spirit", "value": 60, "success_rate": 0.8, "rarity": 0.9},  # Common
+    {"emoji": "🌀 Interdimensional Entity", "value": 120, "success_rate": 0.4, "rarity": 0.2},  # Mythical
+    {"emoji": "🗡️ Band of Bandits", "value": 40, "success_rate": 0.9, "rarity": 0.9}  # Common
+]
+
 
 def calculate_payout(result):
     total_payout = 0
@@ -88,3 +102,5 @@ def create_leaderboard_embed(title, entries, page_number):
         embed.add_field(name=f"#{index}", value=value, inline=False)
 
     return embed
+
+

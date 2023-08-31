@@ -10,7 +10,8 @@ from discord import app_commands, Embed
 from discord.ext import commands, tasks
 
 from DataBase import User
-from config.lists import job_descriptions, fake_robbery_scenarios, funny_crime_scenarios, adv_scenarios
+from config.lists import job_descriptions, fake_robbery_scenarios, funny_crime_scenarios, adv_scenarios, \
+    adv_success_strings
 from utils.checks import persistent_cooldown
 from utils.paginator import Paginator
 from utils.utilities import subtraction_percentage, generate_embed_color, progress_percentage
@@ -149,12 +150,13 @@ class Misc(commands.Cog):
             cash = monster["value"]*random.randint(5, 10)
             await user_data.add_balance(cash, self.bot)
             scenario = random.choice(success_list)
+            outcome = random.choice(adv_success_strings)
             scenario_text = scenario[0].format(author, monster["emoji"])
-            outcome = f"you were successful, You found ${cash}!"
+            outcome = " " + outcome.format(author, monster["emoji"]) + f" you earned ${cash}!"
         else:
             scenario = random.choice(fail_list)
             scenario_text = scenario[0].format(author, monster["emoji"])
-            outcome = "\nyou were unsuccessful, you fucking died, lol"
+            outcome = random.choice(adv_success_strings).format(author, monster["emoji"])
 
         await ctx.send(scenario_text+outcome)
 
