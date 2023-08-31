@@ -226,6 +226,31 @@ class Dev(commands.Cog):
         await user_data.update_user({"jail": {"remaining_time": remaining_time}}, self.bot)
         await ctx.send(f"Added {time_in_seconds} seconds of jail time for {user.display_name}.")
 
+    @commands.group("economy", description="Manage user economy.", invoke_without_command=True)
+    @commands.is_owner()
+    async def economy(self, ctx):
+        await ctx.send("Please use subcommands: add, remove, or set.")
+
+    @economy.command(name="add", description="Add money to a user's balance.")
+    async def add_money(self, ctx, user: commands.UserConverter, amount: int):
+        user_data = await self.bot.db_client.get_user(user.id)
+        await user_data.add_balance(amount, self.bot)
+        await ctx.send(f"Added {amount} to {user.display_name}'s balance.")
+
+    @economy.command(name="remove", description="Remove money from a user's balance.")
+    async def remove_money(self, ctx, user: commands.UserConverter, amount: int):
+        user_data = await self.bot.db_client.get_user(user.id)
+        await user_data.subtract_balance(amount, self.bot)
+        await ctx.send(f"Removed {amount} from {user.display_name}'s balance.")
+
+    @economy.command(name="set", description="Set a user's balance.")
+    async def set_money(self, ctx, user: commands.UserConverter, amount: int):
+        user_data = await self.bot.db_client.get_user(user.id)
+        await user_data.update_balance(amount, self.bot)
+        await ctx.send(f"Set {user.display_name}'s balance to {amount}.")
+
+
+
     @commands.command(name="eval")
     @commands.is_owner()
     async def eval(self, ctx, *, body: str):
