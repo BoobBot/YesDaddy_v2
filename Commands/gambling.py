@@ -280,7 +280,7 @@ class Gambling(commands.Cog):
         else:
             await ctx.send(f"You chose {choice}, the bot chose {bot_choice}. It's a tie!")
 
-    @commands.hybrid_command(description="Play rock paper scissors lizard spock.", aliases=["rpsls"])
+    @commands.hybrid_command(description="Play rock paper scissors lizard spock.")
     @app_commands.describe(choice="rock, paper, scissors, lizard, or spock")
     @app_commands.describe(bet='the amount of money to bet')
     async def rpsls(self, ctx, choice: Literal['rock', 'paper', 'scissors', 'lizard', 'spock'], bet: int):
