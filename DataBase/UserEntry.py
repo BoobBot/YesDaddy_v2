@@ -3,7 +3,9 @@ import datetime
 
 
 class User:
-    def __init__(self, user_id, blacklist, last_seen, xp, level, premium, balance, bank_balance, cooldowns, messages, jail):
+    def __init__(self, user_id, blacklist, last_seen, xp, level, premium, balance, bank_balance, cooldowns, messages,
+                 jail,
+                 last_daily_claim=None, last_weekly_claim=None, daily_streak=0, weekly_streak=0):
         self.user_id = user_id
         self.blacklist = blacklist
         self.last_seen = last_seen
@@ -15,6 +17,10 @@ class User:
         self.cooldowns = cooldowns
         self.messages = messages
         self.jail = self.jail = jail if jail is not None else {}
+        self.last_daily_claim = last_daily_claim
+        self.last_weekly_claim = last_weekly_claim
+        self.daily_streak = daily_streak
+        self.weekly_streak = weekly_streak
 
     async def jail_user(self, hours, fine, bot):
         self.jail = {
@@ -90,3 +96,47 @@ class User:
     async def remove_blacklist(self, bot):
         self.blacklist = False
         await self.update_user({"blacklist": self.blacklist}, bot)
+
+    async def claim_daily(self, bot):
+        now = datetime.datetime.now(datetime.timezone.utc)
+        if self.last_daily_claim is None or (now - self.last_daily_claim).days >= 1:
+            # Check if the daily streak is broken
+            if (self.last_daily_claim is not None and
+                    (now - self.last_daily_claim).days > 1):
+                self.daily_streak = 0  # Reset streak if broken
+
+            # Claim the daily reward
+            money = 5000 + (self.daily_streak * 1000)  # Add streak bonus
+            newbal = self.balance + money
+            self.last_daily_claim = now
+            self.daily_streak += 1
+
+            # Update user data and send an embed
+            await self.add_balance(money, bot)
+            await self.update_user({"last_daily_claim": self.last_daily_claim,
+                                    "daily_streak": self.daily_streak}, bot)
+            return money, self.daily_streak
+        else:
+            return 0, self.daily_streak
+
+    async def claim_weekly(self, bot):
+        now = datetime.datetime.now(datetime.timezone.utc)
+        if self.last_weekly_claim is None or (now - self.last_weekly_claim).days >= 7:
+            # Check if the weekly streak is broken
+            if (self.last_weekly_claim is not None and
+                    (now - self.last_weekly_claim).days > 7):
+                self.weekly_streak = 0  # Reset streak if broken
+
+            # Claim the weekly reward
+            money = 20000 + (self.weekly_streak * 5000)  # Add streak bonus
+            newbal = self.balance + money
+            self.last_weekly_claim = now
+            self.weekly_streak += 1
+
+            # Update user data and send an embed
+            await self.add_balance(money, bot)
+            await self.update_user({"last_weekly_claim": self.last_weekly_claim,
+                                    "weekly_streak": self.weekly_streak}, bot)
+            return money, self.weekly_streak
+        else:
+            return 0, self.weekly_streak
