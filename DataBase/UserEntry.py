@@ -107,17 +107,13 @@ class User:
 
             # Claim the daily reward
             money = 5000 + (self.daily_streak * 1000)  # Add streak bonus
-            newbal = self.balance + money
             self.last_daily_claim = now
             self.daily_streak += 1
-
-            # Update user data and send an embed
-            await self.add_balance(money, bot)
             await self.update_user({"last_daily_claim": self.last_daily_claim,
                                     "daily_streak": self.daily_streak}, bot)
             return money, self.daily_streak
         else:
-            return 0, self.daily_streak
+            return 5000, self.daily_streak
 
     async def claim_weekly(self, bot):
         now = datetime.datetime.now(datetime.timezone.utc)

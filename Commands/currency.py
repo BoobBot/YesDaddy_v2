@@ -117,36 +117,31 @@ class Currency(commands.Cog):
         user = user or ctx.author
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
         user_color = await generate_embed_color(user)
-
-        money = 5000
-        newbal = user_data.balance + money
-
         author_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
         claimed_money, daily_streak = await author_data.claim_daily(self.bot)
 
-
         if user.id == ctx.author.id:
-            description = f"Daily: + {money}"
-            if claimed_money > 0:
+            description = f"Daily: + {claimed_money}"
+            if claimed_money > 5000:
                 description = f"Daily: + {claimed_money} (Streak: {daily_streak})"
             em = discord.Embed(color=user_color, title=f"{ctx.author}'s daily", description=description)
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
         else:
             description = "\nGifted Currency: +1000"
-            if claimed_money > 0:
+            if claimed_money > 5000:
                 description = f"Gifted: + {claimed_money} (Streak: {daily_streak})"
-            money += 1000
+            claimed_money += 1000
             em = discord.Embed(color=user_color,
                                title=f"{ctx.author} has given {user} their daily, plus a bonus!",
                                description=description)
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
 
-        em.add_field(name="Amount Added", value=f"{money}")
-        em.add_field(name="New Balance", value=f"{newbal}")
-        if claimed_money == 0 and daily_streak > 0:
+        em.add_field(name="Amount Added", value=f"{claimed_money}")
+        em.add_field(name="New Balance", value=f"{user_data.balance + claimed_money}")
+        if claimed_money == 5000 or claimed_money == 6000 and daily_streak > 0:
             em.add_field(name="Streak Broken!", value=f"You broke your daily streak of {daily_streak} days!")
 
-        await user_data.add_balance(money, self.bot)
+        await user_data.add_balance(claimed_money, self.bot)
         await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="weekly", description="Get your weekly coins!.")
