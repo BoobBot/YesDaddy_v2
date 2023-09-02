@@ -24,6 +24,8 @@ class Currency(commands.Cog):
     @commands.hybrid_command(name="adventure", description="Go on an adventure!")
     async def adventure(self, ctx):
         author = ctx.author.mention
+        user = ctx.author
+        user_color = await generate_embed_color(ctx.author)
         success_list = []
         fail_list = []
         [success_list.append(i) if i[1] else fail_list.append(i) for i in adv_scenarios]
@@ -50,7 +52,11 @@ class Currency(commands.Cog):
             scenario_text = scenario[0].format(author, monster["emoji"])
             outcome = random.choice(adv_failure_strings).format(author, monster["emoji"])
 
-        await ctx.send(scenario_text+outcome)
+        em = discord.Embed(color=user_color,
+                           title=f"{user}'s adventure!",
+                           description=scenario_text+outcome)
+        em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
+        await ctx.send(embed=em)
 
     # chop command
     @commands.hybrid_command(name="chop", description="Go chopping!")
