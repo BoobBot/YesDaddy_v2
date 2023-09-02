@@ -144,7 +144,7 @@ class Currency(commands.Cog):
 
         em.add_field(name="Amount Added", value=f"{claimed_money}")
         em.add_field(name="New Balance", value=f"{user_data.balance + claimed_money}")
-        if claimed_money == 5000 and daily_streak > 0 or claimed_money == 6000 and daily_streak > 0:
+        if claimed_money == 5000 and daily_streak > 1 or claimed_money == 6000 and daily_streak > 1:
             em.add_field(name="Streak Broken!", value=f"You broke your daily streak of {daily_streak} days!")
 
         await user_data.add_balance(claimed_money, self.bot)

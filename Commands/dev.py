@@ -226,6 +226,32 @@ class Dev(commands.Cog):
         await user_data.update_user({"jail": {"remaining_time": remaining_time}}, self.bot)
         await ctx.send(f"Added {time_in_seconds} seconds of jail time for {user.display_name}.")
 
+    @commands.group("streaks", description="Manage user streaks.", invoke_without_command=True)
+    @commands.is_owner()
+    async def streaks(self, ctx):
+        await ctx.send("Please use subcommands: cleardaily, or clearweekly.")
+
+    @streaks.command(name="cleardaily", description="Clear the daily streak of a user.")
+    async def clear_daily(self, ctx, user: commands.UserConverter):
+        user_data = await self.bot.db_client.get_user(user.id)
+
+        if not user_data.daily_streak:
+            await ctx.send(f"{user.display_name} has no streak.")
+        else:
+            await user_data.update_user({"streak": {}}, self.bot)
+            await ctx.send(f"Cleared streak for {user.display_name}.")
+
+    @streaks.command(name="clearweekly", description="Clear the weekly streak of a user.")
+    async def clear_weekly(self, ctx, user: commands.UserConverter):
+        user_data = await self.bot.db_client.get_user(user.id)
+
+        if not user_data.weekly_streak:
+            await ctx.send(f"{user.display_name} has no streak.")
+        else:
+            await user_data.update_user({"streak": {}}, self.bot)
+            await ctx.send(f"Cleared streak for {user.display_name}.")
+
+
     @commands.group("economy", description="Manage user economy.", invoke_without_command=True)
     @commands.is_owner()
     async def economy(self, ctx):
