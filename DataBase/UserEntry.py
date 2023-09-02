@@ -99,10 +99,10 @@ class User:
 
     async def claim_daily(self, bot):
         now = datetime.datetime.now(datetime.timezone.utc)
-        if self.last_daily_claim is None or (now - self.last_daily_claim.replace(tzinfo=datetime.timezone.utc)).days >= 1:
+        if self.last_daily_claim is None or (now - self.last_daily_claim.replace(tzinfo=datetime.timezone.utc)).days >= 2:
             # Check if the daily streak is broken
             if (self.last_daily_claim is not None and
-                    (now - self.last_daily_claim.replace(tzinfo=datetime.timezone.utc)).days > 1):
+                    (now - self.last_daily_claim.replace(tzinfo=datetime.timezone.utc)).days > 2):
                 self.daily_streak = 0  # Reset streak if broken
 
             # Claim the daily reward
