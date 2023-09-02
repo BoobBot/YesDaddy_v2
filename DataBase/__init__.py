@@ -115,6 +115,10 @@ class DiscordDatabase:
             user_data.setdefault("cooldowns", {})
             user_data.setdefault("messages", 0)
             user_data.setdefault("jail", {})  # Provide a default value for 'jail' attribute
+            user_data.setdefault("last_daily_claim", {})
+            user_data.setdefault("last_weekly_claim", {})
+            user_data.setdefault("weekly_streak", {})
+            user_data.setdefault("daily_streak", {})
             return User(**user_data)
         user = User(user_id, False, f'{datetime.utcnow()}', 0, 0, False, 0, 0, {}, 0, {})
         await self.add_user(user)
