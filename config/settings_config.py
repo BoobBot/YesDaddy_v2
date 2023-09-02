@@ -37,18 +37,18 @@ chop_resource_info = {
     'Birch': {'emote': '<:birch:1146125694313697330>', 'min_value': 20, 'max_value': 30, 'rarity': 0.3},
 }
 
-# TODO indo make more fix emotes
+
 monsters = [
-    {"emoji": "🐉 Dragon", "value": 100, "success_rate": 0.7, "rarity": 0.4},  # Legendary
-    {"emoji": "🦊 Kitsune", "value": 50, "success_rate": 0.9, "rarity": 0.5},  # Rare
-    {"emoji": "👻 Ancient Spirit", "value": 80, "success_rate": 0.6, "rarity": 0.3},  # Epic
-    {"emoji": "🗡️ Rogue Bandit", "value": 20, "success_rate": 0.95, "rarity": 0.9},  # Common
-    {"emoji": "🧚‍♂️ Pixie", "value": 30, "success_rate": 0.85, "rarity": 0.7},  # Uncommon
-    {"emoji": "🌊 Shapeshifter", "value": 70, "success_rate": 0.75, "rarity": 0.5},  # Rare
-    {"emoji": "🪨 Rock Golem", "value": 90, "success_rate": 0.5, "rarity": 0.7},  # Uncommon
-    {"emoji": "👻 Haunted Spirit", "value": 60, "success_rate": 0.8, "rarity": 0.9},  # Common
-    {"emoji": "🌀 Interdimensional Entity", "value": 120, "success_rate": 0.4, "rarity": 0.2},  # Mythical
-    {"emoji": "🗡️ Band of Bandits", "value": 40, "success_rate": 0.9, "rarity": 0.9}  # Common
+    {"emoji": "The Dragon <a:dragon:1146865445547278457>", "value": 100, "success_rate": 0.7, "rarity": 0.4},  # Legendary
+    {"emoji": "A Kitsune <:kitsune:1146865719502442667>", "value": 50, "success_rate": 0.9, "rarity": 0.5},  # Rare
+    {"emoji": "The Ancient Spirit <:spirit:1146869866599555082>", "value": 80, "success_rate": 0.6, "rarity": 0.3},  # Epic
+    {"emoji": "A Rogue Bandit <:bandit:1146870790344683530>", "value": 20, "success_rate": 0.95, "rarity": 0.9},  # Common
+    {"emoji": "A Pixie <:pixie:1146872679866044467>", "value": 30, "success_rate": 0.85, "rarity": 0.7},  # Uncommon
+    {"emoji": "The Shapeshifter <:shifter:1146874237387284580>", "value": 70, "success_rate": 0.75, "rarity": 0.5},  # Rare
+    {"emoji": "A Rock Golem <:golem:1146874710186008676>", "value": 90, "success_rate": 0.5, "rarity": 0.7},  # Uncommon
+    {"emoji": "The Haunted Spirit <:ghost:1146867993461133403>", "value": 60, "success_rate": 0.8, "rarity": 0.9},  # Common
+    {"emoji": "An Interdimensional Entity <:entity:1146875640675573810>", "value": 120, "success_rate": 0.4, "rarity": 0.2},  # Mythical
+    {"emoji": "A Band of Bandits <:bandit_group:1146870972301979658>", "value": 40, "success_rate": 0.9, "rarity": 0.9}  # Common
 ]
 
 
