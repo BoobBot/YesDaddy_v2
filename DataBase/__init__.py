@@ -102,7 +102,7 @@ class DiscordDatabase:
         await self.user_collection.insert_one(user.__dict__)
 
     async def get_user(self, user_id):
-        user_data = await self.user_collection.find_one({"user_id": user_id}, {"_id": 0})
+        user_data = await self.user_collection.find_one({"user_id": user_id}, {"_id": 0}, {"streak": 0})
         if user_data:
             # Provide default values for missing attributes
             user_data.setdefault("blacklist", False)

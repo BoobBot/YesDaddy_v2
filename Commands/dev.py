@@ -238,7 +238,7 @@ class Dev(commands.Cog):
         if not user_data.daily_streak:
             await ctx.send(f"{user.display_name} has no streak.")
         else:
-            await user_data.update_user({"streak": {}}, self.bot)
+            await user_data.update_user({"daily_streak": {}}, self.bot)
             await ctx.send(f"Cleared streak for {user.display_name}.")
 
     @streaks.command(name="clearweekly", description="Clear the weekly streak of a user.")
@@ -248,7 +248,7 @@ class Dev(commands.Cog):
         if not user_data.weekly_streak:
             await ctx.send(f"{user.display_name} has no streak.")
         else:
-            await user_data.update_user({"streak": {}}, self.bot)
+            await user_data.update_user({"weekly_streak": {}}, self.bot)
             await ctx.send(f"Cleared streak for {user.display_name}.")
 
 
