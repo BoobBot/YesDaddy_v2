@@ -136,23 +136,23 @@ class Currency(commands.Cog):
         claimed_money, daily_streak = await author_data.claim_daily(self.bot)
 
         if user.id == ctx.author.id:
-            description = f"Daily: + {claimed_money}"
+            description = f"Daily: + ${claimed_money}"
             if claimed_money > 5000:
-                description = f"Daily: + {claimed_money} (Streak: {daily_streak})"
+                description = f"Daily: + ${claimed_money} (Streak: {daily_streak})"
             em = discord.Embed(
                 color=user_color, title=f"{ctx.author}'s daily", description=description)
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
         else:
-            description = "\nGifted Currency: +1000"
+            description = "\nGifted Currency: +$1000"
             if claimed_money > 5000:
-                description = f"Gifted: + {claimed_money} (Streak: {daily_streak})"
+                description = f"Gifted: + ${claimed_money} (Streak: {daily_streak})"
             claimed_money += 1000
             em = discord.Embed(color=user_color,
                                title=f"{ctx.author} has given {user} their daily, plus a bonus!",
                                description=description)
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
 
-        em.add_field(name="Amount Added", value=f"{claimed_money}")
+        em.add_field(name="Amount Added", value=f"${claimed_money}")
         em.add_field(name="New Balance",
                      value=f"{user_data.balance + claimed_money}")
         if claimed_money == 5000 and daily_streak > 1 or claimed_money == 6000 and daily_streak > 1:
@@ -174,19 +174,19 @@ class Currency(commands.Cog):
         newbal = user_data.balance + money
 
         if user.id == ctx.author.id:
-            description = f"Weekly: + {money}"
+            description = f"Weekly: + ${money}"
             em = discord.Embed(
                 color=user_color, title=f"{ctx.author}'s weekly", description=description)
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
         else:
-            description = "\nGifted Currency: +10000"
+            description = "\nGifted Currency: +$10000"
             em = discord.Embed(color=user_color,
                                title=f"{ctx.author} has given {user} their weekly, plus a bonus!",
                                description=description)
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
 
-        em.add_field(name="Amount Added", value=f"{money}")
-        em.add_field(name="New Balance", value=f"{newbal}")
+        em.add_field(name="Amount Added", value=f"${money}")
+        em.add_field(name="New Balance", value=f"${newbal}")
 
         await user_data.add_balance(money, self.bot)
         await ctx.reply(embed=em)
@@ -206,12 +206,12 @@ class Currency(commands.Cog):
             return await ctx.send(
                 f"Look at you all handcuffed and shit, you'll get out of those {remaining_timestamp}")
         new_bal = user_data.balance + cash
-        description = f"{job}\n\nCash: + {cash}"
+        description = f"{job}\n\nCash: + ${cash}"
         em = discord.Embed(color=discord.Color.random(),
                            title=f"{ctx.author}'s job", description=description)
         em.set_thumbnail(
             url=ctx.author.display_avatar.with_static_format("png"))
-        em.add_field(name="New Balance", value=f"{new_bal}")
+        em.add_field(name="New Balance", value=f"${new_bal}")
         await user_data.add_balance(cash, self.bot)
         await ctx.reply(embed=em)
 
