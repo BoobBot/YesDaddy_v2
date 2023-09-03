@@ -32,7 +32,8 @@ class User:
 
     def is_in_jail(self):
         if self.jail:
-            start_time = self.jail["start_time"].replace(tzinfo=datetime.timezone.utc)
+            start_time = self.jail["start_time"].replace(
+                tzinfo=datetime.timezone.utc)
             duration = self.jail["duration_hours"]
             end_time = start_time + datetime.timedelta(hours=duration)
             return end_time

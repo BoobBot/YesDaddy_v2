@@ -116,7 +116,8 @@ class Gambling(commands.Cog):
 
         random.shuffle(fake_robbery_scenarios)
         scenario = random.choice(fake_robbery_scenarios)
-        rob_scenario = scenario[0].replace("{0}", ctx.author.mention).replace("{1}", user.mention)
+        rob_scenario = scenario[0].replace(
+            "{0}", ctx.author.mention).replace("{1}", user.mention)
         rob_outcome = scenario[1]
 
         אחוז_הפסד = 25
@@ -140,7 +141,8 @@ class Gambling(commands.Cog):
 
         if rob_outcome:
             user_balance = user_data.balance
-            user_loss_total = subtraction_percentage(user_balance, loss_percent)
+            user_loss_total = subtraction_percentage(
+                user_balance, loss_percent)
             author_total = max(author_data.balance + user_loss_total, 0)
             user_total = max(user_data.balance - user_loss_total, 0)
             await user_data.update_balance(user_total, self.bot)
@@ -152,7 +154,8 @@ class Gambling(commands.Cog):
         else:
             author_balance = author_data.balance
             total_percentage = loss_percent + אחוז_הפסד
-            author_loss_total = subtraction_percentage(author_balance, total_percentage)
+            author_loss_total = subtraction_percentage(
+                author_balance, total_percentage)
             total = max(author_balance - author_loss_total, 0)
             jail_time = random.randint(1, 3)
             fine = random.randint(100, 1000)
@@ -255,7 +258,8 @@ class Gambling(commands.Cog):
             return
 
         valid_choices = ['rock', 'paper', 'scissors']
-        bot_choice = random.choice(valid_choices)  # You'll need to import 'random'
+        # You'll need to import 'random'
+        bot_choice = random.choice(valid_choices)
 
         # Determine the winner
         if choice == bot_choice:
@@ -297,7 +301,8 @@ class Gambling(commands.Cog):
             return
 
         valid_choices = ['rock', 'paper', 'scissors', 'lizard', 'spock']
-        bot_choice = random.choice(valid_choices)  # You'll need to import 'random'
+        # You'll need to import 'random'
+        bot_choice = random.choice(valid_choices)
 
         # Determine the winner
         if choice == bot_choice:
@@ -556,6 +561,7 @@ class Gambling(commands.Cog):
         else:
             await ctx.send(
                 f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. It's a tie!")
+
 
 async def setup(bot):
     await bot.add_cog(Gambling(bot))

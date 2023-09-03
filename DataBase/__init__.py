@@ -50,15 +50,14 @@ class DiscordDatabase:
 
     async def get_top_users_by_combined_balance(self, limit):
         pipeline = [
-            {"$addFields": {"combined_balance": {"$add": ["$balance", "$bank_balance"]}}},
+            {"$addFields": {"combined_balance": {
+                "$add": ["$balance", "$bank_balance"]}}},
             {"$sort": {"combined_balance": -1}},
             {"$limit": limit},
             {"$project": {"_id": 0}}
         ]
         top_users = await self.user_collection.aggregate(pipeline).to_list(None)
         return top_users
-
-
 
     async def get_all_users(self):
         all_users = []
@@ -73,7 +72,8 @@ class DiscordDatabase:
             user_data.setdefault("bank_balance", 0)
             user_data.setdefault("cooldowns", {})
             user_data.setdefault("messages", 0)
-            user_data.setdefault("jail", {})  # Provide a default value for 'jail' attribute
+            # Provide a default value for 'jail' attribute
+            user_data.setdefault("jail", {})
             all_users.append(user_data)
         return all_users
 
@@ -91,7 +91,8 @@ class DiscordDatabase:
             user_data.setdefault("bank_balance", 0)
             user_data.setdefault("cooldowns", {})
             user_data.setdefault("messages", 0)
-            user_data.setdefault("jail", {})  # Provide a default value for 'jail' attribute
+            # Provide a default value for 'jail' attribute
+            user_data.setdefault("jail", {})
             user = User(**user_data)
             if user.is_in_jail():
                 users_in_jail.append(user.user_id)
@@ -114,13 +115,15 @@ class DiscordDatabase:
             user_data.setdefault("bank_balance", 0)
             user_data.setdefault("cooldowns", {})
             user_data.setdefault("messages", 0)
-            user_data.setdefault("jail", {})  # Provide a default value for 'jail' attribute
+            # Provide a default value for 'jail' attribute
+            user_data.setdefault("jail", {})
             user_data.setdefault("last_daily_claim", {})
             user_data.setdefault("last_weekly_claim", {})
             user_data.setdefault("weekly_streak", {})
             user_data.setdefault("daily_streak", {})
             return User(**user_data)
-        user = User(user_id, False, f'{datetime.utcnow()}', 0, 0, False, 0, 0, {}, 0, {})
+        user = User(user_id, False,
+                    f'{datetime.utcnow()}', 0, 0, False, 0, 0, {}, 0, {})
         await self.add_user(user)
         user_data = await self.user_collection.find_one({"user_id": user_id}, {"_id": 0})
         return User(**user_data)

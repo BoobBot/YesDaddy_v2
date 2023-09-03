@@ -47,7 +47,8 @@ class Profile(commands.Cog):
 
         em = discord.Embed(title=f"{user}'s Profile", color=user_color)
         em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
-        em.add_field(name="Level", value=f"{user_data.level} {bar} {user_data.level + 1}", inline=False)
+        em.add_field(
+            name="Level", value=f"{user_data.level} {bar} {user_data.level + 1}", inline=False)
         em.add_field(name="Experience", value=f"{user_data.xp} / {exp_needed}")
         em.add_field(name="Balance", value=f"{user_data.balance}")
         em.add_field(name="Bank Balance", value=f"{user_data.bank_balance}")
@@ -55,7 +56,8 @@ class Profile(commands.Cog):
             release_time = user_data.is_in_jail()
             remaining_timestamp = discord.utils.format_dt(release_time, style="R"
                                                           )
-            em.add_field(name="Jail?", value=f"experience freedom in {remaining_timestamp}")
+            em.add_field(
+                name="Jail?", value=f"experience freedom in {remaining_timestamp}")
         await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="avatar", description="Look at someone's avatar.")
@@ -80,7 +82,8 @@ class Profile(commands.Cog):
 
         sorted_users = []
         for user_data in top_users:
-            user_data.setdefault("jail", {})  # Provide a default value for 'jail' attribute
+            # Provide a default value for 'jail' attribute
+            user_data.setdefault("jail", {})
             user = User(**user_data)
             member = ctx.guild.get_member(user.user_id)
 
@@ -89,7 +92,8 @@ class Profile(commands.Cog):
 
         sorted_users.sort(key=lambda entry: entry[0].level, reverse=True)
 
-        pages = create_leaderboard_pages(sorted_users, "Leaderboard - Levels: Page")
+        pages = create_leaderboard_pages(
+            sorted_users, "Leaderboard - Levels: Page")
         await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
 
     @leaderboard.command(name="balance", aliases=["bal"], description="View the balance leaderboard.")
@@ -108,7 +112,8 @@ class Profile(commands.Cog):
                 sorted_users.append((user, member))
 
         sorted_users.sort(key=lambda entry: entry[0]['balance'], reverse=True)
-        pages = create_leaderboard_pages(sorted_users, "Leaderboard - Balance: Page")
+        pages = create_leaderboard_pages(
+            sorted_users, "Leaderboard - Balance: Page")
         await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
 
     @leaderboard.command(name="bank", description="View the bank balance leaderboard.")
@@ -126,8 +131,10 @@ class Profile(commands.Cog):
             if member:
                 sorted_users.append((user, member))
 
-        sorted_users.sort(key=lambda entry: entry[0]['bank_balance'], reverse=True)
-        pages = create_leaderboard_pages(sorted_users, "Leaderboard - Bank Balance: Page")
+        sorted_users.sort(
+            key=lambda entry: entry[0]['bank_balance'], reverse=True)
+        pages = create_leaderboard_pages(
+            sorted_users, "Leaderboard - Bank Balance: Page")
         await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
 
     @leaderboard.command(name="total", aliases=["net"], description="View the total balance leaderboard.")
@@ -145,8 +152,10 @@ class Profile(commands.Cog):
             if member:
                 sorted_users.append((user, member))
 
-        sorted_users.sort(key=lambda entry: entry[0]['balance'] + entry[0]['bank_balance'], reverse=True)
-        pages = create_leaderboard_pages(sorted_users, "Leaderboard - Total Balance: Page")
+        sorted_users.sort(
+            key=lambda entry: entry[0]['balance'] + entry[0]['bank_balance'], reverse=True)
+        pages = create_leaderboard_pages(
+            sorted_users, "Leaderboard - Total Balance: Page")
         await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
 
 

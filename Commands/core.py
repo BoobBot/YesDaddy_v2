@@ -22,6 +22,5 @@ class Core(commands.Cog):
         await ctx.reply("https://github.com/BoobBot/YesDaddy_v2")
 
 
-
 async def setup(bot):
     await bot.add_cog(Core(bot))

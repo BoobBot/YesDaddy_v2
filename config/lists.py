@@ -907,1380 +907,1380 @@ adv_scenarios = [
         True),
 
     (
-    "{0} discovers an ancient library guarded by {1}. They delve into its tomes and gain a wealth of knowledge, uncovering secrets that shape their destiny.",
-    True),
+        "{0} discovers an ancient library guarded by {1}. They delve into its tomes and gain a wealth of knowledge, uncovering secrets that shape their destiny.",
+        True),
     (
-    "A sudden earthquake traps {0} in a cave with {1}. Working together, they find a way to escape, forging an unlikely bond in the process.",
-    True),
+        "A sudden earthquake traps {0} in a cave with {1}. Working together, they find a way to escape, forging an unlikely bond in the process.",
+        True),
     (
-    "While crossing a rickety bridge, {0} encounters {1}, a mischievous trickster. A battle of wits ensues, leaving {0} questioning the nature of reality.",
-    False),
+        "While crossing a rickety bridge, {0} encounters {1}, a mischievous trickster. A battle of wits ensues, leaving {0} questioning the nature of reality.",
+        False),
     (
-    "A long-lost artifact said to possess untold power lies within a treacherous maze. {0} navigates the labyrinth, but finds only disappointment as the artifact proves to be a myth.",
-    False),
+        "A long-lost artifact said to possess untold power lies within a treacherous maze. {0} navigates the labyrinth, but finds only disappointment as the artifact proves to be a myth.",
+        False),
     (
-    "{0} stumbles upon an ancient artifact that holds a curse. They must solve riddles and break a complex enchantment to free themselves from its grip.",
-    True),
+        "{0} stumbles upon an ancient artifact that holds a curse. They must solve riddles and break a complex enchantment to free themselves from its grip.",
+        True),
     (
-    "In the heart of a snow-covered forest, {0} encounters {1}, a guardian of winter. They must prove their respect for nature before being granted a glimpse of the guardian's power.",
-    True),
+        "In the heart of a snow-covered forest, {0} encounters {1}, a guardian of winter. They must prove their respect for nature before being granted a glimpse of the guardian's power.",
+        True),
     (
-    "A peculiar door appears in the midst of a meadow. {0} opens it and is transported to a realm of dreams, where they confront {1}'s illusions.",
-    False),
+        "A peculiar door appears in the midst of a meadow. {0} opens it and is transported to a realm of dreams, where they confront {1}'s illusions.",
+        False),
     (
-    "{0} is challenged to a friendly cooking contest by {1}, a culinary master. The dishes are exquisite, but ultimately, the competition ends in a draw.",
-    False),
+        "{0} is challenged to a friendly cooking contest by {1}, a culinary master. The dishes are exquisite, but ultimately, the competition ends in a draw.",
+        False),
     (
-    "A luminous comet passes overhead, and {0} follows its trail to discover a hidden grove. {1} appears, offering them a chance to make a wish.",
-    True),
+        "A luminous comet passes overhead, and {0} follows its trail to discover a hidden grove. {1} appears, offering them a chance to make a wish.",
+        True),
     (
-    "{0} encounters a pack of wild creatures led by {1}. To earn their trust, {0} must navigate the delicate balance of nature and prove themselves as a friend, not a foe.",
-    True),
+        "{0} encounters a pack of wild creatures led by {1}. To earn their trust, {0} must navigate the delicate balance of nature and prove themselves as a friend, not a foe.",
+        True),
     (
-    "A celestial alignment reveals a secret portal. {0} enters and faces {1}, a cosmic guardian who tests their understanding of the universe's mysteries.",
-    False),
+        "A celestial alignment reveals a secret portal. {0} enters and faces {1}, a cosmic guardian who tests their understanding of the universe's mysteries.",
+        False),
     (
-    "{0} stumbles upon an ancient puzzle that, when solved, opens a portal to a realm of forgotten legends. In this realm, they must choose between aiding {1} or pursuing their own desires.",
-    True),
+        "{0} stumbles upon an ancient puzzle that, when solved, opens a portal to a realm of forgotten legends. In this realm, they must choose between aiding {1} or pursuing their own desires.",
+        True),
     (
-    "A legend speaks of {0} as the hero who will tame {1}, a mythical beast of the skies. Through courage and compassion, they forge a bond that transcends species.",
-    True),
+        "A legend speaks of {0} as the hero who will tame {1}, a mythical beast of the skies. Through courage and compassion, they forge a bond that transcends species.",
+        True),
     (
-    "While exploring a cave system, {0} disturbs a nest of creatures, including {1}. They must navigate darkness and danger to escape the cavern's depths.",
-    False),
+        "While exploring a cave system, {0} disturbs a nest of creatures, including {1}. They must navigate darkness and danger to escape the cavern's depths.",
+        False),
     (
-    "{0} finds themselves in a twisted mirror world where they encounter an alternate version of {1}. They must solve the mystery of this doppelgänger to restore balance.",
-    True),
+        "{0} finds themselves in a twisted mirror world where they encounter an alternate version of {1}. They must solve the mystery of this doppelgänger to restore balance.",
+        True),
     (
-    "The realm is plagued by an eternal winter caused by {1}. {0} embarks on a journey to end the curse, facing frosty landscapes and formidable ice guardians.",
-    True),
+        "The realm is plagued by an eternal winter caused by {1}. {0} embarks on a journey to end the curse, facing frosty landscapes and formidable ice guardians.",
+        True),
     (
-    "{0} becomes trapped in a labyrinth created by {1}, a trickster spirit. They must solve riddles to navigate the maze's shifting walls and escape its grasp.",
-    False),
+        "{0} becomes trapped in a labyrinth created by {1}, a trickster spirit. They must solve riddles to navigate the maze's shifting walls and escape its grasp.",
+        False),
     (
-    "A massive tree reveals itself as {1}, a guardian of nature. {0} must seek its wisdom to heal a blighted forest and prove their commitment to preservation.",
-    True),
+        "A massive tree reveals itself as {1}, a guardian of nature. {0} must seek its wisdom to heal a blighted forest and prove their commitment to preservation.",
+        True),
     (
-    "In a forgotten ruin, {0} encounters a time-traveling artifact. They witness historical events involving {1} and must decide whether to alter the past.",
-    False),
+        "In a forgotten ruin, {0} encounters a time-traveling artifact. They witness historical events involving {1} and must decide whether to alter the past.",
+        False),
     (
-    "{0} is chosen by the spirits to retrieve {1}, an elemental gem stolen by thieves. Their journey leads them through desolate deserts and treacherous mountains.",
-    True),
+        "{0} is chosen by the spirits to retrieve {1}, an elemental gem stolen by thieves. Their journey leads them through desolate deserts and treacherous mountains.",
+        True),
     (
-    "A mysterious rift opens, connecting {0}'s world to an alternate realm ruled by {1}. The two must collaborate to close the rift and restore balance.",
-    False),
+        "A mysterious rift opens, connecting {0}'s world to an alternate realm ruled by {1}. The two must collaborate to close the rift and restore balance.",
+        False),
     (
-    "A magical storm sweeps {0} to a realm where {1} reigns. They face elemental trials to prove their worthiness and return home with newfound power.",
-    True),
+        "A magical storm sweeps {0} to a realm where {1} reigns. They face elemental trials to prove their worthiness and return home with newfound power.",
+        True),
     (
-    "A forgotten prophecy tells of {0}'s encounter with {1}. The outcome shapes the balance between light and darkness, as well as their own path.",
-    True),
+        "A forgotten prophecy tells of {0}'s encounter with {1}. The outcome shapes the balance between light and darkness, as well as their own path.",
+        True),
     (
-    "{0} discovers a hidden underwater cavern guarded by {1}. To earn passage through the cavern, they must solve riddles that test their mental agility.",
-    True),
+        "{0} discovers a hidden underwater cavern guarded by {1}. To earn passage through the cavern, they must solve riddles that test their mental agility.",
+        True),
     (
-    "During a lunar eclipse, {0} encounters {1}, a guardian of dreams. They journey through surreal landscapes and uncover hidden truths about themselves.",
-    False),
+        "During a lunar eclipse, {0} encounters {1}, a guardian of dreams. They journey through surreal landscapes and uncover hidden truths about themselves.",
+        False),
     (
-    "A mystical portal transports {0} to a realm where they must challenge {1} to a game of wit and strategy. The outcome determines their fate in the realm.",
-    False),
+        "A mystical portal transports {0} to a realm where they must challenge {1} to a game of wit and strategy. The outcome determines their fate in the realm.",
+        False),
     (
-    "{0} encounters {1}, a reclusive sage known for their wisdom. To gain their guidance, {0} must solve riddles and answer thought-provoking questions.",
-    True),
+        "{0} encounters {1}, a reclusive sage known for their wisdom. To gain their guidance, {0} must solve riddles and answer thought-provoking questions.",
+        True),
     (
-    "A traveling carnival appears, led by {1}, the enigmatic ringmaster. {0} must navigate illusions and choose whether to pursue the carnival's mysteries.",
-    False),
+        "A traveling carnival appears, led by {1}, the enigmatic ringmaster. {0} must navigate illusions and choose whether to pursue the carnival's mysteries.",
+        False),
     (
-    "In a city plagued by corruption, {0} teams up with {1}, a rogue thief seeking redemption. Together, they uncover a conspiracy that threatens the realm.",
-    True),
+        "In a city plagued by corruption, {0} teams up with {1}, a rogue thief seeking redemption. Together, they uncover a conspiracy that threatens the realm.",
+        True),
     (
-    "A sudden portal whisks {0} to an alternate dimension ruled by {1}. They must navigate this distorted realm to find a way back to their own world.",
-    False),
+        "A sudden portal whisks {0} to an alternate dimension ruled by {1}. They must navigate this distorted realm to find a way back to their own world.",
+        False),
     (
-    "{0} encounters an ancient spirit of chaos, {1}, who offers them a choice: embrace chaos or restore balance to the realm.",
-    True),
+        "{0} encounters an ancient spirit of chaos, {1}, who offers them a choice: embrace chaos or restore balance to the realm.",
+        True),
     (
-    "A shimmering portal opens in the night sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
-    False),
+        "A shimmering portal opens in the night sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+        False),
     (
-    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
-    True),
+        "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+        True),
     (
-    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
-    True),
+        "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+        True),
     (
-    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
-    True),
+        "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+        True),
     (
-    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
-    True),
+        "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+        True),
     (
-    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
-    False),
+        "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+        False),
     (
-    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
-    False),
+        "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+        False),
     (
-    "During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}, a cosmic guardian of wisdom.",
-    True),
+        "During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}, a cosmic guardian of wisdom.",
+        True),
     (
-    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
-    True),
+        "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+        True),
     (
-    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
-    False),
+        "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+        False),
     (
-    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
-    False),
+        "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+        False),
     (
-    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
-    False),
+        "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+        False),
     (
-    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
-    True),
+        "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+        True),
     (
-    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
-    True),
+        "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+        True),
     (
-    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
-    False),
+        "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+        False),
     (
-    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
-    False),
+        "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+        False),
     (
-    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
-    True),
+        "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+        True),
     (
-    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
-    True),
+        "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+        True),
     (
-    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
-    False),
+        "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+        False),
     (
-    "A forgotten prophecy foretells {0}'s duel with {1}, a legendary warrior. Their clash of swords shapes the destiny of both the realm and their own.",
-    True),
+        "A forgotten prophecy foretells {0}'s duel with {1}, a legendary warrior. Their clash of swords shapes the destiny of both the realm and their own.",
+        True),
     (
-    "During a meteor shower, {0} encounters {1}, a celestial being. They must decipher the language of the stars to earn the being's guidance.",
-    False),
+        "During a meteor shower, {0} encounters {1}, a celestial being. They must decipher the language of the stars to earn the being's guidance.",
+        False),
     (
-    "A mysterious door appears in the midst of a dense forest. {0} opens it and enters a surreal realm where they must confront {1}'s illusions.",
-    False),
+        "A mysterious door appears in the midst of a dense forest. {0} opens it and enters a surreal realm where they must confront {1}'s illusions.",
+        False),
     (
-    "{0} receives an ancient map leading to a hidden island inhabited by {1}. They must solve riddles and navigate dangerous waters to find the island.",
-    False),
+        "{0} receives an ancient map leading to a hidden island inhabited by {1}. They must solve riddles and navigate dangerous waters to find the island.",
+        False),
     (
-    "A cursed gem has transformed {1} into a monstrous creature. {0} embarks on a quest to break the curse and restore the gem's true power.",
-    True),
+        "A cursed gem has transformed {1} into a monstrous creature. {0} embarks on a quest to break the curse and restore the gem's true power.",
+        True),
     (
-    "{0} discovers an abandoned laboratory where {1}, a scientist, once conducted experiments. They must solve puzzles to uncover the scientist's legacy.",
-    True),
+        "{0} discovers an abandoned laboratory where {1}, a scientist, once conducted experiments. They must solve puzzles to uncover the scientist's legacy.",
+        True),
     (
-    "During a celestial alignment, {0} encounters {1}, a guardian of starlight. They must prove their understanding of the cosmos to earn the guardian's blessing.",
-    True),
+        "During a celestial alignment, {0} encounters {1}, a guardian of starlight. They must prove their understanding of the cosmos to earn the guardian's blessing.",
+        True),
     (
-    "An enchanted forest reveals its mysteries to {0}, including a pact with {1}, the spirit of the land. Together, they restore balance to the realm.",
-    True),
+        "An enchanted forest reveals its mysteries to {0}, including a pact with {1}, the spirit of the land. Together, they restore balance to the realm.",
+        True),
     (
-    "{0} stumbles upon an ancient prophecy involving {1}. Through a series of trials, they determine whether the prophecy leads to glory or deception.",
-    False),
+        "{0} stumbles upon an ancient prophecy involving {1}. Through a series of trials, they determine whether the prophecy leads to glory or deception.",
+        False),
     (
-    "A hidden realm opens its doors to {0}, revealing a city shaped by {1}'s magic. They must navigate illusions and uncover the city's true nature.",
-    True),
+        "A hidden realm opens its doors to {0}, revealing a city shaped by {1}'s magic. They must navigate illusions and uncover the city's true nature.",
+        True),
     (
-    "{0} discovers a time-worn book containing the story of {1}, a forgotten hero. They must solve riddles to bring the hero's legacy to life once more.",
-    False),
+        "{0} discovers a time-worn book containing the story of {1}, a forgotten hero. They must solve riddles to bring the hero's legacy to life once more.",
+        False),
     (
-    "A mysterious portal transports {0} to a realm of dreams, where they face {1}, the guardian of illusions. Their journey tests the boundaries of reality.",
-    False),
+        "A mysterious portal transports {0} to a realm of dreams, where they face {1}, the guardian of illusions. Their journey tests the boundaries of reality.",
+        False),
     (
-    "{0} receives a summons to a realm ruled by {1}, a monarch of shadows. To prove their worth, they must navigate a labyrinth of darkness and despair.",
-    True),
+        "{0} receives a summons to a realm ruled by {1}, a monarch of shadows. To prove their worth, they must navigate a labyrinth of darkness and despair.",
+        True),
     (
-    "A legendary creature, {1}, is rumored to inhabit a secluded valley. {0} embarks on a journey to find the creature and learn its ancient wisdom.",
-    True),
+        "A legendary creature, {1}, is rumored to inhabit a secluded valley. {0} embarks on a journey to find the creature and learn its ancient wisdom.",
+        True),
     (
-    "{0} awakens in a realm between dreams and reality, where they encounter {1}, a guardian of the mind. They must face their inner fears to escape.",
-    False),
+        "{0} awakens in a realm between dreams and reality, where they encounter {1}, a guardian of the mind. They must face their inner fears to escape.",
+        False),
     (
-    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
-    True),
+        "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+        True),
     (
-    "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
-    True),
+        "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
+        True),
     (
-    "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
-    True),
+        "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
+        True),
     (
-    "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
-    False),
+        "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
+        False),
     (
-    "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
-    True),
+        "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
+        True),
     (
-    "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
-    False),
+        "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
+        False),
     (
-    "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
-    False),
+        "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
+        False),
     (
-    "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
-    True),
+        "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
+        True),
     (
-    "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
-    True),
+        "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
+        True),
     (
-    "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
-    False),
+        "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
+        False),
     (
-    "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
-    False),
+        "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
+        False),
     (
-    "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
-    True),
+        "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
+        True),
     (
-    "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
-    True),
+        "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
+        True),
     (
-    "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
-    False),
+        "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
+        False),
     (
-    "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
-    True),
+        "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
+        True),
     (
-    "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
-    False),
+        "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
+        False),
     (
-    "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
-    True),
+        "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
+        True),
     (
-    "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
-    False),
+        "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+        False),
     (
-    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
-    True),
+        "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+        True),
     (
-    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
-    True),
+        "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+        True),
     (
-    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
-    True),
+        "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+        True),
     (
-    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
-    True),
+        "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+        True),
     (
-    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
-    False),
+        "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+        False),
     (
-    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
-    False),
+        "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+        False),
     ("During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}",
      ", a cosmic guardian of wisdom.", True),
     (
-    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
-    True),
+        "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+        True),
     (
-    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
-    False),
+        "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+        False),
     (
-    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
-    False),
+        "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+        False),
     (
-    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
-    False),
+        "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+        False),
     (
-    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
-    True),
+        "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+        True),
     (
-    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
-    True),
+        "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+        True),
     (
-    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
-    False),
+        "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+        False),
     (
-    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
-    False),
+        "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+        False),
     (
-    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
-    True),
+        "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+        True),
     (
-    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
-    True),
+        "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+        True),
     (
-    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
-    False),
+        "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+        False),
     (
-    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
-    True),
+        "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+        True),
     (
-    "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
-    True),
+        "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
+        True),
     (
-    "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
-    True),
+        "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
+        True),
     (
-    "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
-    False),
+        "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
+        False),
     (
-    "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
-    True),
+        "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
+        True),
     (
-    "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
-    False),
+        "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
+        False),
     (
-    "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
-    False),
+        "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
+        False),
     (
-    "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
-    True),
+        "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
+        True),
     (
-    "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
-    True),
+        "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
+        True),
     (
-    "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
-    False),
+        "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
+        False),
     (
-    "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
-    False),
+        "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
+        False),
     (
-    "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
-    True),
+        "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
+        True),
     (
-    "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
-    True),
+        "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
+        True),
     (
-    "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
-    False),
+        "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
+        False),
     (
-    "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
-    True),
+        "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
+        True),
     (
-    "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
-    False),
+        "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
+        False),
     (
-    "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
-    True),
+        "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
+        True),
     (
-    "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
-    False),
+        "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+        False),
     (
-    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
-    True),
+        "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+        True),
     (
-    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
-    True),
+        "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+        True),
     (
-    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
-    True),
+        "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+        True),
     (
-    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
-    True),
+        "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+        True),
     (
-    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
-    False),
+        "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+        False),
     (
-    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
-    False),
+        "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+        False),
     ("During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}",
      ", a cosmic guardian of wisdom.", True),
     (
-    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
-    True),
+        "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+        True),
     (
-    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
-    False),
+        "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+        False),
     (
-    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
-    False),
+        "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+        False),
     (
-    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
-    False),
+        "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+        False),
     (
-    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
-    True),
+        "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+        True),
     (
-    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
-    True),
+        "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+        True),
     (
-    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
-    False),
+        "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+        False),
     (
-    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
-    False),
+        "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+        False),
     (
-    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
-    True),
+        "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+        True),
     (
-    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
-    True),
+        "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+        True),
     (
-    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
-    False),
+        "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+        False),
     (
-    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
-    True),
+        "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+        True),
     (
-    "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
-    True),
+        "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
+        True),
     (
-    "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
-    True),
+        "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
+        True),
     (
-    "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
-    False),
+        "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
+        False),
     (
-    "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
-    True),
+        "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
+        True),
     (
-    "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
-    False),
+        "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
+        False),
     (
-    "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
-    False),
+        "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
+        False),
     (
-    "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
-    True),
+        "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
+        True),
     (
-    "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
-    True),
+        "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
+        True),
     (
-    "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
-    False),
+        "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
+        False),
     (
-    "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
-    False),
+        "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
+        False),
     (
-    "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
-    True),
+        "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
+        True),
     (
-    "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
-    True),
+        "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
+        True),
     (
-    "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
-    False),
+        "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
+        False),
     (
-    "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
-    True),
+        "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
+        True),
     (
-    "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
-    False),
+        "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
+        False),
     (
-    "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
-    True),
+        "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
+        True),
     (
-    "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
-    False),
+        "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+        False),
     (
-    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
-    True),
+        "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+        True),
     (
-    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
-    True),
+        "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+        True),
     (
-    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
-    True),
+        "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+        True),
     (
-    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
-    True),
+        "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+        True),
     (
-    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
-    False),
+        "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+        False),
     (
-    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
-    False),
+        "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+        False),
     ("During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}",
      " the cosmic guardian of wisdom.", True),
     (
-    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
-    True),
+        "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+        True),
     (
-    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
-    False),
+        "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+        False),
     (
-    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
-    False),
+        "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+        False),
     (
-    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
-    False),
+        "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+        False),
     (
-    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
-    True),
+        "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+        True),
     (
-    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
-    True),
+        "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+        True),
     (
-    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
-    False),
+        "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+        False),
     (
-    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
-    False),
+        "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+        False),
     (
-    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
-    True),
+        "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+        True),
     (
-    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
-    True),
+        "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+        True),
     (
-    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
-    False),
+        "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+        False),
     (
-    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
-    True),
+        "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+        True),
     (
-    "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
-    True),
+        "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
+        True),
     (
-    "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
-    True),
+        "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
+        True),
     (
-    "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
-    False),
+        "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
+        False),
     (
-    "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
-    True),
+        "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
+        True),
     (
-    "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
-    False),
+        "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
+        False),
     (
-    "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
-    False),
+        "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
+        False),
     (
-    "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
-    True),
+        "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
+        True),
     (
-    "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
-    True),
+        "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
+        True),
     (
-    "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
-    False),
+        "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
+        False),
     (
-    "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
-    False),
+        "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
+        False),
     (
-    "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
-    True),
+        "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
+        True),
     (
-    "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
-    True),
+        "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
+        True),
     (
-    "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
-    False),
+        "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
+        False),
     (
-    "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
-    True),
+        "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
+        True),
     (
-    "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
-    False),
+        "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
+        False),
     (
-    "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
-    True),
+        "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
+        True),
     (
-    "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
-    False),
+        "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+        False),
     (
-    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
-    True),
+        "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+        True),
     (
-    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
-    True),
+        "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+        True),
     (
-    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
-    True),
+        "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+        True),
     (
-    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
-    True),
+        "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+        True),
     (
-    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
-    False),
+        "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+        False),
     (
-    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
-    False),
+        "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+        False),
     ("During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}",
      " the cosmic guardian of wisdom.", True),
     (
-    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
-    True),
+        "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+        True),
     (
-    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
-    False),
+        "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+        False),
     (
-    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
-    False),
+        "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+        False),
     (
-    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
-    False),
+        "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+        False),
     (
-    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
-    True),
+        "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+        True),
     (
-    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
-    True),
+        "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+        True),
     (
-    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
-    False),
+        "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+        False),
     (
-    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
-    False),
+        "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+        False),
     (
-    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
-    True),
+        "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+        True),
     (
-    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
-    True),
+        "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+        True),
     (
-    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
-    False),
+        "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+        False),
     (
-    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
-    True),
+        "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+        True),
     (
-    "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
-    True),
+        "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
+        True),
     (
-    "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
-    True),
+        "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
+        True),
     (
-    "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
-    False),
+        "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
+        False),
     (
-    "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
-    True),
+        "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
+        True),
     (
-    "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
-    False),
+        "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
+        False),
     (
-    "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
-    False),
+        "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
+        False),
     (
-    "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
-    True),
+        "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
+        True),
     (
-    "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
-    True),
+        "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
+        True),
     (
-    "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
-    False),
+        "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
+        False),
     (
-    "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
-    False),
+        "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
+        False),
     (
-    "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
-    True),
+        "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
+        True),
     (
-    "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
-    True),
+        "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
+        True),
     (
-    "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
-    False),
+        "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
+        False),
     (
-    "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
-    True),
+        "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
+        True),
     (
-    "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
-    False),
+        "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
+        False),
     (
-    "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
-    True),
+        "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
+        True),
     (
-    "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
-    False),
+        "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+        False),
     (
-    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
-    True),
+        "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+        True),
     (
-    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
-    True),
+        "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+        True),
     (
-    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
-    True),
+        "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+        True),
     (
-    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
-    True),
+        "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+        True),
     (
-    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
-    False),
+        "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+        False),
     (
-    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
-    False),
+        "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+        False),
     ("During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}",
      " the cosmic guardian of wisdom.", True),
     (
-    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
-    True),
+        "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+        True),
     (
-    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
-    False),
+        "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+        False),
     (
-    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
-    False),
+        "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+        False),
     (
-    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
-    False),
+        "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+        False),
     (
-    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
-    True),
+        "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+        True),
     (
-    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
-    True),
+        "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+        True),
     (
-    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
-    False),
+        "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+        False),
     (
-    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
-    False),
+        "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+        False),
     (
-    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
-    True),
+        "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+        True),
     (
-    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
-    True),
+        "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+        True),
     (
-    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
-    False),
+        "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+        False),
     (
-    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
-    True),
+        "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+        True),
     (
-    "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
-    True),
+        "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
+        True),
     (
-    "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
-    True),
+        "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
+        True),
     (
-    "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
-    False),
+        "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
+        False),
     (
-    "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
-    True),
+        "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
+        True),
     (
-    "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
-    False),
+        "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
+        False),
     (
-    "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
-    False),
+        "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
+        False),
     (
-    "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
-    True),
+        "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
+        True),
     (
-    "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
-    True),
+        "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
+        True),
     (
-    "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
-    False),
+        "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
+        False),
     (
-    "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
-    False),
+        "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
+        False),
     (
-    "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
-    True),
+        "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
+        True),
     (
-    "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
-    True),
+        "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
+        True),
     (
-    "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
-    False),
+        "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
+        False),
     (
-    "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
-    True),
+        "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
+        True),
     (
-    "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
-    False),
+        "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
+        False),
     (
-    "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
-    True),
+        "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
+        True),
     (
-    "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
-    False),
+        "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+        False),
     (
-    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
-    True),
+        "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+        True),
     (
-    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
-    True),
+        "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+        True),
     (
-    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
-    True),
+        "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+        True),
     (
-    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
-    True),
+        "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+        True),
     (
-    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
-    False),
+        "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+        False),
     (
-    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
-    False),
+        "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+        False),
     ("During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}",
      " the cosmic guardian of wisdom.", True),
     (
-    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
-    True),
+        "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+        True),
     (
-    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
-    False),
+        "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+        False),
     (
-    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
-    False),
+        "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+        False),
     (
-    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
-    False),
+        "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+        False),
     (
-    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
-    True),
+        "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+        True),
     (
-    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
-    True),
+        "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+        True),
     (
-    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
-    False),
+        "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+        False),
     (
-    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
-    False),
+        "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+        False),
     (
-    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
-    True),
+        "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+        True),
     (
-    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
-    True),
+        "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+        True),
     (
-    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
-    False),
+        "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+        False),
     (
-    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
-    True),
+        "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+        True),
     (
-    "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
-    True),
+        "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
+        True),
     (
-    "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
-    True),
+        "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
+        True),
     (
-    "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
-    False),
+        "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
+        False),
     (
-    "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
-    True),
+        "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
+        True),
     (
-    "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
-    False),
+        "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
+        False),
     (
-    "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
-    False),
+        "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
+        False),
     (
-    "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
-    True),
+        "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
+        True),
     (
-    "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
-    True),
+        "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
+        True),
     (
-    "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
-    False),
+        "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
+        False),
     (
-    "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
-    False),
+        "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
+        False),
     (
-    "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
-    True),
+        "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
+        True),
     (
-    "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
-    True),
+        "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
+        True),
     (
-    "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
-    False),
+        "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
+        False),
     (
-    "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
-    True),
+        "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
+        True),
     (
-    "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
-    False),
+        "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
+        False),
     (
-    "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
-    True),
+        "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
+        True),
     (
-    "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
-    False),
+        "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+        False),
     (
-    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
-    True),
+        "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+        True),
     (
-    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
-    True),
+        "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+        True),
     (
-    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
-    True),
+        "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+        True),
     (
-    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
-    True),
+        "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+        True),
     (
-    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
-    False),
+        "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+        False),
     (
-    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
-    False),
+        "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+        False),
     ("During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}",
      " the cosmic guardian of wisdom.", True),
     (
-    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
-    True),
+        "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+        True),
     (
-    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
-    False),
+        "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+        False),
     (
-    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
-    False),
+        "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+        False),
     (
-    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
-    False),
+        "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+        False),
     (
-    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
-    True),
+        "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+        True),
     (
-    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
-    True),
+        "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+        True),
     (
-    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
-    False),
+        "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+        False),
     (
-    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
-    False),
+        "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+        False),
     (
-    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
-    True),
+        "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+        True),
     (
-    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
-    True),
+        "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+        True),
     (
-    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
-    False),
+        "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+        False),
     (
-    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
-    True),
+        "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+        True),
     (
-    "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
-    True),
+        "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
+        True),
     (
-    "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
-    True),
+        "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
+        True),
     (
-    "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
-    False),
+        "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
+        False),
     (
-    "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
-    True),
+        "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
+        True),
     (
-    "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
-    False),
+        "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
+        False),
     (
-    "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
-    False),
+        "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
+        False),
     (
-    "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
-    True),
+        "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
+        True),
     (
-    "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
-    True),
+        "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
+        True),
     (
-    "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
-    False),
+        "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
+        False),
     (
-    "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
-    False),
+        "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
+        False),
     (
-    "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
-    True),
+        "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
+        True),
     (
-    "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
-    True),
+        "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
+        True),
     (
-    "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
-    False),
+        "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
+        False),
     (
-    "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
-    True),
+        "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
+        True),
     (
-    "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
-    False),
+        "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
+        False),
     (
-    "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
-    True),
+        "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
+        True),
     (
-    "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
-    False),
+        "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+        False),
     (
-    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
-    True),
+        "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+        True),
     (
-    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
-    True),
+        "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+        True),
     (
-    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
-    True),
+        "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+        True),
     (
-    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
-    True),
+        "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+        True),
     (
-    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
-    False),
+        "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+        False),
     (
-    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
-    False),
+        "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+        False),
     ("During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}",
      " the cosmic guardian of wisdom.", True),
     (
-    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
-    True),
+        "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+        True),
     (
-    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
-    False),
+        "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+        False),
     (
-    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
-    False),
+        "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+        False),
     (
-    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
-    False),
+        "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+        False),
     (
-    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
-    True),
+        "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+        True),
     (
-    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
-    True),
+        "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+        True),
     (
-    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
-    False),
+        "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+        False),
     (
-    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
-    False),
+        "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+        False),
     (
-    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
-    True),
+        "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+        True),
     (
-    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
-    True),
+        "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+        True),
     (
-    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
-    False),
+        "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+        False),
     (
-    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
-    True),
+        "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+        True),
     (
-    "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
-    True),
+        "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
+        True),
     (
-    "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
-    True),
+        "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
+        True),
     (
-    "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
-    False),
+        "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
+        False),
     (
-    "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
-    True),
+        "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
+        True),
     (
-    "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
-    False),
+        "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
+        False),
     (
-    "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
-    False),
+        "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
+        False),
     (
-    "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
-    True),
+        "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
+        True),
     (
-    "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
-    True),
+        "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
+        True),
     (
-    "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
-    False),
+        "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
+        False),
     (
-    "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
-    False),
+        "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
+        False),
     (
-    "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
-    True),
+        "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
+        True),
     (
-    "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
-    True),
+        "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
+        True),
     (
-    "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
-    False),
+        "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
+        False),
     (
-    "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
-    True),
+        "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
+        True),
     (
-    "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
-    False),
+        "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
+        False),
     (
-    "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
-    True),
+        "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
+        True),
     (
-    "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
-    False),
+        "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+        False),
     (
-    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
-    True),
+        "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+        True),
     (
-    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
-    True),
+        "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+        True),
     (
-    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
-    True),
+        "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+        True),
     (
-    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
-    True),
+        "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+        True),
     (
-    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
-    False),
+        "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+        False),
     (
-    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
-    False),
+        "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+        False),
     ("During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}",
      " the cosmic guardian of wisdom.", True),
     (
-    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
-    True),
+        "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+        True),
     (
-    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
-    False),
+        "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+        False),
     (
-    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
-    False),
+        "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+        False),
     (
-    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
-    False),
+        "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+        False),
     (
-    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
-    True),
+        "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+        True),
     (
-    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
-    True),
+        "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+        True),
     (
-    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
-    False),
+        "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+        False),
     (
-    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
-    False),
+        "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+        False),
     (
-    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
-    True),
+        "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+        True),
     (
-    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
-    True),
+        "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+        True),
     (
-    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
-    False),
+        "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+        False),
     (
-    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
-    True),
+        "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+        True),
     (
-    "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
-    True),
+        "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
+        True),
     (
-    "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
-    True),
+        "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
+        True),
     (
-    "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
-    False),
+        "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
+        False),
     (
-    "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
-    True),
+        "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
+        True),
     (
-    "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
-    False),
+        "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
+        False),
     (
-    "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
-    False),
+        "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
+        False),
     (
-    "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
-    True),
+        "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
+        True),
     (
-    "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
-    True),
+        "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
+        True),
     (
-    "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
-    False),
+        "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
+        False),
     (
-    "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
-    False),
+        "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
+        False),
     (
-    "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
-    True),
+        "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
+        True),
     (
-    "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
-    True),
+        "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
+        True),
     (
-    "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
-    False),
+        "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
+        False),
     (
-    "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
-    True),
+        "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
+        True),
     (
-    "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
-    False),
+        "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
+        False),
     (
-    "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
-    True),
+        "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
+        True),
     (
-    "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
-    False),
+        "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+        False),
     (
-    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
-    True),
+        "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+        True),
     (
-    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
-    True),
+        "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+        True),
     (
-    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
-    True),
+        "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+        True),
     (
-    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
-    True),
+        "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+        True),
     (
-    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
-    False),
+        "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+        False),
     (
-    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
-    False),
+        "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+        False),
     ("During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}",
      " the cosmic guardian of wisdom.", True),
     (
-    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
-    True),
+        "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+        True),
     (
-    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
-    False),
+        "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+        False),
     (
-    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
-    False),
+        "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+        False),
     (
-    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
-    False),
+        "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+        False),
     (
-    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
-    True),
+        "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+        True),
     (
-    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
-    True),
+        "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+        True),
     (
-    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
-    False),
+        "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+        False),
     (
-    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
-    False),
+        "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+        False),
     (
-    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
-    True),
+        "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+        True),
     (
-    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
-    True),
+        "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+        True),
     (
-    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
-    False),
+        "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+        False),
     (
-    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
-    True),
+        "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+        True),
     (
-    "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
-    True),
+        "In the heart of a forgotten forest, {0} discovers an altar dedicated to {1}, the spirit of nature. They must prove their respect to gain its favor.",
+        True),
     (
-    "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
-    True),
+        "{0} stumbles upon an abandoned laboratory where {1}, a brilliant inventor, once created marvels. Solving puzzles unveils the inventor's legacy.",
+        True),
     (
-    "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
-    False),
+        "A labyrinthine cave system leads {0} to a hidden chamber, where they face {1}, a guardian of memories. Solving riddles triggers visions of the past.",
+        False),
     (
-    "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
-    True),
+        "{0} encounters a sentient forest, guided by {1}, the spirit of growth. They must navigate the forest's heart and earn the spirit's wisdom.",
+        True),
     (
-    "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
-    False),
+        "A secret society led by {1} offers {0} a choice: join their ranks and gain power, or defy them and face the consequences of their defiance.",
+        False),
     (
-    "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
-    False),
+        "During a solar eclipse, {0} is transported to a realm of shadows, where {1} challenges them to solve enigmatic puzzles and escape the darkness.",
+        False),
     (
-    "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
-    True),
+        "{0} finds an ancient map leading to a forgotten city where {1} is said to reside. They must navigate the city's maze-like streets and face trials.",
+        True),
     (
-    "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
-    True),
+        "A mysterious portal transports {0} to a realm where {1}, the keeper of dreams, tests their imagination and creativity through intricate puzzles.",
+        True),
     (
-    "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
-    False),
+        "{0} enters a realm of floating islands where they face {1}, a guardian of the skies. They must solve riddles to prove their aerial prowess.",
+        False),
     (
-    "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
-    False),
+        "A legendary artifact said to control the weather is rumored to be hidden in a thunderous realm. {0} faces lightning storms to uncover its secrets.",
+        False),
     (
-    "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
-    True),
+        "{0} discovers a hidden garden tended by {1}, the spirit of life. They must nurture the garden and prove their dedication to restoration.",
+        True),
     (
-    "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
-    True),
+        "In a mystical forest, {0} encounters {1}, a guardian of the wild. They must navigate the forest's trials and show their respect for its inhabitants.",
+        True),
     (
-    "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
-    False),
+        "{0} becomes trapped in an endless mirror maze created by {1}, a trickster spirit. They must solve riddles to escape its maze of illusions.",
+        False),
     (
-    "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
-    True),
+        "A prophecy speaks of {0}'s encounter with {1}, a figure cloaked in darkness. Their meeting shapes the fate of the realm and tests {0}'s resolve.",
+        True),
     (
-    "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
-    False),
+        "While exploring a hidden cave, {0} disturbs a colony of creatures, including {1}. They must find a way to escape the cave's depths and darkness.",
+        False),
     (
-    "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
-    True),
+        "{0} is chosen by the moon goddess to seek {1}, a guardian of lunar secrets. Their journey tests their intuition and affinity with the night sky.",
+        True),
     (
-    "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
-    False),
+        "A shimmering portal opens in the sky, revealing {1}'s realm. {0} enters, facing trials that test their resolve and challenge their perceptions.",
+        False),
     (
-    "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
-    True),
+        "The stars align, revealing a hidden path that leads {0} to a fabled city. Here, they face trials determined by {1}'s influence over the city's fate.",
+        True),
     (
-    "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
-    True),
+        "A forgotten prophecy speaks of {0} as the one who will unlock the power of {1}. Their journey is fraught with challenges, leading to an unexpected destiny.",
+        True),
     (
-    "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
-    True),
+        "An enchanted forest is plagued by a curse cast by {1}. {0} embarks on a quest to restore the forest's magic and break the curse's hold.",
+        True),
     (
-    "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
-    True),
+        "{0} comes across a hidden society led by {1}. To gain their trust, they must prove themselves through a series of trials and earn a place among the society.",
+        True),
     (
-    "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
-    False),
+        "A long-lost artifact said to grant wishes is rumored to be buried in a forgotten city. {0} embarks on a perilous journey to uncover the truth.",
+        False),
     (
-    "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
-    False),
+        "{0} is lured into a realm of illusions by {1}, a trickster spirit. They must outwit the spirit's deceptions to find their way back to reality.",
+        False),
     ("During a celestial event, {0} is transported to a realm where they must solve puzzles created by {1}",
      " the cosmic guardian of wisdom.", True),
     (
-    "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
-    True),
+        "{0} encounters a living embodiment of {1}, a creature of fire and lava. They must navigate an erupting volcano to gain its trust and knowledge.",
+        True),
     (
-    "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
-    False),
+        "An ancient curse has turned {1} into a fearsome beast. {0} must journey to a hidden temple and break the curse through a series of trials.",
+        False),
     (
-    "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
-    False),
+        "{0} finds a magical mirror that transports them to a parallel world. Here, they encounter {1}, a reflection that challenges their perceptions.",
+        False),
     (
-    "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
-    False),
+        "A relic that can shape reality is rumored to be hidden in a treacherous desert. {0} navigates the dunes and faces sandstorms to uncover its secrets.",
+        False),
     (
-    "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
-    True),
+        "While exploring a lost city, {0} awakens {1}, an ancient guardian. They must solve riddles and challenges to restore the guardian's power.",
+        True),
     (
-    "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
-    True),
+        "{0} receives a letter inviting them to a masquerade ball hosted by {1}, a enigmatic figure. At the ball, secrets and identities are revealed.",
+        True),
     (
-    "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
-    False),
+        "A rare celestial alignment opens a portal to {1}'s realm. {0} must solve riddles and decipher constellations to navigate this astral world.",
+        False),
     (
-    "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
-    False),
+        "{0} enters an abandoned alchemist's laboratory, awakening {1}, an experimental creation. They must find a way to free the creation from its chains.",
+        False),
     (
-    "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
-    True),
+        "In a land of eternal night, {0} encounters {1}, a guardian of shadows. They must prove their ability to blend into the darkness to earn the guardian's favor.",
+        True),
     (
-    "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
-    True),
+        "A hidden oasis holds the key to awakening {1}, a slumbering guardian of life. {0} must solve puzzles and nurture the land to restore its vitality.",
+        True),
     (
-    "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
-    False),
+        "{0} discovers a portal to a realm governed by {1}, the keeper of time. They must navigate past, present, and future challenges to prove their worth.",
+        False),
     (
-    "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
-    True)
+        "A forgotten prophecy reveals {0} as the one destined to confront {1}, an ancient force threatening the world's harmony. Their clash shapes the outcome.",
+        True)
 ]
 
 adv_success_strings = [

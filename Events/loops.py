@@ -1,3 +1,5 @@
+import datetime
+
 import discord
 from discord.ext import tasks, commands
 
@@ -29,7 +31,8 @@ class Loops(commands.Cog):
                     fine = user.jail.get("fine", 0)
                     await user.subtract_balance(fine, self.bot)
                     await user.update_user({"jail": {}}, self.bot)
-                    self.bot.log.info(f"User {user_id} has been released from jail.")
+                    self.bot.log.info(
+                        f"User {user_id} has been released from jail.")
 
     @tasks.loop(minutes=5)  # Run the task every 5 minutes
     async def change_role_color(self):

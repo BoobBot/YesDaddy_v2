@@ -49,7 +49,8 @@ class Dev(commands.Cog):
         )
 
         # Set a thumbnail for the embed
-        embed.set_thumbnail(url=ctx.author.display_avatar.with_static_format("png"))
+        embed.set_thumbnail(
+            url=ctx.author.display_avatar.with_static_format("png"))
 
         # Add fields to the embed
         embed.add_field(name="Field 1", value="Value 1", inline=True)
@@ -59,10 +60,12 @@ class Dev(commands.Cog):
         embed.add_field(name="Field 5", value="Value 5", inline=False)
 
         # Add an inline field
-        embed.add_field(name="Inline Field", value="This field is inline.", inline=True)
+        embed.add_field(name="Inline Field",
+                        value="This field is inline.", inline=True)
 
         # Set an image for the embed
-        embed.set_image(url=ctx.author.display_avatar.with_static_format("png"))
+        embed.set_image(
+            url=ctx.author.display_avatar.with_static_format("png"))
 
         # Add more fields
         embed.add_field(name="Field 6", value="Value 6", inline=True)
@@ -70,7 +73,8 @@ class Dev(commands.Cog):
         embed.add_field(name="Field 8", value="Value 8", inline=False)
 
         # Set the footer information
-        timestamp = discord.utils.format_dt(datetime.datetime.now(datetime.timezone.utc), style="f")
+        timestamp = discord.utils.format_dt(
+            datetime.datetime.now(datetime.timezone.utc), style="f")
         embed.set_footer(
             text=f"Command ran by {ctx.author.display_name} at {timestamp}",
             icon_url=ctx.author.display_avatar.with_static_format("png")
@@ -149,7 +153,8 @@ class Dev(commands.Cog):
                       "• Please respect people's roles.\n\n" \
                       "• This server is English ONLY\n\n" \
                       "• If you have ever been called a snowflake ❄️ or consider yourself to be 'woke', you might want to save yourself and us some time and frustration and go ahead hit the leave server button."
-        em = discord.Embed(title="Rules of Boobbot Community", description=description, color=discord.Color.blurple())
+        em = discord.Embed(title="Rules of Boobbot Community",
+                           description=description, color=discord.Color.blurple())
         await ctx.send(embed=em, view=RuleButton())
 
     @commands.command()
@@ -174,7 +179,8 @@ class Dev(commands.Cog):
                 # if the bot is logged out, it will not be able to send the message
                 await ctx.send(f'Git pull failed. Output:\n```{command_output}```')
         except subprocess.CalledProcessError as e:
-            self.bot.logger.error(f'Git pull failed with error code {e.returncode} and output:\n{e.output}')
+            self.bot.logger.error(
+                f'Git pull failed with error code {e.returncode} and output:\n{e.output}')
             # if the bot is logged out, it will not be able to send the message
             await ctx.send(f'An error occurred: {e}')
 
@@ -204,7 +210,8 @@ class Dev(commands.Cog):
         else:
             remaining_time = jail_info.get("remaining_time", 0)
             release_time = user_data.is_in_jail()
-            remaining_timestamp = discord.utils.format_dt(release_time, style="R")
+            remaining_timestamp = discord.utils.format_dt(
+                release_time, style="R")
             await ctx.send(f"{user.display_name} is in jail till {remaining_timestamp} seconds.")
 
     @jail.command(name="clear", description="Clear jail time of a user.")
@@ -222,7 +229,8 @@ class Dev(commands.Cog):
         user_data = await self.bot.db_client.get_user(user.id)
         current_jail_info = user_data.jail or {}
 
-        remaining_time = current_jail_info.get("remaining_time", 0) + time_in_seconds
+        remaining_time = current_jail_info.get(
+            "remaining_time", 0) + time_in_seconds
         await user_data.update_user({"jail": {"remaining_time": remaining_time}}, self.bot)
         await ctx.send(f"Added {time_in_seconds} seconds of jail time for {user.display_name}.")
 
@@ -251,7 +259,6 @@ class Dev(commands.Cog):
             await user_data.update_user({"weekly_streak": {}}, self.bot)
             await ctx.send(f"Cleared streak for {user.display_name}.")
 
-
     @commands.group("economy", description="Manage user economy.", invoke_without_command=True)
     @commands.is_owner()
     async def economy(self, ctx):
@@ -274,8 +281,6 @@ class Dev(commands.Cog):
         user_data = await self.bot.db_client.get_user(user.id)
         await user_data.update_balance(amount, self.bot)
         await ctx.send(f"Set {user.display_name}'s balance to {amount}.")
-
-
 
     @commands.command(name="eval")
     @commands.is_owner()
@@ -328,14 +333,16 @@ class Dev(commands.Cog):
 
         if ret is None:
             if value:
-                em = discord.Embed(title="Success", description=f"```py\n{value}\n```", color=discord.Color.green())
+                em = discord.Embed(
+                    title="Success", description=f"```py\n{value}\n```", color=discord.Color.green())
                 return await ctx.send(embed=em)
             else:
                 em = discord.Embed(title="Success", description="```py\nNo output\n```",
                                    color=discord.Color.green())
                 return await ctx.send(embed=em)
         else:
-            em = discord.Embed(title="Success", description=f"```py\n{value}{ret}\n```", color=discord.Color.green())
+            em = discord.Embed(
+                title="Success", description=f"```py\n{value}{ret}\n```", color=discord.Color.green())
             return await ctx.send(embed=em)
 
     @staticmethod

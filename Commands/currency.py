@@ -28,12 +28,15 @@ class Currency(commands.Cog):
         user_color = await generate_embed_color(ctx.author)
         success_list = []
         fail_list = []
-        [success_list.append(i) if i[1] else fail_list.append(i) for i in adv_scenarios]
+        [success_list.append(i) if i[1] else fail_list.append(i)
+         for i in adv_scenarios]
         monster_rarity_threshold = random.uniform(0.1, 1)
-        available_monsters = [monster for monster in monsters if monster["rarity"] >= monster_rarity_threshold]
+        available_monsters = [
+            monster for monster in monsters if monster["rarity"] >= monster_rarity_threshold]
 
         if not available_monsters:
-            available_monsters = monsters  # Use all monsters if none available for the selected rarity threshold
+            # Use all monsters if none available for the selected rarity threshold
+            available_monsters = monsters
 
         monster = random.choice(available_monsters)
 
@@ -46,11 +49,14 @@ class Currency(commands.Cog):
             scenario = random.choice(success_list)
             outcome = random.choice(adv_success_strings)
             scenario_text = scenario[0].format(author, monster["emoji"])
-            outcome = " " + outcome.format(author, monster["emoji"]) + f" you earned ${cash}!"
+            outcome = " " + \
+                outcome.format(
+                    author, monster["emoji"]) + f" you earned ${cash}!"
         else:
             scenario = random.choice(fail_list)
             scenario_text = scenario[0].format(author, monster["emoji"])
-            outcome = random.choice(adv_failure_strings).format(author, monster["emoji"])
+            outcome = random.choice(adv_failure_strings).format(
+                author, monster["emoji"])
 
         em = discord.Embed(color=user_color,
                            title=f"{user}'s adventure!",
@@ -66,7 +72,8 @@ class Currency(commands.Cog):
                            weights=[info['rarity'] for info in chop_resource_info.values()], k=1)[0]
         resource = chop_resource_info[chosen_resource]
         resource_amount = random.randint(1, 5)
-        resource_value = random.randint(resource['min_value'], resource['max_value'])
+        resource_value = random.randint(
+            resource['min_value'], resource['max_value'])
 
         user_id = ctx.author.id
         user_data = await ctx.bot.db_client.get_user(user_id=user_id)
@@ -84,11 +91,13 @@ class Currency(commands.Cog):
     async def mine(self, ctx):
         chosen_resource = \
             random.choices(list(mine_resource_info.keys()),
-                           weights=[info['rarity'] for info in mine_resource_info.values()],
+                           weights=[info['rarity']
+                                    for info in mine_resource_info.values()],
                            k=1)[0]
         resource = mine_resource_info[chosen_resource]
         resource_amount = random.randint(1, 10)
-        resource_value = random.randint(resource['min_value'], resource['max_value'])
+        resource_value = random.randint(
+            resource['min_value'], resource['max_value'])
 
         user_id = ctx.author.id
         user_data = await ctx.bot.db_client.get_user(user_id=user_id)
@@ -130,7 +139,8 @@ class Currency(commands.Cog):
             description = f"Daily: + {claimed_money}"
             if claimed_money > 5000:
                 description = f"Daily: + {claimed_money} (Streak: {daily_streak})"
-            em = discord.Embed(color=user_color, title=f"{ctx.author}'s daily", description=description)
+            em = discord.Embed(
+                color=user_color, title=f"{ctx.author}'s daily", description=description)
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
         else:
             description = "\nGifted Currency: +1000"
@@ -143,9 +153,11 @@ class Currency(commands.Cog):
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
 
         em.add_field(name="Amount Added", value=f"{claimed_money}")
-        em.add_field(name="New Balance", value=f"{user_data.balance + claimed_money}")
+        em.add_field(name="New Balance",
+                     value=f"{user_data.balance + claimed_money}")
         if claimed_money == 5000 and daily_streak > 1 or claimed_money == 6000 and daily_streak > 1:
-            em.add_field(name="Streak Broken!", value=f"You broke your daily streak of {daily_streak} days!")
+            em.add_field(name="Streak Broken!",
+                         value=f"You broke your daily streak of {daily_streak} days!")
 
         await user_data.add_balance(claimed_money, self.bot)
         await ctx.reply(embed=em)
@@ -163,7 +175,8 @@ class Currency(commands.Cog):
 
         if user.id == ctx.author.id:
             description = f"Weekly: + {money}"
-            em = discord.Embed(color=user_color, title=f"{ctx.author}'s weekly", description=description)
+            em = discord.Embed(
+                color=user_color, title=f"{ctx.author}'s weekly", description=description)
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
         else:
             description = "\nGifted Currency: +10000"
@@ -194,8 +207,10 @@ class Currency(commands.Cog):
                 f"Look at you all handcuffed and shit, you'll get out of those {remaining_timestamp}")
         new_bal = user_data.balance + cash
         description = f"{job}\n\nCash: + {cash}"
-        em = discord.Embed(color=discord.Color.random(), title=f"{ctx.author}'s job", description=description)
-        em.set_thumbnail(url=ctx.author.display_avatar.with_static_format("png"))
+        em = discord.Embed(color=discord.Color.random(),
+                           title=f"{ctx.author}'s job", description=description)
+        em.set_thumbnail(
+            url=ctx.author.display_avatar.with_static_format("png"))
         em.add_field(name="New Balance", value=f"{new_bal}")
         await user_data.add_balance(cash, self.bot)
         await ctx.reply(embed=em)
@@ -203,4 +218,3 @@ class Currency(commands.Cog):
 
 async def setup(bot):
     await bot.add_cog(Currency(bot))
-

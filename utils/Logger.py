@@ -21,7 +21,8 @@ def setup_logger():
     logging.setLoggerClass(ColoredLogger)
     color_formatter = ColoredFormatter(color_format)
     console = logging.StreamHandler()
-    file = logging.FileHandler(filename=f'logs/bot.log', encoding='utf-8', mode='w')
+    file = logging.FileHandler(
+        filename=f'logs/bot.log', encoding='utf-8', mode='w')
     console.setFormatter(color_formatter)
     file.setFormatter(color_formatter)
     logger.addHandler(console)
@@ -59,7 +60,8 @@ class ColoredFormatter(logging.Formatter):
     def format(self, record):
         level_name = record.levelname
         if self.use_color and level_name in COLORS:
-            level_name_color = COLOR_SEQ % (30 + COLORS[level_name]) + level_name + RESET_SEQ
+            level_name_color = COLOR_SEQ % (
+                30 + COLORS[level_name]) + level_name + RESET_SEQ
             record.levelname = level_name_color
         message = record.msg
         if self.use_color and level_name in COLORS:

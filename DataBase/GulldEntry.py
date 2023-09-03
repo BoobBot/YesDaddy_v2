@@ -4,11 +4,3 @@ class Guild:
         self.member_data = member_data if member_data else []
         self.tickets = tickets if tickets is not None else []
         self.config = config if config else {}
-
-
-
-
-
-
-
-

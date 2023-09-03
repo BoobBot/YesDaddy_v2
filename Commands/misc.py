@@ -54,16 +54,25 @@ chop_resource_info = {
 }
 # TODO indo make more fix emotes
 monsters = [
-    {"emoji": "🐉 Dragon", "value": 100, "success_rate": 0.7, "rarity": 0.4},  # Legendary
+    {"emoji": "🐉 Dragon", "value": 100,
+        "success_rate": 0.7, "rarity": 0.4},  # Legendary
     {"emoji": "🦊 Kitsune", "value": 50, "success_rate": 0.9, "rarity": 0.5},  # Rare
-    {"emoji": "👻 Ancient Spirit", "value": 80, "success_rate": 0.6, "rarity": 0.3},  # Epic
-    {"emoji": "🗡️ Rogue Bandit", "value": 20, "success_rate": 0.95, "rarity": 0.9},  # Common
-    {"emoji": "🧚‍♂️ Pixie", "value": 30, "success_rate": 0.85, "rarity": 0.7},  # Uncommon
-    {"emoji": "🌊 Shapeshifter", "value": 70, "success_rate": 0.75, "rarity": 0.5},  # Rare
-    {"emoji": "🪨 Rock Golem", "value": 90, "success_rate": 0.5, "rarity": 0.7},  # Uncommon
-    {"emoji": "👻 Haunted Spirit", "value": 60, "success_rate": 0.8, "rarity": 0.9},  # Common
-    {"emoji": "🌀 Interdimensional Entity", "value": 120, "success_rate": 0.4, "rarity": 0.2},  # Mythical
-    {"emoji": "🗡️ Band of Bandits", "value": 40, "success_rate": 0.9, "rarity": 0.9}  # Common
+    {"emoji": "👻 Ancient Spirit", "value": 80,
+        "success_rate": 0.6, "rarity": 0.3},  # Epic
+    {"emoji": "🗡️ Rogue Bandit", "value": 20,
+        "success_rate": 0.95, "rarity": 0.9},  # Common
+    {"emoji": "🧚‍♂️ Pixie", "value": 30,
+        "success_rate": 0.85, "rarity": 0.7},  # Uncommon
+    {"emoji": "🌊 Shapeshifter", "value": 70,
+        "success_rate": 0.75, "rarity": 0.5},  # Rare
+    {"emoji": "🪨 Rock Golem", "value": 90,
+        "success_rate": 0.5, "rarity": 0.7},  # Uncommon
+    {"emoji": "👻 Haunted Spirit", "value": 60,
+        "success_rate": 0.8, "rarity": 0.9},  # Common
+    {"emoji": "🌀 Interdimensional Entity", "value": 120,
+        "success_rate": 0.4, "rarity": 0.2},  # Mythical
+    {"emoji": "🗡️ Band of Bandits", "value": 40,
+        "success_rate": 0.9, "rarity": 0.9}  # Common
 ]
 
 
@@ -134,12 +143,15 @@ class Misc(commands.Cog):
         author = ctx.author.mention
         success_list = []
         fail_list = []
-        [success_list.append(i) if i[1] else fail_list.append(i) for i in adv_scenarios]
+        [success_list.append(i) if i[1] else fail_list.append(i)
+         for i in adv_scenarios]
         monster_rarity_threshold = random.uniform(0.1, 1)
-        available_monsters = [monster for monster in monsters if monster["rarity"] >= monster_rarity_threshold]
+        available_monsters = [
+            monster for monster in monsters if monster["rarity"] >= monster_rarity_threshold]
 
         if not available_monsters:
-            available_monsters = monsters  # Use all monsters if none available for the selected rarity threshold
+            # Use all monsters if none available for the selected rarity threshold
+            available_monsters = monsters
 
         monster = random.choice(available_monsters)
 
@@ -152,11 +164,14 @@ class Misc(commands.Cog):
             scenario = random.choice(success_list)
             outcome = random.choice(adv_success_strings)
             scenario_text = scenario[0].format(author, monster["emoji"])
-            outcome = " " + outcome.format(author, monster["emoji"]) + f" you earned ${cash}!"
+            outcome = " " + \
+                outcome.format(
+                    author, monster["emoji"]) + f" you earned ${cash}!"
         else:
             scenario = random.choice(fail_list)
             scenario_text = scenario[0].format(author, monster["emoji"])
-            outcome = random.choice(adv_success_strings).format(author, monster["emoji"])
+            outcome = random.choice(adv_success_strings).format(
+                author, monster["emoji"])
 
         await ctx.send(scenario_text+outcome)
 
@@ -168,7 +183,8 @@ class Misc(commands.Cog):
                            weights=[info['rarity'] for info in chop_resource_info.values()], k=1)[0]
         resource = chop_resource_info[chosen_resource]
         resource_amount = random.randint(1, 5)
-        resource_value = random.randint(resource['min_value'], resource['max_value'])
+        resource_value = random.randint(
+            resource['min_value'], resource['max_value'])
 
         user_id = ctx.author.id
         user_data = await ctx.bot.db_client.get_user(user_id=user_id)
@@ -186,11 +202,13 @@ class Misc(commands.Cog):
     async def mine(self, ctx):
         chosen_resource = \
             random.choices(list(mine_resource_info.keys()),
-                           weights=[info['rarity'] for info in mine_resource_info.values()],
+                           weights=[info['rarity']
+                                    for info in mine_resource_info.values()],
                            k=1)[0]
         resource = mine_resource_info[chosen_resource]
         resource_amount = random.randint(1, 10)
-        resource_value = random.randint(resource['min_value'], resource['max_value'])
+        resource_value = random.randint(
+            resource['min_value'], resource['max_value'])
         user_id = ctx.author.id
         user_data = await ctx.bot.db_client.get_user(user_id=user_id)
         user_balance = user_data.balance
@@ -273,7 +291,8 @@ class Misc(commands.Cog):
 
         em = discord.Embed(title=f"{user}'s Profile", color=user_color)
         em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
-        em.add_field(name="Level", value=f"{user_data.level} {bar} {user_data.level + 1}", inline=False)
+        em.add_field(
+            name="Level", value=f"{user_data.level} {bar} {user_data.level + 1}", inline=False)
         em.add_field(name="Experience", value=f"{user_data.xp} / {exp_needed}")
         em.add_field(name="Balance", value=f"{user_data.balance}")
         em.add_field(name="Bank Balance", value=f"{user_data.bank_balance}")
@@ -281,7 +300,8 @@ class Misc(commands.Cog):
             release_time = user_data.is_in_jail()
             remaining_timestamp = discord.utils.format_dt(release_time, style="R"
                                                           )
-            em.add_field(name="Jail?", value=f"experience freedom in {remaining_timestamp}")
+            em.add_field(
+                name="Jail?", value=f"experience freedom in {remaining_timestamp}")
 
         await ctx.reply(embed=em)
 
@@ -307,7 +327,8 @@ class Misc(commands.Cog):
 
         if user.id == ctx.author.id:
             description = f"Daily: + {money}"
-            em = discord.Embed(color=user_color, title=f"{ctx.author}'s daily", description=description)
+            em = discord.Embed(
+                color=user_color, title=f"{ctx.author}'s daily", description=description)
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
         else:
             description = "\nGifted Currency: +1000"
@@ -336,7 +357,8 @@ class Misc(commands.Cog):
 
         if user.id == ctx.author.id:
             description = f"Weekly: + {money}"
-            em = discord.Embed(color=user_color, title=f"{ctx.author}'s weekly", description=description)
+            em = discord.Embed(
+                color=user_color, title=f"{ctx.author}'s weekly", description=description)
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
         else:
             description = "\nGifted Currency: +10000"
@@ -367,8 +389,10 @@ class Misc(commands.Cog):
                 f"Look at you all handcuffed and shit, you'll get out of those {remaining_timestamp}")
         new_bal = user_data.balance + cash
         description = f"{job}\n\nCash: + {cash}"
-        em = discord.Embed(color=discord.Color.random(), title=f"{ctx.author}'s job", description=description)
-        em.set_thumbnail(url=ctx.author.display_avatar.with_static_format("png"))
+        em = discord.Embed(color=discord.Color.random(),
+                           title=f"{ctx.author}'s job", description=description)
+        em.set_thumbnail(
+            url=ctx.author.display_avatar.with_static_format("png"))
         em.add_field(name="New Balance", value=f"{new_bal}")
         await user_data.add_balance(cash, self.bot)
         await ctx.reply(embed=em)
@@ -439,7 +463,8 @@ class Misc(commands.Cog):
 
         random.shuffle(fake_robbery_scenarios)
         scenario = random.choice(fake_robbery_scenarios)
-        rob_scenario = scenario[0].replace("{0}", ctx.author.mention).replace("{1}", user.mention)
+        rob_scenario = scenario[0].replace(
+            "{0}", ctx.author.mention).replace("{1}", user.mention)
         rob_outcome = scenario[1]
 
         אחוז_הפסד = 25
@@ -463,7 +488,8 @@ class Misc(commands.Cog):
 
         if rob_outcome:
             user_balance = user_data.balance
-            user_loss_total = subtraction_percentage(user_balance, loss_percent)
+            user_loss_total = subtraction_percentage(
+                user_balance, loss_percent)
             author_total = max(author_data.balance + user_loss_total, 0)
             user_total = max(user_data.balance - user_loss_total, 0)
             await user_data.update_balance(user_total, self.bot)
@@ -475,7 +501,8 @@ class Misc(commands.Cog):
         else:
             author_balance = author_data.balance
             total_percentage = loss_percent + אחוז_הפסד
-            author_loss_total = subtraction_percentage(author_balance, total_percentage)
+            author_loss_total = subtraction_percentage(
+                author_balance, total_percentage)
             total = max(author_balance - author_loss_total, 0)
             jail_time = random.randint(1, 3)
             fine = random.randint(100, 1000)
@@ -702,7 +729,8 @@ class Misc(commands.Cog):
 
         sorted_users = []
         for user_data in top_users:
-            user_data.setdefault("jail", {})  # Provide a default value for 'jail' attribute
+            # Provide a default value for 'jail' attribute
+            user_data.setdefault("jail", {})
             user = User(**user_data)
             member = ctx.guild.get_member(user.user_id)
 
@@ -711,7 +739,8 @@ class Misc(commands.Cog):
 
         sorted_users.sort(key=lambda entry: entry[0].level, reverse=True)
 
-        pages = create_leaderboard_pages(sorted_users, "Leaderboard - Levels: Page")
+        pages = create_leaderboard_pages(
+            sorted_users, "Leaderboard - Levels: Page")
         await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
 
     @leaderboard.command(name="balance", aliases=["bal"], description="View the balance leaderboard.")
@@ -730,7 +759,8 @@ class Misc(commands.Cog):
                 sorted_users.append((user, member))
 
         sorted_users.sort(key=lambda entry: entry[0]['balance'], reverse=True)
-        pages = create_leaderboard_pages(sorted_users, "Leaderboard - Balance: Page")
+        pages = create_leaderboard_pages(
+            sorted_users, "Leaderboard - Balance: Page")
         await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
 
     @leaderboard.command(name="bank", description="View the bank balance leaderboard.")
@@ -748,8 +778,10 @@ class Misc(commands.Cog):
             if member:
                 sorted_users.append((user, member))
 
-        sorted_users.sort(key=lambda entry: entry[0]['bank_balance'], reverse=True)
-        pages = create_leaderboard_pages(sorted_users, "Leaderboard - Bank Balance: Page")
+        sorted_users.sort(
+            key=lambda entry: entry[0]['bank_balance'], reverse=True)
+        pages = create_leaderboard_pages(
+            sorted_users, "Leaderboard - Bank Balance: Page")
         await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
 
     @leaderboard.command(name="total", aliases=["net"], description="View the total balance leaderboard.")
@@ -767,8 +799,10 @@ class Misc(commands.Cog):
             if member:
                 sorted_users.append((user, member))
 
-        sorted_users.sort(key=lambda entry: entry[0]['balance'] + entry[0]['bank_balance'], reverse=True)
-        pages = create_leaderboard_pages(sorted_users, "Leaderboard - Total Balance: Page")
+        sorted_users.sort(
+            key=lambda entry: entry[0]['balance'] + entry[0]['bank_balance'], reverse=True)
+        pages = create_leaderboard_pages(
+            sorted_users, "Leaderboard - Total Balance: Page")
         await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
 
     @tasks.loop(minutes=5)
@@ -786,7 +820,8 @@ class Misc(commands.Cog):
                     fine = user.jail.get("fine", 0)
                     await user.subtract_balance(fine, self.bot)
                     await user.update_user({"jail": {}}, self.bot)
-                    self.bot.log.info(f"User {user_id} has been released from jail.")
+                    self.bot.log.info(
+                        f"User {user_id} has been released from jail.")
 
     @tasks.loop(minutes=5)  # Run the task every 5 minutes
     async def change_role_color(self):

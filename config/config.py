@@ -9,13 +9,16 @@ class Config:
     def __init__(self):
         self.token = os.getenv('DISCORD_TOKEN',
                                "")  # Use environment variable as token
-        self.debug_mode = os.getenv('DEBUG_MODE', False)  # Use environment variable as debug_mode
+        # Use environment variable as debug_mode
+        self.debug_mode = os.getenv('DEBUG_MODE', False)
         self.debug_token = os.getenv('DEBUG_TOKEN',
                                      "")  # Use environment variable as debug_token
         self.sync_testing_guild = os.getenv('SYNC_TESTING_GUILD',
                                             False)  # Use environment variable as sync_testing_guild_id
-        self.mongo_uri = os.getenv('MONGO_URI', "")  # Use environment variable as mongo_uri
-        self.database_name = os.getenv('DATABASE_NAME', "")  # Use environment variable as database_name
+        # Use environment variable as mongo_uri
+        self.mongo_uri = os.getenv('MONGO_URI', "")
+        # Use environment variable as database_name
+        self.database_name = os.getenv('DATABASE_NAME', "")
         self.user_collection_name = os.getenv('USER_COLLECTION_NAME',
                                               "users")  # Use environment variable as user_collection_name
         self.guild_collection_name = os.getenv('GUILD_COLLECTION_NAME',
@@ -25,13 +28,18 @@ class Config:
         self.initial_extensions = ['Commands.core', 'Events.Ready', 'Events.Message', 'Events.loops', 'Events.Error',
                                    'Commands.currency', 'Commands.gambling', 'Commands.profile',
                                    'Commands.transactions', 'Commands.dev']  # List of initial extensions
-        self.prefix = os.getenv('PREFIX', "")  # Use environment variable as prefix
-        self.owner_ids = os.getenv('OWNER_IDS', "")  # Use environment variable as owner_ids
-        self.open_ai_key = os.getenv('OPEN_AI_KEY', "")  # Use environment variable as open_ai_key
-        self.member_role_id = os.getenv('MEMBER_ROLE_ID', "")  # Use environment variable as member_role_id
+        # Use environment variable as prefix
+        self.prefix = os.getenv('PREFIX', "")
+        # Use environment variable as owner_ids
+        self.owner_ids = os.getenv('OWNER_IDS', "")
+        # Use environment variable as open_ai_key
+        self.open_ai_key = os.getenv('OPEN_AI_KEY', "")
+        # Use environment variable as member_role_id
+        self.member_role_id = os.getenv('MEMBER_ROLE_ID', "")
         self.verification_image = os.getenv('VERIFICATION_IMAGE',
                                             "")  # Use environment variable as verification_image
-        self.error_webhook = os.getenv('ERROR_WEBHOOK', "")  # Use environment variable as error_webhook
+        # Use environment variable as error_webhook
+        self.error_webhook = os.getenv('ERROR_WEBHOOK', "")
 
     def get_token(self, debug=False):  # Get token
         if self.debug_mode or debug:  # If debug_mode is True

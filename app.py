@@ -35,6 +35,7 @@ if debug:
     bot_token = config.debug_token
     # logger.setLevel(logging.DEBUG)
 
+
 class Bot(commands.Bot):
     def __init__(
             self,
@@ -64,7 +65,8 @@ class Bot(commands.Bot):
             await self.load_extension(extension)
 
         if self.testing_guild_id and config.sync_testing_guild:
-            self.log.info(f"Syncing commands for guild {self.testing_guild_id}")
+            self.log.info(
+                f"Syncing commands for guild {self.testing_guild_id}")
             guild = discord.Object(self.testing_guild_id)
             self.tree.copy_global_to(guild=guild)
             # await self.tree.sync(guild=guild)

@@ -6,8 +6,10 @@ from discord.ext import commands
 class Paginator(discord.ui.View):
     def __init__(self, *,
                  timeout: int = 60,
-                 previous_button: discord.ui.Button = discord.ui.Button(emoji=discord.PartialEmoji(name="\U000025c0")),
-                 next_button: discord.ui.Button = discord.ui.Button(emoji=discord.PartialEmoji(name="\U000025b6")),
+                 previous_button: discord.ui.Button = discord.ui.Button(
+                     emoji=discord.PartialEmoji(name="\U000025c0")),
+                 next_button: discord.ui.Button = discord.ui.Button(
+                     emoji=discord.PartialEmoji(name="\U000025b6")),
                  page_counter_style: discord.ButtonStyle = discord.ButtonStyle.grey,
                  initial_page: int = 0,
                  allow_others: bool = False,
@@ -36,7 +38,8 @@ class Paginator(discord.ui.View):
             ctx = await commands.Context.from_interaction(ctx)
 
         if len(pages) == 0:
-            raise ValueError("'pages' does not contain at least one instance of discord.Embed")
+            raise ValueError(
+                "'pages' does not contain at least one instance of discord.Embed")
 
         self.pages = pages
         self.total_page_count = len(pages)
@@ -98,4 +101,5 @@ class Paginator(discord.ui.View):
 
 class PageCounter(discord.ui.Button):
     def __init__(self, style: discord.ButtonStyle, total_pages, initial_page):
-        super().__init__(label=f"{initial_page + 1}/{total_pages}", style=style, disabled=True)
+        super().__init__(
+            label=f"{initial_page + 1}/{total_pages}", style=style, disabled=True)

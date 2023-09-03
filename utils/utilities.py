@@ -32,7 +32,8 @@ async def get_average_color(url):
 
 
 async def generate_embed_color(member):
-    roles_with_color = [role for role in reversed(member.roles) if role.color != discord.Colour.default()]
+    roles_with_color = [role for role in reversed(
+        member.roles) if role.color != discord.Colour.default()]
 
     if roles_with_color:
         embed_color = roles_with_color[0].color
