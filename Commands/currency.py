@@ -133,7 +133,12 @@ class Currency(commands.Cog):
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
         user_color = await generate_embed_color(user)
         author_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
-        claimed_money, daily_streak = await author_data.claim_daily(self.bot)
+        streak, daily_streak = await author_data.claim_daily(self.bot)
+        if streak:
+            claimed_money = 5000 + (500 * daily_streak)
+        else:
+            claimed_money = 5000
+
 
         if user.id == ctx.author.id:
             description = f"Daily: + ${claimed_money}"
@@ -155,7 +160,7 @@ class Currency(commands.Cog):
         em.add_field(name="Amount Added", value=f"${claimed_money}")
         em.add_field(name="New Balance",
                      value=f"{user_data.balance + claimed_money}")
-        if claimed_money == 5000 and daily_streak > 1 or claimed_money == 6000 and daily_streak > 1:
+        if streak and daily_streak > 1:
             em.add_field(name="Streak Broken!",
                          value=f"You broke your daily streak of {daily_streak} days!")
 
