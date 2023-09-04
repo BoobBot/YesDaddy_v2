@@ -148,9 +148,9 @@ class Currency(commands.Cog):
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
         else:
             description = "\nGifted Currency: +$1000"
-            if claimed_money > 5000:
-                description = f"Gifted: + ${claimed_money} (Streak: {daily_streak})"
             claimed_money += 1000
+            if claimed_money > 6000:
+                description = f"Gifted: + ${claimed_money} (Streak: {daily_streak})"
             em = discord.Embed(color=user_color,
                                title=f"{ctx.author} has given {user} their daily, plus a bonus!",
                                description=description)
