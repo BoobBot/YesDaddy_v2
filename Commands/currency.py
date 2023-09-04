@@ -139,7 +139,6 @@ class Currency(commands.Cog):
         else:
             claimed_money = 5000
 
-
         if user.id == ctx.author.id:
             description = f"Daily: + ${claimed_money}"
             if claimed_money > 5000:
