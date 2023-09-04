@@ -4,8 +4,8 @@ from datetime import datetime
 
 import motor.motor_asyncio
 
-from DataBase.GulldEntry import Guild
-from DataBase.UserEntry import User
+from database.gulld_entry import Guild
+from database.user_entry import User
 
 
 class DiscordDatabase:

@@ -9,7 +9,7 @@ import discord
 from discord import app_commands, Embed
 from discord.ext import commands, tasks
 
-from DataBase import User
+from database import User
 from config.lists import job_descriptions, fake_robbery_scenarios, funny_crime_scenarios, adv_scenarios, \
     adv_success_strings
 from utils.checks import persistent_cooldown

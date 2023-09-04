@@ -10,7 +10,7 @@ import discord
 from discord import app_commands, Embed
 from discord.ext import commands, tasks
 
-from DataBase import User
+from database import User
 from config.lists import fake_robbery_scenarios, funny_crime_scenarios
 from config.settings_config import jackpot_emoji, calculate_payout, jackpot_payout, bonus_multiplier
 from utils.checks import persistent_cooldown

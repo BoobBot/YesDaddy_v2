@@ -10,12 +10,12 @@ from aiohttp import ClientSession
 from discord.ext import commands
 from motor import motor_asyncio
 
-from DataBase import DiscordDatabase
-from Views import tickets_view
-from Views.verification_view import VerificationView
-from Views.rule_button_view import RuleButton
+from database import DiscordDatabase
+from views import tickets_view
+from views.verification_view import VerificationView
+from views.rule_button_view import RuleButton
 from config.config import Config
-from utils.Logger import setup_logger
+from utils.logger import setup_logger
 
 config = Config()
 openai.api_key = config.open_ai_key

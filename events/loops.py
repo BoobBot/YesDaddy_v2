@@ -3,7 +3,7 @@ import datetime
 import discord
 from discord.ext import tasks, commands
 
-from DataBase import User
+from database import User
 
 
 class Loops(commands.Cog):

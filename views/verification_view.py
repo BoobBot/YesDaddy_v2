@@ -2,7 +2,7 @@ from datetime import datetime
 
 import discord
 
-from Views.tickets_view import TicketView
+from views.tickets_view import TicketView
 
 
 class VerificationView(discord.ui.View):

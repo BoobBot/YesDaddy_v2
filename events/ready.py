@@ -1,6 +1,6 @@
 from discord.ext import commands
 
-from DataBase import User
+from database import User
 
 
 class Ready(commands.Cog):

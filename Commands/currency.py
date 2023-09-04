@@ -10,7 +10,7 @@ import discord
 from discord import app_commands, Embed
 from discord.ext import commands, tasks
 
-from DataBase import User
+from database import User
 from config.lists import job_descriptions, adv_success_strings, adv_scenarios, adv_failure_strings
 from config.settings_config import chop_resource_info, mine_resource_info, fish_info, monsters
 from utils.checks import persistent_cooldown

@@ -9,7 +9,7 @@ import discord
 from discord import app_commands, Embed
 from discord.ext import commands, tasks
 
-from DataBase import User
+from database import User
 from config.settings_config import create_leaderboard_pages
 from utils.checks import persistent_cooldown
 from utils.paginator import Paginator

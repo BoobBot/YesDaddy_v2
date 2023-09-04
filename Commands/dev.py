@@ -17,7 +17,7 @@ import psutil
 from discord.ext import commands
 from discord.ext.commands import Context, Greedy
 
-from Views.rule_button_view import RuleButton
+from views.rule_button_view import RuleButton
 
 
 class Dev(commands.Cog):
