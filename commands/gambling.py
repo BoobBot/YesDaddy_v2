@@ -241,7 +241,7 @@ class Gambling(commands.Cog):
         await user_data.update_balance(user_balance, self.bot)
 
     # rps
-    @commands.hybrid_command(description="Play rock paper scissors.", aliases=["rockpaperscissors"])
+    @commands.hybrid_command(description="Play rock paper scissors.", aliases=["rps"])
     @app_commands.describe(choice="rock, paper, or scissors")
     @app_commands.describe(bet='the amount of money to bet')
     async def rps(self, ctx, choice: Literal['rock', 'paper', 'scissors'], bet: int):
@@ -277,12 +277,18 @@ class Gambling(commands.Cog):
         if result == "win":
             winnings = bet * winnings_multiplier
             await user_data.update_balance(user_balance + winnings, self.bot)
-            await ctx.send(f"You chose {choice}, the bot chose {bot_choice}. You win {winnings} coins!")
+            em = discord.Embed(color=discord.Color.green(),
+                               description=f"You chose {choice}, the bot chose {bot_choice}. You win {winnings} coins!")
+            return await ctx.reply(embed=em)
         elif result == "lose":
             await user_data.update_balance(user_balance - bet, self.bot)
-            await ctx.send(f"You chose {choice}, the bot chose {bot_choice}. You lose {bet} coins.")
+            em = discord.Embed(color=discord.Color.red(),
+                               description=f"You chose {choice}, the bot chose {bot_choice}. You lose {bet} coins.")
+            return await ctx.reply(embed=em)
         else:
-            await ctx.send(f"You chose {choice}, the bot chose {bot_choice}. It's a tie!")
+            em = discord.Embed(color=discord.Color.yellow(),
+                               description=f"You chose {choice}, the bot chose {bot_choice}. It's a tie!")
+            await ctx.reply(embed=em)
 
     @commands.hybrid_command(description="Play rock paper scissors lizard spock.")
     @app_commands.describe(choice="rock, paper, scissors, lizard, or spock")
@@ -322,12 +328,18 @@ class Gambling(commands.Cog):
         if result == "win":
             winnings = bet * winnings_multiplier
             await user_data.update_balance(user_balance + winnings, self.bot)
-            await ctx.send(f"You chose {choice}, the bot chose {bot_choice}. You win {winnings} coins!")
+            em = discord.Embed(color=discord.Color.green(),
+                               description=f"You chose {choice}, the bot chose {bot_choice}. You win {winnings} coins!")
+            return await ctx.reply(embed=em)
         elif result == "lose":
             await user_data.update_balance(user_balance - bet, self.bot)
-            await ctx.send(f"You chose {choice}, the bot chose {bot_choice}. You lose {bet} coins.")
+            em = discord.Embed(color=discord.Color.red(),
+                               description=f"You chose {choice}, the bot chose {bot_choice}. You lose {bet} coins.")
+            return await ctx.reply(embed=em)
         else:
-            await ctx.send(f"You chose {choice}, the bot chose {bot_choice}. It's a tie!")
+            em = discord.Embed(color=discord.Color.yellow(),
+                               description=f"You chose {choice}, the bot chose {bot_choice}. It's a tie!")
+            await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="dice", description="Roll a dice.")
     @app_commands.describe(bet='the amount of money to bet')
@@ -350,12 +362,18 @@ class Gambling(commands.Cog):
         if user_roll > bot_roll:
             winnings = bet * 2
             await user_data.update_balance(user_balance + winnings, self.bot)
-            await ctx.send(f"You rolled {user_roll}, the bot rolled {bot_roll}. You win {winnings} coins!")
+            em = discord.Embed(color=discord.Color.green(),
+                               description=f"You rolled {user_roll}, the bot rolled {bot_roll}. You win {winnings} coins!")
+            return await ctx.reply(embed=em)
         elif user_roll < bot_roll:
             await user_data.update_balance(user_balance - bet, self.bot)
-            await ctx.send(f"You rolled {user_roll}, the bot rolled {bot_roll}. You lose {bet} coins.")
+            em = discord.Embed(color=discord.Color.red(),
+                               description=f"You rolled {user_roll}, the bot rolled {bot_roll}. You lose {bet} coins.")
+            return await ctx.reply(embed=em)
         else:
-            await ctx.send(f"You rolled {user_roll}, the bot rolled {bot_roll}. It's a tie!")
+            em = discord.Embed(color=discord.Color.yellow(),
+                               description=f"You rolled {user_roll}, the bot rolled {bot_roll}. It's a tie!")
+            await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="roulette", description="Spin the roulette wheel.")
     @app_commands.describe(bet='the amount of money to bet')
