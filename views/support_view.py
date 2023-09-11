@@ -53,7 +53,7 @@ class SupportTicketView(discord.ui.View):
             file.write('strong { color: #7289da; }\n')
             file.write('</style>\n')
             file.write("</head>\n<body>\n")
-            file.write(f"<h1>Transcript of Ticket from {ctx.author}</h1>\n\n")
+            file.write(f"<h1>Transcript of Ticket from {interaction.user}</h1>\n\n")
 
             # Copy messages to the transcript file with HTML formatting
             async for message in interaction.channel.history(limit=None):
