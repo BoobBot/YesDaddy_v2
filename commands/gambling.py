@@ -241,7 +241,7 @@ class Gambling(commands.Cog):
         await user_data.update_balance(user_balance, self.bot)
 
     # rps
-    @commands.hybrid_command(description="Play rock paper scissors.", aliases=["rps"])
+    @commands.hybrid_command(description="Play rock paper scissors.")
     @app_commands.describe(choice="rock, paper, or scissors")
     @app_commands.describe(bet='the amount of money to bet')
     async def rps(self, ctx, choice: Literal['rock', 'paper', 'scissors'], bet: int):
