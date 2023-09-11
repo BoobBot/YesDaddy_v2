@@ -85,7 +85,10 @@ class TicketView(discord.ui.View):
         await interaction.client.db_client.update_guild(interaction.guild.id, {"tickets": data.tickets})
         # log the verification
         ch = interaction.guild.get_channel(1142915549198823546)
-        user = await interaction.client.fetch_user(user_id)
+        try:
+            user = await interaction.client.fetch_user(user_id)
+        except discord.NotFound:
+            user = None
         if user:
             await ch.send(f"verification ticket by {user.name} ({user.id}) was closed by {interaction.user.mention} ({interaction.user.id})")
         else:
@@ -123,6 +126,9 @@ class TicketView(discord.ui.View):
         except discord.Forbidden:
             await ch.send(
                 f"verification ticket by {user_id} was banned by {interaction.user.mention} but I don't have permissions to ban")
+        except discord.NotFound:
+            await ch.send(
+                f"verification ticket by {user_id} was banned by {interaction.user.mention} but something went wrong")
         ch = interaction.guild.get_channel(1142915549198823546)
         user = await interaction.client.fetch_user(user_id)
         if user:

@@ -14,7 +14,7 @@ class TicketView(discord.ui.View):
         user_id = 0
         data = await interaction.client.db_client.get_guild(interaction.guild.id)
         if not data:
-            interaction.client.lof.error("No data found for Ticket, this should not happen :/")
+            interaction.client.log.error("No data found for Ticket, this should not happen :/")
             return await interaction.response.send_message("Something went wrong",
                                                            ephemeral=True)
         for ticket in data.tickets:
