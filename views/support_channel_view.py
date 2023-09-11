@@ -20,9 +20,9 @@ class SupportChannelView(discord.ui.View):
                                                            ephemeral=True)
 
         retrieved_guild = await interaction.client.db_client.get_guild(interaction.guild.id)
-        if interaction.user.id in [ticket.get("user_id") for ticket in retrieved_guild.support_tickets if
-                                   ticket.get("status") == "open"]:
-            return await interaction.response.send_message("You are already have a ticket", ephemeral=True)
+        # if interaction.user.id in [ticket.get("user_id") for ticket in retrieved_guild.support_tickets if
+        #                            ticket.get("status") == "open"]:
+        #     return await interaction.response.send_message("You are already have a ticket", ephemeral=True)
 
         category_id = 1141700782006222970
         category = interaction.guild.get_channel(category_id)
