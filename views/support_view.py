@@ -60,7 +60,8 @@ class SupportTicketView(discord.ui.View):
                 file.write(f'<p><strong>{message.author}:</strong> {message.content}</p>\n')
 
             file.write("</body>\n</html>")
-
+            file.close()
+            print(f"Transcript saved to {transcript_file}")
             await ch.send(f"Ticket Transcript for <@{user_id}>:",
                           file=discord.File(transcript_file, filename="ticket_transcript.html"))
 
