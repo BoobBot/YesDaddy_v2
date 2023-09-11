@@ -3,5 +3,5 @@ class Guild:
         self.guild_id = guild_id
         self.member_data = member_data if member_data else []
         self.tickets = tickets if tickets is not None else []
-        self.tickets = support_tickets if support_tickets is not None else []
+        self.support_tickets = support_tickets if support_tickets is not None else []
         self.config = config if config else {}
