@@ -17,12 +17,21 @@ import psutil
 from discord.ext import commands
 from discord.ext.commands import Context, Greedy
 
+from views import support_channel_view
 from views.rule_button_view import RuleButton
 
 
 class Dev(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+
+    @commands.command(name="supporttest", description="????")
+    @commands.is_owner()
+    async def testing(self, ctx):
+
+        em = discord.Embed(title="Support Ticket", description="Click the button below to open a support ticket.",
+                           color=discord.Color.blurple())
+        await ctx.send(embed=em, view=support_channel_view.SupportChannelView())
 
     @commands.command(name="test", description="test stuff")
     async def lol(self, ctx):
