@@ -2,6 +2,7 @@ from datetime import datetime
 
 import discord
 
+from views import support_view
 from views.tickets_view import TicketView
 
 
@@ -48,6 +49,6 @@ class SupportChannelView(discord.ui.View):
         await dm_channel.send("Your ticket has been created. Please describe your issue.")
         await new_channel.send(
             f"<@&981426793925992448> Support Ticket by {interaction.user.mention}",
-            view=TicketView())
+            view=support_view.SupportTicketView())
 
         await interaction.client.db_client.update_guild(interaction.guild.id, retrieved_guild.__dict__)
