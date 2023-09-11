@@ -11,7 +11,7 @@ from discord.ext import commands
 from motor import motor_asyncio
 
 from database import DiscordDatabase
-from views import tickets_view
+from views import tickets_view, support_view, support_channel_view
 from views.verification_view import VerificationView
 from views.rule_button_view import RuleButton
 from config.config import Config
@@ -60,6 +60,8 @@ class Bot(commands.Bot):
         self.add_view(VerificationView())
         self.add_view(tickets_view.TicketView())
         self.add_view(RuleButton())
+        self.add_view(support_view.SupportTicketView())
+        self.add_view(support_channel_view.SupportChannelView())
         for extension in self.initial_extensions:
             self.log.info(f"Loading {extension}")
             await self.load_extension(extension)

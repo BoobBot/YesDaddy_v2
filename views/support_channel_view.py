@@ -11,7 +11,7 @@ class SupportChannelView(discord.ui.View):
 
     @discord.ui.button(label='Start a support ticket', style=discord.ButtonStyle.green,
                        custom_id='persistent_view:support', emoji='🆘')
-    async def verify(self, interaction: discord.Interaction, button: discord.ui.Button):
+    async def support(self, interaction: discord.Interaction, button: discord.ui.Button):
         try:
             dm_channel = await interaction.user.create_dm()
         except discord.Forbidden:
