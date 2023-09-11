@@ -19,7 +19,7 @@ class SupportChannelView(discord.ui.View):
                                                            ephemeral=True)
 
         retrieved_guild = await interaction.client.db_client.get_guild(interaction.guild.id)
-        if interaction.user.id in [ticket.get("user_id") for ticket in retrieved_guild.support_ticketss if
+        if interaction.user.id in [ticket.get("user_id") for ticket in retrieved_guild.support_tickets if
                                    ticket.get("status") == "open"]:
             return await interaction.response.send_message("You are already have a ticket", ephemeral=True)
 
@@ -44,7 +44,7 @@ class SupportChannelView(discord.ui.View):
             "created_at": datetime.utcnow(),
             "reason": "Support"
         }
-        retrieved_guild.support_ticketss.append(ticket_data)
+        retrieved_guild.support_tickets.append(ticket_data)
         await dm_channel.send("Your ticket has been created. Please describe your issue.")
         await new_channel.send(
             f"<@&981426793925992448> Support Ticket by {interaction.user.mention}",
