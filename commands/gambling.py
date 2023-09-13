@@ -533,7 +533,7 @@ class Gambling(commands.Cog):
         else:
             await ctx.send(f"The result was {result}, it's a tie!")
 
-    @commands.hybrid_command(name="hilow", description="Play a game of high low.")
+    @commands.hybrid_command(name="highlow", description="Play a game of high low.")
     @app_commands.describe(bet='the amount of money to bet')
     async def hilow(self, ctx, bet: int):
         if bet <= 0:
