@@ -18,7 +18,7 @@ class TicketView(discord.ui.View):
             return await interaction.response.send_message("Something went wrong",
                                                            ephemeral=True)
         
-        ticket = next((ticket for ticket in data.support_tickets if ticket.get("channel_id") == interaction.channel.id \
+        ticket = next((ticket for ticket in data.tickets if ticket.get("channel_id") == interaction.channel.id \
                        and ticket.get("status") == "open"), None)
 
         if not ticket:
@@ -82,7 +82,7 @@ class TicketView(discord.ui.View):
             return await interaction.response.send_message("Something went wrong",
                                                            ephemeral=True)
         
-        ticket = next((ticket for ticket in data.support_tickets if ticket.get("channel_id") == interaction.channel.id), None)
+        ticket = next((ticket for ticket in data.tickets if ticket.get("channel_id") == interaction.channel.id), None)
 
         if not ticket:
             return await interaction.response.send_message('Ticket data not found', ephemeral=True)
@@ -121,7 +121,7 @@ class TicketView(discord.ui.View):
             return await interaction.response.send_message("Something went wrong",
                                                            ephemeral=True)
 
-        ticket = next((ticket for ticket in data.support_tickets if ticket.get("channel_id") == interaction.channel.id), None)
+        ticket = next((ticket for ticket in data.tickets if ticket.get("channel_id") == interaction.channel.id), None)
 
         if not ticket:
             return await interaction.response.send_message('Ticket data not found', ephemeral=True)
