@@ -18,6 +18,8 @@ class Message(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, msg):
+        if msg.channel.id == 1141856931984715807:
+            await dump_delete(msg)
         if msg.author.bot:
             return
         user = await self.bot.db_client.get_user(user_id=msg.author.id)
@@ -31,9 +33,6 @@ class Message(commands.Cog):
         await user.update_messages(bot=self.bot)
         await user.add_xp(xp, bot=self.bot)
         await user.update_last_seen(bot=self.bot)
-
-        if msg.channel.id == 1141856931984715807:
-            await dump_delete(msg)
 
 
 async def setup(bot):
