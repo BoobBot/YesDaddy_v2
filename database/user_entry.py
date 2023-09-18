@@ -100,18 +100,24 @@ class User:
 
     async def claim_daily(self, bot):
         now = datetime.datetime.now(datetime.timezone.utc)
-        if self.last_daily_claim is None or (now - self.last_daily_claim).days >= 2:
-            broken = False
-            if (self.last_daily_claim is not None and
-                    (now - self.last_daily_claim).days > 2):
-                self.daily_streak = 0  # Reset streak if broken
-                broken = True
-
+        if self.last_daily_claim is None:
             self.last_daily_claim = now
-            self.daily_streak += 1
+            self.daily_streak = 1
             await self.update_user({"last_daily_claim": self.last_daily_claim,
                                     "daily_streak": self.daily_streak}, bot)
-            return broken, self.daily_streak
+            return False, self.daily_streak
+        if (now - self.last_daily_claim.replace(tzinfo=datetime.timezone.utc)).days > 2:
+            self.daily_streak = 1
+            self.last_daily_claim = now
+            await self.update_user({"last_daily_claim": self.last_daily_claim,
+                                    "daily_streak": self.daily_streak}, bot)
+            return True, self.daily_streak
+        elif (now - self.last_daily_claim.replace(tzinfo=datetime.timezone.utc)).days < 2:
+            self.daily_streak += 1
+            self.last_daily_claim = now
+            await self.update_user({"last_daily_claim": self.last_daily_claim,
+                                    "daily_streak": self.daily_streak}, bot)
+            return False, self.daily_streak
         else:
             return False, self.daily_streak
 
