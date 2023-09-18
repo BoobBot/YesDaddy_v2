@@ -34,7 +34,7 @@ class SupportChannelView(discord.ui.View):
         }
         new_channel = await interaction.guild.create_text_channel(interaction.user.name, category=category,
                                                                   overwrites=overwrites)
-        await interaction.response.send_message("Opened support ticket check your DMs", ephemeral=True)
+        await interaction.response.send_message("Opened support ticket, check your DMs!", ephemeral=True)
         ticket_data = {
             "channel_id": new_channel.id,
             "dm_channel_id": dm_channel.id,

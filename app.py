@@ -37,15 +37,11 @@ if debug:
 
 
 class Bot(commands.Bot):
-    def __init__(
-            self,
-            *args,
-            initial_extensions: List[str],
-            db_client: motor_asyncio.AsyncIOMotorClient,
-            web_client: ClientSession,
-            testing_guild_id: Optional[int] = None,
-            **kwargs,
-    ):
+    def __init__(self, *args, initial_extensions: List[str],
+                 db_client: motor_asyncio.AsyncIOMotorClient,
+                 web_client: ClientSession,
+                 testing_guild_id: Optional[int] = None,
+                 **kwargs):
         super().__init__(*args, **kwargs)
         self.db_client = db_client
         self.web_client = web_client
@@ -56,19 +52,18 @@ class Bot(commands.Bot):
         self.debug = debug
 
     async def setup_hook(self) -> None:
-
         self.add_view(VerificationView())
         self.add_view(tickets_view.TicketView())
         self.add_view(RuleButton())
         self.add_view(support_view.SupportTicketView())
         self.add_view(support_channel_view.SupportChannelView())
+
         for extension in self.initial_extensions:
             self.log.info(f"Loading {extension}")
             await self.load_extension(extension)
 
         if self.testing_guild_id and config.sync_testing_guild:
-            self.log.info(
-                f"Syncing commands for guild {self.testing_guild_id}")
+            self.log.info(f"Syncing commands for guild {self.testing_guild_id}")
             guild = discord.Object(self.testing_guild_id)
             self.tree.copy_global_to(guild=guild)
             # await self.tree.sync(guild=guild)

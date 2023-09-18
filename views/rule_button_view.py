@@ -14,9 +14,8 @@ class RuleButton(discord.ui.View):
     async def ruleaccept(self, interaction: discord.Interaction, button: discord.ui.Button):
         # for testing await interaction.client.db_client.delete_guild(interaction.guild.id)
         # Check if the user already has the member role
-        if 694641646780022826 in [role.id for role in interaction.user.roles]:
+        if any(r.id == 694641646780022826 for r in interaction.user.roles):
             return await interaction.response.send_message("You already have the member role!", ephemeral=True)
-        member = interaction.user
-        await member.add_roles(
-            discord.utils.get(interaction.guild.roles, id=694641646780022826))  # Member
+
+        await interaction.user.add_roles(discord.utils.get(interaction.guild.roles, id=694641646780022826))  # Member
         await interaction.response.send_message("You have received the member role!", ephemeral=True)

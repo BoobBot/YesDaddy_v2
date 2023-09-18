@@ -14,7 +14,7 @@ class VerificationView(discord.ui.View):
     async def verify(self, interaction: discord.Interaction, button: discord.ui.Button):
         # for testing await interaction.client.db_client.delete_guild(interaction.guild.id)
         # Check if the user is already verified
-        if 694641646821703741 in [role.id for role in interaction.user.roles]:
+        if any(r.id == 694641646821703741 for r in interaction.user.roles):
             return await interaction.response.send_message("You are already verified!", ephemeral=True)
 
         # check for gender role
@@ -23,7 +23,7 @@ class VerificationView(discord.ui.View):
         # male = 694641646805057560
         # trans = 694641646805057562
         genders = [694641646805057561, 694641646805057560, 694641646805057562]
-        if not any(role_id in [role.id for role in interaction.user.roles] for role_id in genders):
+        if not any(role.id in genders for role in interaction.user.roles):
             return await interaction.response.send_message("You need a gender role from <#1141869787895574598>",
                                                            ephemeral=True)
 
