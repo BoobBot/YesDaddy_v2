@@ -102,7 +102,7 @@ class User:
         now = datetime.datetime.now(datetime.timezone.utc)
         print(self.last_daily_claim)
         print("yes")
-        if self.last_daily_claim is None:
+        if self.last_daily_claim == {} or self.last_daily_claim is None:
             print("yes1111")
             self.last_daily_claim = now
             self.daily_streak = 1
