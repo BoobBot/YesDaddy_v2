@@ -103,7 +103,7 @@ class User:
         if self.last_daily_claim is None or (now - self.last_daily_claim).days >= 2:
             broken = False
             if (self.last_daily_claim is not None and
-                    (now - self.last_daily_claim.replace(tzinfo=datetime.timezone.utc)).days > 2):
+                    (now - self.last_daily_claim).days > 2):
                 self.daily_streak = 0  # Reset streak if broken
                 broken = True
 
