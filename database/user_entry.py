@@ -100,7 +100,7 @@ class User:
 
     async def claim_daily(self, bot):
         now = datetime.datetime.now(datetime.timezone.utc)
-        if self.last_daily_claim is None or (now - self.last_daily_claim.replace(tzinfo=datetime.timezone.utc)).days >= 2:
+        if self.last_daily_claim is None or (now - self.last_daily_claim).days >= 2:
             broken = False
             if (self.last_daily_claim is not None and
                     (now - self.last_daily_claim.replace(tzinfo=datetime.timezone.utc)).days > 2):
