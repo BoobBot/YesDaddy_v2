@@ -35,7 +35,7 @@ class SupportTicketView(discord.ui.View):
 
         await interaction.client.db_client.update_guild(interaction.guild.id, {"support_tickets": data.support_tickets})
         # log the verification
-        ch = interaction.guild.get_channel(1142915549198823546)
+        ch = interaction.guild.get_channel(1153818515262947378)
         try:
             user = await interaction.client.fetch_user(user_id)
         except discord.NotFound:
