@@ -33,7 +33,7 @@ class Message(commands.Cog):
                 await channel.send(f"**{msg.author.name}**#{msg.author.discriminator}: {msg.content}")
                 return
         if msg.channel.category_id == 1141700782006222970:
-            data = await self.bot.db_client.get_guild(msg.guild)
+            data = await self.bot.db_client.get_guild(msg.guild.id)
             ticket = next((ticket for ticket in data.support_tickets if ticket.get("channel_id") == msg.channel.id),
                           None)
             if ticket:
