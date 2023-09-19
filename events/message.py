@@ -24,14 +24,16 @@ class Message(commands.Cog):
             return
         if msg.guild is None:
             guild = 694641646780022818
+            guild = self.bot.get_guild(guild)
             data = await self.bot.db_client.get_guild(guild)
             ticket = next((ticket for ticket in data.support_tickets if ticket.get("dm_channel_id") == msg.channel.id), None)
             if ticket:
-                channel = self.bot.get_channel(ticket.get("channel_id"))
+                print(ticket.get("channel_id"))
+                channel = guild.get_channel(ticket.get("channel_id"))
                 await channel.send(f"**{msg.author.name}**#{msg.author.discriminator}: {msg.content}")
                 return
         if msg.channel.category_id == 1141700782006222970:
-            data = await self.bot.db_client.get_guild(guild)
+            data = await self.bot.db_client.get_guild(msg.guild)
             ticket = next((ticket for ticket in data.support_tickets if ticket.get("channel_id") == msg.channel.id),
                           None)
             if ticket:
