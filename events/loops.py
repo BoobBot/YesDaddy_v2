@@ -1,4 +1,5 @@
 import datetime
+import random
 
 import discord
 from discord.ext import tasks, commands
@@ -15,6 +16,19 @@ class Loops(commands.Cog):
     def cog_unload(self):
         self.check_jail_loop.cancel()
         self.change_role_color.cancel()
+
+    @tasks.loop(minutes=1)
+    async def voice_xp(self):
+        guild = self.bot.guilds
+        for guild in guild:
+            voice_channels = [channel for channel in guild.voice_channels if not "afk" in channel.name.lower()]
+            for channel in voice_channels:
+                for member in channel.members:
+                    user = await self.bot.db_client.get_user(member.id)
+                    if user:
+                        xp = random.randint(10, 50)
+                        await user.add_xp(xp, self.bot)
+                        await user.update_last_seen(self.bot)
 
     @tasks.loop(minutes=5)
     async def check_jail_loop(self):

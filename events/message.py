@@ -22,6 +22,22 @@ class Message(commands.Cog):
             await dump_delete(msg)
         if msg.author.bot:
             return
+        if msg.guild is None:
+            guild = 694641646780022818
+            data = await self.bot.db_client.get_guild(guild)
+            ticket = next((ticket for ticket in data.support_tickets if ticket.get("dm_channel_id") == msg.channel.id), None)
+            if ticket:
+                channel = self.bot.get_channel(ticket.get("channel_id"))
+                await channel.send(f"**{msg.author.name}**#{msg.author.discriminator}: {msg.content}")
+                return
+        if msg.channel.category_id == 1141700782006222970:
+            data = await self.bot.db_client.get_guild(guild)
+            ticket = next((ticket for ticket in data.support_tickets if ticket.get("channel_id") == msg.channel.id),
+                          None)
+            if ticket:
+                channel = self.bot.get_channel(ticket.get("dm_channel_id"))
+                await channel.send(f"**{msg.author.name}**#{msg.author.discriminator}: {msg.content}")
+                return
         user = await self.bot.db_client.get_user(user_id=msg.author.id)
         xp = random.randint(1, 10)
         lvl = math.floor(0.1 * math.sqrt(user.xp + xp))
