@@ -12,10 +12,12 @@ class Loops(commands.Cog):
         self.bot = bot
         self.check_jail_loop.start()
         self.change_role_color.start()
+        self.voice_xp.start()
 
     def cog_unload(self):
         self.check_jail_loop.cancel()
         self.change_role_color.cancel()
+        self.voice_xp.cancel()
 
     @tasks.loop(minutes=1)
     async def voice_xp(self):
