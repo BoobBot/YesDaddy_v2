@@ -15,6 +15,7 @@ class SupportChannelView(discord.ui.View):
     async def support(self, interaction: discord.Interaction, button: discord.ui.Button):
         try:
             dm_channel = await interaction.user.create_dm()
+            await dm_channel.send("Hello! opening a support ticket for you.")
         except discord.Forbidden:
             return await interaction.response.send_message("I couldn't DM you! Do you have DMs disabled?",
                                                            ephemeral=True)
@@ -52,3 +53,5 @@ class SupportChannelView(discord.ui.View):
             view=support_view.SupportTicketView())
 
         await interaction.client.db_client.update_guild(interaction.guild.id, retrieved_guild.__dict__)
+
+    
