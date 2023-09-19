@@ -31,3 +31,7 @@ class Moderation(commands.Cog):
                 await interaction.followup.send(f"{interaction.user} decided to selfban. Fucking idiot.")
             except:
                 await interaction.followup.send("You can't selfban, suffer instead.", ephemeral=True)
+
+
+async def setup(bot):
+    await bot.add_cog(Moderation(bot))
