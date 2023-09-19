@@ -43,7 +43,7 @@ class Message(commands.Cog):
                 if ticket:
                     print(ticket.get("dm_channel_id"))
                     channel = await self.bot.fetch_channel(int(ticket.get("dm_channel_id")))
-                    await channel.send(f"**{msg.author.name}**#{msg.author.discriminator}: {msg.content}")
+                    await channel.send(f"**{msg.author.name}**#{msg.author.discriminator}: {msg.content[1:]}")
                     if msg.attachments:
                         for attachment in msg.attachments:
                             await channel.send(attachment.url)
