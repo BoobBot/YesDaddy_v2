@@ -29,7 +29,8 @@ class Dev(commands.Cog):
     @commands.is_owner()
     async def testing(self, ctx):
 
-        em = discord.Embed(title="Support Ticket", description="Click the button below to open a support ticket.",
+        em = discord.Embed(title="Support Ticket",
+                           description="Click the button below to open a support ticket with staff. Please be patient while we get to you. Do not open a ticket unless you need help with something.",
                            color=discord.Color.blurple())
         await ctx.send(embed=em, view=support_channel_view.SupportChannelView())
 
