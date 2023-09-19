@@ -31,6 +31,9 @@ class Message(commands.Cog):
                 print(ticket.get("channel_id"))
                 channel = await guild.fetch_channel(ticket.get("channel_id"))
                 await channel.send(f"**{msg.author.name}**#{msg.author.discriminator}: {msg.content}")
+                if msg.attachments:
+                    for attachment in msg.attachments:
+                        await channel.send(attachment.url)
                 return
         if msg.channel.category_id == 1141700782006222970:
             data = await self.bot.db_client.get_guild(msg.guild.id)
@@ -40,6 +43,9 @@ class Message(commands.Cog):
                 print(ticket.get("dm_channel_id"))
                 channel = await self.bot.fetch_channel(int(ticket.get("dm_channel_id")))
                 await channel.send(f"**{msg.author.name}**#{msg.author.discriminator}: {msg.content}")
+                if msg.attachments:
+                    for attachment in msg.attachments:
+                        await channel.send(attachment.url)
                 return
         user = await self.bot.db_client.get_user(user_id=msg.author.id)
         xp = random.randint(1, 10)
