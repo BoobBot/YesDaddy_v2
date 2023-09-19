@@ -93,7 +93,6 @@ class DiscordDatabase:
             user_data.setdefault("messages", 0)
             # Provide a default value for 'jail' attribute
             user_data.setdefault("jail", {})
-            user_data.setdefault("health", 0)
             user = User(**user_data)
             if user.is_in_jail():
                 users_in_jail.append(user.user_id)
@@ -122,7 +121,6 @@ class DiscordDatabase:
             user_data.setdefault("last_weekly_claim", {})
             user_data.setdefault("weekly_streak", {})
             user_data.setdefault("daily_streak", {})
-            user_data.setdefault("health", 0)
             return User(**user_data)
         user = User(user_id, False,
                     f'{datetime.utcnow()}', 0, 0, False, 0, 0, {}, 0, {})
