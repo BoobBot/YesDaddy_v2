@@ -127,7 +127,7 @@ class Currency(commands.Cog):
 
     @commands.hybrid_command(name="daily", description="Get your daily coins!.")
     @persistent_cooldown(1, 86400, commands.BucketType.user)
-    @app_commands.describe(user="The user to give the daily to.")
+    @app_commands.describe(user="The user to give your daily to.")
     async def daily(self, ctx, user: Optional[discord.Member]):
         user = user or ctx.author
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
@@ -168,7 +168,7 @@ class Currency(commands.Cog):
 
     @commands.hybrid_command(name="weekly", description="Get your weekly coins!.")
     @persistent_cooldown(1, 604800, commands.BucketType.user)
-    @app_commands.describe(user="The user to give the weekly to.")
+    @app_commands.describe(user="The user to give your weekly to.")
     async def weekly(self, ctx, user: Optional[discord.Member]):
         user = user or ctx.author
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
