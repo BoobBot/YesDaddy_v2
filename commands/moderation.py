@@ -11,7 +11,7 @@ class Moderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.slash_command(name="selfban", description="Ban yourself from the server.")
+    @app_commands.command(name="selfban", description="Ban yourself from the server.")
     async def selfban(self, interaction: discord.Interaction):
         em = discord.Embed(color=interaction.user.color)
         em.set_author(name="Are you sure about this? It really will ban you.")
