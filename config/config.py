@@ -27,7 +27,7 @@ class Config:
                                           "")  # Use environment variable as testing_guild_id
         self.initial_extensions = ['commands.core', 'events.ready', 'events.message', 'events.loops', 'events.error',
                                    'commands.currency', 'commands.gambling', 'commands.profile',
-                                   'commands.transactions', 'commands.dev']  # List of initial extensions
+                                   'commands.transactions', 'commands.dev', 'commands.moderation']  # List of initial extensions
         # Use environment variable as prefix
         self.prefix = os.getenv('PREFIX', "")
         # Use environment variable as owner_ids
