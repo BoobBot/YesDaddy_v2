@@ -1,7 +1,5 @@
-import asyncio
 import logging
-from datetime import datetime
-
+from datetime import datetime, timezone
 import motor.motor_asyncio
 
 from database.gulld_entry import Guild
@@ -19,40 +17,9 @@ class DiscordDatabase:
         self.guild_collection = self.client[self.database_name][self.guild_collection_name]
         self.log = logging.getLogger()
 
-    # User operations
-
-    async def get_top_users_by_level(self, limit):
+    async def get_top_users(self, field, limit):
         pipeline = [
-            {"$sort": {"level": -1}},
-            {"$limit": limit},
-            {"$project": {"_id": 0}}
-        ]
-        top_users = await self.user_collection.aggregate(pipeline).to_list(None)
-        return top_users
-
-    async def get_top_users_by_bank_balance(self, limit):
-        pipeline = [
-            {"$sort": {"bank_balance": -1}},
-            {"$limit": limit},
-            {"$project": {"_id": 0}}
-        ]
-        top_users = await self.user_collection.aggregate(pipeline).to_list(None)
-        return top_users
-
-    async def get_top_users_by_balance(self, limit):
-        pipeline = [
-            {"$sort": {"balance": -1}},
-            {"$limit": limit},
-            {"$project": {"_id": 0}}
-        ]
-        top_users = await self.user_collection.aggregate(pipeline).to_list(None)
-        return top_users
-
-    async def get_top_users_by_combined_balance(self, limit):
-        pipeline = [
-            {"$addFields": {"combined_balance": {
-                "$add": ["$balance", "$bank_balance"]}}},
-            {"$sort": {"combined_balance": -1}},
+            {"$sort": {field: -1}},
             {"$limit": limit},
             {"$project": {"_id": 0}}
         ]
@@ -62,37 +29,36 @@ class DiscordDatabase:
     async def get_all_users(self):
         all_users = []
         async for user_data in self.user_collection.find({}, {"_id": 0}):
-            # Provide default values for missing attributes
-            user_data.setdefault("blacklist", False)
-            user_data.setdefault("last_seen", f'{datetime.utcnow()}')
-            user_data.setdefault("xp", 0)
-            user_data.setdefault("level", 0)
-            user_data.setdefault("premium", False)
-            user_data.setdefault("balance", 0)
-            user_data.setdefault("bank_balance", 0)
-            user_data.setdefault("cooldowns", {})
-            user_data.setdefault("messages", 0)
-            # Provide a default value for 'jail' attribute
-            user_data.setdefault("jail", {})
+            user_data = self._provide_default_user_attributes(user_data)
             all_users.append(user_data)
         return all_users
+
+    @staticmethod
+    def _provide_default_user_attributes(user_data):
+        defaults = {
+            "blacklist": False,
+            "last_seen": f'{datetime.utcnow()}',
+            "xp": 0,
+            "level": 0,
+            "premium": False,
+            "balance": 0,
+            "bank_balance": 0,
+            "cooldowns": {},
+            "messages": 0,
+            "jail": {},
+            "last_daily_claim": None,
+            "last_weekly_claim": None,
+            "weekly_streak": 0,
+            "daily_streak": 0,
+        }
+        user_data.update((key, value) for key, value in defaults.items() if key not in user_data)
+        return user_data
 
     async def get_users_in_jail(self):
         users_in_jail = []
         all_users = await self.get_all_users()
 
         for user_data in all_users:
-            user_data.setdefault("blacklist", False)
-            user_data.setdefault("last_seen", f'{datetime.utcnow()}')
-            user_data.setdefault("xp", 0)
-            user_data.setdefault("level", 0)
-            user_data.setdefault("premium", False)
-            user_data.setdefault("balance", 0)
-            user_data.setdefault("bank_balance", 0)
-            user_data.setdefault("cooldowns", {})
-            user_data.setdefault("messages", 0)
-            # Provide a default value for 'jail' attribute
-            user_data.setdefault("jail", {})
             user = User(**user_data)
             if user.is_in_jail():
                 users_in_jail.append(user.user_id)
@@ -105,25 +71,10 @@ class DiscordDatabase:
     async def get_user(self, user_id):
         user_data = await self.user_collection.find_one({"user_id": user_id}, {"_id": 0})
         if user_data:
-            # Provide default values for missing attributes
-            user_data.setdefault("blacklist", False)
-            user_data.setdefault("last_seen", f'{datetime.utcnow()}')
-            user_data.setdefault("xp", 0)
-            user_data.setdefault("level", 0)
-            user_data.setdefault("premium", False)
-            user_data.setdefault("balance", 0)
-            user_data.setdefault("bank_balance", 0)
-            user_data.setdefault("cooldowns", {})
-            user_data.setdefault("messages", 0)
-            # Provide a default value for 'jail' attribute
-            user_data.setdefault("jail", {})
-            user_data.setdefault("last_daily_claim", {})
-            user_data.setdefault("last_weekly_claim", {})
-            user_data.setdefault("weekly_streak", {})
-            user_data.setdefault("daily_streak", {})
+            user_data = self._provide_default_user_attributes(user_data)
             return User(**user_data)
-        user = User(user_id, False,
-                    f'{datetime.utcnow()}', 0, 0, False, 0, 0, {}, 0, {})
+
+        user = User(user_id, False, f'{datetime.utcnow()}', 0, 0, False, 0, 0, {}, 0, {})
         await self.add_user(user)
         user_data = await self.user_collection.find_one({"user_id": user_id}, {"_id": 0})
         return User(**user_data)
@@ -142,6 +93,7 @@ class DiscordDatabase:
         guild_data = await self.guild_collection.find_one({"guild_id": guild_id}, {"_id": 0})
         if guild_data:
             return Guild(**guild_data)
+
         guild = Guild(guild_id)
         await self.add_guild(guild)
         guild_data = await self.guild_collection.find_one({"guild_id": guild_id}, {"_id": 0})

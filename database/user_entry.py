@@ -21,6 +21,7 @@ class User:
         self.last_weekly_claim = last_weekly_claim
         self.daily_streak = daily_streak
         self.weekly_streak = weekly_streak
+        self.health = 100
 
     async def jail_user(self, hours, fine, bot):
         self.jail = {
