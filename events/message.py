@@ -37,6 +37,7 @@ class Message(commands.Cog):
             ticket = next((ticket for ticket in data.support_tickets if ticket.get("channel_id") == msg.channel.id),
                           None)
             if ticket:
+                print(ticket.get("dm_channel_id"))
                 channel = self.bot.get_channel(ticket.get("dm_channel_id"))
                 await channel.send(f"**{msg.author.name}**#{msg.author.discriminator}: {msg.content}")
                 return
