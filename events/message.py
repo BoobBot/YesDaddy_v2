@@ -38,7 +38,7 @@ class Message(commands.Cog):
                           None)
             if ticket:
                 print(ticket.get("dm_channel_id"))
-                channel = self.bot.fetch_channel(int(ticket.get("dm_channel_id")))
+                channel = await self.bot.fetch_channel(int(ticket.get("dm_channel_id")))
                 await channel.send(f"**{msg.author.name}**#{msg.author.discriminator}: {msg.content}")
                 return
         user = await self.bot.db_client.get_user(user_id=msg.author.id)
