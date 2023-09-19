@@ -29,7 +29,7 @@ class Message(commands.Cog):
             ticket = next((ticket for ticket in data.support_tickets if ticket.get("dm_channel_id") == msg.channel.id), None)
             if ticket:
                 print(ticket.get("channel_id"))
-                channel = guild.get_channel(ticket.get("channel_id"))
+                channel = await guild.fetch_channel(ticket.get("channel_id"))
                 await channel.send(f"**{msg.author.name}**#{msg.author.discriminator}: {msg.content}")
                 return
         if msg.channel.category_id == 1141700782006222970:
@@ -38,7 +38,7 @@ class Message(commands.Cog):
                           None)
             if ticket:
                 print(ticket.get("dm_channel_id"))
-                channel = self.bot.get_channel(int(ticket.get("dm_channel_id")))
+                channel = self.bot.fetch_channel(int(ticket.get("dm_channel_id")))
                 await channel.send(f"**{msg.author.name}**#{msg.author.discriminator}: {msg.content}")
                 return
         user = await self.bot.db_client.get_user(user_id=msg.author.id)
