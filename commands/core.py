@@ -93,7 +93,37 @@ class Core(commands.Cog):
             embed.add_field(name=f"Role", value=f"<@&{role.get('role_id')}>")
         await ctx.reply(embed=embed)
 
+    @commands.hybrid_group(name="text_reactions", description="View or change text reactions.")
+    @commands.check(has_ban_permissions)
+    async def text_reaction(self, ctx):
+        await ctx.send("Please use a valid subcommand")
 
+    @text_reaction.command(name="add", description="Add a text reaction.")
+    async def text_reaction_add(self, ctx, trigger: str, response: str):
+        guild = await self.bot.db_client.get_guild(ctx.guild.id)
+        if trigger in [reaction.get("trigger") for reaction in guild.text_reactions]:
+            return await ctx.reply("That trigger is already a text reaction.")
+        guild.text_reactions.append({"trigger": trigger, "response": response})
+        await self.bot.db_client.update_guild(ctx.guild.id, guild.__dict__)
+        await ctx.reply(f"Added `{trigger}` as a text reaction.")
+
+    @text_reaction.command(name="remove", description="Remove a text reaction.")
+    async def text_reaction_remove(self, ctx, trigger: str):
+        guild = await self.bot.db_client.get_guild(ctx.guild.id)
+        guild.text_reactions.remove({"trigger": trigger})
+        await self.bot.db_client.update_guild(ctx.guild.id, guild.__dict__)
+        await ctx.reply(f"Removed `{trigger}` as a text reaction.")
+
+    @text_reaction.command(name="list", description="List all text reactions.")
+    async def text_reaction_list(self, ctx):
+        guild = await self.bot.db_client.get_guild(ctx.guild.id)
+        reactions = guild.text_reactions
+        if not reactions:
+            return await ctx.reply("There are no text reactions.")
+        embed = discord.Embed(title="Text Reactions")
+        for reaction in reactions:
+            embed.add_field(name=f"Trigger", value=f"`{reaction.get('trigger')}`")
+        await ctx.reply(embed=embed)
 
 async def setup(bot):
     await bot.add_cog(Core(bot))
