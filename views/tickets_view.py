@@ -67,11 +67,7 @@ class TicketView(discord.ui.View):
         user = await interaction.client.fetch_user(user_id)
         await ch.send(f"verification ticket by {user.name} ({user.id}) was verified by {interaction.user.mention} ({interaction.user.id})")
         # store the ticket
-        await interaction.client.db_client.guild_collection.update_one(
-            {"guild_id": interaction.guild.id},
-            {"$push": {"tickets": ticket}},
-            upsert=True  # Create the document if it doesn't exist
-        )
+        await interaction.client.db_client.add_ticket(interaction.guild.id, ticket)
         # respond to the user
         await interaction.response.send_message("Ticket verified!", ephemeral=True)
         await asyncio.sleep(5)
@@ -100,11 +96,7 @@ class TicketView(discord.ui.View):
         ticket["resolved_by"] = interaction.user.id
         ticket["resolved_at"] = datetime.utcnow()
 
-        await interaction.client.db_client.guild_collection.update_one(
-            {"guild_id": interaction.guild.id},
-            {"$push": {"tickets": ticket}},
-            upsert=True  # Create the document if it doesn't exist
-        )
+        await interaction.client.db_client.add_ticket(interaction.guild.id, ticket)
         # log the verification
         ch = interaction.guild.get_channel(1142915549198823546)
         try:
@@ -143,12 +135,7 @@ class TicketView(discord.ui.View):
         ticket["resolved_by"] = interaction.user.id
         ticket["resolved_at"] = datetime.utcnow()
 
-        await interaction.client.db_client.guild_collection.update_one(
-            {"guild_id": interaction.guild.id},
-            {"$push": {"tickets": ticket}},
-            upsert=True  # Create the document if it doesn't exist
-        )
-
+        await interaction.client.db_client.add_ticket(interaction.guild.id, ticket)
         ch = interaction.guild.get_channel(1142915549198823546)
         # Ban the user by ID
         try:
