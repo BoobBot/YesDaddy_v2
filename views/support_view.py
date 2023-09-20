@@ -63,7 +63,7 @@ class SupportTicketView(discord.ui.View):
             <h1>Transcript of Ticket from {interaction.user}</h1>
         """
 
-        async for message in interaction.channel.history(limit=None):
+        async for message in interaction.channel.history(limit=None, oldest_first=True):
             transcript += f'\n<p><strong>{message.author}:</strong> {message.content}</p>'
 
         transcript += '\n</body>\n</html>'
