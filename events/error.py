@@ -139,6 +139,9 @@ class ErrorHandlerCog(commands.Cog):
             self.logger.error(f"An error occurred: {error}")
             self.logger.error(f"Traceback:\n{traceback_info}")
             self.logger.error(f"Traceback:\n{error_message}")
+            # Get the traceback information as a formatted string
+            traceback_info = "".join(traceback.format_exception(type(error), error, error.__traceback__))
+            self.logger.error(traceback_info)
             await self.send_error_to_webhook(f"An error occurred: {error}\n\nTraceback:```\n{error_message}```")
 
 
