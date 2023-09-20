@@ -66,7 +66,8 @@ class Message(commands.Cog):
                 f"Congratulations {msg.author.mention}! You have leveled up to level {lvl}! <a:lvlup:1138933829185323149>")
             user.level = lvl
             await user.update_level(amount=user.level, bot=self.bot)
-            await process_level_roles(user, msg.guild, self.bot)
+            data = await self.bot.db_client.get_guild(msg.guild.id)
+            await process_level_roles(user, data, self.bot)
         await user.update_messages(bot=self.bot)
         await user.add_xp(xp, bot=self.bot)
         await user.update_last_seen(bot=self.bot)
