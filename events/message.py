@@ -46,33 +46,34 @@ class Message(commands.Cog):
                     for attachment in msg.attachments:
                         await channel.send(attachment.url)
                 return
-        if msg.channel.category_id == 1141700782006222970:
-            if msg.content.startswith("-"):
+        if msg.guild:
+            if msg.channel.category_id == 1141700782006222970:
+                if msg.content.startswith("-"):
+                    data = await self.bot.db_client.get_guild(msg.guild.id)
+                    ticket = next((ticket for ticket in data.support_tickets if
+                                   ticket.get("channel_id") == msg.channel.id and ticket.get("status") == "open"),
+                                  None)
+                    if ticket:
+                        print(ticket.get("dm_channel_id"))
+                        channel = await self.bot.fetch_channel(int(ticket.get("dm_channel_id")))
+                        await channel.send(f"**{msg.author.name}**#{msg.author.discriminator}: {msg.content[1:]}")
+                        if msg.attachments:
+                            for attachment in msg.attachments:
+                                await channel.send(attachment.url)
+                        return
+            user = await self.bot.db_client.get_user(user_id=msg.author.id)
+            xp = random.randint(1, 10)
+            lvl = math.floor(0.1 * math.sqrt(user.xp + xp))
+            if lvl > user.level:
+                await msg.channel.send(
+                    f"Congratulations {msg.author.mention}! You have leveled up to level {lvl}! <a:lvlup:1138933829185323149>")
+                user.level = lvl
+                await user.update_level(amount=user.level, bot=self.bot)
                 data = await self.bot.db_client.get_guild(msg.guild.id)
-                ticket = next((ticket for ticket in data.support_tickets if
-                               ticket.get("channel_id") == msg.channel.id and ticket.get("status") == "open"),
-                              None)
-                if ticket:
-                    print(ticket.get("dm_channel_id"))
-                    channel = await self.bot.fetch_channel(int(ticket.get("dm_channel_id")))
-                    await channel.send(f"**{msg.author.name}**#{msg.author.discriminator}: {msg.content[1:]}")
-                    if msg.attachments:
-                        for attachment in msg.attachments:
-                            await channel.send(attachment.url)
-                    return
-        user = await self.bot.db_client.get_user(user_id=msg.author.id)
-        xp = random.randint(1, 10)
-        lvl = math.floor(0.1 * math.sqrt(user.xp + xp))
-        if lvl > user.level:
-            await msg.channel.send(
-                f"Congratulations {msg.author.mention}! You have leveled up to level {lvl}! <a:lvlup:1138933829185323149>")
-            user.level = lvl
-            await user.update_level(amount=user.level, bot=self.bot)
-            data = await self.bot.db_client.get_guild(msg.guild.id)
-            await process_level_roles(user, msg.author, msg.guild, self.bot)
-        await user.update_messages(bot=self.bot)
-        await user.add_xp(xp, bot=self.bot)
-        await user.update_last_seen(bot=self.bot)
+                await process_level_roles(user, msg.author, msg.guild, self.bot)
+            await user.update_messages(bot=self.bot)
+            await user.add_xp(xp, bot=self.bot)
+            await user.update_last_seen(bot=self.bot)
 
 
 async def setup(bot):
