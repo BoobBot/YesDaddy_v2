@@ -168,7 +168,7 @@ class DiscordDatabase:
             {"guild_id": guild_id},
             {"$push": {"tickets": ticket_data}}
         )
-        print(push_res.raw)
+        print(push_res.raw_result)
         print(f'Modified {push_res.modified_count} documents')
 
     async def add_support_ticket(self, guild_id, ticket_data):
@@ -176,7 +176,7 @@ class DiscordDatabase:
             {"guild_id": guild_id},
             {"$push": {"support_tickets": ticket_data}}
         )
-        print(push_res.raw)
+        print(push_res.raw_result)
         print(f'Modified {push_res.modified_count} documents')
 
     async def get_tickets(self, guild_id):
