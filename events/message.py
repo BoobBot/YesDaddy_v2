@@ -47,6 +47,11 @@ class Message(commands.Cog):
                         await channel.send(attachment.url)
                 return
         if msg.guild:
+            data = await self.bot.db_client.get_guild(msg.guild.id)
+            for reaction in data.text_reactions:
+                if reaction.get("trigger") in msg.content.lower():
+                    await msg.add_reaction(reaction.get("response"))
+
             if msg.channel.category_id == 1141700782006222970:
                 if msg.content.startswith("-"):
                     data = await self.bot.db_client.get_guild(msg.guild.id)
@@ -62,7 +67,6 @@ class Message(commands.Cog):
                                 await channel.send(attachment.url)
                         return
             user = await self.bot.db_client.get_user(user_id=msg.author.id)
-            data = await self.bot.db_client.get_guild(msg.guild.id)
             bonus_xp = sum(1 for role in msg.author.roles for r in data.bonus_roles if role.id == r.get("role_id"))
             bonus_xp += 1
             xp = random.randint(1, 10) * bonus_xp
@@ -72,7 +76,6 @@ class Message(commands.Cog):
                     f"Congratulations {msg.author.mention}! You have leveled up to level {lvl}! <a:lvlup:1138933829185323149>")
                 user.level = lvl
                 await user.update_level(amount=user.level, bot=self.bot)
-                data = await self.bot.db_client.get_guild(msg.guild.id)
                 await process_level_roles(user, msg.author, msg.guild, self.bot)
             await user.update_messages(bot=self.bot)
             await user.add_xp(xp, bot=self.bot)
