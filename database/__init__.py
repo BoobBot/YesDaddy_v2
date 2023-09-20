@@ -168,16 +168,30 @@ class DiscordDatabase:
             {"guild_id": guild_id},
             {"$push": {"tickets": ticket_data}}
         )
+
+        if "user_id" in ticket_data:
+            count = await self.guild_collection.count_documents({
+                "guild_id": guild_id,
+                "tickets.user_id": ticket_data["user_id"] 
+            })
+            print(count)
+
         print(push_res.raw_result)
-        print(f'Modified {push_res.modified_count} documents')
 
     async def add_support_ticket(self, guild_id, ticket_data):
         push_res = await self.guild_collection.update_one(
             {"guild_id": guild_id},
             {"$push": {"support_tickets": ticket_data}}
         )
+
+        if "user_id" in ticket_data:
+            count = await self.guild_collection.count_documents({
+                "guild_id": guild_id,
+                "support_tickets.user_id": ticket_data["user_id"] 
+            })
+            print(count)
+
         print(push_res.raw_result)
-        print(f'Modified {push_res.modified_count} documents')
 
     async def get_tickets(self, guild_id):
         guild_data = await self.guild_collection.find_one({"guild_id": guild_id})
