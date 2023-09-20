@@ -13,11 +13,57 @@ class Loops(commands.Cog):
         self.check_jail_loop.start()
         self.change_role_color.start()
         self.voice_xp.start()
+        self.guild_sync_loop.start()
 
     def cog_unload(self):
         self.check_jail_loop.cancel()
         self.change_role_color.cancel()
         self.voice_xp.cancel()
+        self.guild_sync_loop.cancel()
+
+    @tasks.loop(minutes=1)
+    async def guild_sync_loop(self):
+        try:
+            support = self.bot.get_guild(694641646780022818)
+            community = self.bot.get_guild(694641646780022818)
+            contributor = discord.utils.get(support.roles, id=528615882709008430)
+            contributor_plus = discord.utils.get(support.roles, id=528615837305929748)
+            kissy_contributor = discord.utils.get(support.roles, id=528615659115118602)
+            nitro_booster = discord.utils.get(support.roles, id=585533009797578759)
+            for member in contributor.members:
+                try:
+                    mem = await community.fetch_member(member.id)
+                    self.bot.log.info(f"Syncing {mem.name} to community")
+                    if mem:
+                        await mem.add_roles(discord.utils.get(community.roles, id=694641646901395515))
+                except:
+                    pass
+            for member in contributor_plus.members:
+                try:
+                    mem = await community.fetch_member(member.id)
+                    self.bot.log.info(f"Syncing {mem.name} to community")
+                    if mem:
+                        await mem.add_roles(discord.utils.get(community.roles, id=694641646914109460))
+                except:
+                    pass
+            for member in kissy_contributor.members:
+                try:
+                    mem = await community.fetch_member(member.id)
+                    self.bot.log.info(f"Syncing {mem.name} to community")
+                    if mem:
+                        await mem.add_roles(discord.utils.get(community.roles, id=694641646838480978))
+                except:
+                    pass
+            for member in nitro_booster.members:
+                try:
+                    mem = await community.fetch_member(member.id)
+                    self.bot.log.info(f"Syncing {mem.name} to community")
+                    if mem:
+                        await mem.add_roles(discord.utils.get(community.roles, id=872596931598225489))
+                except:
+                    pass
+        except:
+            pass
 
     @tasks.loop(minutes=1)
     async def voice_xp(self):
@@ -38,7 +84,8 @@ class Loops(commands.Cog):
                         user = await self.bot.db_client.get_user(member.id)
                         if user:
                             data = await self.bot.db_client.get_guild(guild.id)
-                            bonus_xp = sum(1 for role in member.roles for r in data.bonus_roles if role.id == r.get("role_id"))
+                            bonus_xp = sum(
+                                1 for role in member.roles for r in data.bonus_roles if role.id == r.get("role_id"))
                             bonus_xp += 1
                             for r in data.bonus_roles:
                                 print(r)
