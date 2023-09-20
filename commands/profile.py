@@ -84,6 +84,7 @@ class Profile(commands.Cog):
         for user_data in top_users:
             # Provide a default value for 'jail' attribute
             user_data.setdefault("jail", {})
+            user_data.pop("health", None)
             user = User(**user_data)
             member = ctx.guild.get_member(user.user_id)
 

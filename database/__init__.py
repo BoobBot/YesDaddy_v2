@@ -148,11 +148,13 @@ class DiscordDatabase:
         guild_data = await self.guild_collection.find_one({"guild_id": guild_id}, {"_id": 0})
         if guild_data:
             guild_data.setdefault("lvl_roles", [])
+            guild_data.setdefault("bonus_roles", [])
             return Guild(**guild_data)
         guild = Guild(guild_id)
         await self.add_guild(guild)
         guild_data = await self.guild_collection.find_one({"guild_id": guild_id}, {"_id": 0})
         guild_data.setdefault("lvl_roles", [])
+        guild_data.setdefault("bonus_roles", [])
         return Guild(**guild_data)
 
     async def update_guild(self, guild_id, new_data):

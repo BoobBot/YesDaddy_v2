@@ -62,7 +62,9 @@ class Message(commands.Cog):
                                 await channel.send(attachment.url)
                         return
             user = await self.bot.db_client.get_user(user_id=msg.author.id)
-            xp = random.randint(1, 10)
+            data = await self.bot.db_client.get_guild(msg.guild.id)
+            bonus_xp = len([role.id for role in msg.author.roles if role.id in data.bonus_roles]) + 1
+            xp = random.randint(1, 10) * bonus_xp
             lvl = math.floor(0.1 * math.sqrt(user.xp + xp))
             if lvl > user.level:
                 await msg.channel.send(

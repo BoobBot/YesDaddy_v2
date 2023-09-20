@@ -23,14 +23,25 @@ class Loops(commands.Cog):
     async def voice_xp(self):
         guild = self.bot.guilds
         for guild in guild:
-            voice_channels = [channel for channel in guild.voice_channels if not "afk" in channel.name.lower()]
+            voice_channels = [channel for channel in guild.voice_channels if len(channel.members) > 0]
             for channel in voice_channels:
-                for member in channel.members:
-                    user = await self.bot.db_client.get_user(member.id)
-                    if user:
-                        xp = random.randint(10, 50)
-                        await user.add_xp(xp, self.bot)
-                        await user.update_last_seen(self.bot)
+                # Check if the channel is the AFK channel
+                if channel.id != guild.afk_channel.id:
+                    for member in channel.members:
+                        # Check if any of the following conditions are met:
+                        # - Member is deafened by the guild
+                        # - Member is muted by the guild
+                        # - Member is self-muted
+                        # - Member is self-deafened
+                        if member.voice.deaf or member.voice.mute or member.voice.self_mute or member.voice.self_deaf:
+                            continue  # Skip giving XP to this member
+                        user = await self.bot.db_client.get_user(member.id)
+                        if user:
+                            data = await self.bot.db_client.get_guild(guild.id)
+                            bonus_xp = len([role.id for role in member.roles if role.id in data.bonus_roles]) + 1
+                            xp = random.randint(10, 50)
+                            await user.add_xp((xp * bonus_xp), self.bot)
+                            await user.update_last_seen(self.bot)
 
     @tasks.loop(minutes=5)
     async def check_jail_loop(self):

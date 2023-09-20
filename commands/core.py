@@ -61,5 +61,38 @@ class Core(commands.Cog):
         await ctx.reply(embed=embed)
 
 
+    @commands.hybrid_group(name="bonus_roles", description="View or change bonus roles.")
+    @commands.check(has_ban_permissions)
+    async def bonus_role(self, ctx):
+        await ctx.send("Please use a valid subcommand")
+
+    @bonus_role.command(name="add", description="Add a bonus role.")
+    async def bonus_role_add(self, ctx, role: discord.Role):
+        guild = await self.bot.db_client.get_guild(ctx.guild.id)
+        if role.id in [role.get("role_id") for role in guild.bonus_roles]:
+            return await ctx.reply("That role is already a bonus role.")
+        guild.bonus_roles.append({"role_id": role.id})
+        await self.bot.db_client.update_guild(ctx.guild.id, guild.__dict__)
+        await ctx.reply(f"Added {role.mention} as a bonus role.")
+
+    @bonus_role.command(name="remove", description="Remove a bonus role.")
+    async def bonus_role_remove(self, ctx, role: discord.Role):
+        guild = await self.bot.db_client.get_guild(ctx.guild.id)
+        guild.bonus_roles.remove({"role_id": role.id})
+        await self.bot.db_client.update_guild(ctx.guild.id, guild.__dict__)
+        await ctx.reply(f"Removed {role.mention} as a bonus role.")
+
+    @bonus_role.command(name="list", description="List all bonus roles.")
+    async def bonus_role_list(self, ctx):
+        guild = await self.bot.db_client.get_guild(ctx.guild.id)
+        roles = guild.bonus_roles
+        if not roles:
+            return await ctx.reply("There are no bonus roles.")
+        embed = discord.Embed(title="Bonus Roles")
+        for role in roles:
+            embed.add_field(name=f"Role", value=f"<@&{role.get('role_id')}>")
+        await ctx.reply(embed=embed)
+
+
 async def setup(bot):
     await bot.add_cog(Core(bot))
