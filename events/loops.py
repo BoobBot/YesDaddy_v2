@@ -38,7 +38,11 @@ class Loops(commands.Cog):
                         user = await self.bot.db_client.get_user(member.id)
                         if user:
                             data = await self.bot.db_client.get_guild(guild.id)
-                            bonus_xp = len([role.id for role in member.roles if role.id in data.bonus_roles]) + 1
+                            bonus_xp = sum(1 for role in member.roles for r in data.bonus_roles if role.id == r.get("role_id"))
+                            bonus_xp += 1
+                            for r in data.bonus_roles:
+                                print(r)
+                            print(f"{member.name} {bonus_xp}")
                             xp = random.randint(10, 50) * bonus_xp
                             await user.add_xp(xp, self.bot)
                             await user.update_last_seen(self.bot)

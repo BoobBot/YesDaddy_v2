@@ -63,7 +63,8 @@ class Message(commands.Cog):
                         return
             user = await self.bot.db_client.get_user(user_id=msg.author.id)
             data = await self.bot.db_client.get_guild(msg.guild.id)
-            bonus_xp = len([role.id for role in msg.author.roles if role.id in data.bonus_roles]) + 1
+            bonus_xp = sum(1 for role in msg.author.roles for r in data.bonus_roles if role.id == r.get("role_id"))
+            bonus_xp += 1
             xp = random.randint(1, 10) * bonus_xp
             lvl = math.floor(0.1 * math.sqrt(user.xp + xp))
             if lvl > user.level:
