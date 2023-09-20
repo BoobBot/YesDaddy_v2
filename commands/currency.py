@@ -159,7 +159,7 @@ class Currency(commands.Cog):
         em.add_field(name="Amount Added", value=f"${claimed_money}")
         em.add_field(name="New Balance",
                      value=f"{user_data.balance + claimed_money}")
-        if streak and daily_streak > 1:
+        if streak_broken and daily_streak > 1:
             em.add_field(name="Streak Broken!",
                          value=f"You broke your daily streak of {daily_streak} days!")
 
