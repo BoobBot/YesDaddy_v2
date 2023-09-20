@@ -18,7 +18,7 @@ class Core(commands.Cog):
     @commands.hybrid_command(name="invite", description="Invite the bot to your server.")
     async def invite(self, ctx):
         await ctx.reply(
-            f"https://discord.com/api/oauth2/authorize?client_id={self.bot.id}&permissions=8&scope=bot+applications.commands")
+            f"https://discord.com/api/oauth2/authorize?client_id={self.bot.user.id}&permissions=8&scope=bot+applications.commands")
 
     @commands.hybrid_command(name="support", description="Join the support server.")
     async def support(self, ctx):
@@ -92,6 +92,7 @@ class Core(commands.Cog):
         for role in roles:
             embed.add_field(name=f"Role", value=f"<@&{role.get('role_id')}>")
         await ctx.reply(embed=embed)
+
 
 
 async def setup(bot):

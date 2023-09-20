@@ -133,8 +133,8 @@ class Currency(commands.Cog):
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
         user_color = await generate_embed_color(user)
         author_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
-        streak, daily_streak = await author_data.claim_daily(self.bot)
-        if streak:
+        streak_broken, daily_streak = await author_data.claim_daily(self.bot)
+        if not streak_broken:
             claimed_money = 5000 + (500 * daily_streak)
         else:
             claimed_money = 5000
