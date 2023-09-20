@@ -12,6 +12,14 @@ async def dump_delete(msg):
         await msg.delete()
 
 
+async def process_level_roles(user, guild, bot):
+    for role in guild.lvl_roles:
+        if role.get("level") <= user.level:
+            await user.add_role(role.get("role_id"), bot=bot)
+        # else:
+        #     await user.remove_role(role.get("role_id"), bot=bot)
+
+
 class Message(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -26,7 +34,8 @@ class Message(commands.Cog):
             guild = 694641646780022818
             guild = self.bot.get_guild(guild)
             data = await self.bot.db_client.get_guild(guild.id)
-            ticket = next((ticket for ticket in data.support_tickets if ticket.get("dm_channel_id") == msg.channel.id and ticket.get("status") == "open"), None)
+            ticket = next((ticket for ticket in data.support_tickets if
+                           ticket.get("dm_channel_id") == msg.channel.id and ticket.get("status") == "open"), None)
             if ticket:
                 print(ticket.get("channel_id"))
                 channel = await guild.fetch_channel(ticket.get("channel_id"))
@@ -38,7 +47,8 @@ class Message(commands.Cog):
         if msg.channel.category_id == 1141700782006222970:
             if msg.content.startswith("-"):
                 data = await self.bot.db_client.get_guild(msg.guild.id)
-                ticket = next((ticket for ticket in data.support_tickets if ticket.get("channel_id") == msg.channel.id and ticket.get("status") == "open"),
+                ticket = next((ticket for ticket in data.support_tickets if
+                               ticket.get("channel_id") == msg.channel.id and ticket.get("status") == "open"),
                               None)
                 if ticket:
                     print(ticket.get("dm_channel_id"))
@@ -56,6 +66,7 @@ class Message(commands.Cog):
                 f"Congratulations {msg.author.mention}! You have leveled up to level {lvl}! <a:lvlup:1138933829185323149>")
             user.level = lvl
             await user.update_level(amount=user.level, bot=self.bot)
+            await process_level_roles(user, msg.guild, self.bot)
         await user.update_messages(bot=self.bot)
         await user.add_xp(xp, bot=self.bot)
         await user.update_last_seen(bot=self.bot)
