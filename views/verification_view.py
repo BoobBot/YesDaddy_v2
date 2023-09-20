@@ -53,7 +53,7 @@ class VerificationView(discord.ui.View):
             }
             new_channel = await interaction.guild.create_text_channel(interaction.user.name, category=category,
                                                                       overwrites=overwrites)
-            await interaction.response.send_message(F"Opened ticket {new_channel.mention}", ephemeral=True)
+            await interaction.response.send_message(f"Opened ticket {new_channel.mention}", ephemeral=True)
             ticket_data = {
                 "channel_id": new_channel.id,
                 "user_id": interaction.user.id,
