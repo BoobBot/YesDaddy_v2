@@ -39,9 +39,10 @@ class Loops(commands.Cog):
                         if user:
                             data = await self.bot.db_client.get_guild(guild.id)
                             bonus_xp = len([role.id for role in member.roles if role.id in data.bonus_roles]) + 1
-                            xp = random.randint(10, 50)
-                            await user.add_xp((xp * bonus_xp), self.bot)
+                            xp = random.randint(10, 50) * bonus_xp
+                            await user.add_xp(xp, self.bot)
                             await user.update_last_seen(self.bot)
+                            self.bot.log.info(f"{member.name[xp]} -> {user.xp}")
 
     @tasks.loop(minutes=5)
     async def check_jail_loop(self):
