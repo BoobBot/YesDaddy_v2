@@ -1,4 +1,10 @@
+import discord
 from discord.ext import commands
+
+
+def has_ban_permissions(self, ctx):
+    # Check if the author of the command has the "ban_members" permission
+    return ctx.author.guild_permissions.ban_members
 
 
 class Core(commands.Cog):
@@ -11,7 +17,8 @@ class Core(commands.Cog):
 
     @commands.hybrid_command(name="invite", description="Invite the bot to your server.")
     async def invite(self, ctx):
-        await ctx.reply(f"https://discord.com/api/oauth2/authorize?client_id={self.bot.id}&permissions=8&scope=bot+applications.commands")
+        await ctx.reply(
+            f"https://discord.com/api/oauth2/authorize?client_id={self.bot.id}&permissions=8&scope=bot+applications.commands")
 
     @commands.hybrid_command(name="support", description="Join the support server.")
     async def support(self, ctx):
@@ -20,6 +27,38 @@ class Core(commands.Cog):
     @commands.hybrid_command(name="github", description="View the bot's GitHub repository.")
     async def github(self, ctx):
         await ctx.reply("https://github.com/BoobBot/YesDaddy_v2")
+
+    @commands.hybrid_group(name="lvlroles", description="View or change level roles.")
+    @commands.check(has_ban_permissions)
+    async def lvlrole(self, ctx):
+        await ctx.send("Please use a valid subcommand")
+
+    @lvlrole.command(name="add", description="Add a level role.")
+    async def lvlrole_add(self, ctx, level: int, role: discord.Role):
+        guild = await self.bot.db_client.get_guild(ctx.guild.id)
+        if role.id in [role.get("role_id") for role in guild.lvl_roles]:
+            return await ctx.reply("That role is already a level role.")
+        guild.lvl_roles.append({"level": level, "role_id": role.id})
+        await self.bot.db_client.update_guild(ctx.guild.id, guild.__dict__)
+        await ctx.reply(f"Added {role.mention} as a level role for level {level}.")
+
+    @lvlrole.command(name="remove", description="Remove a level role.")
+    async def lvlrole_remove(self, ctx, level: int, role: discord.Role):
+        guild = await self.bot.db_client.get_guild(ctx.guild.id)
+        guild.lvl_roles.remove({"level": level, "role_id": role.id})
+        await self.bot.db_client.update_guild(ctx.guild.id, guild.__dict__)
+        await ctx.reply(f"Removed {role.mention} as a level role for level {level}.")
+
+    @lvlrole.command(name="list", description="List all level roles.")
+    async def lvlrole_list(self, ctx):
+        guild = await self.bot.db_client.get_guild(ctx.guild.id)
+        roles = guild.lvl_roles
+        if not roles:
+            return await ctx.reply("There are no level roles.")
+        embed = discord.Embed(title="Level Roles")
+        for role in roles:
+            embed.add_field(name=f"Level {role.get('level')}", value=f"<@&{role.get('role_id')}>")
+        await ctx.reply(embed=embed)
 
 
 async def setup(bot):
