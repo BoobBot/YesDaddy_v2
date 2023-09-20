@@ -52,7 +52,3 @@ class SupportChannelView(discord.ui.View):
         await new_channel.send(
             f"<@&981426793925992448> Support Ticket by {interaction.user.mention}",
             view=support_view.SupportTicketView())
-
-        await interaction.client.db_client.update_guild(interaction.guild.id, retrieved_guild.__dict__)
-
-    

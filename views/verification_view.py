@@ -78,5 +78,3 @@ class VerificationView(discord.ui.View):
                                   color=0x00ff00)
             embed.set_image(url=interaction.client.config.verification_image)
             await new_channel.send(embed=embed)
-            # Update the guild
-            await interaction.client.db_client.update_guild(interaction.guild.id, retrieved_guild.__dict__)
