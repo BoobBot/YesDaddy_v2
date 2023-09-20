@@ -42,7 +42,7 @@ class Loops(commands.Cog):
                             xp = random.randint(10, 50) * bonus_xp
                             await user.add_xp(xp, self.bot)
                             await user.update_last_seen(self.bot)
-                            self.bot.log.info(f"{member.name[xp]} -> {user.xp}")
+                            self.bot.log.info(f"{member.name} {xp} -> {user.xp}")
 
     @tasks.loop(minutes=5)
     async def check_jail_loop(self):
