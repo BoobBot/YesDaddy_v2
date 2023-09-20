@@ -28,7 +28,7 @@ class Loops(commands.Cog):
                 for member in channel.members:
                     user = await self.bot.db_client.get_user(member.id)
                     if user:
-                        xp = random.randint(1000, 5000)
+                        xp = random.randint(10, 50)
                         await user.add_xp(xp, self.bot)
                         await user.update_last_seen(self.bot)
 
