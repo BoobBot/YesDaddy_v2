@@ -33,7 +33,11 @@ class SupportTicketView(discord.ui.View):
         ticket["resolved_by"] = interaction.user.id
         ticket["resolved_at"] = datetime.utcnow()
 
-        await interaction.client.db_client.update_guild(interaction.guild.id, {"support_tickets": data.support_tickets})
+        await interaction.client.db_client.guild_collection.update_one(
+            {"guild_id": interaction.guild.id},
+            {"$push": {"support_tickets": ticket}},
+            upsert=True  # Create the document if it doesn't exist
+        )
         # log the verification
         ch = interaction.guild.get_channel(1153818515262947378)
         try:

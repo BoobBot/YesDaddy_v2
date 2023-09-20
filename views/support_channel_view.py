@@ -46,7 +46,11 @@ class SupportChannelView(discord.ui.View):
             "created_at": datetime.utcnow(),
             "reason": "Support"
         }
-        retrieved_guild.support_tickets.append(ticket_data)
+        await interaction.client.db_client.guild_collection.update_one(
+            {"guild_id": interaction.guild.id},
+            {"$push": {"support_tickets": ticket_data}},
+            upsert=True  # Create the document if it doesn't exist
+        )
         await dm_channel.send("Your ticket has been created. Please describe your issue.")
         await new_channel.send(
             f"<@&981426793925992448> Support Ticket by {interaction.user.mention}",

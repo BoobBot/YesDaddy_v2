@@ -61,7 +61,12 @@ class VerificationView(discord.ui.View):
                 "created_at": datetime.utcnow(),
                 "reason": "Verification"
             }
-            retrieved_guild.tickets.append(ticket_data)
+            await interaction.client.db_client.guild_collection.update_one(
+                {"guild_id": interaction.guild.id},
+                {"$push": {"tickets": ticket_data}},
+                upsert=True  # Create the document if it doesn't exist
+            )
+
             # Deny permissions for everyone
             # await new_channel.set_permissions(interaction.guild.default_role, send_messages=False, read_messages=False)
             # Allow permissions for the specified user
