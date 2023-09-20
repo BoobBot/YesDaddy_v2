@@ -170,11 +170,8 @@ class DiscordDatabase:
         )
 
         if "user_id" in ticket_data:
-            count = await self.guild_collection.count_documents({
-                "guild_id": guild_id,
-                "tickets.user_id": ticket_data["user_id"] 
-            })
-            print(count)
+            d = await self.get_guild(guild_id)
+            print(len(d.tickets))
 
         print(push_res.raw_result)
 
@@ -185,11 +182,8 @@ class DiscordDatabase:
         )
 
         if "user_id" in ticket_data:
-            count = await self.guild_collection.count_documents({
-                "guild_id": guild_id,
-                "support_tickets.user_id": ticket_data["user_id"] 
-            })
-            print(count)
+            d = await self.get_guild(guild_id)
+            print(len(d.support_tickets))
 
         print(push_res.raw_result)
 
