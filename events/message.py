@@ -13,11 +13,11 @@ async def dump_delete(msg):
         await msg.delete()
 
 
-async def process_level_roles(user, guild, bot):
+async def process_level_roles(user, member, guild, bot):
     data = await bot.db_client.get_guild(guild.id)
     for role in data.lvl_roles:
         if role.get("level") <= user.level:
-            await user.add_roles(discord.utils.get(guild.roles, id=role.get("role_id")))
+            await member.add_roles(discord.utils.get(guild.roles, id=role.get("role_id")))
         # else:
         #     await user.remove_role(role.get("role_id"), bot=bot)
 
@@ -69,7 +69,7 @@ class Message(commands.Cog):
             user.level = lvl
             await user.update_level(amount=user.level, bot=self.bot)
             data = await self.bot.db_client.get_guild(msg.guild.id)
-            await process_level_roles(msg.author, msg.guild, self.bot)
+            await process_level_roles(user, msg.author, msg.guild, self.bot)
         await user.update_messages(bot=self.bot)
         await user.add_xp(xp, bot=self.bot)
         await user.update_last_seen(bot=self.bot)
