@@ -21,7 +21,7 @@ class Loops(commands.Cog):
         self.voice_xp.cancel()
         self.guild_sync_loop.cancel()
 
-    @tasks.loop(minutes=1)
+    @tasks.loop(minutes=15)
     async def guild_sync_loop(self):
         try:
             support = self.bot.get_guild(440526421388165120)
