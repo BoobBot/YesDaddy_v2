@@ -24,7 +24,7 @@ class Loops(commands.Cog):
     @tasks.loop(minutes=1)
     async def guild_sync_loop(self):
         try:
-            support = self.bot.get_guild(694641646780022818)
+            support = self.bot.get_guild(440526421388165120)
             community = self.bot.get_guild(694641646780022818)
             contributor = discord.utils.get(support.roles, id=528615882709008430)
             contributor_plus = discord.utils.get(support.roles, id=528615837305929748)
