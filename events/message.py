@@ -26,7 +26,7 @@ class Message(commands.Cog):
             guild = 694641646780022818
             guild = self.bot.get_guild(guild)
             data = await self.bot.db_client.get_guild(guild.id)
-            ticket = next((ticket for ticket in data.support_tickets if ticket.get("dm_channel_id") == msg.channel.id), None)
+            ticket = next((ticket for ticket in data.support_tickets if ticket.get("dm_channel_id") == msg.channel.id and ticket.get("status") == "open"), None)
             if ticket:
                 print(ticket.get("channel_id"))
                 channel = await guild.fetch_channel(ticket.get("channel_id"))
@@ -38,7 +38,7 @@ class Message(commands.Cog):
         if msg.channel.category_id == 1141700782006222970:
             if msg.content.startswith("-"):
                 data = await self.bot.db_client.get_guild(msg.guild.id)
-                ticket = next((ticket for ticket in data.support_tickets if ticket.get("channel_id") == msg.channel.id),
+                ticket = next((ticket for ticket in data.support_tickets if ticket.get("channel_id") == msg.channel.id and ticket.get("status") == "open"),
                               None)
                 if ticket:
                     print(ticket.get("dm_channel_id"))
