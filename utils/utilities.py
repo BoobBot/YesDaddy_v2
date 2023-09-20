@@ -51,15 +51,20 @@ async def generate_embed_color(member):
 
 
 def progress_percentage(remain, total):
-    assert remain <= total
+    default_char = '◯'  # Define default_char here
+    assert remain <= total, "remain should be less than or equal to total"
     max_bare_size = 10  # 10 units for 100%
-    remain_percent = 100 * remain // total // max_bare_size
-    default_char = '◯'
+
+    if total == 0:
+        return f"0% {default_char * (max_bare_size - 1)}◯"
+
+    remain_percent = min(100 * remain // total, 100) // max_bare_size
     icon = "⬤"
     bar = (default_char * max_bare_size)
     bar_done = (icon * remain_percent)
     bar_remain = bar[remain_percent:]
     return f"{bar_done}{bar_remain}"
+
 
 
 def subtraction_percentage(bal, percentage_to_subtract):
