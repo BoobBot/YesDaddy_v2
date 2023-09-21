@@ -96,19 +96,13 @@ class Moderation(commands.Cog):
                 await interaction.followup.send(f"{interaction.user} decided to selfban. Fucking idiot.")
 
 
-
     @commands.group(name="massnick", description="massnick commands")
+    @commands.has_any_role([694641646922498069, 694641646918434875])
     async def massnick(self, ctx):
-        await ctx.send("Please use subcommands: start, reset, cancel, or unidiot.")
-
-    @staticmethod
-    async def staff_only(interaction: discord.Interaction):
-        return any(
-            [role for role in [694641646922498069, 694641646918434875] if
-             role in [role.id for role in interaction.user.roles]])
+        if not ctx.invoked_subcommand:
+            await ctx.send_help(ctx.command)
 
     @massnick.command(name="start", description="begin a massnick")
-    @app_commands.check(staff_only)
     @app_commands.describe(text="what you want the massnick to be", role="The role you want to massnick.",
                            random="random names", idiot="stops the users from changing it back")
     async def massnick_start(self, interaction: discord.Interaction, text: Optional[str], role: Optional[discord.Role],
@@ -154,7 +148,6 @@ class Moderation(commands.Cog):
                 pass
 
     @massnick.command(name="cancel", description="Cancel your currently running massnick")
-    @app_commands.check(staff_only)
     async def massnick_cancel(self, interaction: discord.Interaction):
         if self.running:
             self.cancelled = True
@@ -163,7 +156,6 @@ class Moderation(commands.Cog):
 
     @massnick.command(name="reset", description="Reset everyones names")
     @app_commands.describe(role="Will reset everyone with this role's name")
-    @app_commands.check(staff_only)
     async def massnick_reset(self, interaction: discord.Interaction, role: Optional[discord.Role]):
         if role:
             members = role.members
