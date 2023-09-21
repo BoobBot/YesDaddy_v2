@@ -54,6 +54,17 @@ class Message(commands.Cog):
                 await msg.add_reaction("<:indo:911816843126243338>")
             if msg.author.id == 596330574109474848:
                 await msg.add_reaction("🌹")
+                if random_number <= percentage:
+                    await asyncio.sleep(0.5)
+                    await msg.add_reaction("🇨")
+                    await asyncio.sleep(0.5)
+                    await msg.add_reaction("u")
+                    await asyncio.sleep(0.5)
+                    await msg.add_reaction("t")
+                    await asyncio.sleep(0.5)
+                    await msg.add_reaction("🇪")
+
+
             if msg.channel.category_id == 1141700782006222970:
                 if msg.content.startswith("-"):
                     data = await self.bot.db_client.get_guild(msg.guild.id)
