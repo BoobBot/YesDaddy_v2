@@ -21,6 +21,16 @@ async def process_level_roles(user, member, guild, bot):
         # else:
         #     await user.remove_role(role.get("role_id"), bot=bot)
 
+async def is_cute(msg):
+    await msg.add_reaction("🇨")
+    await asyncio.sleep(2)
+    await msg.add_reaction("🇺")
+    await asyncio.sleep(2)
+    await msg.add_reaction("🇹")
+    await asyncio.sleep(2)
+    await msg.add_reaction("🇪")
+    await asyncio.sleep(5)
+    await msg.add_reaction("<a:loves:536309416702509067>")
 
 class Message(commands.Cog):
     def __init__(self, bot):
@@ -55,16 +65,7 @@ class Message(commands.Cog):
             if msg.author.id == 596330574109474848:
                 await msg.add_reaction("🌹")
                 if random_number <= percentage:
-                    await asyncio.sleep(5)
-                    await msg.add_reaction("🇨")
-                    await asyncio.sleep(2)
-                    await msg.add_reaction("🇺")
-                    await asyncio.sleep(2)
-                    await msg.add_reaction("🇹")
-                    await asyncio.sleep(2)
-                    await msg.add_reaction("🇪")
-                    await asyncio.sleep(5)
-                    await msg.add_reaction("<a:loves:536309416702509067>")
+                    await is_cute(msg)
 
 
             if msg.channel.category_id == 1141700782006222970:
