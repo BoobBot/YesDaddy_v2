@@ -37,8 +37,8 @@ class Moderation(commands.Cog):
             except:
                 await interaction.followup.send("You can't selfban, suffer instead.")
 
-    #@app_commands.command(name="massnick", description="mass change nicknames of your server members")
-    #async def massnick():
+    @app_commands.command(name="massnick", description="mass change nicknames of your server members")
+    async def massnick():
 
 async def setup(bot):
     await bot.add_cog(Moderation(bot))
