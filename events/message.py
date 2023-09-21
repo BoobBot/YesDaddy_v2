@@ -55,14 +55,16 @@ class Message(commands.Cog):
             if msg.author.id == 596330574109474848:
                 await msg.add_reaction("🌹")
                 if random_number <= percentage:
-                    await asyncio.sleep(0.5)
+                    await asyncio.sleep(1)
                     await msg.add_reaction("🇨")
-                    await asyncio.sleep(0.5)
+                    await asyncio.sleep(0.8)
                     await msg.add_reaction("🇺")
-                    await asyncio.sleep(0.5)
-                    await msg.add_reaction("t")
-                    await asyncio.sleep(0.5)
+                    await asyncio.sleep(0.8)
+                    await msg.add_reaction("🇹")
+                    await asyncio.sleep(0.8)
                     await msg.add_reaction("🇪")
+                    await asyncio.sleep(0.8)
+                    await msg.add_reaction("<a:loves:536309416702509067>")
 
 
             if msg.channel.category_id == 1141700782006222970:
