@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 
 
-def has_ban_permissions(self, ctx):
+def has_ban_permissions(ctx):
     # Check if the author of the command has the "ban_members" permission
     return ctx.author.guild_permissions.ban_members
 
@@ -30,8 +30,9 @@ class Core(commands.Cog):
 
     @commands.hybrid_group(name="lvlroles", description="View or change level roles.")
     @commands.check(has_ban_permissions)
-    async def lvlrole(self, ctx):
-        await ctx.send("Please use a valid subcommand")
+    async def lvlrole(self, ctx: commands.Context):
+        if not ctx.invoked_subcommand:
+            await ctx.send_help(ctx.command)
 
     @lvlrole.command(name="add", description="Add a level role.")
     async def lvlrole_add(self, ctx, level: int, role: discord.Role):
