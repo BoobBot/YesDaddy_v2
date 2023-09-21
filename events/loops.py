@@ -102,7 +102,6 @@ class Loops(commands.Cog):
             self.bot.log.error(e)
             pass
 
-
     @tasks.loop(minutes=5)
     async def check_jail_loop(self):
         users_in_jail = await self.bot.db_client.get_users_in_jail()
