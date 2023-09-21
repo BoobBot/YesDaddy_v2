@@ -11,9 +11,11 @@ massnick_group = app_commands.Group(name="massnick", description="massnick users
 
 
 class Moderation(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
         self.nickname_task: Optional[asyncio.Task] = None
+
+        bot.tree.add_command(massnick_group)
 
 
     # @commands.hybrid_group(name="idiot", description="idiot commands")
