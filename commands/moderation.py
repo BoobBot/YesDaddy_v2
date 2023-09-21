@@ -17,16 +17,16 @@ class Moderation(commands.Cog):
 
     @app_commands.command(name="selfban", description="Ban yourself from the server.")
     async def selfban(self, interaction: discord.Interaction):
+        # should be removed
         if interaction.user.id == 596330574109474848:
-            return await interaction.response.send_message(
-                "Tom said No, Stop fucking trying <:pikascream:585952447801982977>")
-        if [role for role in interaction.user.roles if role.id == 694641646922498069]:
-            return await interaction.response.send_message(
-                "You can't selfban from the community server, you absolute idiot, suffer instead.")
+            return await interaction.response.send_message("Tom said No, Stop fucking trying <:pikascream:585952447801982977>")
 
-        em = discord.Embed(color=interaction.user.color)
+        if any(role.id == 694641646922498069 for role in interaction.user.roles):
+            return await interaction.response.send_message("You can't selfban from the community server, you absolute idiot, suffer instead.")
+
+        em = discord.Embed(color=interaction.user.color,
+                           description="This is a one-way trip. You will not be able to rejoin the server unless you draw an unpunishment cat.")
         em.set_author(name="Are you sure about this? It really will ban you.")
-        em.description = "This is a one-way trip. You will not be able to rejoin the server unless you draw an unpunishment cat."
         view = Confirm()
         await interaction.response.send_message(embed=em, view=view, ephemeral=True)
         view.message = await interaction.original_response()
