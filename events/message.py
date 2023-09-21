@@ -46,12 +46,12 @@ class Message(commands.Cog):
                     for attachment in msg.attachments:
                         await channel.send(attachment.url)
                 return
-        # if msg.guild:
-        #     await msg.add_reaction("<:indo:911816843126243338>")
-        #     data = await self.bot.db_client.get_guild(msg.guild.id)
-        #     for reaction in data.text_reactions:
-        #         if reaction.get("trigger") in msg.content.lower():
-        #             await msg.add_reaction(reaction.get("response"))
+        if msg.guild:
+            # await msg.add_reaction("<:indo:911816843126243338>")
+            # data = await self.bot.db_client.get_guild(msg.guild.id)
+            # for reaction in data.text_reactions:
+            #     if reaction.get("trigger") in msg.content.lower():
+            #         await msg.add_reaction(reaction.get("response"))
 
             if msg.channel.category_id == 1141700782006222970:
                 if msg.content.startswith("-"):
