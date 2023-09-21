@@ -7,15 +7,11 @@ from discord.ext import commands
 
 from views.confirm_view import Confirm
 
-massnick_group = app_commands.Group(name="massnick", description="massnick users")
-
 
 class Moderation(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         self.nickname_task: Optional[asyncio.Task] = None
-
-        bot.tree.add_command(massnick_group)
 
 
     # @commands.hybrid_group(name="idiot", description="idiot commands")
@@ -95,74 +91,77 @@ class Moderation(commands.Cog):
             else:
                 await interaction.followup.send(f"{interaction.user} decided to selfban. Fucking idiot.")
 
-    @massnick_group.command(name="start", description="begin a massnick")
-    @app_commands.checks.has_any_role(694641646922498069, 694641646918434875)
+    @commands.hybrid_group(name="massnick", description="massnick users")
+    async def massnick(self, ctx: commands.Context):
+        if not ctx.invoked_subcommand:
+            await ctx.send_help(ctx.command)
+
+    @massnick.command(name="start", description="begin a massnick")
+    @commands.has_any_role(694641646922498069, 694641646918434875)
     @app_commands.describe(nickname="What you want the massnick to be. This is mutually exclusive to random.",
                            role="The role you want to massnick.",
                            random="Whether to use a random name for each member.",
                            idiot="Whether to prevent users from changing their nicknames.")
-    async def massnick_start(self, interaction: discord.Interaction, nickname: Optional[str],
+    async def massnick_start(self, ctx: commands.Context, nickname: Optional[str],
                              role: Optional[discord.Role], random: Optional[bool],
                              idiot: Optional[bool]):
         if self.nickname_task is not None:
-            return await interaction.response.send_message("I'm already doing a massnick, chill tf out", ephemeral=True)
+            return await ctx.send("I'm already doing a massnick, chill tf out", ephemeral=True)
 
-        role = role or interaction.guild.get_role(694641646780022826)
+        role = role or ctx.guild.get_role(694641646780022826)
 
         view = Confirm()
-        await interaction.response.send_message(f"{interaction.user.mention}, are you sure you want me to run this massnick?", view=view)
-        view.message = await interaction.original_response()
+        view.message = await ctx.send(f"{ctx.author.mention}, are you sure you want me to run this massnick?", view=view)
         await view.wait()
 
         if view.value is None:
-            return await interaction.followup.send("Timed out.")
+            return await ctx.send("Timed out.")
 
         if view.value is False:
-            return await interaction.followup.send("Fine I wont massnick the plebs.")
+            return await ctx.send("Fine I wont massnick the plebs.")
 
-        self.nickname_task = asyncio.create_task(self._do_massnick(interaction, role.members, nickname, random is True, idiot is True))
-        await interaction.followup.send("Okie dokie, I'll hit you up when I'm finished :)")
+        self.nickname_task = asyncio.create_task(self._do_massnick(ctx, role.members, nickname, random is True, idiot is True))
+        await ctx.send("Okie dokie, I'll hit you up when I'm finished :)")
 
-    @massnick_group.command(name="cancel", description="Cancel your currently running massnick")
-    @app_commands.checks.has_any_role(694641646922498069, 694641646918434875)
-    async def massnick_cancel(self, interaction: discord.Interaction):
+    @massnick.command(name="cancel", description="Cancel your currently running massnick")
+    @commands.has_any_role(694641646922498069, 694641646918434875)
+    async def massnick_cancel(self, ctx: commands.Context):
         if self.nickname_task is not None:
             if self.nickname_task.cancelling() > 0:
-                return await interaction.response.send_message("The massnick is already pending cancellation.", ephemeral=True)
+                return await ctx.send("The massnick is already pending cancellation.", ephemeral=True)
             
             if self.nickname_task.cancelled():
                 self.nickname_task = None
             else:
                 self.nickname_task.cancel()
 
-            return await interaction.response.send_message("The massnick has been cancelled.", ephemeral=True)
+            return await ctx.send("The massnick has been cancelled.", ephemeral=True)
 
-        return await interaction.response.send_message("What are you cancelling if I'm not running a massnick?", ephemeral=True)
+        return await ctx.send("What are you cancelling if I'm not running a massnick?", ephemeral=True)
 
-    @massnick_group.command(name="reset", description="Reset everyones names")
-    @app_commands.checks.has_any_role(694641646922498069, 694641646918434875)
+    @massnick.command(name="reset", description="Reset everyones names")
+    @commands.has_any_role(694641646922498069, 694641646918434875)
     @app_commands.describe(role="Will reset everyone with this role's name")
-    async def massnick_reset(self, interaction: discord.Interaction, role: Optional[discord.Role]):
+    async def massnick_reset(self, ctx: commands.Context, role: Optional[discord.Role]):
         if self.nickname_task is not None:
             await self.nickname_task.cancel()
             await asyncio.sleep(1.5)  # Give the task time to cancel.
 
-        role = role or interaction.guild.get_role(694641646780022826)
+        role = role or ctx.guild.get_role(694641646780022826)
         view = Confirm()
-        await interaction.response.send_message(f"{interaction.user.mention}, are you sure you want me to reset the members names?", view=view)
-        view.message = await interaction.original_response()
+        view.message = await ctx.send(f"{ctx.author.mention}, are you sure you want me to reset the members names?", view=view)
         await view.wait()
 
         if view.value is None:
-            return await interaction.followup.send("Timed out.")
+            return await ctx.send("Timed out.")
 
         if view.value is False:
-            return await interaction.followup.send("Fine I wont reset.")
+            return await ctx.send("Fine I wont reset.")
 
-        await interaction.followup.send("Okie dokie, I'll hit you up when I'm finished :)")
-        self.nickname_task = asyncio.create_task(self._do_massnick(interaction, role.members, nickname=None))
+        await ctx.send("Okie dokie, I'll hit you up when I'm finished :)")
+        self.nickname_task = asyncio.create_task(self._do_massnick(ctx, role.members, nickname=None))
 
-    async def _do_massnick(self, interaction: discord.Interaction, members: List[discord.Member],
+    async def _do_massnick(self, ctx: commands.Context, members: List[discord.Member],
                            nickname: Optional[str], random: bool = False, idiot: bool = False):
         """
         Sets the nickname on all the members provided.
@@ -185,7 +184,7 @@ class Moderation(commands.Cog):
 
         try:
             for member in members:
-                if member.top_role >= interaction.guild.me.top_role:
+                if member.top_role >= ctx.guild.me.top_role:
                     continue
 
                 try:
@@ -203,7 +202,7 @@ class Moderation(commands.Cog):
             cancelled = True
 
         self.nickname_task = None
-        await interaction.user.send(f'Massnick results (updated: {updated} / failed: {failed}){" [cancelled]" if cancelled else ""}')
+        await ctx.author.send(f'Massnick results (updated: {updated} / failed: {failed}){" [cancelled]" if cancelled else ""}')
 
 
 async def setup(bot):
