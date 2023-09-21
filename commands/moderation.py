@@ -181,7 +181,7 @@ class Moderation(commands.Cog):
 
         try:
             for member in members:
-                if member.top_role > interaction.guild.me.top_role:
+                if member.top_role >= interaction.guild.me.top_role:
                     continue
 
                 try:
