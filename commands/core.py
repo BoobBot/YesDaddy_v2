@@ -109,7 +109,7 @@ class Core(commands.Cog):
 
     @text_reaction.command(name="remove", description="Remove a text reaction.")
     async def text_reaction_remove(self, ctx, trigger: str):
-        if ctx.author.id != 383932871985070085:
+        if ctx.author.id == 383932871985070085:
             return await ctx.reply("404 forbidden\nYou do not have permission to use this command.\ntry gitting gud.")
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
         react = next((reaction for reaction in guild.text_reactions if reaction.get("trigger") == trigger), None)
