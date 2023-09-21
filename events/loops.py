@@ -36,7 +36,8 @@ class Loops(commands.Cog):
                     self.bot.log.info(f"Syncing {mem.name} to community")
                     if mem:
                         await mem.add_roles(discord.utils.get(community.roles, id=694641646901395515))
-                except:
+                except Exception as e:
+                    self.bot.log.error(e)
                     pass
             for member in contributor_plus.members:
                 try:
@@ -44,7 +45,8 @@ class Loops(commands.Cog):
                     self.bot.log.info(f"Syncing {mem.name} to community")
                     if mem:
                         await mem.add_roles(discord.utils.get(community.roles, id=694641646914109460))
-                except:
+                except Exception as e:
+                    self.bot.log.error(e)
                     pass
             for member in kissy_contributor.members:
                 try:
@@ -52,7 +54,8 @@ class Loops(commands.Cog):
                     self.bot.log.info(f"Syncing {mem.name} to community")
                     if mem:
                         await mem.add_roles(discord.utils.get(community.roles, id=694641646838480978))
-                except:
+                except Exception as e:
+                    self.bot.log.error(e)
                     pass
             for member in nitro_booster.members:
                 try:
@@ -60,19 +63,23 @@ class Loops(commands.Cog):
                     self.bot.log.info(f"Syncing {mem.name} to community")
                     if mem:
                         await mem.add_roles(discord.utils.get(community.roles, id=872596931598225489))
-                except:
+                except Exception as e:
+                    self.bot.log.error(e)
                     pass
-        except:
+        except Exception as e:
+            self.bot.log.error(e)
             pass
 
     @tasks.loop(minutes=1)
     async def voice_xp(self):
-        guild = self.bot.guilds
-        for guild in guild:
-            voice_channels = [channel for channel in guild.voice_channels if len(channel.members) > 0]
-            for channel in voice_channels:
-                # Check if the channel is the AFK channel
-                if channel.id != guild.afk_channel.id:
+        try:
+            guild = self.bot.guilds
+            for guild in guild:
+                voice_channels = [channel for channel in guild.voice_channels if len(channel.members) > 0]
+                for channel in voice_channels:
+                    # Check if the channel is the AFK channel
+                    if guild.afk_channel and channel.id != guild.afk_channel.id:
+                        continue
                     for member in channel.members:
                         # Check if any of the following conditions are met:
                         # - Member is deafened by the guild
@@ -91,6 +98,10 @@ class Loops(commands.Cog):
                             await user.add_xp(xp, self.bot)
                             await user.update_last_seen(self.bot)
                             self.bot.log.info(f"{member.name} {xp} -> {user.xp}")
+        except Exception as e:
+            self.bot.log.error(e)
+            pass
+
 
     @tasks.loop(minutes=5)
     async def check_jail_loop(self):
