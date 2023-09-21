@@ -60,7 +60,6 @@ class Core(commands.Cog):
             embed.add_field(name=f"Level {role.get('level')}", value=f"<@&{role.get('role_id')}>")
         await ctx.reply(embed=embed)
 
-
     @commands.hybrid_group(name="bonus_roles", description="View or change bonus roles.")
     @commands.check(has_ban_permissions)
     async def bonus_role(self, ctx):
@@ -129,6 +128,7 @@ class Core(commands.Cog):
         for reaction in reactions:
             embed.add_field(name=f"Trigger", value=f"`{reaction.get('trigger')}`")
         await ctx.reply(embed=embed)
+
 
 async def setup(bot):
     await bot.add_cog(Core(bot))
