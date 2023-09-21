@@ -20,9 +20,9 @@ class Moderation(commands.Cog):
         # if interaction.user.id == 596330574109474848:
         #     return await interaction.response.send_message(
         #         "Tom said No, Stop fucking trying <:pikascream:585952447801982977>")
-        if [role for role in interaction.user.roles if role.id == 694641646922498069]:
-            return await interaction.response.send_message(
-                "You can't selfban from the community server, you absolute idiot, suffer instead.")
+        # if [role for role in interaction.user.roles if role.id == 694641646922498069]:
+        #     return await interaction.response.send_message(
+        #         "You can't selfban from the community server, you absolute idiot, suffer instead.")
 
         em = discord.Embed(color=interaction.user.color)
         em.set_author(name="Are you sure about this? It really will ban you.")
