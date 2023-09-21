@@ -70,6 +70,14 @@ class Loops(commands.Cog):
             self.bot.log.error(e)
             pass
 
+    @guild_sync_loop.before_loop
+    async def before_guild_sync(self):
+        await self.bot.wait_until_ready()
+        # Start the loop after the bot is ready
+        print("Starting the sync loop")
+        # Run the loop once to initialize the role color
+        await self.guild_sync_loop()
+
     @tasks.loop(minutes=1)
     async def voice_xp(self):
         try:
