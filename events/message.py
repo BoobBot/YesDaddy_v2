@@ -47,6 +47,7 @@ class Message(commands.Cog):
                         await channel.send(attachment.url)
                 return
         if msg.guild:
+            data = await self.bot.db_client.get_guild(msg.guild.id)
             percentage = 40
             random_number = random.randint(1, 100)
             if random_number <= percentage:
