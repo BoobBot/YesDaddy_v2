@@ -91,13 +91,14 @@ class Moderation(commands.Cog):
     #                          random: Optional[bool], idiot: Optional[bool]):
     #     if self.running:
     #         return await interaction.response.send_message("I'm already doing a massnick, chill tf out", ephemeral=True)
-    #     if role:
-    #         members = role.members
-    #     else:
-    #         member_role = interaction.guild.get_role(694641646780022826)
-    #         members = interaction.guild.members
-    #         members = [x for x in members if x.top_role < interaction.guild.me.top_role]
-    #         members = [x for x in members if member_role in x.roles]
+    #
+    #     role = role or interaction.guild.get_role(694641646780022826)
+    #
+    #     if not role:
+    #         return await interaction.response.send_message("Role not found, tf?", ephemeral=True)
+    #
+    #     members = [m for m in role.members if m.top_role < interaction.guild.me.top_role]
+    #
     #     view = Confirm()
     #     await interaction.response.send_message(
     #         f"{interaction.user.mention}, are you sure you want me to run this massnick?", view=view)
