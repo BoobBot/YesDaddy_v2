@@ -82,7 +82,7 @@ class Loops(commands.Cog):
                 voice_channels = [channel for channel in guild.voice_channels if len(channel.members) > 0]
                 for channel in voice_channels:
                     # Check if the channel is the AFK channel
-                    if guild.afk_channel and channel.id != guild.afk_channel.id:
+                    if guild.afk_channel and channel.id == guild.afk_channel.id:
                         continue
                     count = len([member for member in channel.members if not member.bot])
                     if count <= 1:
