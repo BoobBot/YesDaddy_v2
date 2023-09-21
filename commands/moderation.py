@@ -138,7 +138,7 @@ class Moderation(commands.Cog):
             try:
                 if not text:
                     if random:
-                        resp = await bot.web_client.get("https://nekos.life/api/v2/name")
+                        resp = await self.bot.web_client.get("https://nekos.life/api/v2/name")
                         resp = await resp.json()
                         new_name = resp["name"]
                     else:
