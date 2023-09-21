@@ -2,11 +2,6 @@ import discord
 from discord.ext import commands
 
 
-def has_ban_permissions(ctx):
-    # Check if the author of the command has the "ban_members" permission
-    return ctx.author.guild_permissions.ban_members
-
-
 class Core(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -29,7 +24,7 @@ class Core(commands.Cog):
         await ctx.reply("https://github.com/BoobBot/YesDaddy_v2")
 
     @commands.hybrid_group(name="lvlroles", description="View or change level roles.")
-    @commands.check(has_ban_permissions)
+    @commands.has_guild_permissions(ban_members=True)
     async def lvlrole(self, ctx: commands.Context):
         if not ctx.invoked_subcommand:
             await ctx.send_help(ctx.command)
@@ -37,8 +32,10 @@ class Core(commands.Cog):
     @lvlrole.command(name="add", description="Add a level role.")
     async def lvlrole_add(self, ctx, level: int, role: discord.Role):
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
-        if role.id in [role.get("role_id") for role in guild.lvl_roles]:
+
+        if any(role.get('role_id') == role.id for role in guild.lvl_roles):
             return await ctx.reply("That role is already a level role.")
+
         guild.lvl_roles.append({"level": level, "role_id": role.id})
         await self.bot.db_client.update_guild(ctx.guild.id, guild.__dict__)
         await ctx.reply(f"Added {role.mention} as a level role for level {level}.")
@@ -62,7 +59,7 @@ class Core(commands.Cog):
         await ctx.reply(embed=embed)
 
     @commands.hybrid_group(name="bonus_roles", description="View or change bonus roles.")
-    @commands.check(has_ban_permissions)
+    @commands.has_guild_permissions(ban_members=True)
     async def bonus_role(self, ctx):
         await ctx.send("Please use a valid subcommand")
 
@@ -94,9 +91,10 @@ class Core(commands.Cog):
         await ctx.reply(embed=embed)
 
     @commands.hybrid_group(name="text_reactions", description="View or change text reactions.")
-    @commands.check(has_ban_permissions)
+    @commands.has_guild_permissions(ban_members=True)
     async def text_reaction(self, ctx):
-        await ctx.send("Please use a valid subcommand")
+        if not ctx.invoked_subcommand:
+            await ctx.send_help(ctx.command)
 
     @text_reaction.command(name="add", description="Add a text reaction.")
     async def text_reaction_add(self, ctx, trigger: str, response: str):
