@@ -39,9 +39,10 @@ class Moderation(commands.Cog):
             try:
                 await interaction.user.ban(delete_message_days=0,
                                            reason="wah wah, selfbanned.")
-                await interaction.followup.send(f"{interaction.user} decided to selfban. Fucking idiot.")
             except:
                 await interaction.followup.send("You can't selfban, suffer instead.")
+            else:
+                await interaction.followup.send(f"{interaction.user} decided to selfban. Fucking idiot.")
 
     # @commands.group(name="massnick", description="massnick commands")
     # async def massnick(self, ctx):
