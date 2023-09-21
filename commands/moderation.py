@@ -97,72 +97,98 @@ class Moderation(commands.Cog):
 
 
 
-    # @commands.group(name="massnick", description="massnick commands")
-    # async def massnick(self, ctx):
-    #     await ctx.send("Please use subcommands: start, reset, cancel, or unidiot.")
-    #
-    # @staticmethod
-    # async def staff_only(interaction: discord.Interaction):
-    #     return any(
-    #         [role for role in [694641646922498069, 694641646918434875] if
-    #          role in [role.id for role in interaction.user.roles]])
-    #
-    # @massnick.command(name="start", description="begin a massnick")
-    # @app_commands.check(staff_only)
-    # @app_commands.describe(text="what you want the massnick to be", role="The role you want to massnick.",
-    #                        random="random names", idiot="stops the users from changing it back")
-    # @massnick.command(name="cancel", description="Cancel your currently running massnick")
-    # @app_commands.check(staff_only)
-    # async def massnick_cancel(self, interaction: discord.Interaction):
-    #     if self.running:
-    #         self.cancelled = True
-    #         return await interaction.response.send_message("Cancelling...")
-    #     return await interaction.response.send_message("What are you cancelling if I'm not running a massnick?", ephemeral=True)
-    #
-    # @massnick.command(name="reset", description="Reset everyones names")
-    # @app_commands.describe(role="Will iterate over this roles users")
-    # @app_commands.check(staff_only)
-    # async def massnick_reset(self, interaction: discord.Interaction, role: Optional[discord.Role]):
-    #     if role:
-    #         members = role.members
-    #     else:
-    #         member_role = interaction.guild.get_role(694641646780022826)
-    #         members = interaction.guild.members
-    #         members = [x for x in members if member_role in x.roles]
-    #     view = Confirm()
-    #     await interaction.response.send_message(
-    #         f"{interaction.user.mention}, are you sure you want me to reset members names?", view=view
-    #     )
-    #     view.message = await interaction.original_response()
-    #     await view.wait()
-    #     if view.value is None:
-    #         return await interaction.followup.send("Timed out.")
-    #     if view.value is False:
-    #         return await interaction.followup.send("Fine I wont reset.")
-    #     await interaction.followup.send("Okie dokie, I'll hit you up when I'm finished :)")
-    #
-    # async def massnick_start(self, interaction: discord.Interaction, text: Optional[str], role: Optional[discord.Role],
-    #                          random: Optional[bool], idiot: Optional[bool]):
-    #     if self.running:
-    #         return await interaction.response.send_message("I'm already doing a massnick, chill tf out", ephemeral=True)
-    #
-    #     role = role or interaction.guild.get_role(694641646780022826)
-    #
-    #     if not role:
-    #         return await interaction.response.send_message("Role not found, tf?", ephemeral=True)
-    #
-    #     members = [m for m in role.members if m.top_role < interaction.guild.me.top_role]
-    #
-    #     view = Confirm()
-    #     await interaction.response.send_message(
-    #         f"{interaction.user.mention}, are you sure you want me to run this massnick?", view=view)
-    #     view.message = await interaction.original_response()
-    #     await view.wait()
-    #     if view.value is None:
-    #         return await interaction.followup.send("Timed out.")
-    #     if view.value is False:
-    #         return await interaction.followup.send("Fine I wont massnick the plebs.")
-    #     await interaction.followup.send("Okie dokie, I'll hit you up when I'm finished :)")
+    @commands.group(name="massnick", description="massnick commands")
+    async def massnick(self, ctx):
+        await ctx.send("Please use subcommands: start, reset, cancel, or unidiot.")
+
+    @staticmethod
+    async def staff_only(interaction: discord.Interaction):
+        return any(
+            [role for role in [694641646922498069, 694641646918434875] if
+             role in [role.id for role in interaction.user.roles]])
+
+    @massnick.command(name="start", description="begin a massnick")
+    @app_commands.check(staff_only)
+    @app_commands.describe(text="what you want the massnick to be", role="The role you want to massnick.",
+                           random="random names", idiot="stops the users from changing it back")
+    async def massnick_start(self, interaction: discord.Interaction, text: Optional[str], role: Optional[discord.Role],
+                             random: Optional[bool], idiot: Optional[bool]):
+        if self.running:
+            return await interaction.response.send_message("I'm already doing a massnick, chill tf out", ephemeral=True)
+        if role:
+            members = role.members
+        else:
+            member_role = interaction.guild.get_role(694641646780022826)
+            members = interaction.guild.members
+            members = [x for x in members if x.top_role < interaction.guild.me.top_role]
+            members = [x for x in members if member_role in x.roles]
+        view = Confirm()
+        await interaction.response.send_message(
+            f"{interaction.user.mention}, are you sure you want me to run this massnick?", view=view)
+        view.message = await interaction.original_response()
+        await view.wait()
+        if view.value is None:
+            return await interaction.followup.send("Timed out.")
+        if view.value is False:
+            return await interaction.followup.send("Fine I wont massnick the plebs.")
+        await interaction.followup.send("Okie dokie, I'll hit you up when I'm finished :)")
+        for member in members:
+            if self.cancelled:
+                break
+            try:
+                if not text:
+                    if random:
+                        resp = await bot.web_client.get("https://nekos.life/api/v2/name")
+                        resp = await resp.json()
+                        new_name = resp["name"]
+                    else:
+                        new_name = member.display_name
+                else:
+                    new_name = member.name if text.lower() == "{user_name}" else text
+                # if idiot:
+
+                if member.display_name == new_name or len(new_name) > 32:
+                    continue
+                await member.edit(nick=new_name)
+            except:
+                pass
+
+    @massnick.command(name="cancel", description="Cancel your currently running massnick")
+    @app_commands.check(staff_only)
+    async def massnick_cancel(self, interaction: discord.Interaction):
+        if self.running:
+            self.cancelled = True
+            return await interaction.response.send_message("Cancelling...")
+        return await interaction.response.send_message("What are you cancelling if I'm not running a massnick?", ephemeral=True)
+
+    @massnick.command(name="reset", description="Reset everyones names")
+    @app_commands.describe(role="Will reset everyone with this role's name")
+    @app_commands.check(staff_only)
+    async def massnick_reset(self, interaction: discord.Interaction, role: Optional[discord.Role]):
+        if role:
+            members = role.members
+        else:
+            member_role = interaction.guild.get_role(694641646780022826)
+            members = interaction.guild.members
+            members = [x for x in members if member_role in x.roles]
+        view = Confirm()
+        await interaction.response.send_message(
+            f"{interaction.user.mention}, are you sure you want me to reset the members names?", view=view
+        )
+        view.message = await interaction.original_response()
+        await view.wait()
+        if view.value is None:
+            return await interaction.followup.send("Timed out.")
+        if view.value is False:
+            return await interaction.followup.send("Fine I wont reset.")
+        await interaction.followup.send("Okie dokie, I'll hit you up when I'm finished :)")
+        for member in members:
+            if self.cancelled:
+                break
+            try:
+                await member.edit(nick=None)
+            except:
+                pass
 
 
 async def setup(bot):
