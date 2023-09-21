@@ -110,7 +110,7 @@ class Core(commands.Cog):
     @text_reaction.command(name="remove", description="Remove a text reaction.")
     async def text_reaction_remove(self, ctx, trigger: str):
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
-        guild.text_reactions.remove({"trigger": trigger})
+        guild.text_reactions.remove(trigger)
         await self.bot.db_client.update_guild(ctx.guild.id, guild.__dict__)
         await ctx.reply(f"Removed `{trigger}` as a text reaction.")
 
