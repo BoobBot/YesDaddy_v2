@@ -5,7 +5,7 @@ import datetime
 class User:
     def __init__(self, user_id, blacklist, last_seen, xp, level, premium, balance, bank_balance, cooldowns, messages,
                  jail,
-                 last_daily_claim=None, last_weekly_claim=None, daily_streak=0, weekly_streak=0):
+                 last_daily_claim=None, last_weekly_claim=None, daily_streak=0, weekly_streak=0, idiot=None):
         self.user_id = user_id
         self.blacklist = blacklist
         self.last_seen = last_seen
@@ -21,6 +21,7 @@ class User:
         self.last_weekly_claim = last_weekly_claim
         self.daily_streak = daily_streak
         self.weekly_streak = weekly_streak
+        self.idiot = self.idiot = idiot if idiot is not None else {}
 
     async def jail_user(self, hours, fine, bot):
         self.jail = {

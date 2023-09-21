@@ -1,3 +1,4 @@
+import datetime
 from typing import Optional
 
 import discord
@@ -14,6 +15,56 @@ class Moderation(commands.Cog):
         self.bot = bot
         self.running = False
         self.cancelled = False
+
+
+    # @commands.hybrid_group(name="idiot", description="idiot commands")
+    # async def idiot(self, ctx):
+    #     await ctx.send("Please use subcommands: set, clear, check, or list.")
+    #
+    # @idiot.command(name="set", description="set a idiots nickname")
+    # async def idiot_set(self, ctx, user: discord.Member, *, nickname: str):
+    #     user = self.bot.db_client.get_user(user.id)
+    #     if user.idiot:
+    #         if user.idiot.get("idiot"):
+    #             view = Confirm()
+    #             em = discord.Embed(color=ctx.author.user.color)
+    #             em.description = f"{user.mention} is already an idiot, changed by <@{user.idiot.get('idiot_by')}>, are you sure you want to change their nickname?"
+    #             view.message = await ctx.reply(embed=em, view=view, ephemeral=True)
+    #             if view.value is None:
+    #                 await ctx.reply("Timed out.", ephemeral=True)
+    #             elif view.value is False:
+    #                 await ctx.reply("Ok, I wont change it.", ephemeral=True)
+    #                 return
+    #             else:
+    #                 idiot_data = user.idiot
+    #                 idiot_data["idiot"] = True
+    #                 idiot_data["nickname"] = nickname
+    #                 idiot_data["times_idiot"] += 1
+    #                 idiot_data["timestamp"] = datetime.datetime.now(datetime.timezone.utc)
+    #                 idiot_data["change"] = 0
+    #                 idiot_data["idiot_by"] = ctx.author.id
+    #         idiot_data = user.idiot
+    #         idiot_data["idiot"] = True
+    #         idiot_data["nickname"] = nickname
+    #         idiot_data["times_idiot"] += 1
+    #         idiot_data["timestamp"] = datetime.datetime.now(datetime.timezone.utc)
+    #         idiot_data["change"] = 0
+    #         idiot_data["idiot_by"] = ctx.author.id
+    #     else:
+    #         idiot_data = {
+    #             "nickname": nickname,
+    #             "idiot": True,
+    #             "idiot_by": ctx.author.id,
+    #             "timestamp": datetime.datetime.now(datetime.timezone.utc),
+    #             "times_idiot": 1,
+    #             "change": 0
+    #         }
+    #
+    #
+    #     await user.update_user({"idiot_data": idiot_data}, self.bot)
+    #     await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.")
+
+
 
     @app_commands.command(name="selfban", description="Ban yourself from the server.")
     async def selfban(self, interaction: discord.Interaction):
@@ -43,6 +94,8 @@ class Moderation(commands.Cog):
                 await interaction.followup.send("You can't selfban, suffer instead.")
             else:
                 await interaction.followup.send(f"{interaction.user} decided to selfban. Fucking idiot.")
+
+
 
     # @commands.group(name="massnick", description="massnick commands")
     # async def massnick(self, ctx):
