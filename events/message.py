@@ -58,7 +58,7 @@ class Message(commands.Cog):
                     await asyncio.sleep(0.5)
                     await msg.add_reaction("🇨")
                     await asyncio.sleep(0.5)
-                    await msg.add_reaction("u")
+                    await msg.add_reaction("🇺")
                     await asyncio.sleep(0.5)
                     await msg.add_reaction("t")
                     await asyncio.sleep(0.5)
