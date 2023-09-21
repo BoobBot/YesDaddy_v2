@@ -37,7 +37,6 @@ class Loops(commands.Cog):
                     if mem:
                         await mem.add_roles(discord.utils.get(community.roles, id=694641646901395515))
                 except Exception as e:
-                    self.bot.log.error(e)
                     pass
             for member in contributor_plus.members:
                 try:
@@ -46,7 +45,6 @@ class Loops(commands.Cog):
                     if mem:
                         await mem.add_roles(discord.utils.get(community.roles, id=694641646914109460))
                 except Exception as e:
-                    self.bot.log.error(e)
                     pass
             for member in kissy_contributor.members:
                 try:
@@ -55,7 +53,6 @@ class Loops(commands.Cog):
                     if mem:
                         await mem.add_roles(discord.utils.get(community.roles, id=694641646838480978))
                 except Exception as e:
-                    self.bot.log.error(e)
                     pass
             for member in nitro_booster.members:
                 try:
@@ -64,7 +61,6 @@ class Loops(commands.Cog):
                     if mem:
                         await mem.add_roles(discord.utils.get(community.roles, id=872596931598225489))
                 except Exception as e:
-                    self.bot.log.error(e)
                     pass
         except Exception as e:
             self.bot.log.error(e)
