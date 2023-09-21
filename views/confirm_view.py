@@ -4,7 +4,17 @@ import discord
 class Confirm(discord.ui.View):
     def __init__(self):
         super().__init__()
+        self.message = None
         self.value = None
+
+    async def on_timeout(self) -> None:
+        await self.disable_buttons()
+
+    async def disable_buttons(self) -> None:
+        for item in self.children:
+            item.disabled = True
+
+        await self.message.edit(view=self)
 
     # When the confirm button is pressed, set the inner value to `True` and
     # stop the View from listening to more input.
