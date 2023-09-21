@@ -47,12 +47,12 @@ class Message(commands.Cog):
                         await channel.send(attachment.url)
                 return
         if msg.guild:
-            # await msg.add_reaction("<:indo:911816843126243338>")
-            # data = await self.bot.db_client.get_guild(msg.guild.id)
-            # for reaction in data.text_reactions:
-            #     if reaction.get("trigger") in msg.content.lower():
-            #         await msg.add_reaction(reaction.get("response"))
-
+            percentage = 40
+            random_number = random.randint(1, 100)
+            if random_number <= percentage:
+                await msg.add_reaction("<:indo:911816843126243338>")
+            if msg.author.id == 596330574109474848:
+                await msg.add_reaction("🌹")
             if msg.channel.category_id == 1141700782006222970:
                 if msg.content.startswith("-"):
                     data = await self.bot.db_client.get_guild(msg.guild.id)
