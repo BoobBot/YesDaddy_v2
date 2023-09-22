@@ -27,12 +27,12 @@ class VerificationView(discord.ui.View):
         if not any(role.id in genders for role in interaction.user.roles):
             return await interaction.response.send_message("You need a gender role from <#1141869787895574598>",
                                                            ephemeral=True)
-
+        print("here")
         # Check if the user is already in the verification process
         retrieved_guild = await interaction.client.db_client.get_guild(interaction.guild.id)
-
+        print(retrieved_guild)
         open_ticket = next((ticket for ticket in retrieved_guild.tickets if ticket.get('user_id') == interaction.user.id and ticket.get('status') == 'open'), None)
-
+        print(open_ticket)
         if open_ticket is not None:
             return await interaction.response.send_message(f"You are already have an open ticket at <#{open_ticket['channel_id']}>", ephemeral=True)
 
@@ -40,9 +40,10 @@ class VerificationView(discord.ui.View):
                      ticket.get("user_id") == interaction.user.id and
                      ticket.get("status") == "closed" and
                      ticket.get("reason") == "Verification"])
-
+        print(count)
         # Create a new ticket
         category = discord.utils.get(interaction.guild.categories, name="🆘 Tickets")
+        print(category)
         if category:
             staff = discord.utils.get(interaction.guild.roles, id=694641646918434875)
             overwrites = {
@@ -64,7 +65,7 @@ class VerificationView(discord.ui.View):
                 "created_at": datetime.utcnow(),
                 "reason": "Verification"
             }
-
+            print(ticket_data)
             await interaction.client.db_client.add_ticket(interaction.guild.id, ticket_data)
 
             # Deny permissions for everyone
