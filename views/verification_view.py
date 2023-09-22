@@ -42,7 +42,7 @@ class VerificationView(discord.ui.View):
                      ticket.get("reason") == "Verification"])
         print(count)
         # Create a new ticket
-        category = discord.utils.get(interaction.guild.categories, name="🆘 Tickets")
+        category = discord.utils.get(interaction.guild.categories, id=1141700782006222970)
         print(category)
         if category:
             staff = discord.utils.get(interaction.guild.roles, id=694641646918434875)
