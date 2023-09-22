@@ -58,14 +58,14 @@ class Message(commands.Cog):
                 return
         if msg.guild:
             data = await self.bot.db_client.get_guild(msg.guild.id)
-            percentage = 40
-            random_number = random.randint(1, 100)
-            if random_number <= percentage:
-                await msg.add_reaction("<:indo:911816843126243338>")
-            if msg.author.id == 596330574109474848:
-                await msg.add_reaction("🌹")
-                if random_number <= percentage:
-                    await is_cute(msg)
+            # percentage = 40
+            # random_number = random.randint(1, 100)
+            # if random_number <= percentage:
+            #     await msg.add_reaction("<:indo:911816843126243338>")
+            # if msg.author.id == 596330574109474848:
+            #     await msg.add_reaction("🌹")
+            #     if random_number <= percentage:
+            #         await is_cute(msg)
 
 
             if msg.channel.category_id == 1141700782006222970:

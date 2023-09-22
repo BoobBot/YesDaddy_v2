@@ -13,7 +13,6 @@ class Moderation(commands.Cog):
         self.bot = bot
         self.nickname_task: Optional[asyncio.Task] = None
 
-
     # @commands.hybrid_group(name="idiot", description="idiot commands")
     # async def idiot(self, ctx):
     #     await ctx.send("Please use subcommands: set, clear, check, or list.")
@@ -61,15 +60,16 @@ class Moderation(commands.Cog):
     #     await user.update_user({"idiot_data": idiot_data}, self.bot)
     #     await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.")
 
-
     @app_commands.command(name="selfban", description="Ban yourself from the server.")
     async def selfban(self, interaction: discord.Interaction):
         # should be removed
         if interaction.user.id == 596330574109474848:
-            return await interaction.response.send_message("Tom said No, Stop fucking trying <:pikascream:585952447801982977>")
+            return await interaction.response.send_message(
+                "Tom said No, Stop fucking trying <:pikascream:585952447801982977>")
 
         if any(role.id == 694641646922498069 for role in interaction.user.roles):
-            return await interaction.response.send_message("You can't selfban from the community server, you absolute idiot, suffer instead.")
+            return await interaction.response.send_message(
+                "You can't selfban from the community server, you absolute idiot, suffer instead.")
 
         em = discord.Embed(color=interaction.user.color,
                            description="This is a one-way trip. You will not be able to rejoin the server unless you draw an unpunishment cat.")
@@ -111,7 +111,8 @@ class Moderation(commands.Cog):
         role = role or ctx.guild.get_role(694641646780022826)
 
         view = Confirm()
-        view.message = await ctx.send(f"{ctx.author.mention}, are you sure you want me to run this massnick?", view=view)
+        view.message = await ctx.send(f"{ctx.author.mention}, are you sure you want me to run this massnick?",
+                                      view=view)
         await view.wait()
 
         if view.value is None:
@@ -120,7 +121,8 @@ class Moderation(commands.Cog):
         if view.value is False:
             return await ctx.send("Fine I wont massnick the plebs.")
 
-        self.nickname_task = asyncio.create_task(self._do_massnick(ctx, role.members, nickname, random is True, idiot is True))
+        self.nickname_task = asyncio.create_task(
+            self._do_massnick(ctx, role.members, nickname, random is True, idiot is True))
         await ctx.send("Okie dokie, I'll hit you up when I'm finished :)")
 
     @massnick.command(name="cancel", description="Cancel your currently running massnick")
@@ -129,7 +131,7 @@ class Moderation(commands.Cog):
         if self.nickname_task is not None:
             if self.nickname_task.cancelling() > 0:
                 return await ctx.send("The massnick is already pending cancellation.", ephemeral=True)
-            
+
             if self.nickname_task.cancelled():
                 self.nickname_task = None
             else:
@@ -149,7 +151,8 @@ class Moderation(commands.Cog):
 
         role = role or ctx.guild.get_role(694641646780022826)
         view = Confirm()
-        view.message = await ctx.send(f"{ctx.author.mention}, are you sure you want me to reset the members names?", view=view)
+        view.message = await ctx.send(f"{ctx.author.mention}, are you sure you want me to reset the members names?",
+                                      view=view)
         await view.wait()
 
         if view.value is None:
@@ -188,7 +191,8 @@ class Moderation(commands.Cog):
                     continue
 
                 try:
-                    new_name = (await (await self.bot.web_client.get("https://nekos.life/api/v2/name")).json())['name'] if random is True else nickname
+                    new_name = (await (await self.bot.web_client.get("https://nekos.life/api/v2/name")).json())[
+                        'name'] if random is True else nickname
                     # if idiot:
 
                     if member.display_name == new_name or len(new_name) > 32:
@@ -202,7 +206,8 @@ class Moderation(commands.Cog):
             cancelled = True
 
         self.nickname_task = None
-        await ctx.author.send(f'Massnick results (updated: {updated} / failed: {failed}){" [cancelled]" if cancelled else ""}')
+        await ctx.author.send(
+            f'Massnick results (updated: {updated} / failed: {failed}){" [cancelled]" if cancelled else ""}')
 
 
 async def setup(bot):
