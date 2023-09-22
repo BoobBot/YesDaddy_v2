@@ -12,6 +12,7 @@ class VerificationView(discord.ui.View):
     @discord.ui.button(label='Start verification', style=discord.ButtonStyle.green,
                        custom_id='persistent_view:verification', emoji='✔️')
     async def verify(self, interaction: discord.Interaction, button: discord.ui.Button):
+        print("Verification button pressed")
         # for testing await interaction.client.db_client.delete_guild(interaction.guild.id)
         # Check if the user is already verified
         if any(r.id == 694641646821703741 for r in interaction.user.roles):
