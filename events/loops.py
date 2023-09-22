@@ -33,7 +33,7 @@ class Loops(commands.Cog):
             for member in contributor.members:
                 try:
                     mem = await community.fetch_member(member.id)
-                    self.bot.log.info(f"Syncing {mem.name} to community")
+                    # self.bot.log.info(f"Syncing {mem.name} to community")
                     if mem:
                         await mem.add_roles(discord.utils.get(community.roles, id=694641646901395515))
                 except Exception as e:
@@ -41,7 +41,7 @@ class Loops(commands.Cog):
             for member in contributor_plus.members:
                 try:
                     mem = await community.fetch_member(member.id)
-                    self.bot.log.info(f"Syncing {mem.name} to community")
+                    # self.bot.log.info(f"Syncing {mem.name} to community")
                     if mem:
                         await mem.add_roles(discord.utils.get(community.roles, id=694641646914109460))
                 except Exception as e:
@@ -49,7 +49,7 @@ class Loops(commands.Cog):
             for member in kissy_contributor.members:
                 try:
                     mem = await community.fetch_member(member.id)
-                    self.bot.log.info(f"Syncing {mem.name} to community")
+                    # self.bot.log.info(f"Syncing {mem.name} to community")
                     if mem:
                         await mem.add_roles(discord.utils.get(community.roles, id=694641646838480978))
                 except Exception as e:
@@ -57,7 +57,7 @@ class Loops(commands.Cog):
             for member in nitro_booster.members:
                 try:
                     mem = await community.fetch_member(member.id)
-                    self.bot.log.info(f"Syncing {mem.name} to community")
+                    # self.bot.log.info(f"Syncing {mem.name} to community")
                     if mem:
                         await mem.add_roles(discord.utils.get(community.roles, id=872596931598225489))
                 except Exception as e:
