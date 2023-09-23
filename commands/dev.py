@@ -20,13 +20,51 @@ from discord.ext.commands import Context, Greedy
 from views import support_channel_view
 from views.rule_button_view import RuleButton
 from views.verification_view import VerificationView
-
-
+from PIL import Image, ImageDraw, ImageFont
+from io import BytesIO
 class Dev(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name="supporttest", description="????")
+    @commands.command(name="test2", description="????")
+    @commands.is_owner()
+    async def rank(self, ctx):
+        user_avatar_url = str(ctx.author.avatar.url)  # Convert to string
+        user_xp = 500  # Replace with user's XP
+        user_balance = 1000  # Replace with user's balance
+
+        response = await self.bot.web_client.get(user_avatar_url)
+        image_data = await response.read()
+        user_avatar = Image.open(BytesIO(image_data))
+
+        # Create a blank 240x400 image
+        rank_card = Image.new("RGB", (240, 400), (255, 255, 255))
+        draw = ImageDraw.Draw(rank_card)
+
+        # Draw circular user avatar
+        user_avatar = user_avatar.resize((100, 100))  # Resize to fit circle
+        mask = Image.new("L", user_avatar.size, 0)
+        draw_mask = ImageDraw.Draw(mask)
+        draw_mask.ellipse((0, 0, 100, 100), fill=255)
+        rank_card.paste(user_avatar, (70, 50), mask)
+
+        # Draw XP progress bar
+        xp_bar_width = int(user_xp / 1000 * 200)  # Calculate XP bar width
+        draw.rectangle([(20, 200), (20 + xp_bar_width, 220)], fill=(0, 255, 0))
+
+        # Add text for balance
+        font = ImageFont.load_default()  # You can choose a different font
+        text = f"Balance: {user_balance}"
+        text_width, text_height = draw.textsize(text, font=font)
+        draw.text(((240 - text_width) / 2, 250), text, fill=(0, 0, 0), font=font)
+
+        rank_card_bytesio = BytesIO()
+        rank_card.save(rank_card_bytesio, format="PNG")
+        rank_card_bytesio.seek(0)
+        await ctx.send(file=discord.File(rank_card_bytesio, filename="rank_card.png"))
+
+
+@commands.command(name="supporttest", description="????")
     @commands.is_owner()
     async def testing(self, ctx):
 
