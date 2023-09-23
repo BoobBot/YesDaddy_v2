@@ -29,7 +29,7 @@ class Dev(commands.Cog):
     @commands.command(name="test2", description="????")
     @commands.is_owner()
     async def rank(self, ctx):
-        user_avatar_url = str(ctx.author.avatar.url)  # Convert to string
+        user_avatar_url = ctx.author.avatar.url
         user_xp = 500  # Replace with user's XP
         user_balance = 1000  # Replace with user's balance
 
@@ -37,26 +37,25 @@ class Dev(commands.Cog):
         image_data = await response.read()
         user_avatar = Image.open(BytesIO(image_data))
 
-        # Create a blank 240x400 image
-        rank_card = Image.new("RGB", (240, 400), (255, 255, 255))
+        # Create a blank 400x240 image with a white background
+        rank_card = Image.new("RGB", (400, 240), (255, 255, 255))
         draw = ImageDraw.Draw(rank_card)
 
-        # Draw circular user avatar
-        user_avatar = user_avatar.resize((100, 100))  # Resize to fit circle
+        # Draw circular user avatar on the left
         mask = Image.new("L", user_avatar.size, 0)
         draw_mask = ImageDraw.Draw(mask)
         draw_mask.ellipse((0, 0, 100, 100), fill=255)
-        rank_card.paste(user_avatar, (70, 50), mask)
+        rank_card.paste(user_avatar, (20, 70), mask)
 
-        # Draw XP progress bar
-        xp_bar_width = int(user_xp / 1000 * 200)  # Calculate XP bar width
-        draw.rectangle([(20, 200), (20 + xp_bar_width, 220)], fill=(0, 255, 0))
+        # Draw XP progress circle around the avatar
+        progress_angle = 360 * (user_xp / 1000)  # Calculate angle based on XP progress
+        draw.pieslice((20, 70, 120, 170), start=90, end=90 + progress_angle, fill=(0, 255, 0))
 
         # Add text for balance
         font = ImageFont.load_default()  # You can choose a different font
         text = f"Balance: {user_balance}"
         text_width, text_height = draw.textsize(text, font=font)
-        draw.text(((240 - text_width) / 2, 250), text, fill=(0, 0, 0), font=font)
+        draw.text((160, 110), text, fill=(0, 0, 0), font=font)
 
         rank_card_bytesio = BytesIO()
         rank_card.save(rank_card_bytesio, format="PNG")
