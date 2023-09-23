@@ -226,10 +226,10 @@ class Moderation(commands.Cog):
         if nsfw_channel_names:
             nsfw_channel_names_str = "\n".join(nsfw_channel_names)
             description = f"Age-restricted channels: \n{nsfw_channel_names_str}"
-            em = discord.Embed(title="NSFW Channel List", description=description)
+            em = discord.Embed(title="NSFW Channel List", description=description, colour=discord.Color.random())
             await ctx.reply(embed=em)
 
-        em = discord.Embed(title="Ratio Check")
+        em = discord.Embed(title="Ratio Check", colour=discord.Color.random())
         em.add_field(name="SFW:", value=f"{sfw}")
         em.add_field(name="NSFW:", value=f"{nsfw}")
         em.add_field(name="All Channels:", value=f"{allchannels}")
