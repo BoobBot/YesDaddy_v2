@@ -209,6 +209,32 @@ class Moderation(commands.Cog):
         await ctx.author.send(
             f'Massnick results (updated: {updated} / failed: {failed}){" [cancelled]" if cancelled else ""}')
 
+    @commands.hybrid_command(name="ratio", description="Check how many nsfw vs sfw channels there are")
+    @commands.has_any_role(694641646922498069, 694641646918434875)
+    async def ratio(self, ctx):
+        sfw = 0
+        nsfw_channel_names = []
+        nsfw = 0
+        allchannels = len(ctx.guild.channels)
+        for ch in ctx.guild.channels:
+            if ch.nsfw:
+                nsfw += 1
+                nsfw_channel_names.append(ch.name)
+            else:
+                sfw += 1
+
+        if nsfw_channel_names:
+            nsfw_channel_names_str = ", ".join(nsfw_channel_names)
+            description = f"Age-restricted channels: {nsfw_channel_names_str}"
+            em = discord.Embed(title="NSFW Channel List", description=description)
+            await ctx.reply(embed=em)
+
+        em = discord.Embed(title="Ratio Check")
+        em.add_field(name="SFW:", value=f"{sfw}")
+        em.add_field(name="NSFW:", value=f"{nsfw}")
+        em.add_field(name="All Channels:", value=f"{allchannels}")
+        await ctx.reply(embed=em)
+
 
 async def setup(bot):
     await bot.add_cog(Moderation(bot))
