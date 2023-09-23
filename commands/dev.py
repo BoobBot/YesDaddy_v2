@@ -47,9 +47,17 @@ class Dev(commands.Cog):
         draw_mask.ellipse((0, 0, 100, 100), fill=255)
         rank_card.paste(user_avatar, (20, 70), mask)
 
-        # Draw XP progress circle around the avatar
+        # Calculate the coordinates for the circular progress bar
+        center_x = 70 + 50  # X-coordinate of the center of the avatar
+        center_y = 70 + 50  # Y-coordinate of the center of the avatar
+        radius = 50  # Radius of the circular progress bar
         progress_angle = 360 * (user_xp / 1000)  # Calculate angle based on XP progress
-        draw.pieslice((20, 70, 120, 170), start=90, end=90 + progress_angle, fill=(0, 255, 0))
+
+        # Draw the circular progress bar around the avatar
+        draw.pieslice((center_x - radius, center_y - radius, center_x + radius, center_y + radius),
+                      start=90,
+                      end=90 + progress_angle,
+                      fill=(0, 255, 0))
 
         # Add text for balance
         font = ImageFont.load_default()  # You can choose a different font
