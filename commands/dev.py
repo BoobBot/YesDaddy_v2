@@ -20,7 +20,7 @@ from discord.ext.commands import Context, Greedy
 from views import support_channel_view
 from views.rule_button_view import RuleButton
 from views.verification_view import VerificationView
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageOps
 from io import BytesIO
 class Dev(commands.Cog):
     def __init__(self, bot):
@@ -36,6 +36,7 @@ class Dev(commands.Cog):
         response = await self.bot.web_client.get(user_avatar_url)
         image_data = await response.read()
         user_avatar = Image.open(BytesIO(image_data))
+        ser_avatar = user_avatar.resize((100, 100))  # Resize user avatar
 
         # Create a blank 400x240 image with a white background
         rank_card = Image.new("RGB", (400, 240), (255, 255, 255))
@@ -47,17 +48,16 @@ class Dev(commands.Cog):
         draw_mask.ellipse((0, 0, 100, 100), fill=255)
         rank_card.paste(user_avatar, (20, 70), mask)
 
-        # Calculate the coordinates for the circular progress bar
-        center_x = 70 + 50  # X-coordinate of the center of the avatar
-        center_y = 70 + 50  # Y-coordinate of the center of the avatar
-        radius = 50  # Radius of the circular progress bar
+        # Calculate the angle for the circular progress bar
         progress_angle = 360 * (user_xp / 1000)  # Calculate angle based on XP progress
 
-        # Draw the circular progress bar around the avatar
-        draw.pieslice((center_x - radius, center_y - radius, center_x + radius, center_y + radius),
-                      start=90,
-                      end=90 + progress_angle,
-                      fill=(0, 255, 0))
+        # Create a mask for the circular progress bar
+        progress_mask = Image.new("L", (100, 100), 0)
+        draw_progress_mask = ImageDraw.Draw(progress_mask)
+        draw_progress_mask.pieslice((0, 0, 100, 100), start=90, end=90 + progress_angle, fill=255)
+
+        # Apply the progress mask to the rank card
+        rank_card.paste(ImageOps.colorize(progress_mask, (0, 255, 0), (0, 255, 0)), (20, 70), progress_mask)
 
         # Add text for balance
         font = ImageFont.load_default()  # You can choose a different font
