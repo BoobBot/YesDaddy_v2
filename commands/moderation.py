@@ -225,7 +225,7 @@ class Moderation(commands.Cog):
 
         if nsfw_channel_names:
             nsfw_channel_names_str = "\n".join(nsfw_channel_names)
-            description = f"Age-restricted channels: {nsfw_channel_names_str}"
+            description = f"Age-restricted channels: \n{nsfw_channel_names_str}"
             em = discord.Embed(title="NSFW Channel List", description=description)
             await ctx.reply(embed=em)
 
