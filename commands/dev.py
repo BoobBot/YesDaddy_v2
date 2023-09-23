@@ -64,7 +64,7 @@ class Dev(commands.Cog):
         await ctx.send(file=discord.File(rank_card_bytesio, filename="rank_card.png"))
 
 
-@commands.command(name="supporttest", description="????")
+    @commands.command(name="supporttest", description="????")
     @commands.is_owner()
     async def testing(self, ctx):
 
