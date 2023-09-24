@@ -33,6 +33,7 @@ class Dev(commands.Cog):
         user_avatar_url = ctx.author.avatar.url
         user_xp = 500  # Replace with user's XP
         user_balance = 1000  # Replace with user's balance
+        max_xp = 1000
 
         response = await self.bot.web_client.get(user_avatar_url)
         image_data = await response.read()
@@ -50,14 +51,14 @@ class Dev(commands.Cog):
         rank_card.paste(user_avatar, (20, 70), mask)
 
         # Calculate the angle for the circular progress bar
-        progress_angle = 360 * (user_xp / 1500)  # Calculate angle based on XP progress
+        progress_angle = 360 * (user_xp / max_xp)  # Calculate angle based on XP progress
 
         # Draw the circular progress bar
         draw_progress_bar = ImageDraw.Draw(rank_card)
         x0, y0, x1, y1 = (20, 70, 120, 170)  # Coordinates for the progress bar bounding box
         start_angle = 90  # Angle to start drawing from
         end_angle = start_angle + progress_angle
-        for angle in range(start_angle, end_angle):
+        for angle in range(start_angle, int(end_angle)):
             x = int(x0 + (x1 - x0) * math.cos(math.radians(angle)))
             y = int(y0 + (y1 - y0) * math.sin(math.radians(angle)))
             draw_progress_bar.point((x, y), fill=(0, 255, 0))
