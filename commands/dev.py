@@ -80,9 +80,12 @@ class Dev(commands.Cog):
         #max_xp = 1000
 
         # Load user avatar from URL and resize it
-        avatar_url = user.avatar.with_size(512).url
+        target_size = 512
+        avatar_url = user.avatar.with_size(target_size).url
         image_bytes = await (await self.bot.web_client.get(avatar_url)).read()
-        user_avatar = Image.open(BytesIO(image_bytes)).convert('RGBA')  # ensure we load this with an alpha channel
+        user_avatar = Image.open(BytesIO(image_bytes)) \
+            .convert('RGBA') \
+            .resize((target_size, target_size), resample=Image.LANCZOS)  # ensure we load this with an alpha channel
 
         base = Image.new("RGBA", (300, 150))
         filtered = user_avatar.copy().filter(ImageFilter.GaussianBlur(radius=10))
