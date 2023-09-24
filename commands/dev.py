@@ -68,7 +68,7 @@ class Dev(commands.Cog):
         text_width, text_height = draw.textsize(text, font=font)
         draw.text((160, 110), text, fill=(0, 0, 0), font=font)
 
-        rank_card_bytesio = BytesIO()
+    rank_card_bytesio = BytesIO()
         rank_card.save(rank_card_bytesio, format="PNG")
         rank_card_bytesio.seek(0)
         await ctx.send(file=discord.File(rank_card_bytesio, filename="rank_card.png"))
