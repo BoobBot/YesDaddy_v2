@@ -91,10 +91,10 @@ class Dev(commands.Cog):
         filtered = user_avatar.copy().filter(ImageFilter.GaussianBlur(radius=10))
         base.paste(filtered, (-int((user_avatar.width / 2) - (base.width / 2)), -int((user_avatar.height / 2) - (base.height / 2))), user_avatar)
 
-        self.arc_bar(img=base, xy=(10, 10), size=(140, 140), progress_pc=100,
+        self.arc_bar(img=base, xy=(10, 10), size=(135, 135), progress_pc=100,
                      width=5, fill=(255, 255, 255))
 
-        self.arc_bar(img=base, xy=(10, 10), size=(140, 140), progress_pc=(user_xp / max_xp) * 100,
+        self.arc_bar(img=base, xy=(10, 10), size=(135, 135), progress_pc=(user_xp / max_xp) * 100,
                      width=5, fill=(0, 191, 255))
 
         avatar_circle = user_avatar.copy()
