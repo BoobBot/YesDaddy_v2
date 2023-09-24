@@ -49,15 +49,21 @@ class Dev(commands.Cog):
         rank_card.paste(user_avatar, (20, 70), mask)
 
         # Calculate the angle for the circular progress bar
-        progress_angle = 360 * (user_xp / 1000)  # Calculate angle based on XP progress
+        progress_angle = 360 * (user_xp / max_xp)  # Calculate angle based on XP progress
 
-        # Create a mask for the circular progress bar
-        progress_mask = Image.new("L", (100, 100), 0)
-        draw_progress_mask = ImageDraw.Draw(progress_mask)
-        draw_progress_mask.pieslice((0, 0, 100, 100), start=90, end=90 + progress_angle, fill=255)
+        # Create a transparent circular progress bar
+        progress_bar = Image.new("RGBA", (100, 100))
+        draw_progress_bar = ImageDraw.Draw(progress_bar)
+        draw_progress_bar.pieslice((0, 0, 100, 100), start=90, end=90 + progress_angle, fill=(0, 255, 0, 128))
 
-        # Apply the progress mask to the rank card
-        rank_card.paste(ImageOps.colorize(progress_mask, (0, 255, 0), (0, 255, 0)), (20, 70), progress_mask)
+        # Paste the progress bar onto the rank card
+        rank_card.paste(progress_bar, (20, 70), progress_bar)
+
+        # Add text for balance
+        font = ImageFont.load_default()  # You can choose a different font
+        text = f"Balance: {user_balance}"
+        text_width, text_height = draw.textsize(text, font=font)
+        draw.text((160, 110), text, fill=(0, 0, 0), font=font)
 
         # Add text for balance
         font = ImageFont.load_default()  # You can choose a different font
