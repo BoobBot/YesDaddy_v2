@@ -80,7 +80,7 @@ class Dev(commands.Cog):
         #max_xp = 1000
 
         # Load user avatar from URL and resize it
-        target_size = 512
+        target_size = 1024
         avatar_url = user.avatar.with_size(target_size).url
         image_bytes = await (await self.bot.web_client.get(avatar_url)).read()
         user_avatar = Image.open(BytesIO(image_bytes)) \
@@ -92,10 +92,10 @@ class Dev(commands.Cog):
         base.paste(filtered, (-int((user_avatar.width / 2) - (base.width / 2)), -int((user_avatar.height / 2) - (base.height / 2))), user_avatar)
 
         self.arc_bar(img=base, xy=(30, 30), size=(270, 270), progress_pc=100,
-                     width=5, fill=(255, 255, 255))
+                     width=10, fill=(255, 255, 255))
 
         self.arc_bar(img=base, xy=(30, 30), size=(270, 270), progress_pc=(user_xp / max_xp) * 100,
-                     width=5, fill=(0, 191, 255))
+                     width=10, fill=(0, 191, 255))
 
         avatar_circle = user_avatar.copy()
         self.mask_ellipsis(avatar_circle)  # Apply mask before resizing as this yields better quality edges after applying mask
