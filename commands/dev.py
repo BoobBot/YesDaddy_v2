@@ -53,15 +53,15 @@ class Dev(commands.Cog):
         # Calculate the angle for the circular progress bar
         progress_angle = 360 * (user_xp / max_xp)  # Calculate angle based on XP progress
 
-        # Draw the circular progress bar
-        draw_progress_bar = ImageDraw.Draw(rank_card)
-        x0, y0, x1, y1 = (20, 70, 120, 170)  # Coordinates for the progress bar bounding box
-        start_angle = 90  # Angle to start drawing from
+        # Create a transparent overlay image for the progress bar
+        overlay = Image.new("RGBA", (100, 100), (0, 0, 0, 0))
+        draw_overlay = ImageDraw.Draw(overlay)
+        start_angle = 90  # Start at the top (90 degrees)
         end_angle = start_angle + progress_angle
-        for angle in range(start_angle, int(end_angle)):
-            x = int(x0 + (x1 - x0) * math.cos(math.radians(angle)))
-            y = int(y0 + (y1 - y0) * math.sin(math.radians(angle)))
-            draw_progress_bar.point((x, y), fill=(0, 255, 0))
+        draw_overlay.pieslice((0, 0, 100, 100), start_angle, end_angle, fill=(0, 255, 0, 128), outline=None)
+
+        # Composite the overlay onto the rank card
+        rank_card.paste(overlay, (20, 70), overlay)
 
         # Add text for balance
         font = ImageFont.load_default()  # You can choose a different font
