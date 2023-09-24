@@ -61,19 +61,20 @@ class Dev(commands.Cog):
             await self.bot.reload_extension(f'{cog}')
         await ctx.send('reloaded')
 
-
-    @commands.command(name="test2", description="????")
-    @commands.is_owner()
+    @commands.command(name="rank", description="Generate a rank card")
     async def rank(self, ctx):
-        user_avatar_url = ctx.author.avatar.url
         user_xp = 500  # Replace with user's XP
         user_balance = 1000  # Replace with user's balance
         max_xp = 1000
 
-        response = await self.bot.web_client.get(user_avatar_url)
+        # Fetch user's avatar URL
+        user_avatar_url = ctx.author.avatar.url
+
+        # Load user avatar from URL and resize it
+        response = await self.bot.session.get(user_avatar_url)
         image_data = await response.read()
         user_avatar = Image.open(BytesIO(image_data))
-        user_avatar = user_avatar.resize((180, 180))
+        user_avatar = user_avatar.resize((100, 100))  # Adjust the size as needed
 
         # Create a blank 240x400 image with a white background
         rank_card = Image.new("RGB", (240, 400), (255, 255, 255))
@@ -89,7 +90,7 @@ class Dev(commands.Cog):
         draw.pieslice((20, 20, 220, 220), start=90, end=90 + progress_angle, fill=(0, 191, 255))
 
         # Paste the user avatar over the progress bar
-        rank_card.paste(user_avatar, (30, 30), user_avatar)
+        rank_card.paste(user_avatar, (70, 70))  # Adjust the position as needed
 
         # Add text for XP and Balance
         font = ImageFont.load_default()  # You can choose a different font
@@ -97,13 +98,16 @@ class Dev(commands.Cog):
         balance_text = f"Balance: {user_balance}"
         # Add other text as needed
 
-        draw.text((30, 240), xp_text, fill=(0, 0, 0), font=font)
-        draw.text((30, 260), balance_text, fill=(0, 0, 0), font=font)
+        draw.text((160, 240), xp_text, fill=(0, 0, 0), font=font)  # Adjust the position as needed
+        draw.text((160, 260), balance_text, fill=(0, 0, 0), font=font)  # Adjust the position as needed
         # Add other text as needed
 
+        # Save the rank card as an image
         rank_card_bytesio = BytesIO()
         rank_card.save(rank_card_bytesio, format="PNG")
         rank_card_bytesio.seek(0)
+
+        # Send the rank card to the user
         await ctx.send(file=discord.File(rank_card_bytesio, filename="rank_card.png"))
 
 
