@@ -87,19 +87,19 @@ class Dev(commands.Cog):
             .convert('RGBA') \
             .resize((target_size, target_size), resample=Image.LANCZOS)  # ensure we load this with an alpha channel
 
-        base = Image.new("RGBA", (300, 150))
+        base = Image.new("RGBA", (300, 160))
         filtered = user_avatar.copy().filter(ImageFilter.GaussianBlur(radius=10))
         base.paste(filtered, (-int((user_avatar.width / 2) - (base.width / 2)), -int((user_avatar.height / 2) - (base.height / 2))), user_avatar)
 
-        draw = ImageDraw.Draw(base)
-        draw.ellipse((20, 20, 120, 120), fill=(255, 255, 255))
+        self.arc_bar(img=base, xy=(20, 20), size=(140, 140), progress_pc=100,
+                     width=10, fill=(255, 255, 255))
 
-        self.arc_bar(img=base, xy=(20, 20), size=(120, 120), progress_pc=(user_xp / max_xp) * 100,
-                     width=15, fill=(0, 191, 255))
+        self.arc_bar(img=base, xy=(20, 20), size=(140, 140), progress_pc=(user_xp / max_xp) * 100,
+                     width=10, fill=(0, 191, 255))
 
         avatar_circle = user_avatar.copy()
         self.mask_ellipsis(avatar_circle)  # Apply mask before resizing as this yields better quality edges after applying mask
-        avatar_circle = avatar_circle.resize((80, 80), resample=Image.LANCZOS)
+        avatar_circle = avatar_circle.resize((100, 100), resample=Image.LANCZOS)
         base.paste(avatar_circle, (30, 30), avatar_circle)
 
         # Add text for XP and Balance
@@ -108,6 +108,7 @@ class Dev(commands.Cog):
         balance_text = f"Balance: {user_balance}"
         # Add other text as needed
 
+        draw = ImageDraw.Draw(base)
         draw.text((150, 40), xp_text, fill=(0, 0, 0), font=font)  # Adjust the position as needed
         draw.text((150, 60), balance_text, fill=(0, 0, 0), font=font)  # Adjust the position as needed
         # Add other text as needed
