@@ -50,7 +50,7 @@ class Dev(commands.Cog):
         rank_card.paste(user_avatar, (20, 70), mask)
 
         # Calculate the angle for the circular progress bar
-        progress_angle = 360 * (user_xp / max_xp)  # Calculate angle based on XP progress
+        progress_angle = 360 * (user_xp / 1500)  # Calculate angle based on XP progress
 
         # Draw the circular progress bar
         draw_progress_bar = ImageDraw.Draw(rank_card)
