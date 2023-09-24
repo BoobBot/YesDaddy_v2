@@ -57,6 +57,7 @@ class Bot(commands.Bot):
         self.add_view(RuleButton())
         self.add_view(support_view.SupportTicketView())
         self.add_view(support_channel_view.SupportChannelView())
+        self.remove_command('help')
 
         for extension in self.initial_extensions:
             self.log.info(f"Loading {extension}")
