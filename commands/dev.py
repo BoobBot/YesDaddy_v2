@@ -49,7 +49,7 @@ class Dev(commands.Cog):
         rank_card.paste(user_avatar, (20, 70), mask)
 
         # Calculate the angle for the circular progress bar
-        progress_angle = 360 * (user_xp / max_xp)  # Calculate angle based on XP progress
+        progress_angle = 360 * (user_xp / 1000)  # Calculate angle based on XP progress
 
         # Create a transparent circular progress bar
         progress_bar = Image.new("RGBA", (100, 100))
