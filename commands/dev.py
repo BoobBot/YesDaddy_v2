@@ -99,7 +99,7 @@ class Dev(commands.Cog):
 
         avatar_circle = user_avatar.copy()
         self.mask_ellipsis(avatar_circle)  # Apply mask before resizing as this yields better quality edges after applying mask
-        avatar_circle = avatar_circle.resize((90, 90), resample=Image.LANCZOS)
+        avatar_circle = avatar_circle.resize((100, 100), resample=Image.LANCZOS)
         base.paste(avatar_circle, (20, 20), avatar_circle)
 
         # Add text for XP and Balance
