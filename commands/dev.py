@@ -71,7 +71,7 @@ class Dev(commands.Cog):
                 progress_pc: int, width: int,
                 fill: Tuple[int, ...]):
         draw = ImageDraw.Draw(img)
-        draw.arc((xy, size), start=-90, end=-90 + min(3.6 * progress_pc, 100), width=width, fill=fill)
+        draw.arc((xy, size), start=-90, end=-90 + 3.6 * min(progress_pc, 100), width=width, fill=fill)
 
     @commands.command(name="rank", description="Generate a rank card")
     async def rank(self, ctx, user_xp: int, max_xp: int):
