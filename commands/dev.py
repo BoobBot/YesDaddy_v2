@@ -44,24 +44,21 @@ class Dev(commands.Cog):
         rank_card = Image.new("RGB", (400, 240), (255, 255, 255))
         draw = ImageDraw.Draw(rank_card)
 
-        # Draw circular user avatar on the left
-        mask = Image.new("L", user_avatar.size, 0)
-        draw_mask = ImageDraw.Draw(mask)
-        draw_mask.ellipse((0, 0, 100, 100), fill=255)
-        rank_card.paste(user_avatar, (20, 70), mask)
+        # Create a transparent image for the circular progress bar
+        progress_bar = Image.new("RGBA", (100, 100), (0, 0, 0, 0))
+        draw_progress = ImageDraw.Draw(progress_bar)
 
         # Calculate the angle for the circular progress bar
         progress_angle = 360 * (user_xp / max_xp)  # Calculate angle based on XP progress
 
-        # Create a transparent overlay image for the progress bar
-        overlay = Image.new("RGBA", (100, 100), (0, 0, 0, 0))
-        draw_overlay = ImageDraw.Draw(overlay)
-        start_angle = 90  # Start at the top (90 degrees)
-        end_angle = start_angle + progress_angle
-        draw_overlay.pieslice((0, 0, 100, 100), start_angle, end_angle, fill=(0, 255, 0, 128), outline=None)
+        # Draw the circular progress bar
+        draw_progress.pieslice((0, 0, 100, 100), start=0, end=progress_angle, fill=(0, 255, 0, 128))
 
-        # Composite the overlay onto the rank card
-        rank_card.paste(overlay, (20, 70), overlay)
+        # Paste the progress bar on the avatar image
+        user_avatar.paste(progress_bar, (0, 0), progress_bar)
+
+        # Paste the avatar onto the rank card
+        rank_card.paste(user_avatar, (20, 70))
 
         # Add text for balance
         font = ImageFont.load_default()  # You can choose a different font
