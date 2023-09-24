@@ -73,33 +73,33 @@ class Dev(commands.Cog):
         response = await self.bot.web_client.get(user_avatar_url)
         image_data = await response.read()
         user_avatar = Image.open(BytesIO(image_data))
-        ser_avatar = user_avatar.resize((100, 100))  # Resize user avatar
+        user_avatar = user_avatar.resize((180, 180))
 
-        # Create a blank 400x240 image with a white background
-        rank_card = Image.new("RGB", (400, 240), (255, 255, 255))
+        # Create a blank 240x400 image with a white background
+        rank_card = Image.new("RGB", (240, 400), (255, 255, 255))
         draw = ImageDraw.Draw(rank_card)
 
-        # Create a transparent image for the circular progress bar
-        progress_bar = Image.new("RGBA", (100, 100), (0, 0, 0, 0))
-        draw_progress = ImageDraw.Draw(progress_bar)
+        # Create a light gray circle to represent the empty portion of the progress bar
+        draw.ellipse((20, 20, 220, 220), fill=(200, 200, 200))
 
         # Calculate the angle for the circular progress bar
         progress_angle = 360 * (user_xp / max_xp)  # Calculate angle based on XP progress
 
-        # Draw the circular progress bar
-        draw_progress.pieslice((0, 0, 100, 100), start=0, end=progress_angle, fill=(0, 255, 0, 128))
+        # Create a light blue circle for the progress bar
+        draw.pieslice((20, 20, 220, 220), start=90, end=90 + progress_angle, fill=(0, 191, 255))
 
-        # Paste the progress bar on the avatar image
-        user_avatar.paste(progress_bar, (0, 0), progress_bar)
+        # Paste the user avatar over the progress bar
+        rank_card.paste(user_avatar, (30, 30), user_avatar)
 
-        # Paste the avatar onto the rank card
-        rank_card.paste(user_avatar, (20, 70))
-
-        # Add text for balance
+        # Add text for XP and Balance
         font = ImageFont.load_default()  # You can choose a different font
-        text = f"Balance: {user_balance}"
-        text_width, text_height = draw.textsize(text, font=font)
-        draw.text((160, 110), text, fill=(0, 0, 0), font=font)
+        xp_text = f"XP: {user_xp}"
+        balance_text = f"Balance: {user_balance}"
+        # Add other text as needed
+
+        draw.text((30, 240), xp_text, fill=(0, 0, 0), font=font)
+        draw.text((30, 260), balance_text, fill=(0, 0, 0), font=font)
+        # Add other text as needed
 
         rank_card_bytesio = BytesIO()
         rank_card.save(rank_card_bytesio, format="PNG")
