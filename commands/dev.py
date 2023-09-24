@@ -61,6 +61,12 @@ class Dev(commands.Cog):
             await self.bot.reload_extension(f'{cog}')
         await ctx.send('reloaded')
 
+    def mask_ellipsis(self, img: Image, offset: int = 0):
+        img_mask = Image.new('L', img.size, 0)
+        mask = ImageDraw.Draw(img_mask)
+        mask.ellipse((offset, offset, img_mask.width - offset, img_mask.height - offset), fill=255)
+        img.putalpha(img_mask)
+
     def arc_bar(self, img: Image, xy: Tuple[int, int], size: Tuple[int, int],
                 progress_pc: Union[int, float], width: int,
                 fill: Tuple[int, ...]):
@@ -95,13 +101,8 @@ class Dev(commands.Cog):
         self.arc_bar(img=base, xy=(20, 20), size=(120, 120), progress_pc=(user_xp / max_xp),
                      width=5, fill=(0, 191, 255))
 
-        # Create a circular mask for the user avatar
-        mask = Image.new("L", user_avatar_downsized.size, 0)
-        draw_mask = ImageDraw.Draw(mask)
-        draw_mask.ellipse((10, 10, 80, 80), fill=255)
-
-        # Paste the user avatar over the progress bar using the circular mask
-        base.paste(user_avatar, (30, 30), mask)
+        self.mask_ellipsis(user_avatar_downsized)
+        base.paste(user_avatar_downsized, (30, 30), user_avatar_downsized)
 
         # Add text for XP and Balance
         font = ImageFont.load_default()  # You can choose a different font
