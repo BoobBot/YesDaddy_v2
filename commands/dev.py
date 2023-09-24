@@ -85,7 +85,8 @@ class Dev(commands.Cog):
         user_avatar = Image.open(BytesIO(image_bytes)).convert('RGBA')  # ensure we load this with an alpha channel
 
         base = Image.new("RGBA", (300, 150))
-        base.paste(user_avatar, (-256, 0), user_avatar.filter(ImageFilter.GaussianBlur(radius=10)))
+        filtered = user_avatar.copy().filter(ImageFilter.GaussianBlur(radius=10))
+        base.paste(filtered, ((user_avatar.width / 2) - (base.width / 2), (user_avatar.height / 2) - (base.height / 2)), user_avatar)
 
         draw = ImageDraw.Draw(base)
         draw.ellipse((20, 20, 120, 120), fill=(255, 255, 255))
