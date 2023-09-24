@@ -87,20 +87,20 @@ class Dev(commands.Cog):
             .convert('RGBA') \
             .resize((target_size, target_size), resample=Image.LANCZOS)  # ensure we load this with an alpha channel
 
-        base = Image.new("RGBA", (300, 150))
+        base = Image.new("RGBA", (600, 300))  # 300, 150
         filtered = user_avatar.copy().filter(ImageFilter.GaussianBlur(radius=10))
         base.paste(filtered, (-int((user_avatar.width / 2) - (base.width / 2)), -int((user_avatar.height / 2) - (base.height / 2))), user_avatar)
 
-        self.arc_bar(img=base, xy=(15, 15), size=(135, 135), progress_pc=100,
+        self.arc_bar(img=base, xy=(30, 30), size=(270, 270), progress_pc=100,
                      width=5, fill=(255, 255, 255))
 
-        self.arc_bar(img=base, xy=(15, 15), size=(135, 135), progress_pc=(user_xp / max_xp) * 100,
+        self.arc_bar(img=base, xy=(30, 30), size=(270, 270), progress_pc=(user_xp / max_xp) * 100,
                      width=5, fill=(0, 191, 255))
 
         avatar_circle = user_avatar.copy()
         self.mask_ellipsis(avatar_circle)  # Apply mask before resizing as this yields better quality edges after applying mask
-        avatar_circle = avatar_circle.resize((110, 110), resample=Image.LANCZOS)
-        base.paste(avatar_circle, (20, 20), avatar_circle)
+        avatar_circle = avatar_circle.resize((220, 220), resample=Image.LANCZOS)
+        base.paste(avatar_circle, (40, 40), avatar_circle)
 
         # Add text for XP and Balance
         font = ImageFont.load_default()  # You can choose a different font
@@ -113,7 +113,9 @@ class Dev(commands.Cog):
         draw.text((150, 60), balance_text, fill=(0, 0, 0), font=font)  # Adjust the position as needed
         # Add other text as needed
 
-        # Save the rank card as an image
+        # Image is rendered at 2x resolution to produce a higher quality output
+        # This is far better than rendering natively at 300, 150, as it'd look pixelated. Downsampling is better here.  
+        base = base.resize((300, 150), resample=Image.LANCZOS)
         img_buffer = BytesIO()
         base.save(img_buffer, format="PNG")
         img_buffer.seek(0)
