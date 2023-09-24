@@ -2,6 +2,7 @@ import contextlib
 import datetime
 import inspect
 import io
+import math
 import os
 import re
 import subprocess
@@ -49,21 +50,17 @@ class Dev(commands.Cog):
         rank_card.paste(user_avatar, (20, 70), mask)
 
         # Calculate the angle for the circular progress bar
-        progress_angle = 360 * (user_xp / 1000)  # Calculate angle based on XP progress
+        progress_angle = 360 * (user_xp / max_xp)  # Calculate angle based on XP progress
 
-        # Create a transparent circular progress bar
-        progress_bar = Image.new("RGBA", (100, 100))
-        draw_progress_bar = ImageDraw.Draw(progress_bar)
-        draw_progress_bar.pieslice((0, 0, 100, 100), start=90, end=90 + progress_angle, fill=(0, 255, 0, 128))
-
-        # Paste the progress bar onto the rank card
-        rank_card.paste(progress_bar, (20, 70), progress_bar)
-
-        # Add text for balance
-        font = ImageFont.load_default()  # You can choose a different font
-        text = f"Balance: {user_balance}"
-        text_width, text_height = draw.textsize(text, font=font)
-        draw.text((160, 110), text, fill=(0, 0, 0), font=font)
+        # Draw the circular progress bar
+        draw_progress_bar = ImageDraw.Draw(rank_card)
+        x0, y0, x1, y1 = (20, 70, 120, 170)  # Coordinates for the progress bar bounding box
+        start_angle = 90  # Angle to start drawing from
+        end_angle = start_angle + progress_angle
+        for angle in range(start_angle, end_angle):
+            x = int(x0 + (x1 - x0) * math.cos(math.radians(angle)))
+            y = int(y0 + (y1 - y0) * math.sin(math.radians(angle)))
+            draw_progress_bar.point((x, y), fill=(0, 255, 0))
 
         # Add text for balance
         font = ImageFont.load_default()  # You can choose a different font
