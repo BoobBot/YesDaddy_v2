@@ -76,21 +76,26 @@ class Dev(commands.Cog):
         user_avatar = Image.open(BytesIO(image_data))
         user_avatar = user_avatar.resize((100, 100))  # Adjust the size as needed
 
-        # Create a blank 240x400 image with a white background
-        rank_card = Image.new("RGB", (240, 400), (255, 255, 255))
+        # Create a blank 300x150 image with a white background
+        rank_card = Image.new("RGB", (300, 150), (255, 255, 255))
         draw = ImageDraw.Draw(rank_card)
 
         # Create a light gray circle to represent the empty portion of the progress bar
-        draw.ellipse((20, 20, 220, 220), fill=(200, 200, 200))
+        draw.ellipse((20, 20, 120, 120), fill=(200, 200, 200))
 
         # Calculate the angle for the circular progress bar
         progress_angle = 360 * (user_xp / max_xp)  # Calculate angle based on XP progress
 
         # Create a light blue circle for the progress bar
-        draw.pieslice((20, 20, 220, 220), start=90, end=90 + progress_angle, fill=(0, 191, 255))
+        draw.pieslice((20, 20, 120, 120), start=90, end=90 + progress_angle, fill=(0, 191, 255))
 
-        # Paste the user avatar over the progress bar
-        rank_card.paste(user_avatar, (70, 70))  # Adjust the position as needed
+        # Create a circular mask for the user avatar
+        mask = Image.new("L", user_avatar.size, 0)
+        draw_mask = ImageDraw.Draw(mask)
+        draw_mask.ellipse((0, 0, 100, 100), fill=255)
+
+        # Paste the user avatar over the progress bar using the circular mask
+        rank_card.paste(user_avatar, (20, 20), mask)
 
         # Add text for XP and Balance
         font = ImageFont.load_default()  # You can choose a different font
@@ -98,8 +103,8 @@ class Dev(commands.Cog):
         balance_text = f"Balance: {user_balance}"
         # Add other text as needed
 
-        draw.text((160, 240), xp_text, fill=(0, 0, 0), font=font)  # Adjust the position as needed
-        draw.text((160, 260), balance_text, fill=(0, 0, 0), font=font)  # Adjust the position as needed
+        draw.text((150, 40), xp_text, fill=(0, 0, 0), font=font)  # Adjust the position as needed
+        draw.text((150, 60), balance_text, fill=(0, 0, 0), font=font)  # Adjust the position as needed
         # Add other text as needed
 
         # Save the rank card as an image
