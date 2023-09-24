@@ -74,13 +74,13 @@ class Dev(commands.Cog):
         draw.arc((xy, size), start=-90, end=-90 + 3.6 * min(progress_pc, 100), width=width, fill=fill)
 
     @commands.command(name="rank", description="Generate a rank card")
-    async def rank(self, ctx, user_xp: int, max_xp: int):
+    async def rank(self, ctx, user: discord.Member, user_xp: int, max_xp: int):
         #user_xp = 500  # Replace with user's XP
         user_balance = 1000  # Replace with user's balance
         #max_xp = 1000
 
         # Load user avatar from URL and resize it
-        avatar_url = ctx.author.avatar.with_size(512).url
+        avatar_url = user.avatar.with_size(512).url
         image_bytes = await (await self.bot.web_client.get(avatar_url)).read()
         user_avatar = Image.open(BytesIO(image_bytes)).convert('RGBA')  # ensure we load this with an alpha channel
 
