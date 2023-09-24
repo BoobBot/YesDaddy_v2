@@ -83,26 +83,20 @@ class Dev(commands.Cog):
         avatar_url = ctx.author.avatar.with_size(512).url
         image_bytes = await (await self.bot.web_client.get(avatar_url)).read()
         user_avatar = Image.open(BytesIO(image_bytes)).convert('RGBA')  # ensure we load this with an alpha channel
-        user_avatar_downsized = user_avatar.resize((80, 80), resample=Image.LANCZOS)  # Adjust the size as needed
 
         base = Image.new("RGBA", (300, 150))
         base.paste(user_avatar, (-256, 0), user_avatar.filter(ImageFilter.GaussianBlur(radius=5)))
 
         draw = ImageDraw.Draw(base)
-        draw.ellipse((20, 20, 100, 100), fill=(255, 255, 255))
-
-        # Calculate the angle for the circular progress bar
-        # progress_angle = 360 * (user_xp / max_xp)  # Calculate angle based on XP progress
-
-        # # Create a light blue circle for the progress bar
-        # draw.pieslice((20, 20, 120, 120), start=90, end=90 + progress_angle, fill=(0, 191, 255, 255),
-        #               outline=(0, 0, 0, 255), width=2)
+        draw.ellipse((20, 20, 120, 120), fill=(255, 255, 255))
 
         self.arc_bar(img=base, xy=(20, 20), size=(120, 120), progress_pc=(user_xp / max_xp),
                      width=5, fill=(0, 191, 255))
 
-        self.mask_ellipsis(user_avatar_downsized)
-        base.paste(user_avatar_downsized, (30, 30), user_avatar_downsized)
+        avatar_circle = user_avatar.copy()
+        self.mask_ellipsis(avatar_circle)  # Apply mask before resizing as this yields better quality edges after applying mask
+        avatar_circle = avatar_circle.resize((80, 80), resample=Image.LANCZOS)
+        base.paste(avatar_circle, (30, 30), avatar_circle)
 
         # Add text for XP and Balance
         font = ImageFont.load_default()  # You can choose a different font
