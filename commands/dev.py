@@ -68,10 +68,10 @@ class Dev(commands.Cog):
         img.putalpha(img_mask)
 
     def arc_bar(self, img: Image, xy: Tuple[int, int], size: Tuple[int, int],
-                progress_pc: Union[int, float], width: int,
+                progress_pc: int, width: int,
                 fill: Tuple[int, ...]):
         draw = ImageDraw.Draw(img)
-        draw.arc((xy, size), start=-90, end=-90 + (3.6 * progress_pc), width=width, fill=fill)
+        draw.arc((xy, size), start=-90, end=-90 + min(3.6 * progress_pc, 100), width=width, fill=fill)
 
     @commands.command(name="rank", description="Generate a rank card")
     async def rank(self, ctx, user_xp: int, max_xp: int):
@@ -90,8 +90,8 @@ class Dev(commands.Cog):
         draw = ImageDraw.Draw(base)
         draw.ellipse((20, 20, 120, 120), fill=(255, 255, 255))
 
-        self.arc_bar(img=base, xy=(20, 20), size=(120, 120), progress_pc=(user_xp / max_xp),
-                     width=5, fill=(0, 191, 255))
+        self.arc_bar(img=base, xy=(20, 20), size=(120, 120), progress_pc=(user_xp / max_xp) * 100,
+                     width=15, fill=(0, 191, 255))
 
         avatar_circle = user_avatar.copy()
         self.mask_ellipsis(avatar_circle)  # Apply mask before resizing as this yields better quality edges after applying mask
