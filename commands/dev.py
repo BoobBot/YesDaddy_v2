@@ -86,7 +86,7 @@ class Dev(commands.Cog):
 
         base = Image.new("RGBA", (300, 150))
         filtered = user_avatar.copy().filter(ImageFilter.GaussianBlur(radius=10))
-        base.paste(filtered, (int((user_avatar.width / 2) - (base.width / 2)), int((user_avatar.height / 2) - (base.height / 2))), user_avatar)
+        base.paste(filtered, (-int((user_avatar.width / 2) - (base.width / 2)), -int((user_avatar.height / 2) - (base.height / 2))), user_avatar)
 
         draw = ImageDraw.Draw(base)
         draw.ellipse((20, 20, 120, 120), fill=(255, 255, 255))
