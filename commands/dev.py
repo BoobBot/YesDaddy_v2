@@ -10,19 +10,19 @@ import sys
 import textwrap
 import traceback
 from io import BytesIO
-from typing import Optional, Literal
+from typing import Literal, Optional, Union, Tuple
 
 import discord
 import psutil
-
 from discord.ext import commands
 from discord.ext.commands import Context, Greedy
+from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 from views import support_channel_view
 from views.rule_button_view import RuleButton
 from views.verification_view import VerificationView
-from PIL import Image, ImageDraw, ImageFont, ImageOps
-from io import BytesIO
+
+
 class Dev(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -61,42 +61,47 @@ class Dev(commands.Cog):
             await self.bot.reload_extension(f'{cog}')
         await ctx.send('reloaded')
 
-    @commands.command(name="rank", description="Generate a rank card")
-    async def rank(self, ctx):
-        user_xp = 500  # Replace with user's XP
-        user_balance = 1000  # Replace with user's balance
-        max_xp = 1000
+    def arc_bar(self, img: Image, xy: Tuple[int, int], size: Tuple[int, int],
+                progress_pc: Union[int, float], width: int,
+                fill: Tuple[int, ...]):
+        draw = ImageDraw.Draw(img)
+        draw.arc((xy, size), start=-90, end=-90 + (3.6 * progress_pc), width=width, fill=fill)
 
-        # Fetch user's avatar URL
-        user_avatar_url = ctx.author.avatar.url
+    @commands.command(name="rank", description="Generate a rank card")
+    async def rank(self, ctx, user_xp: int, max_xp: int):
+        #user_xp = 500  # Replace with user's XP
+        user_balance = 1000  # Replace with user's balance
+        #max_xp = 1000
 
         # Load user avatar from URL and resize it
-        response = await self.bot.web_client.get(user_avatar_url)
-        image_data = await response.read()
-        user_avatar = Image.open(BytesIO(image_data))
-        user_avatar = user_avatar.resize((80, 80))  # Adjust the size as needed
+        avatar_url = ctx.author.avatar.with_size(512).url
+        image_bytes = await (await self.bot.web_client.get(avatar_url)).read()
+        user_avatar = Image.open(BytesIO(image_bytes)).convert('RGBA')  # ensure we load this with an alpha channel
+        user_avatar_downsized = user_avatar.resize((80, 80), resample=Image.LANCZOS)  # Adjust the size as needed
 
-        # Create a blank 300x150 image with a transparent background
-        rank_card = Image.new("RGBA", (300, 150), (255, 255, 255, 0))
-        draw = ImageDraw.Draw(rank_card)
+        base = Image.new("RGBA", (300, 150))
+        base.paste(user_avatar, (-256, 0), user_avatar.filter(ImageFilter.GaussianBlur(radius=5)))
 
-        # Create a light gray circle to represent the empty portion of the progress bar
-        draw.ellipse((20, 20, 120, 120), fill=(200, 200, 200, 255))
+        draw = ImageDraw.Draw(base)
+        draw.ellipse((20, 20, 100, 100), fill=(255, 255, 255))
 
         # Calculate the angle for the circular progress bar
-        progress_angle = 360 * (user_xp / max_xp)  # Calculate angle based on XP progress
+        # progress_angle = 360 * (user_xp / max_xp)  # Calculate angle based on XP progress
 
-        # Create a light blue circle for the progress bar
-        draw.pieslice((20, 20, 120, 120), start=90, end=90 + progress_angle, fill=(0, 191, 255, 255),
-                      outline=(0, 0, 0, 255), width=2)
+        # # Create a light blue circle for the progress bar
+        # draw.pieslice((20, 20, 120, 120), start=90, end=90 + progress_angle, fill=(0, 191, 255, 255),
+        #               outline=(0, 0, 0, 255), width=2)
+
+        self.arc_bar(img=base, xy=(20, 20), size=(120, 120), progress_pc=(user_xp / max_xp),
+                     width=5, fill=(0, 191, 255))
 
         # Create a circular mask for the user avatar
-        mask = Image.new("L", user_avatar.size, 0)
+        mask = Image.new("L", user_avatar_downsized.size, 0)
         draw_mask = ImageDraw.Draw(mask)
-        draw_mask.ellipse((0, 0, 80, 80), fill=255)
+        draw_mask.ellipse((10, 10, 80, 80), fill=255)
 
         # Paste the user avatar over the progress bar using the circular mask
-        rank_card.paste(user_avatar, (30, 30), mask)
+        base.paste(user_avatar, (30, 30), mask)
 
         # Add text for XP and Balance
         font = ImageFont.load_default()  # You can choose a different font
@@ -109,12 +114,12 @@ class Dev(commands.Cog):
         # Add other text as needed
 
         # Save the rank card as an image
-        rank_card_bytesio = BytesIO()
-        rank_card.save(rank_card_bytesio, format="PNG")
-        rank_card_bytesio.seek(0)
+        img_buffer = BytesIO()
+        base.save(img_buffer, format="PNG")
+        img_buffer.seek(0)
 
         # Send the rank card to the user
-        await ctx.send(file=discord.File(rank_card_bytesio, filename="rank_card.png"))
+        await ctx.send(file=discord.File(img_buffer, filename="rank_card.png"))
 
 
     @commands.command(name="supporttest", description="????")
