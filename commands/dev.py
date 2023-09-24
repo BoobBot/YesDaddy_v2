@@ -32,7 +32,7 @@ class Dev(commands.Cog):
     @commands.command()
     async def load(self, ctx, cog):
         try:
-            self.bot.load_extension(f'{cog}')
+            await self.bot.load_extension(f'{cog}')
             await ctx.send(f'{cog} has been loaded.')
         except Exception as e:
             await ctx.send(f'Error loading {cog}: {e}')
@@ -41,7 +41,7 @@ class Dev(commands.Cog):
     @commands.command()
     async def reload(self, ctx, cog):
         try:
-            self.bot.reload_extension(f'{cog}')
+            await self.bot.reload_extension(f'{cog}')
             await ctx.send(f'{cog} has been reloaded.')
         except Exception as e:
             await ctx.send(f'Error reloading {cog}: {e}')
@@ -50,7 +50,7 @@ class Dev(commands.Cog):
     @commands.command()
     async def unload(self, ctx, cog):
         try:
-            self.bot.unload_extension(f'cogs.{cog}')
+            await self.bot.unload_extension(f'cogs.{cog}')
             await ctx.send(f'{cog} has been unloaded.')
         except Exception as e:
             await ctx.send(f'Error unloading {cog}: {e}')
@@ -58,7 +58,7 @@ class Dev(commands.Cog):
     @commands.command()
     async def reload_all(self, ctx):
         for cog in self.bot.cogs.copy():
-            self.bot.reload_extension(f'{cog}')
+            await self.bot.reload_extension(f'{cog}')
         await ctx.send('reloaded')
 
 
