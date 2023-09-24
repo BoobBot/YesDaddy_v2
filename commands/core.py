@@ -128,6 +128,12 @@ class Core(commands.Cog):
             embed.add_field(name=f"Trigger", value=f"`{reaction.get('trigger')}`")
         await ctx.reply(embed=embed)
 
+    @commands.hybrid_group(name="help", description="have a list of commands")
+    async def help(self, ctx):
+        description = "</adventure:1146773955642937375>: go on an adventure\n </chop:1146110870632530063>: chop some wood\n </fish:1146100979532570694>: go fishing"
+        em = discord.Embed(title="Commands List", description=description, colour=discord.Colour.blue())
+        await ctx.reply(embed=em)
+
 
 async def setup(bot):
     await bot.add_cog(Core(bot))
