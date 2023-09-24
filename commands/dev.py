@@ -265,9 +265,7 @@ class Dev(commands.Cog):
             # Send output to discord
             if result.returncode == 0:
                 await ctx.send(f'```{command_output}```')
-                await ctx.send(f'Git pull successful. Restarting with {sys.executable} {sys.argv}')
-                # Restart the bot
-                os.execv(sys.executable, ['python'] + sys.argv)
+                await ctx.send('Git pull successful')
             else:
                 self.bot.logger.error(
                     f'Git pull failed with error code {result.returncode} and output:\n{command_output}')
@@ -277,6 +275,17 @@ class Dev(commands.Cog):
             self.bot.logger.error(
                 f'Git pull failed with error code {e.returncode} and output:\n{e.output}')
             # if the bot is logged out, it will not be able to send the message
+            await ctx.send(f'An error occurred: {e}')
+
+    @commands.command()
+    @commands.is_owner()
+    async def restart(self, ctx):
+        try:
+            await ctx.send(f'Restarting with {sys.executable} {sys.argv}')
+            os.execv(sys.executable, ['python'] + sys.argv)
+        except subprocess.CalledProcessError as e:
+            self.bot.logger.error(
+                f'restart failed with error code {e.returncode} and output:\n{e.output}')
             await ctx.send(f'An error occurred: {e}')
 
     #
