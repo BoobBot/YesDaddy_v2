@@ -92,10 +92,10 @@ class Dev(commands.Cog):
         base.paste(filtered, (-int((user_avatar.width / 2) - (base.width / 2)), -int((user_avatar.height / 2) - (base.height / 2))), user_avatar)
 
         self.arc_bar(img=base, xy=(10, 10), size=(140, 140), progress_pc=100,
-                     width=10, fill=(255, 255, 255))
+                     width=5, fill=(255, 255, 255))
 
         self.arc_bar(img=base, xy=(10, 10), size=(140, 140), progress_pc=(user_xp / max_xp) * 100,
-                     width=10, fill=(0, 191, 255))
+                     width=5, fill=(0, 191, 255))
 
         avatar_circle = user_avatar.copy()
         self.mask_ellipsis(avatar_circle)  # Apply mask before resizing as this yields better quality edges after applying mask
