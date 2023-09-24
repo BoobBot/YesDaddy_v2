@@ -71,7 +71,7 @@ class Dev(commands.Cog):
         user_avatar_url = ctx.author.avatar.url
 
         # Load user avatar from URL and resize it
-        response = await self.bot.session.get(user_avatar_url)
+        response = await self.bot.web_client.get(user_avatar_url)
         image_data = await response.read()
         user_avatar = Image.open(BytesIO(image_data))
         user_avatar = user_avatar.resize((100, 100))  # Adjust the size as needed
