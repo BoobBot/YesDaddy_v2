@@ -15,6 +15,7 @@ from typing import Literal, Optional, Tuple, Union
 
 import discord
 import psutil
+from discord import app_commands
 from discord.ext import commands
 from discord.ext.commands import Context, Greedy
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
@@ -114,13 +115,14 @@ class Dev(commands.Cog):
 
         fallback = font.font_variant(size=size_min)
         return fallback
-
-    @commands.command(name="rank", description="Generate a rank card")
+    # TODO move to profile.py
+    @commands.hybrid_command(name="rank", description="Generate a rank card")
+    @app_commands.describe(user="The user to get the rank card of.")
     async def rank(self, ctx, user: discord.Member = None):
         user = user or ctx.author
         user_data: User = await self.bot.db_client.get_user(user.id)
 
-        user_balance = user_data.balance
+        user_level = user_data.level
         user_xp = user_data.xp
         max_xp = int(((user_data.level + 1) * 10) ** 2)
 
@@ -150,7 +152,7 @@ class Dev(commands.Cog):
         brightness = self.get_brightness(base)
         text_fill, stroke_fill = ((255, 255, 255), (0, 0, 0)) if brightness <= 128 else ((0, 0, 0), (255, 255, 255))
         # Add text for XP and Balance
-        text = f'XP: {user_xp}\nBalance: {user_balance}'
+        text = f'Level: {user_level}\nEXP: {user_xp}/{max_xp}'
         font = ImageFont.truetype('circular-black.ttf', size=42)
         font = self.font_auto_scale(font, text, desired_width=305, size_max=42, size_min=20)
 
