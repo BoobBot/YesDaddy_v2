@@ -150,7 +150,7 @@ class Dev(commands.Cog):
         brightness = self.get_brightness(base)
         text_fill, stroke_fill = ((255, 255, 255), (0, 0, 0)) if brightness <= 128 else ((0, 0, 0), (255, 255, 255))
         # Add text for XP and Balance
-        text = f'{user.name}\nXP: {user_xp}\nBalance: {user_balance}'
+        text = f'XP: {user_xp}\nBalance: {user_balance}'
         font = ImageFont.truetype('circular-black.ttf', size=42)
         font = self.font_auto_scale(font, text, desired_width=305, size_max=42, size_min=20)
 
