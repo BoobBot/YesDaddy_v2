@@ -124,13 +124,16 @@ class DiscordDatabase:
             user_data.setdefault("last_weekly_claim", {})
             user_data.setdefault("weekly_streak", {})
             user_data.setdefault("daily_streak", {})
+            user_data.setdefault("idiot", {})
             user_data.pop("health", None)
+            user_data.pop("idiot_data", None)
             return User(**user_data)
         user = User(user_id, False,
                     f'{datetime.utcnow()}', 0, 0, False, 0, 0, {}, 0, {})
         await self.add_user(user)
         user_data = await self.user_collection.find_one({"user_id": user_id}, {"_id": 0})
         user_data.pop("health", None)
+        user_data.pop("idiot_data", None)
 
         return User(**user_data)
 

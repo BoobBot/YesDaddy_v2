@@ -24,7 +24,7 @@ class Moderation(commands.Cog):
     @app_commands.describe(nickname="The nickname to set.")
     async def idiot_set(self, ctx, user: discord.Member, *, nickname: str):
         user_data = await self.bot.db_client.get_user(user.id)
-        if user.idiot:
+        if user_data.idiot:
 
             if user_data.idiot.get("idiot"):
                 view = Confirm()
@@ -48,7 +48,7 @@ class Moderation(commands.Cog):
                         idiot_data["timestamp"] = datetime.datetime.now(datetime.timezone.utc)
                         idiot_data["change"] = 0
                         idiot_data["idiot_by"] = ctx.author.id
-                        await user_data.update_user({"idiot_data": idiot_data}, self.bot)
+                        await user_data.update_user({"idiot": idiot_data}, self.bot)
                         await ctx.reply(f"LOL you tried.")
 
                     idiot_data = user_data.idiot
@@ -59,7 +59,7 @@ class Moderation(commands.Cog):
                     idiot_data["change"] = 0
                     idiot_data["idiot_by"] = ctx.author.id
                     await user.edit(nick=nickname, reason="what a idiot")
-                    await user_data.update_user({"idiot_data": idiot_data}, self.bot)
+                    await user_data.update_user({"idiot": idiot_data}, self.bot)
                     await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.")
 
         else:
@@ -71,7 +71,7 @@ class Moderation(commands.Cog):
                 "times_idiot": 1,
                 "change": 0
             }
-            await user_data.update_user({"idiot_data": idiot_data}, self.bot)
+            await user_data.update_user({"idiot": idiot_data}, self.bot)
             await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.")
 
     @idiot.command(name="clear", description="clear a idiots nickname")
@@ -84,7 +84,7 @@ class Moderation(commands.Cog):
             user_data.idiot["idiot_by"] = None
             user_data.idiot["timestamp"] = None
             user_data.idiot["change"] = None
-            await user_data.update_user({"idiot_data": user_data.idiot}, self.bot)
+            await user_data.update_user({"idiot": user_data.idiot}, self.bot)
             await ctx.reply(f"Cleared {user.mention}'s nickname.")
         else:
             await ctx.reply(f"{user.mention} is not an idiot.")
