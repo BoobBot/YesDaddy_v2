@@ -27,7 +27,7 @@ class OnMemberUpdate(commands.Cog):
             if user_data.idiot.get("idiot", None):
                 if user_data.idiot.get('nickname', None) != after.nick:
                     await after.edit(nick=user_data.idiot.get('nickname'), reason="what a idiot")
-                    user_data.idiot.change += 1
+                    user_data.idiot['change'] += 1
                     await user_data.update_user({"idiot": user_data.idiot}, self.bot)
 
 
