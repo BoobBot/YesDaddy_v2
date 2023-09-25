@@ -2,35 +2,27 @@ import contextlib
 import datetime
 import inspect
 import io
-import math
 import os
 import re
 import subprocess
 import sys
 import textwrap
 import traceback
-from collections import Counter
 from io import BytesIO
-from typing import Literal, Optional, Tuple, Union
+from typing import Literal, Optional
 
 import discord
 import psutil
-from discord import app_commands
 from discord.ext import commands
 from discord.ext.commands import Context, Greedy
-from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
-from database.user_entry import User
 from views import support_channel_view
-from views.rule_button_view import RuleButton
 from views.verification_view import VerificationView
 
 
 class Dev(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-
-
 
     @commands.command()
     async def load(self, ctx, cog):
@@ -64,116 +56,9 @@ class Dev(commands.Cog):
             await self.bot.reload_extension(str(cog))
         await ctx.send('reloaded')
 
-    def get_dominant(self, image, average = False):
-        colour_bands = [0, 0, 0]
-
-        if average:
-            colour_tuple = [None, None, None]
-
-            for channel in range(3):
-                # Get data for one channel at a time
-                pixels = image.getdata(band=channel)
-                values = []
-                for pixel in pixels:
-                    values.append(pixel)
-                colour_tuple[channel] = int(sum(values) / len(values))
-            return tuple(colour_tuple)
-        else:
-            for band in range(3):
-                pixels = image.getdata(band=band)
-                c = Counter(pixels)
-                colour_bands[band] = c.most_common(1)[0][0]
-
-            return tuple(colour_bands)
-
-    def get_brightness(self, image) -> int:
-        """
-        Returns an integer between 0-255
-        """
-        dom_col = self.get_dominant(image, average=True)
-        return (dom_col[0] * 0.299) + (dom_col[1] * 0.587) + (dom_col[2] * 0.114)
-
-    def mask_ellipsis(self, img: Image, offset: int = 0):
-        img_mask = Image.new('L', img.size, 0)
-        mask = ImageDraw.Draw(img_mask)
-        mask.ellipse((offset, offset, img_mask.width - offset, img_mask.height - offset), fill=255)
-        img.putalpha(img_mask)
-
-    def arc_bar(self, img: Image, xy: Tuple[int, int], size: Tuple[int, int],
-                progress_pc: int, width: int,
-                fill: Union[Tuple[int, int, int], Tuple[int, int, int, int]]):
-        draw = ImageDraw.Draw(img)
-        draw.arc((xy, size), start=-90, end=-90 + 3.6 * min(progress_pc, 100), width=width, fill=fill)
-
-    def font_auto_scale(self, font: ImageFont, text: str, desired_width: int, size_max: int,
-                        size_min: int, stepping: int = 1) -> ImageFont:
-        for size in range(size_max, size_min - 1, -stepping):
-            new_font: ImageFont.FreeTypeFont = font.font_variant(size=size)
-            longest_line = max(new_font.getsize(line)[0] for line in text.splitlines())
-            if longest_line <= desired_width:
-                return new_font
-
-        fallback = font.font_variant(size=size_min)
-        return fallback
-    # TODO move to profile.py
-    @commands.hybrid_command(name="rank", description="Generate a rank card")
-    @app_commands.describe(user="The user to get the rank card of.")
-    async def rank(self, ctx, user: discord.Member = None):
-        user = user or ctx.author
-        user_data: User = await self.bot.db_client.get_user(user.id)
-
-        user_level = user_data.level
-        user_xp = user_data.xp
-        max_xp = int(((user_data.level + 1) * 10) ** 2)
-
-        # Load user avatar from URL and resize it
-        target_size = 1024
-        avatar_url = user.avatar.with_size(target_size).url
-        image_bytes = await (await self.bot.web_client.get(avatar_url)).read()
-        user_avatar = Image.open(BytesIO(image_bytes)) \
-            .convert('RGBA') \
-            .resize((target_size, target_size), resample=Image.LANCZOS)  # ensure we load this with an alpha channel
-
-        base = Image.new("RGBA", (600, 300))  # 300, 150
-        filtered = user_avatar.copy().filter(ImageFilter.GaussianBlur(radius=10))
-        base.paste(filtered, (-((user_avatar.width - base.width) // 2), -((user_avatar.height - base.height) // 2)), user_avatar)
-
-        avatar_circle = user_avatar.copy()
-        self.mask_ellipsis(avatar_circle)  # Apply mask before resizing as this yields better quality edges after applying mask
-        avatar_circle = avatar_circle.resize((220, 220), resample=Image.LANCZOS)
-        base.paste(avatar_circle, (20, 40), avatar_circle)
-
-        self.arc_bar(img=base, xy=(10, 30), size=(250, 270), progress_pc=100,
-                     width=10, fill=(255, 255, 255))
-
-        self.arc_bar(img=base, xy=(10, 30), size=(250, 270), progress_pc=(user_xp / max_xp) * 100,
-                     width=10, fill=(0, 191, 255))
-
-        brightness = self.get_brightness(base)
-        text_fill, stroke_fill = ((255, 255, 255), (0, 0, 0)) if brightness <= 128 else ((0, 0, 0), (255, 255, 255))
-        # Add text for XP and Balance
-        text = f'Level: {user_level}\nEXP: {user_xp}/{max_xp}'
-        font = ImageFont.truetype('circular-black.ttf', size=42)
-        font = self.font_auto_scale(font, text, desired_width=305, size_max=42, size_min=20)
-
-        draw = ImageDraw.Draw(base)
-        draw.text((275, 150), text, fill=text_fill, font=font, anchor="lm", stroke_width=3, stroke_fill=stroke_fill)
-
-        # Image is rendered at 2x resolution to produce a higher quality output
-        # This is far better than rendering natively at 300, 150, as it'd look pixelated. Downsampling is better here.  
-        base = base.resize((300, 150), resample=Image.LANCZOS)
-        img_buffer = BytesIO()
-        base.save(img_buffer, format="PNG")
-        img_buffer.seek(0)
-
-        # Send the rank card to the user
-        await ctx.send(file=discord.File(img_buffer, filename="rank_card.png"))
-
-
     @commands.command(name="supporttest", description="????")
     @commands.is_owner()
     async def testing(self, ctx):
-
         em = discord.Embed(title="Support Ticket",
                            description="Click the button below to open a support ticket with staff. Please be patient while we get to you. Do not open a ticket unless you need help with something.",
                            color=discord.Color.blurple())
