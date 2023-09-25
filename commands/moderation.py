@@ -23,13 +23,13 @@ class Moderation(commands.Cog):
     @app_commands.describe(user="The user to set the nickname of.")
     @app_commands.describe(nickname="The nickname to set.")
     async def idiot_set(self, ctx, user: discord.Member, *, nickname: str):
-        user = await self.bot.db_client.get_user(user.id)
+        user_data = await self.bot.db_client.get_user(user.id)
         if user.idiot:
 
-            if user.idiot.get("idiot"):
+            if user_data.idiot.get("idiot"):
                 view = Confirm()
                 em = discord.Embed(color=ctx.author.user.color)
-                em.description = f"{user.mention} is already an idiot, changed by <@{user.idiot.get('idiot_by')}>, are you sure you want to change their nickname?"
+                em.description = f"{user.mention} is already an idiot, changed by <@{user_data.idiot.get('idiot_by')}>, are you sure you want to change their nickname?"
                 view.message = await ctx.reply(embed=em, view=view, ephemeral=True)
                 if view.value is None:
                     await ctx.reply("Timed out.", ephemeral=True)
@@ -38,28 +38,28 @@ class Moderation(commands.Cog):
                     await ctx.reply("Ok, I wont change it.", ephemeral=True)
                     return
                 else:
-                    if user.idiot.get("idiot_by") == 248294452307689473 and ctx.author.id != 248294452307689473:
+                    if user_data.idiot.get("idiot_by") == 248294452307689473 and ctx.author.id != 248294452307689473:
                         await ctx.author.edit(nick=nickname, reason="what a idiot")
-                        user = await self.bot.db_client.get_user(user.id)
-                        idiot_data = user.idiot
+                        user_data = await self.bot.db_client.get_user(user.id)
+                        idiot_data = user_data.idiot
                         idiot_data["idiot"] = True
                         idiot_data["nickname"] = nickname
                         idiot_data["times_idiot"] += 1
                         idiot_data["timestamp"] = datetime.datetime.now(datetime.timezone.utc)
                         idiot_data["change"] = 0
                         idiot_data["idiot_by"] = ctx.author.id
-                        await user.update_user({"idiot_data": idiot_data}, self.bot)
+                        await user_data.update_user({"idiot_data": idiot_data}, self.bot)
                         await ctx.reply(f"LOL you tried.")
 
-                    idiot_data = user.idiot
+                    idiot_data = user_data.idiot
                     idiot_data["idiot"] = True
                     idiot_data["nickname"] = nickname
                     idiot_data["times_idiot"] += 1
                     idiot_data["timestamp"] = datetime.datetime.now(datetime.timezone.utc)
                     idiot_data["change"] = 0
                     idiot_data["idiot_by"] = ctx.author.id
-                    user.edit(nick=nickname, reason="what a idiot")
-                    await user.update_user({"idiot_data": idiot_data}, self.bot)
+                    await user.edit(nick=nickname, reason="what a idiot")
+                    await user_data.update_user({"idiot_data": idiot_data}, self.bot)
                     await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.")
 
         else:
@@ -71,9 +71,8 @@ class Moderation(commands.Cog):
                 "times_idiot": 1,
                 "change": 0
             }
-
-        await user.update_user({"idiot_data": idiot_data}, self.bot)
-        await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.")
+            await user_data.update_user({"idiot_data": idiot_data}, self.bot)
+            await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.")
 
     @idiot.command(name="clear", description="clear a idiots nickname")
     @app_commands.describe(user="The user to clear the nickname of.")
