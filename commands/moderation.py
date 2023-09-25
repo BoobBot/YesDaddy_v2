@@ -98,7 +98,8 @@ class Moderation(commands.Cog):
     async def idiot_check(self, ctx, user: discord.Member):
         user_data = await self.bot.db_client.get_user(user.id)
         if user_data.idiot["idiot"]:
-            em = discord.Embed(color=ctx.author.user.color)
+            color = await generate_embed_color(ctx.author)
+            em = discord.Embed(color=color)
             em.description = f"{user.mention} is an idiot, changed by <@{user_data.idiot.get('idiot_by')}>, tried to change {user_data.idiot['change']} times idioted {user_data.idiot['times_idiot']}."
             await ctx.reply(embed=em)
 
