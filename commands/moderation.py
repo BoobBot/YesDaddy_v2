@@ -33,6 +33,7 @@ class Moderation(commands.Cog):
                 em = discord.Embed(color=color)
                 em.description = f"{user.mention} is already an idiot, changed by <@{user_data.idiot.get('idiot_by')}>, are you sure you want to change their nickname?"
                 view.message = await ctx.reply(embed=em, view=view, ephemeral=True)
+                await view.wait()
                 if view.value is None:
                     await ctx.reply("Timed out.", ephemeral=True)
                     return
