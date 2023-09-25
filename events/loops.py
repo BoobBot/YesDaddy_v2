@@ -163,7 +163,7 @@ class Loops(commands.Cog):
         else:
             hue = 60 * (4 + (r - g) / (max_value - min_value))
 
-        return 30 <= hue < 60
+        return 30 <= hue <= 60
 
     @change_role_color.before_loop
     async def before_change_role_color(self):
