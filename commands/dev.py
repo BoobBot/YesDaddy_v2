@@ -136,9 +136,11 @@ class Dev(commands.Cog):
         # Add text for XP and Balance
         font = ImageFont.truetype('circular-black.ttf', size=42)
         text = f'XP: {user_xp}\nBalance: {user_balance}'
+        height = font.getbbox(text)[3]  # x, y, width, height
+        center_y = (300 // 2) - (height // 2)
 
         draw = ImageDraw.Draw(base)
-        draw.text((275, 150), text, fill=text_fill, font=font)
+        draw.text((275, center_y), text, fill=text_fill, font=font)
         # Add other text as needed
 
         # Image is rendered at 2x resolution to produce a higher quality output
