@@ -104,6 +104,17 @@ class Dev(commands.Cog):
         draw = ImageDraw.Draw(img)
         draw.arc((xy, size), start=-90, end=-90 + 3.6 * min(progress_pc, 100), width=width, fill=fill)
 
+    def font_auto_scale(self, font: ImageFont, text: str, desired_width: int, size_max: int,
+                        size_min: int, stepping: int = 1) -> ImageFont:
+        for size in range(size_max, size_min - 1, -stepping):
+            new_font = font.font_variant(size=size)
+            font_width, _ = new_font.getsize(text)
+            if font_width <= desired_width:
+                return new_font
+
+        fallback = font.font_variant(size=size_min)
+        return fallback
+
     @commands.command(name="rank", description="Generate a rank card")
     async def rank(self, ctx, user: discord.Member = None):
         user = user or ctx.author
@@ -121,7 +132,7 @@ class Dev(commands.Cog):
             .convert('RGBA') \
             .resize((target_size, target_size), resample=Image.LANCZOS)  # ensure we load this with an alpha channel
 
-        base = Image.new("RGBA", (600, 400))  # 300, 150
+        base = Image.new("RGBA", (600, 300))  # 300, 150
         filtered = user_avatar.copy().filter(ImageFilter.GaussianBlur(radius=10))
         base.paste(filtered, (-((user_avatar.width // 2) - (base.width // 2)), -((user_avatar.height // 2) - (base.height // 2))), user_avatar)
 
@@ -138,8 +149,9 @@ class Dev(commands.Cog):
 
         text_fill = (255, 255, 255) if self.get_brightness(base) <= 128 else (0, 0, 0)
         # Add text for XP and Balance
-        font = ImageFont.truetype('circular-black.ttf', size=42)
         text = f'XP: {user_xp}\nBalance: {user_balance}'
+        font = ImageFont.truetype('circular-black.ttf', size=42)
+        font = self.font_auto_scale(font, text, desired_width=125, size_max=42, size_min=20)
 
         draw = ImageDraw.Draw(base)
         draw.text((275, 150), text, fill=text_fill, font=font, anchor="lm")
