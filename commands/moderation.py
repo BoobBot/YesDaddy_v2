@@ -6,6 +6,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 
+from utils.utilities import get_average_color, generate_embed_color
 from views.confirm_view import Confirm
 
 
@@ -28,7 +29,8 @@ class Moderation(commands.Cog):
 
             if user_data.idiot.get("idiot"):
                 view = Confirm()
-                em = discord.Embed(color=ctx.author.user.color)
+                color = await generate_embed_color(ctx.author)
+                em = discord.Embed(color=color)
                 em.description = f"{user.mention} is already an idiot, changed by <@{user_data.idiot.get('idiot_by')}>, are you sure you want to change their nickname?"
                 view.message = await ctx.reply(embed=em, view=view, ephemeral=True)
                 if view.value is None:
