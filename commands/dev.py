@@ -58,8 +58,15 @@ class Dev(commands.Cog):
     @commands.command()
     async def reload_all(self, ctx):
         for cog in self.bot.cogs.copy():
-            await self.bot.reload_extension(f'{cog}')
+            await self.bot.reload_extension(str(cog))
         await ctx.send('reloaded')
+
+    def get_brightness(self, image) -> int:
+        """
+        Returns an integer between 0-255
+        """
+        dom_col = self.get_dominant(image)
+        return (dom_col[0] * 0.299) + (dom_col[1] * 0.587) + (dom_col[2] * 0.114)
 
     def mask_ellipsis(self, img: Image, offset: int = 0):
         img_mask = Image.new('L', img.size, 0)
@@ -69,7 +76,7 @@ class Dev(commands.Cog):
 
     def arc_bar(self, img: Image, xy: Tuple[int, int], size: Tuple[int, int],
                 progress_pc: int, width: int,
-                fill: Tuple[int, ...]):
+                fill: Union[Tuple[int, int, int], Tuple[int, int, int, int]]):
         draw = ImageDraw.Draw(img)
         draw.arc((xy, size), start=-90, end=-90 + 3.6 * min(progress_pc, 100), width=width, fill=fill)
 
@@ -89,7 +96,7 @@ class Dev(commands.Cog):
 
         base = Image.new("RGBA", (600, 300))  # 300, 150
         filtered = user_avatar.copy().filter(ImageFilter.GaussianBlur(radius=10))
-        base.paste(filtered, (-int((user_avatar.width / 2) - (base.width / 2)), -int((user_avatar.height / 2) - (base.height / 2))), user_avatar)
+        base.paste(filtered, (-((user_avatar.width // 2) - (base.width // 2)), -((user_avatar.height // 2) - (base.height // 2))), user_avatar)
 
         avatar_circle = user_avatar.copy()
         self.mask_ellipsis(avatar_circle)  # Apply mask before resizing as this yields better quality edges after applying mask
@@ -102,15 +109,16 @@ class Dev(commands.Cog):
         self.arc_bar(img=base, xy=(10, 30), size=(250, 270), progress_pc=(user_xp / max_xp) * 100,
                      width=10, fill=(0, 191, 255))
 
+        text_fill = (255, 255, 255) if self.get_brightness(base) <= 128 else (0, 0, 0)
         # Add text for XP and Balance
-        font = ImageFont.load_default()  # You can choose a different font
+        font = ImageFont.load_default().font_variant(size=56)  # You can choose a different font
         xp_text = f"XP: {user_xp}"
         balance_text = f"Balance: {user_balance}"
         # Add other text as needed
 
         draw = ImageDraw.Draw(base)
-        draw.text((150, 40), xp_text, fill=(0, 0, 0), font=font)  # Adjust the position as needed
-        draw.text((150, 60), balance_text, fill=(0, 0, 0), font=font)  # Adjust the position as needed
+        draw.text((400, 100), xp_text, fill=text_fill, font=font)  # Adjust the position as needed
+        draw.text((400, 200), balance_text, fill=text_fill, font=font)  # Adjust the position as needed
         # Add other text as needed
 
         # Image is rendered at 2x resolution to produce a higher quality output
