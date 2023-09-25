@@ -108,9 +108,8 @@ class Dev(commands.Cog):
                         size_min: int, stepping: int = 1) -> ImageFont:
         for size in range(size_max, size_min - 1, -stepping):
             new_font: ImageFont.FreeTypeFont = font.font_variant(size=size)
-            font_width = new_font.getlength(text.split('\n')[0])
-            print(f'font {size} = {font_width}')
-            if font_width <= desired_width:
+            longest_line = max(new_font.getsize(line)[0] for line in text.splitlines())
+            if longest_line <= desired_width:
                 return new_font
 
         fallback = font.font_variant(size=size_min)
