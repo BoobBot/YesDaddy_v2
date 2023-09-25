@@ -89,7 +89,7 @@ class Dev(commands.Cog):
         """
         Returns an integer between 0-255
         """
-        dom_col = self.get_dominant(image)
+        dom_col = self.get_dominant(image, average=True)
         return (dom_col[0] * 0.299) + (dom_col[1] * 0.587) + (dom_col[2] * 0.114)
 
     def mask_ellipsis(self, img: Image, offset: int = 0):
@@ -137,7 +137,7 @@ class Dev(commands.Cog):
                      width=10, fill=(0, 191, 255))
 
         print(self.get_brightness(base))
-        text_fill = (255, 255, 255) if self.get_brightness(base) <= 140 else (0, 0, 0)
+        text_fill = (255, 255, 255) if self.get_brightness(base) <= 190 else (0, 0, 0)
         # Add text for XP and Balance
         font = ImageFont.truetype('circular-black.ttf', size=42)
         text = f'XP: {user_xp}\nBalance: {user_balance}'
