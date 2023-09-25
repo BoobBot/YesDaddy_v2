@@ -135,12 +135,10 @@ class Dev(commands.Cog):
         text_fill = (255, 255, 255) if self.get_brightness(base) <= 128 else (0, 0, 0)
         # Add text for XP and Balance
         font = ImageFont.truetype('circular-black.ttf', size=42)
-        text = f'XP: {user_xp}\nBalance: {user_balance}\nTest\nTest\nAAAAAAAA'
-        height = font.getbbox(text)[3]  # x, y, width, height
+        text = f'XP: {user_xp}\nBalance: {user_balance}'
 
         draw = ImageDraw.Draw(base)
         draw.text((275, 150), text, fill=text_fill, font=font, anchor="lm")
-        # Add other text as needed
 
         # Image is rendered at 2x resolution to produce a higher quality output
         # This is far better than rendering natively at 300, 150, as it'd look pixelated. Downsampling is better here.  
