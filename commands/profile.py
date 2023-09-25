@@ -1,19 +1,19 @@
-import datetime
-import os
-import random
-import subprocess
-import sys
-from typing import Optional, Literal
+from io import BytesIO
+from typing import Optional
 
 import discord
-from discord import app_commands, Embed
-from discord.ext import commands, tasks
+from discord import app_commands
+from discord.ext import commands
+from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
-from database import User
 from config.settings_config import create_leaderboard_pages
+from database import User
 from utils.checks import persistent_cooldown
 from utils.paginator import Paginator
-from utils.utilities import subtraction_percentage, generate_embed_color, progress_percentage
+from utils.pillowutils import (arc_bar, font_auto_scale, get_brightness,
+                               mask_ellipsis)
+from utils.utilities import (generate_embed_color, progress_percentage,
+                             subtraction_percentage)
 
 
 class Profile(commands.Cog):
@@ -59,6 +59,58 @@ class Profile(commands.Cog):
             em.add_field(
                 name="Jail?", value=f"experience freedom in {remaining_timestamp}")
         await ctx.reply(embed=em)
+
+    @commands.hybrid_command(name="rank", description="Generate a rank card")
+    @app_commands.describe(user="The user to get the rank card of.")
+    async def rank(self, ctx, user: discord.Member = None):
+        user = user or ctx.author
+        user_data: User = await self.bot.db_client.get_user(user.id)
+
+        user_level = user_data.level
+        user_xp = user_data.xp
+        max_xp = int(((user_data.level + 1) * 10) ** 2)
+
+        # Load user avatar from URL and resize it
+        target_size = 1024
+        avatar_url = user.avatar.with_size(target_size).url
+        image_bytes = await (await self.bot.web_client.get(avatar_url)).read()
+        user_avatar = Image.open(BytesIO(image_bytes)) \
+            .convert('RGBA') \
+            .resize((target_size, target_size), resample=Image.LANCZOS)
+
+        base = Image.new("RGBA", (600, 300))  # 300, 150
+        filtered = user_avatar.copy().filter(ImageFilter.GaussianBlur(radius=10))
+        base.paste(filtered, (-((user_avatar.width - base.width) // 2), -((user_avatar.height - base.height) // 2)), user_avatar)
+
+        mask_ellipsis(user_avatar)
+        user_avatar = user_avatar.resize((220, 220), resample=Image.LANCZOS)
+        base.paste(user_avatar, (20, 40), user_avatar)
+
+        arc_bar(img=base, xy=(10, 30), size=(250, 270), progress_pc=100,
+                     width=10, fill=(255, 255, 255))
+
+        arc_bar(img=base, xy=(10, 30), size=(250, 270), progress_pc=(user_xp / max_xp) * 100,
+                     width=10, fill=(0, 191, 255))
+
+        brightness = get_brightness(base)
+        text_fill, stroke_fill = ((255, 255, 255), (0, 0, 0)) if brightness <= 128 else ((0, 0, 0), (255, 255, 255))
+        # Add text for XP and Balance
+        text = f'Level: {user_level}\nEXP: {user_xp}/{max_xp}'
+        font = ImageFont.truetype('circular-black.ttf', size=42)
+        font = font_auto_scale(font, text, desired_width=305, size_max=42, size_min=20)
+
+        draw = ImageDraw.Draw(base)
+        draw.text((275, 150), text, fill=text_fill, font=font, anchor="lm", stroke_width=3, stroke_fill=stroke_fill)
+
+        # Image is rendered at 2x resolution to produce a higher quality output
+        # This is far better than rendering natively at 300, 150, as it'd look pixelated. Downsampling is better here.  
+        base = base.resize((300, 150), resample=Image.LANCZOS)
+        img_buffer = BytesIO()
+        base.save(img_buffer, format="PNG")
+        img_buffer.seek(0)
+
+        # Send the rank card to the user
+        await ctx.send(file=discord.File(img_buffer, filename="rank_card.png"))
 
     @commands.hybrid_command(name="avatar", description="Look at someone's avatar.")
     @app_commands.describe(user="The user to get the avatar of.")
