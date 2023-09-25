@@ -148,7 +148,7 @@ class Dev(commands.Cog):
                      width=10, fill=(0, 191, 255))
 
         print(self.get_brightness(base))
-        text_fill = (255, 255, 255) if self.get_brightness(base) <= 128 else (0, 0, 0)
+        text_fill = (255, 255, 255) if self.get_brightness(base) <= 100 else (0, 0, 0)
         # Add text for XP and Balance
         text = f'XP: {user_xp}\nBalance: {user_balance}'
         font = ImageFont.truetype('circular-black.ttf', size=42)
