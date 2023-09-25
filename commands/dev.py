@@ -107,7 +107,7 @@ class Dev(commands.Cog):
     @commands.command(name="rank", description="Generate a rank card")
     async def rank(self, ctx, user: discord.Member = None):
         user = user or ctx.author
-        user_data: User = self.bot.db_client.get_user(user.id)
+        user_data: User = await self.bot.db_client.get_user(user.id)
 
         user_balance = user_data.balance
         user_xp = user_data.xp
