@@ -45,7 +45,7 @@ class Dev(commands.Cog):
 
     @commands.command(aliases=['rm'])
     async def reload_multiple(self, ctx, *cogs: str):
-        status = "```\nCog reload:\n```"
+        status = "Cog reload:```\n"
 
         for cog in cogs:
             name = cog.split(".")[-1]
