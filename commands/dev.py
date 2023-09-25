@@ -121,7 +121,7 @@ class Dev(commands.Cog):
             .convert('RGBA') \
             .resize((target_size, target_size), resample=Image.LANCZOS)  # ensure we load this with an alpha channel
 
-        base = Image.new("RGBA", (600, 300))  # 300, 150
+        base = Image.new("RGBA", (600, 400))  # 300, 150
         filtered = user_avatar.copy().filter(ImageFilter.GaussianBlur(radius=10))
         base.paste(filtered, (-((user_avatar.width // 2) - (base.width // 2)), -((user_avatar.height // 2) - (base.height // 2))), user_avatar)
 
