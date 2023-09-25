@@ -101,26 +101,28 @@ class User:
 
     async def claim_daily(self, bot):
         now = datetime.datetime.now(datetime.timezone.utc)
-        if self.last_daily_claim == {} or self.last_daily_claim is None:
+    
+        if not self.last_daily_claim:
             self.last_daily_claim = now
             self.daily_streak = 1
             await self.update_user({"last_daily_claim": self.last_daily_claim,
                                     "daily_streak": self.daily_streak}, bot)
             return False, self.daily_streak
-        if (now - self.last_daily_claim.replace(tzinfo=datetime.timezone.utc)).days > 2:
+        
+        days_since_last_claim = (now - self.last_daily_claim.replace(tzinfo=datetime.timezone.utc)).days
+
+        if days_since_last_claim > 2:
             self.daily_streak = 1
             self.last_daily_claim = now
             await self.update_user({"last_daily_claim": self.last_daily_claim,
                                     "daily_streak": self.daily_streak}, bot)
             return True, self.daily_streak
-        elif (now - self.last_daily_claim.replace(tzinfo=datetime.timezone.utc)).days < 2:
-            self.daily_streak += 1
-            self.last_daily_claim = now
-            await self.update_user({"last_daily_claim": self.last_daily_claim,
-                                    "daily_streak": self.daily_streak}, bot)
-            return False, self.daily_streak
-        else:
-            return False, self.daily_streak
+
+        self.daily_streak += 1
+        self.last_daily_claim = now
+        await self.update_user({"last_daily_claim": self.last_daily_claim,
+                                "daily_streak": self.daily_streak}, bot)
+        return False, self.daily_streak
 
     async def claim_weekly(self, bot):
         now = datetime.datetime.now(datetime.timezone.utc)
