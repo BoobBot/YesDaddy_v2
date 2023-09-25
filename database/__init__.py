@@ -74,7 +74,9 @@ class DiscordDatabase:
             user_data.setdefault("messages", 0)
             # Provide a default value for 'jail' attribute
             user_data.setdefault("jail", {})
+            user_data.setdefault("idiot", {})
             user_data.pop("health", None)
+            user_data.pop("idiot_data", None)
             all_users.append(user_data)
         return all_users
 
@@ -94,7 +96,9 @@ class DiscordDatabase:
             user_data.setdefault("messages", 0)
             # Provide a default value for 'jail' attribute
             user_data.setdefault("jail", {})
+            user_data.setdefault("idiot", {})
             user_data.pop("health", None)
+            user_data.pop("idiot_data", None)
 
             user = User(**user_data)
             if user.is_in_jail():
