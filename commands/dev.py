@@ -134,7 +134,7 @@ class Dev(commands.Cog):
 
         base = Image.new("RGBA", (600, 300))  # 300, 150
         filtered = user_avatar.copy().filter(ImageFilter.GaussianBlur(radius=10))
-        base.paste(filtered, (-((user_avatar.width // 2) - (base.width // 2)), -((user_avatar.height // 2) - (base.height // 2))), user_avatar)
+        base.paste(filtered, (-((user_avatar.width - base.width) // 2), -((user_avatar.height - base.height) // 2)), user_avatar)
 
         avatar_circle = user_avatar.copy()
         self.mask_ellipsis(avatar_circle)  # Apply mask before resizing as this yields better quality edges after applying mask
