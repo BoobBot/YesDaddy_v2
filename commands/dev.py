@@ -135,13 +135,10 @@ class Dev(commands.Cog):
         text_fill = (255, 255, 255) if self.get_brightness(base) <= 128 else (0, 0, 0)
         # Add text for XP and Balance
         font = ImageFont.truetype('circular-black.ttf', size=42)
-        xp_text = f"XP: {user_xp}"
-        balance_text = f"Balance: {user_balance}"
-        # Add other text as needed
+        text = f'XP: {user_xp}\nBalance: {user_balance}'
 
         draw = ImageDraw.Draw(base)
-        draw.text((275, 100), xp_text, fill=text_fill, font=font)  # Adjust the position as needed
-        draw.text((275, 150), balance_text, fill=text_fill, font=font)  # Adjust the position as needed
+        draw.text((275, 150), text, fill=text_fill, font=font)
         # Add other text as needed
 
         # Image is rendered at 2x resolution to produce a higher quality output
