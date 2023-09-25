@@ -136,7 +136,7 @@ class Dev(commands.Cog):
         self.arc_bar(img=base, xy=(10, 30), size=(250, 270), progress_pc=(user_xp / max_xp) * 100,
                      width=10, fill=(0, 191, 255))
 
-        text_fill = (255, 255, 255) if self.get_brightness(base) <= 128 else (0, 0, 0)
+        text_fill = (255, 255, 255) if self.get_brightness(base) <= 140 else (0, 0, 0)
         # Add text for XP and Balance
         font = ImageFont.truetype('circular-black.ttf', size=42)
         text = f'XP: {user_xp}\nBalance: {user_balance}'
