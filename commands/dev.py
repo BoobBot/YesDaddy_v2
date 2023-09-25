@@ -151,7 +151,7 @@ class Dev(commands.Cog):
         # Add text for XP and Balance
         text = f'XP: {user_xp}\nBalance: {user_balance}'
         font = ImageFont.truetype('circular-black.ttf', size=42)
-        font = self.font_auto_scale(font, text, desired_width=325, size_max=42, size_min=20)
+        font = self.font_auto_scale(font, text, desired_width=305, size_max=42, size_min=20)
 
         draw = ImageDraw.Draw(base)
         draw.text((275, 150), text, fill=text_fill, font=font, anchor="lm")
