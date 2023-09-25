@@ -19,33 +19,49 @@ from discord.ext.commands import Context, Greedy
 from views import support_channel_view
 from views.verification_view import VerificationView
 
+COG_NAME_REGEX = re.compile(r'(commands/[a-zA-Z]+)\.py')
+
 
 class Dev(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @commands.command()
-    async def load(self, ctx, cog):
+    async def load(self, ctx, cog: str):
         try:
-            await self.bot.load_extension(f'{cog}')
+            await self.bot.load_extension(cog)
             await ctx.send(f'{cog} has been loaded.')
         except Exception as e:
             await ctx.send(f'Error loading {cog}: {e}')
 
 
     @commands.command()
-    async def reload(self, ctx, cog):
+    async def reload(self, ctx, cog: str):
         try:
-            await self.bot.reload_extension(f'{cog}')
+            await self.bot.reload_extension(cog)
             await ctx.send(f'{cog} has been reloaded.')
         except Exception as e:
             await ctx.send(f'Error reloading {cog}: {e}')
 
+    @commands.command(aliases=['rm'])
+    async def reload_multiple(self, ctx, *cogs: str):
+        status = "```\nCog reload:\n```"
+
+        for cog in cogs:
+            name = cog.split(".")[-1]
+            try:
+                await self.bot.reload_extension(cog)
+            except Exception as e:
+                status += f'{name:<15} FAILED\n    {e}\n'
+            else:
+                status += f'{name:<15} OK'
+
+        await ctx.send(status + '```')
 
     @commands.command()
-    async def unload(self, ctx, cog):
+    async def unload(self, ctx, cog: str):
         try:
-            await self.bot.unload_extension(f'cogs.{cog}')
+            await self.bot.unload_extension(f'commands.{cog}')
             await ctx.send(f'{cog} has been unloaded.')
         except Exception as e:
             await ctx.send(f'Error unloading {cog}: {e}')
@@ -53,7 +69,7 @@ class Dev(commands.Cog):
     @commands.command()
     async def reload_all(self, ctx):
         for cog in self.bot.cogs.copy():
-            await self.bot.reload_extension(str(cog))
+            await self.bot.reload_extension(cog.__module__)
         await ctx.send('reloaded')
 
     @commands.command(name="supporttest", description="????")
@@ -214,6 +230,12 @@ class Dev(commands.Cog):
             if result.returncode == 0:
                 await ctx.send(f'```{command_output}```')
                 await ctx.send('Git pull successful')
+
+                reload_modules = COG_NAME_REGEX.findall(command_output)
+
+                if reload_modules:
+                    corrected_names = [m.replace('/', '.') for m in reload_modules]
+                    await self.reload_multiple(ctx, corrected_names)
             else:
                 self.bot.logger.error(
                     f'Git pull failed with error code {result.returncode} and output:\n{command_output}')
