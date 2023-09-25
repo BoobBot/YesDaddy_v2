@@ -71,6 +71,7 @@ class Moderation(commands.Cog):
                 "times_idiot": 1,
                 "change": 0
             }
+            await user.edit(nick=nickname, reason="what a idiot")
             await user_data.update_user({"idiot": idiot_data}, self.bot)
             await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.")
 
