@@ -134,7 +134,7 @@ class Dev(commands.Cog):
 
         text_fill = (255, 255, 255) if self.get_brightness(base) <= 128 else (0, 0, 0)
         # Add text for XP and Balance
-        font = ImageFont.load_default().font_variant(size=56)  # You can choose a different font
+        font = ImageFont.truetype('circular-black.ttf', size=56)
         xp_text = f"XP: {user_xp}"
         balance_text = f"Balance: {user_balance}"
         # Add other text as needed
