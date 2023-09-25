@@ -235,7 +235,7 @@ class Dev(commands.Cog):
 
                 if reload_modules:
                     corrected_names = [m.replace('/', '.') for m in reload_modules]
-                    await self.reload_multiple(ctx, corrected_names)
+                    await self.reload_multiple(ctx, *corrected_names)
             else:
                 self.bot.logger.error(
                     f'Git pull failed with error code {result.returncode} and output:\n{command_output}')
