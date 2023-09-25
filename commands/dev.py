@@ -1,4 +1,3 @@
-from collections import Counter
 import contextlib
 import datetime
 import inspect
@@ -10,8 +9,9 @@ import subprocess
 import sys
 import textwrap
 import traceback
+from collections import Counter
 from io import BytesIO
-from typing import Literal, Optional, Union, Tuple
+from typing import Literal, Optional, Tuple, Union
 
 import discord
 import psutil
@@ -19,6 +19,7 @@ from discord.ext import commands
 from discord.ext.commands import Context, Greedy
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
+from database.user_entry import User
 from views import support_channel_view
 from views.rule_button_view import RuleButton
 from views.verification_view import VerificationView
@@ -104,10 +105,13 @@ class Dev(commands.Cog):
         draw.arc((xy, size), start=-90, end=-90 + 3.6 * min(progress_pc, 100), width=width, fill=fill)
 
     @commands.command(name="rank", description="Generate a rank card")
-    async def rank(self, ctx, user: discord.Member, user_xp: int, max_xp: int):
-        #user_xp = 500  # Replace with user's XP
-        user_balance = 1000  # Replace with user's balance
-        #max_xp = 1000
+    async def rank(self, ctx, user: discord.Member = None):
+        user = user or ctx.author
+        user_data: User = self.bot.db_client.get_user(user.id)
+
+        user_balance = user_data.balance
+        user_xp = user_data.xp
+        max_xp = int(((user_data.level + 1) * 10) ** 2)
 
         # Load user avatar from URL and resize it
         target_size = 1024
