@@ -109,7 +109,6 @@ class Dev(commands.Cog):
         for size in range(size_max, size_min - 1, -stepping):
             new_font: ImageFont.FreeTypeFont = font.font_variant(size=size)
             font_width = new_font.getmask(text).getbbox()[2]
-            font.ImageFont.getbbox
             print(f'font {size} = {font_width}')
             if font_width <= desired_width:
                 return new_font
