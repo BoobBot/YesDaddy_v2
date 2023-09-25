@@ -135,9 +135,8 @@ class Dev(commands.Cog):
         text_fill = (255, 255, 255) if self.get_brightness(base) <= 128 else (0, 0, 0)
         # Add text for XP and Balance
         font = ImageFont.truetype('circular-black.ttf', size=42)
-        text = f'XP: {user_xp}\nBalance: {user_balance}'
+        text = f'XP: {user_xp}\nBalance: {user_balance}\nTest\nTest\nAAAAAAAA'
         height = font.getbbox(text)[3]  # x, y, width, height
-        center_y = (300 // 2) - height
 
         draw = ImageDraw.Draw(base)
         draw.text((275, 150), text, fill=text_fill, font=font, anchor="lm")
