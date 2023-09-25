@@ -34,7 +34,6 @@ class Dev(commands.Cog):
         except Exception as e:
             await ctx.send(f'Error loading {cog}: {e}')
 
-
     @commands.command()
     async def reload(self, ctx, cog: str):
         try:
