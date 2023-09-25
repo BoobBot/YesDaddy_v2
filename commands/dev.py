@@ -137,7 +137,7 @@ class Dev(commands.Cog):
         font = ImageFont.truetype('circular-black.ttf', size=42)
         text = f'XP: {user_xp}\nBalance: {user_balance}'
         height = font.getbbox(text)[3]  # x, y, width, height
-        center_y = (300 // 2) - (height // 2)
+        center_y = (300 // 2) - height
 
         draw = ImageDraw.Draw(base)
         draw.text((275, center_y), text, fill=text_fill, font=font)
