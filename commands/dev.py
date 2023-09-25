@@ -147,15 +147,15 @@ class Dev(commands.Cog):
         self.arc_bar(img=base, xy=(10, 30), size=(250, 270), progress_pc=(user_xp / max_xp) * 100,
                      width=10, fill=(0, 191, 255))
 
-        print(self.get_brightness(base))
-        text_fill = (255, 255, 255) if self.get_brightness(base) <= 100 else (0, 0, 0)
+        brightness = self.get_brightness(base)
+        text_fill, stroke_fill = ((255, 255, 255), (0, 0, 0)) if brightness <= 128 else ((0, 0, 0), (255, 255, 255))
         # Add text for XP and Balance
         text = f'XP: {user_xp}\nBalance: {user_balance}'
         font = ImageFont.truetype('circular-black.ttf', size=42)
         font = self.font_auto_scale(font, text, desired_width=305, size_max=42, size_min=20)
 
         draw = ImageDraw.Draw(base)
-        draw.text((275, 150), text, fill=text_fill, font=font, anchor="lm")
+        draw.text((275, 150), text, fill=text_fill, font=font, anchor="lm", stroke_width=3, stroke_fill=stroke_fill)
 
         # Image is rendered at 2x resolution to produce a higher quality output
         # This is far better than rendering natively at 300, 150, as it'd look pixelated. Downsampling is better here.  
