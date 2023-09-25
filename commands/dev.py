@@ -140,7 +140,7 @@ class Dev(commands.Cog):
         center_y = (300 // 2) - height
 
         draw = ImageDraw.Draw(base)
-        draw.text((275, center_y), text, fill=text_fill, font=font)
+        draw.text((275, 150), text, fill=text_fill, font=font, anchor="mm")
         # Add other text as needed
 
         # Image is rendered at 2x resolution to produce a higher quality output
