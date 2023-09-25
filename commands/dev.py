@@ -107,8 +107,8 @@ class Dev(commands.Cog):
     def font_auto_scale(self, font: ImageFont, text: str, desired_width: int, size_max: int,
                         size_min: int, stepping: int = 1) -> ImageFont:
         for size in range(size_max, size_min - 1, -stepping):
-            new_font = font.font_variant(size=size)
-            font_width, _ = new_font.getsize(text)
+            new_font: ImageFont.FreeTypeFont = font.font_variant(size=size)
+            font_width, _ = new_font.getlength(text)
             print(f'font {size} = {font_width}')
             if font_width <= desired_width:
                 return new_font
