@@ -1,3 +1,4 @@
+from collections import Counter
 import contextlib
 import datetime
 import inspect
@@ -60,6 +61,28 @@ class Dev(commands.Cog):
         for cog in self.bot.cogs.copy():
             await self.bot.reload_extension(str(cog))
         await ctx.send('reloaded')
+
+    def get_dominant(self, image, average = False):
+        colour_bands = [0, 0, 0]
+
+        if average:
+            colour_tuple = [None, None, None]
+
+            for channel in range(3):
+                # Get data for one channel at a time
+                pixels = image.getdata(band=channel)
+                values = []
+                for pixel in pixels:
+                    values.append(pixel)
+                colour_tuple[channel] = int(sum(values) / len(values))
+            return tuple(colour_tuple)
+        else:
+            for band in range(3):
+                pixels = image.getdata(band=band)
+                c = Counter(pixels)
+                colour_bands[band] = c.most_common(1)[0][0]
+
+            return tuple(colour_bands)
 
     def get_brightness(self, image) -> int:
         """
