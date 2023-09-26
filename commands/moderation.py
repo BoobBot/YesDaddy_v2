@@ -308,7 +308,7 @@ class Moderation(commands.Cog):
             "status": "open",
             "resolved_by": None,
             "resolved_at": None,
-            "created_at": datetime.utcnow(),
+            "created_at": datetime.datetime.utcnow(),
             "reason": "Support"
         }
 
