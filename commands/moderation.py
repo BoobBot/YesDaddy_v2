@@ -56,6 +56,19 @@ class Moderation(commands.Cog):
                         idiot_data["idiot_by"] = ctx.author.id
                         await user_data.update_user({"idiot": idiot_data}, self.bot)
                         await ctx.reply(f"LOL you tried.")
+                        return
+                    user_data = await self.bot.db_client.get_user(user.id)
+                    idiot_data = user_data.idiot
+                    idiot_data["idiot"] = True
+                    idiot_data["nickname"] = nickname
+                    idiot_data["times_idiot"] += 1
+                    idiot_data["timestamp"] = datetime.datetime.now(datetime.timezone.utc)
+                    idiot_data["change"] = 0
+                    idiot_data["idiot_by"] = ctx.author.id
+                    await user.edit(nick=nickname, reason="what a idiot")
+                    await user_data.update_user({"idiot": idiot_data}, self.bot)
+                    await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.", ephemeral=True)
+                return
             user_data = await self.bot.db_client.get_user(user.id)
             idiot_data = user_data.idiot
             idiot_data["idiot"] = True
@@ -67,6 +80,7 @@ class Moderation(commands.Cog):
             await user.edit(nick=nickname, reason="what a idiot")
             await user_data.update_user({"idiot": idiot_data}, self.bot)
             await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.", ephemeral=True)
+            return
 
         else:
             print("not idiot")
@@ -81,6 +95,7 @@ class Moderation(commands.Cog):
             await user.edit(nick=nickname, reason="what a idiot")
             await user_data.update_user({"idiot": idiot_data}, self.bot)
             await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.")
+            return
 
     @idiot.command(name="clear", description="clear a idiots nickname")
     @app_commands.describe(user="The user to clear the nickname of.")
@@ -291,7 +306,7 @@ class Moderation(commands.Cog):
             await dm_channel.send("Hello! opening a support ticket for you.")
         except discord.Forbidden:
             return await ctx.send("I couldn't DM you! Do you have DMs disabled?",
-                                                           ephemeral=True)
+                                  ephemeral=True)
 
         category_id = 1141700782006222970
         category = ctx.guild.get_channel(category_id)
@@ -302,7 +317,7 @@ class Moderation(commands.Cog):
                                                read_message_history=True, attach_files=True)
         }
         new_channel = await ctx.guild.create_text_channel(user.name, category=category,
-                                                                  overwrites=overwrites)
+                                                          overwrites=overwrites)
         await ctx.send("Opened support ticket, check your DMs!", ephemeral=True)
         ticket_data = {
             "channel_id": new_channel.id,
@@ -322,8 +337,5 @@ class Moderation(commands.Cog):
             view=support_view.SupportTicketView())
 
 
-
-
 async def setup(bot):
     await bot.add_cog(Moderation(bot))
-
