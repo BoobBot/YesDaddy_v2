@@ -51,7 +51,7 @@ class Dev(commands.Cog):
             try:
                 await self.bot.reload_extension(cog)
             except Exception as e:
-                status += f'{name:<15} FAILED\n    {e}\n'
+                status += f'{name:<15} FAILED\n    {e.original or e}\n'
             else:
                 status += f'{name:<15} OK\n'
 
