@@ -139,6 +139,9 @@ class Core(commands.Cog):
                      value="</blackjack:1146852161481883779>: play blackjack\n</coinflip:1146775189732987011>: play coinflip\n</dice:1146842135736356886>: roll some dice\n</slots:1145445177092231340>: play slots\n</roulette:1146842135736356887>: play roulette\n</rps:1146842135736356884>: play rock paper scissors\n</rpsls:1146842135736356885>: play rock paper scissors lizard spock\n</highlow:1153770798050459838>: play a game of highlow\n</wheel:1146879853321269348>: spin the wheel of fortune\n</crime:1145445177092231346>: do some crime\n</rob:1145445177092231347>: rob someone\n", inline=False)
         em.add_field(name="Profile:",
                      value="</avatar:1145798060560089088>: look at your or somebody elses avatar\n</profile:1145445177092231342>: look at yours or somebody elses profile\n</leaderboard level:1145503523652517968>: check the level leaderboard\n</leaderboard balance:1145503523652517968>: check the balance leaderboard\n</leaderboard bank:1145503523652517968>: check the bank leaderboard\n</bail:1145445177092231341>: release you or someone else from jail\n", inline=False)
+        em.add_field(name="Transactions:",
+                     value="</transactions balance:1145445177092231348>: check your balance\n</transactions pay:1145445177092231348>: pay someone money\n</transactions deposit:1145445177092231348>: deposit money into your bank\n</transactions depall:1145445177092231348>: deposit all your money into the bank\n</transactions withdraw:1145445177092231348>: withdraw money from your bank\n</transactions withall:1145445177092231348>: withdraw all your money from the bank\n",
+                     inline=False)
         em.add_field(name="Moderation:",
                      value="</massnick start:1154508740482052186>: run a massnick\n</ratio:1155206383986298900>: check the ratio of nsfw to sfw channels\n", inline=False)
         await ctx.reply(embed=em)
