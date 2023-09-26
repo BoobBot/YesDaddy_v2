@@ -66,8 +66,8 @@ class Moderation(commands.Cog):
                     idiot_data["timestamp"] = datetime.datetime.now(datetime.timezone.utc)
                     idiot_data["change"] = 0
                     idiot_data["idiot_by"] = ctx.author.id
-                    await user.edit(nick=nickname, reason="what a idiot")
                     await user_data.update_user({"idiot": idiot_data}, self.bot)
+                    await user.edit(nick=nickname, reason="what a idiot")
                     await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.", ephemeral=True)
                 return
             user_data = await self.bot.db_client.get_user(user.id)
@@ -78,8 +78,8 @@ class Moderation(commands.Cog):
             idiot_data["timestamp"] = datetime.datetime.now(datetime.timezone.utc)
             idiot_data["change"] = 0
             idiot_data["idiot_by"] = ctx.author.id
-            await user.edit(nick=nickname, reason="what a idiot")
             await user_data.update_user({"idiot": idiot_data}, self.bot)
+            await user.edit(nick=nickname, reason="what a idiot")
             await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.", ephemeral=True)
             return
 
