@@ -25,6 +25,7 @@ class Moderation(commands.Cog):
     @app_commands.describe(user="The user to set the nickname of.")
     @app_commands.describe(nickname="The nickname to set.")
     async def idiot_set(self, ctx, user: discord.Member, *, nickname: str):
+        # TODO this is all very messy and bad, clean it up
         user_data = await self.bot.db_client.get_user(user.id)
         print("ddd")
         if user_data.idiot:
