@@ -26,9 +26,11 @@ class Moderation(commands.Cog):
     @app_commands.describe(nickname="The nickname to set.")
     async def idiot_set(self, ctx, user: discord.Member, *, nickname: str):
         user_data = await self.bot.db_client.get_user(user.id)
+        print("ddd")
         if user_data.idiot:
-
+            print("idiot")
             if user_data.idiot.get("idiot"):
+                print("is idiot")
                 view = Confirm()
                 color = await generate_embed_color(ctx.author)
                 em = discord.Embed(color=color)
@@ -67,6 +69,7 @@ class Moderation(commands.Cog):
                     await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.")
 
         else:
+            print("not idiot")
             idiot_data = {
                 "nickname": nickname,
                 "idiot": True,
