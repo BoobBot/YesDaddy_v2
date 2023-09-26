@@ -128,7 +128,7 @@ class Core(commands.Cog):
             embed.add_field(name=f"Trigger", value=f"`{reaction.get('trigger')}`")
         await ctx.reply(embed=embed)
 
-    @commands.hybrid_group(name="help", description="have a list of commands")
+    @commands.hybrid_command(name="help", description="have a list of commands")
     async def help(self, ctx):
         em = discord.Embed(title="Commands List", colour=discord.Colour.blue())
         em.add_field(name="Core:",
