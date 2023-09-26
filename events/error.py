@@ -142,7 +142,7 @@ class ErrorHandlerCog(commands.Cog):
             # Get the traceback information as a formatted string
             traceback_info = "".join(traceback.format_exception(type(error), error, error.__traceback__))
             self.logger.error(traceback_info)
-            await self.send_error_to_webhook(traceback_info)
+            await self.send_error_to_webhook(f'```{traceback_info}```')
             await self.send_error_to_webhook(f"An error occurred: {error}\n\nTraceback:```\n{error_message}```")
 
 
