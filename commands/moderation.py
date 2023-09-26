@@ -7,6 +7,7 @@ from discord import app_commands
 from discord.ext import commands
 
 from utils.utilities import get_average_color, generate_embed_color
+from views import support_view
 from views.confirm_view import Confirm
 
 
@@ -278,6 +279,48 @@ class Moderation(commands.Cog):
         em.add_field(name="All Channels:", value=f"{allchannels}")
         await ctx.reply(embed=em)
 
+    @commands.hybrid_command(name="new ticket", description="Create a new ticket")
+    @commands.has_any_role(694641646922498069, 694641646918434875)
+    async def support(self, ctx: commands.Context, user: discord.Member):
+        retrieved_guild = await self.bot.db_client.get_guild(ctx.guild.id)
+        try:
+            dm_channel = await user.create_dm()
+            await dm_channel.send("Hello! opening a support ticket for you.")
+        except discord.Forbidden:
+            return await ctx.send("I couldn't DM you! Do you have DMs disabled?",
+                                                           ephemeral=True)
+
+        category_id = 1141700782006222970
+        category = ctx.guild.get_channel(category_id)
+        staff = discord.utils.get(ctx.guild.roles, id=694641646918434875)
+        overwrites = {
+            ctx.guild.default_role: discord.PermissionOverwrite(send_messages=False, read_messages=False),
+            staff: discord.PermissionOverwrite(send_messages=True, read_messages=True, embed_links=True,
+                                               read_message_history=True, attach_files=True)
+        }
+        new_channel = await ctx.guild.create_text_channel(user.name, category=category,
+                                                                  overwrites=overwrites)
+        await ctx.send("Opened support ticket, check your DMs!", ephemeral=True)
+        ticket_data = {
+            "channel_id": new_channel.id,
+            "dm_channel_id": dm_channel.id,
+            "user_id": user.id,
+            "status": "open",
+            "resolved_by": None,
+            "resolved_at": None,
+            "created_at": datetime.utcnow(),
+            "reason": "Support"
+        }
+
+        await self.bot.db_client.add_support_ticket(ctx.guild.id, ticket_data)
+        await dm_channel.send("Your ticket has been created. Please describe your issue.")
+        await new_channel.send(
+            f"<@&981426793925992448> Support Ticket by {user.mention}",
+            view=support_view.SupportTicketView())
+
+
+
 
 async def setup(bot):
     await bot.add_cog(Moderation(bot))
+
