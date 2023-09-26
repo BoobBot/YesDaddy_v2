@@ -279,7 +279,7 @@ class Moderation(commands.Cog):
         em.add_field(name="All Channels:", value=f"{allchannels}")
         await ctx.reply(embed=em)
 
-    @commands.hybrid_command(name="new ticket", description="Create a new ticket")
+    @commands.hybrid_command(name="new_ticket", description="Create a new ticket")
     @commands.has_any_role(694641646922498069, 694641646918434875)
     async def support(self, ctx: commands.Context, user: discord.Member):
         retrieved_guild = await self.bot.db_client.get_guild(ctx.guild.id)
