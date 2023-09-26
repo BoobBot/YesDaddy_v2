@@ -53,7 +53,7 @@ class Dev(commands.Cog):
             except Exception as e:
                 status += f'{name:<15} FAILED\n    {e}\n'
             else:
-                status += f'{name:<15} OK'
+                status += f'{name:<15} OK\n'
 
         await ctx.send(status + '```')
 
