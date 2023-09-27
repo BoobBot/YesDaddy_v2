@@ -1,3 +1,5 @@
+import datetime
+
 import discord
 from discord.ext import commands
 
@@ -131,6 +133,11 @@ class Core(commands.Cog):
     @commands.hybrid_command(name="help", description="have a list of commands")
     async def help(self, ctx):
         em = discord.Embed(title="Commands List", colour=discord.Colour.blue())
+        timestamp = discord.utils.format_dt(
+            datetime.datetime.now(datetime.timezone.utc), style="f")
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png"))
         em.add_field(name="Core:",
                      value="</github:1146802715511492670>: view the bots github repo\n</invite:1146802715511492668>: invite the bot to your server\n</ping:1145445177092231339>: show bot and API latency\n</support:1146802715511492669>: join the support server\n", inline=False)
         em.add_field(name="Currency:",
