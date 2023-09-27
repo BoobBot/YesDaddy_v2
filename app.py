@@ -16,7 +16,9 @@ from views.verification_view import VerificationView
 from views.rule_button_view import RuleButton
 from config.config import Config
 from utils.logger import setup_logger
-
+import sys
+sys.stdin.reconfigure(encoding="utf-8")
+sys.stdout.reconfigure(encoding="utf-8")
 config = Config()
 openai.api_key = config.open_ai_key
 bot_token = config.token
