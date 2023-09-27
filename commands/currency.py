@@ -45,7 +45,7 @@ class Currency(commands.Cog):
         if is_successful:
             user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
             cash = monster["value"]*random.randint(5, 10)
-            await user_data.add_balance(cash, self.bot)
+            await user_data.add_balance(cash)
             scenario = random.choice(success_list)
             outcome = random.choice(adv_success_strings)
             scenario_text = scenario[0].format(author, monster["emoji"])
@@ -78,7 +78,7 @@ class Currency(commands.Cog):
         user_id = ctx.author.id
         user_data = await ctx.bot.db_client.get_user(user_id=user_id)
         user_balance = user_data.balance
-        await user_data.add_balance(resource_value * resource_amount, self.bot)
+        await user_data.add_balance(resource_value * resource_amount)
         color = await generate_embed_color(ctx.author)
 
         embed = discord.Embed(title="You chopped some resources!",
@@ -102,7 +102,7 @@ class Currency(commands.Cog):
         user_id = ctx.author.id
         user_data = await ctx.bot.db_client.get_user(user_id=user_id)
         user_balance = user_data.balance
-        await user_data.add_balance(resource_value * resource_amount, self.bot)
+        await user_data.add_balance(resource_value * resource_amount)
         color = await generate_embed_color(ctx.author)
         embed = discord.Embed(title="You mined some resources!",
                               description=f"You mined x{resource_amount} {resource['emote']} {chosen_resource} worth ${resource_value}! You now have ${user_balance + resource_value}!",
@@ -117,7 +117,7 @@ class Currency(commands.Cog):
 
         user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
         user_balance = user_data.balance
-        await user_data.add_balance(fish_value, self.bot)
+        await user_data.add_balance(fish_value)
         color = await generate_embed_color(ctx.author)
 
         embed = discord.Embed(title="You caught a fish!",
@@ -133,7 +133,7 @@ class Currency(commands.Cog):
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
         user_color = await generate_embed_color(user)
         author_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
-        streak_broken, daily_streak = await author_data.claim_daily(self.bot)
+        streak_broken, daily_streak = await author_data.claim_daily()
         if not streak_broken:
             claimed_money = 5000 + (500 * daily_streak)
         else:
@@ -163,7 +163,7 @@ class Currency(commands.Cog):
             em.add_field(name="Streak Broken!",
                          value=f"You broke your daily streak of {daily_streak} days!")
 
-        await user_data.add_balance(claimed_money, self.bot)
+        await user_data.add_balance(claimed_money)
         await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="weekly", description="Get your weekly coins!.")
@@ -192,7 +192,7 @@ class Currency(commands.Cog):
         em.add_field(name="Amount Added", value=f"${money}")
         em.add_field(name="New Balance", value=f"${newbal}")
 
-        await user_data.add_balance(money, self.bot)
+        await user_data.add_balance(money)
         await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="work", description="get a job")
@@ -216,7 +216,7 @@ class Currency(commands.Cog):
         em.set_thumbnail(
             url=ctx.author.display_avatar.with_static_format("png"))
         em.add_field(name="New Balance", value=f"${new_bal}")
-        await user_data.add_balance(cash, self.bot)
+        await user_data.add_balance(cash)
         await ctx.reply(embed=em)
 
 

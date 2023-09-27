@@ -54,8 +54,8 @@ class Transactions(commands.Cog):
         recipient_balance = recipient_data.balance
         new_recipient_balance = recipient_balance + amount
         new_user_balance = user_balance - amount
-        await recipient_data.update_balance(new_recipient_balance, self.bot)
-        await user_data.update_balance(new_user_balance, self.bot)
+        await recipient_data.update_balance(new_recipient_balance)
+        await user_data.update_balance(new_user_balance)
         await ctx.reply(f":white_check_mark: You paid {member.mention} {amount} coins.")
 
     @transactions.command(name="deposit", description="Deposit money into your bank.")
@@ -76,8 +76,8 @@ class Transactions(commands.Cog):
         user_bank_balance = user_data.bank_balance
         new_user_bank_balance = user_bank_balance + amount
         new_user_balance = user_balance - amount
-        await user_data.update_balance(new_user_balance, self.bot)
-        await user_data.update_bank_balance(new_user_bank_balance, self.bot)
+        await user_data.update_balance(new_user_balance)
+        await user_data.update_bank_balance(new_user_bank_balance)
         await ctx.reply(f":white_check_mark: You deposited {amount} coins into your bank.")
 
     @transactions.command(name="depall", description="Deposit all money into your bank.")
@@ -93,8 +93,8 @@ class Transactions(commands.Cog):
 
         user_bank_balance = user_data.bank_balance
         new_user_bank_balance = user_bank_balance + user_balance
-        await user_data.update_balance(0, self.bot)
-        await user_data.update_bank_balance(new_user_bank_balance, self.bot)
+        await user_data.update_balance(0)
+        await user_data.update_bank_balance(new_user_bank_balance)
         await ctx.reply(f":white_check_mark: You deposited {user_balance} coins into your bank.")
 
     @transactions.command(name="withdraw", description="Withdraw money from your bank.")
@@ -115,8 +115,8 @@ class Transactions(commands.Cog):
         user_balance = user_data.balance
         new_user_bank_balance = user_bank_balance - amount
         new_user_balance = user_balance + amount
-        await user_data.update_balance(new_user_balance, self.bot)
-        await user_data.update_bank_balance(new_user_bank_balance, self.bot)
+        await user_data.update_balance(new_user_balance)
+        await user_data.update_bank_balance(new_user_bank_balance)
         await ctx.reply(f":white_check_mark: You withdrew {amount} coins from your bank.")
 
     @transactions.command(name="withall", description="Withdraw all money from your bank.")
@@ -133,8 +133,8 @@ class Transactions(commands.Cog):
         user_balance = user_data.balance
         new_user_bank_balance = user_bank_balance - user_bank_balance
         new_user_balance = user_balance + user_bank_balance
-        await user_data.update_balance(new_user_balance, self.bot)
-        await user_data.update_bank_balance(new_user_bank_balance, self.bot)
+        await user_data.update_balance(new_user_balance)
+        await user_data.update_bank_balance(new_user_bank_balance)
         await ctx.reply(f":white_check_mark: You withdrew {user_bank_balance} coins from your bank.")
 
     @transactions.command(name="balance", description="Check your balance.")

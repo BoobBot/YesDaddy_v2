@@ -3,9 +3,10 @@ import datetime
 
 
 class User:
-    def __init__(self, user_id, blacklist, last_seen, xp, level, premium, balance, bank_balance, cooldowns, messages,
-                 jail,
+    def __init__(self, db, user_id, blacklist, last_seen, xp, level, premium, balance, bank_balance, cooldowns,
+                 messages, jail,
                  last_daily_claim=None, last_weekly_claim=None, daily_streak=0, weekly_streak=0, idiot=None):
+        self._db = db
         self.user_id = user_id
         self.blacklist = blacklist
         self.last_seen = last_seen
@@ -23,13 +24,13 @@ class User:
         self.weekly_streak = weekly_streak
         self.idiot = self.idiot = idiot if idiot is not None else {}
 
-    async def jail_user(self, hours, fine, bot):
+    async def jail_user(self, hours, fine):
         self.jail = {
             "start_time": datetime.datetime.now(datetime.timezone.utc),
             "duration_hours": hours,
             "fine": fine
         }
-        await self.update_user({"jail": self.jail}, bot)
+        await self.update_user({"jail": self.jail})
 
     def is_in_jail(self):
         if self.jail:
@@ -40,73 +41,73 @@ class User:
             return end_time
         return False
 
-    async def add_xp(self, amount, bot):
+    async def add_xp(self, amount):
         self.xp += amount
-        await self.update_user({"xp": self.xp}, bot)
+        await self.update_user({"xp": self.xp})
 
-    async def update_level(self, amount, bot):
+    async def update_level(self, amount):
         self.level = amount
-        await self.update_user({"level": self.level}, bot)
+        await self.update_user({"level": self.level})
 
-    async def add_balance(self, amount, bot):
+    async def add_balance(self, amount):
         self.balance += max(amount, 0)
-        await self.update_user({"balance": self.balance}, bot)
+        await self.update_user({"balance": self.balance})
 
-    async def subtract_balance(self, amount, bot):
+    async def subtract_balance(self, amount):
         self.balance -= max(amount, 0)
-        await self.update_user({"balance": self.balance}, bot)
+        await self.update_user({"balance": self.balance})
 
-    async def update_balance(self, amount, bot):
+    async def update_balance(self, amount):
         self.balance = max(amount, 0)
-        await self.update_user({"balance": self.balance}, bot)
+        await self.update_user({"balance": self.balance})
 
-    async def update_bank_balance(self, amount, bot):
+    async def update_bank_balance(self, amount):
         self.balance = max(amount, 0)
-        await self.update_user({"bank_balance": self.balance}, bot)
+        await self.update_user({"bank_balance": self.balance})
 
-    async def add_bank_balance(self, amount, bot):
+    async def add_bank_balance(self, amount):
         self.bank_balance += max(amount, 0)
-        await self.update_user({"bank_balance": self.bank_balance}, bot)
+        await self.update_user({"bank_balance": self.bank_balance})
 
-    async def update_user(self, new_data, bot):
-        await bot.db_client.update_user(self.user_id, new_data)
+    async def update_user(self, new_data):
+        await self._db.update_user(self.user_id, new_data)
 
-    async def update_last_seen(self, bot):
+    async def update_last_seen(self):
         self.last_seen = datetime.datetime.now(datetime.timezone.utc)
-        await self.update_user({"last_seen": self.last_seen}, bot)
+        await self.update_user({"last_seen": self.last_seen})
 
-    # async def update_cool_down(self, bot):
+    # async def update_cool_down(self):
     #     self.cooldowns = datetime.utcnow()
-    #     await self.update_user({"cool_down": self.cool_down}, bot)
+    #     await self.update_user({"cool_down": self.cool_down})
 
-    async def update_messages(self, bot):
+    async def update_messages(self):
         self.messages += 1
-        await self.update_user({"messages": self.messages}, bot)
+        await self.update_user({"messages": self.messages})
 
-    async def add_premium(self, bot):
+    async def add_premium(self):
         self.premium = True
-        await self.update_user({"premium": self.premium}, bot)
+        await self.update_user({"premium": self.premium})
 
-    async def remove_premium(self, bot):
+    async def remove_premium(self):
         self.premium = False
-        await self.update_user({"premium": self.premium}, bot)
+        await self.update_user({"premium": self.premium})
 
-    async def add_blacklist(self, bot):
+    async def add_blacklist(self):
         self.blacklist = True
-        await self.update_user({"blacklist": self.blacklist}, bot)
+        await self.update_user({"blacklist": self.blacklist})
 
-    async def remove_blacklist(self, bot):
+    async def remove_blacklist(self):
         self.blacklist = False
-        await self.update_user({"blacklist": self.blacklist}, bot)
+        await self.update_user({"blacklist": self.blacklist})
 
-    async def claim_daily(self, bot):
+    async def claim_daily(self):
         now = datetime.datetime.now(datetime.timezone.utc)
     
         if not self.last_daily_claim:
             self.last_daily_claim = now
             self.daily_streak = 1
             await self.update_user({"last_daily_claim": self.last_daily_claim,
-                                    "daily_streak": self.daily_streak}, bot)
+                                    "daily_streak": self.daily_streak})
             return False, self.daily_streak
         
         days_since_last_claim = (now - self.last_daily_claim.replace(tzinfo=datetime.timezone.utc)).days
@@ -115,16 +116,16 @@ class User:
             self.daily_streak = 1
             self.last_daily_claim = now
             await self.update_user({"last_daily_claim": self.last_daily_claim,
-                                    "daily_streak": self.daily_streak}, bot)
+                                    "daily_streak": self.daily_streak})
             return True, self.daily_streak
 
         self.daily_streak += 1
         self.last_daily_claim = now
         await self.update_user({"last_daily_claim": self.last_daily_claim,
-                                "daily_streak": self.daily_streak}, bot)
+                                "daily_streak": self.daily_streak})
         return False, self.daily_streak
 
-    async def claim_weekly(self, bot):
+    async def claim_weekly(self):
         now = datetime.datetime.now(datetime.timezone.utc)
         if self.last_weekly_claim is None or (now - self.last_weekly_claim).days >= 7:
             # Check if the weekly streak is broken
@@ -139,9 +140,9 @@ class User:
             self.weekly_streak += 1
 
             # Update user data and send an embed
-            await self.add_balance(money, bot)
+            await self.add_balance(money)
             await self.update_user({"last_weekly_claim": self.last_weekly_claim,
-                                    "weekly_streak": self.weekly_streak}, bot)
+                                    "weekly_streak": self.weekly_streak})
             return money, self.weekly_streak
         else:
             return 0, self.weekly_streak

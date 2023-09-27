@@ -17,7 +17,7 @@ class OnMemberJoin(commands.Cog):
         if user_data.idiot.get("idiot", None):
             await member.edit(nick=user_data.idiot.get('nickname'), reason="what a idiot")
             user_data.idiot.change += 1
-            await user_data.update_user({"idiot": user_data.idiot}, self.bot)
+            await user_data.update_user({"idiot": user_data.idiot})
 
 
 async def setup(bot):

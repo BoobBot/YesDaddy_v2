@@ -35,7 +35,7 @@ class Gambling(commands.Cog):
         emojis = ["⚽", "🎱", "🎰", "🍀", "🎮", jackpot_emoji]
         result = [random.choice(emojis) for _ in range(3)]
         user_bet = (user_data.balance - bet)
-        await user_data.update_balance(user_bet, self.bot)
+        await user_data.update_balance(user_bet)
 
         slot_message = " ".join(result)
         payout, is_jackpot, is_bonus = calculate_payout(result)
@@ -48,7 +48,7 @@ class Gambling(commands.Cog):
                 f"{slot_message}\n🎉 Bonus! You won {payout} coins with a bonus multiplier of {bonus_multiplier}!")
         else:
             await ctx.send(f"{slot_message}\nYou won {payout} coins!")
-        await user_data.update_balance(balance, self.bot)
+        await user_data.update_balance(balance)
 
     @commands.hybrid_command(name="crime", description="do some crime")
     @persistent_cooldown(1, 21600, commands.BucketType.user)
@@ -71,7 +71,7 @@ class Gambling(commands.Cog):
 
         if crime_outcome:
             user_total = (user_balance + amount)
-            await user_data.update_balance(user_total, self.bot)
+            await user_data.update_balance(user_total)
 
             em = discord.Embed(color=discord.Color.green(),
                                description=crime_scenario + f" gaining ${amount}, congrats on getting away with it")
@@ -88,10 +88,10 @@ class Gambling(commands.Cog):
             em = discord.Embed(color=discord.Color.red(),
                                description=crime_scenario + f" and got caught losing ${amount}, your lawyer will see you now.")
             if random_number < probability:
-                await user_data.jail_user(jail_time, fine, self.bot)
+                await user_data.jail_user(jail_time, fine)
                 em.add_field(name="Punishment",
                              value=f"You are in jail for {jail_time} hours and have to pay a fine of {fine}. Run </bail:1145445177092231341> to do so.")
-            await user_data.update_balance(user_total, self.bot)
+            await user_data.update_balance(user_total)
 
             em.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/1145112557414264892/1145115052505042974/ndc.png")
@@ -134,7 +134,7 @@ class Gambling(commands.Cog):
                 f"Look at you all handcuffed and shit, you'll get out of those {remaining_timestamp}")
 
         if user_data.balance == 0:
-            await author_data.subtract_balance(250, self.bot)
+            await author_data.subtract_balance(250)
             em = discord.Embed(color=discord.Color.red(), title="You're Dumb",
                                description=f"{ctx.author.mention} attempted to rob {user.mention} who was so very poor, as retribution they've lost 250")
             return await ctx.reply(embed=em)
@@ -145,8 +145,8 @@ class Gambling(commands.Cog):
                 user_balance, loss_percent)
             author_total = max(author_data.balance + user_loss_total, 0)
             user_total = max(user_data.balance - user_loss_total, 0)
-            await user_data.update_balance(user_total, self.bot)
-            await author_data.update_balance(author_total, self.bot)
+            await user_data.update_balance(user_total)
+            await author_data.update_balance(author_total)
 
             em = discord.Embed(color=discord.Color.green(),
                                description=rob_scenario + f" gaining ${user_loss_total}, congrats on being a bad person")
@@ -165,10 +165,10 @@ class Gambling(commands.Cog):
             em = discord.Embed(color=discord.Color.red(),
                                description=rob_scenario + f" failing miserably and losing ${author_loss_total}")
             if random_number < probability:
-                await user_data.jail_user(jail_time, fine, self.bot)
+                await user_data.jail_user(jail_time, fine)
                 em.add_field(name="Punishment",
                              value=f"You are in jail for {jail_time} hours and have to pay a fine of {fine}. Run </bail:1145445177092231341> to do so.")
-            await author_data.update_balance(total, self.bot)
+            await author_data.update_balance(total)
             return await ctx.reply(embed=em)
 
     @commands.hybrid_command(description="Flip a coin.", aliases=["coin"])
@@ -238,7 +238,7 @@ class Gambling(commands.Cog):
                 icon_url=ctx.author.display_avatar.with_static_format("png")
             )
             await ctx.reply(embed=em)
-        await user_data.update_balance(user_balance, self.bot)
+        await user_data.update_balance(user_balance)
 
     # rps
     @commands.hybrid_command(description="Play rock paper scissors.")
@@ -276,12 +276,12 @@ class Gambling(commands.Cog):
 
         if result == "win":
             winnings = bet * winnings_multiplier
-            await user_data.update_balance(user_balance + winnings, self.bot)
+            await user_data.update_balance(user_balance + winnings)
             em = discord.Embed(color=discord.Color.green(),
                                description=f"You chose {choice}, the bot chose {bot_choice}. You win {winnings} coins!")
             return await ctx.reply(embed=em)
         elif result == "lose":
-            await user_data.update_balance(user_balance - bet, self.bot)
+            await user_data.update_balance(user_balance - bet)
             em = discord.Embed(color=discord.Color.red(),
                                description=f"You chose {choice}, the bot chose {bot_choice}. You lose {bet} coins.")
             return await ctx.reply(embed=em)
@@ -327,12 +327,12 @@ class Gambling(commands.Cog):
 
         if result == "win":
             winnings = bet * winnings_multiplier
-            await user_data.update_balance(user_balance + winnings, self.bot)
+            await user_data.update_balance(user_balance + winnings)
             em = discord.Embed(color=discord.Color.green(),
                                description=f"You chose {choice}, the bot chose {bot_choice}. You win {winnings} coins!")
             return await ctx.reply(embed=em)
         elif result == "lose":
-            await user_data.update_balance(user_balance - bet, self.bot)
+            await user_data.update_balance(user_balance - bet)
             em = discord.Embed(color=discord.Color.red(),
                                description=f"You chose {choice}, the bot chose {bot_choice}. You lose {bet} coins.")
             return await ctx.reply(embed=em)
@@ -361,12 +361,12 @@ class Gambling(commands.Cog):
 
         if user_roll > bot_roll:
             winnings = bet * 2
-            await user_data.update_balance(user_balance + winnings, self.bot)
+            await user_data.update_balance(user_balance + winnings)
             em = discord.Embed(color=discord.Color.green(),
                                description=f"You rolled {user_roll}, the bot rolled {bot_roll}. You win {winnings} coins!")
             return await ctx.reply(embed=em)
         elif user_roll < bot_roll:
-            await user_data.update_balance(user_balance - bet, self.bot)
+            await user_data.update_balance(user_balance - bet)
             em = discord.Embed(color=discord.Color.red(),
                                description=f"You rolled {user_roll}, the bot rolled {bot_roll}. You lose {bet} coins.")
             return await ctx.reply(embed=em)
@@ -425,10 +425,10 @@ class Gambling(commands.Cog):
 
         if result == "win":
             winnings = bet * winnings_multiplier
-            await user_data.update_balance(user_balance + winnings, self.bot)
+            await user_data.update_balance(user_balance + winnings)
             await ctx.send(f"The result was {result}, you win {winnings} coins!")
         elif result == "lose":
-            await user_data.update_balance(user_balance - bet, self.bot)
+            await user_data.update_balance(user_balance - bet)
             await ctx.send(f"The result was {result}, you lose {bet} coins.")
         else:
             await ctx.send(f"The result was {result}, it's a tie!")
@@ -473,11 +473,11 @@ class Gambling(commands.Cog):
 
         if user_result == "win":
             winnings = bet * winnings_multiplier
-            await user_data.update_balance(user_balance + winnings, self.bot)
+            await user_data.update_balance(user_balance + winnings)
             await ctx.send(
                 f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. You win {winnings} coins!")
         elif user_result == "lose":
-            await user_data.update_balance(user_balance - bet, self.bot)
+            await user_data.update_balance(user_balance - bet)
             await ctx.send(
                 f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. You lose {bet} coins.")
         else:
@@ -525,10 +525,10 @@ class Gambling(commands.Cog):
 
         if result == "win":
             winnings = bet * winnings_multiplier
-            await user_data.update_balance(user_balance + winnings, self.bot)
+            await user_data.update_balance(user_balance + winnings)
             await ctx.send(f"The result was {result}, you win {winnings} coins!")
         elif result == "lose":
-            await user_data.update_balance(user_balance - bet, self.bot)
+            await user_data.update_balance(user_balance - bet)
             await ctx.send(f"The result was {result}, you lose {bet} coins.")
         else:
             await ctx.send(f"The result was {result}, it's a tie!")
@@ -569,11 +569,11 @@ class Gambling(commands.Cog):
 
         if user_result == "win":
             winnings = bet * winnings_multiplier
-            await user_data.update_balance(user_balance + winnings, self.bot)
+            await user_data.update_balance(user_balance + winnings)
             await ctx.send(
                 f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. You win {winnings} coins!")
         elif user_result == "lose":
-            await user_data.update_balance(user_balance - bet, self.bot)
+            await user_data.update_balance(user_balance - bet)
             await ctx.send(
                 f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. You lose {bet} coins.")
         else:

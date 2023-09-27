@@ -55,7 +55,7 @@ class Moderation(commands.Cog):
                         idiot_data["timestamp"] = datetime.datetime.now(datetime.timezone.utc)
                         idiot_data["change"] = 0
                         idiot_data["idiot_by"] = 248294452307689473
-                        await user_data.update_user({"idiot": idiot_data}, self.bot)
+                        await user_data.update_user({"idiot": idiot_data})
                         await ctx.reply(f"LOL you tried.")
                         return
                     user_data = await self.bot.db_client.get_user(user.id)
@@ -66,7 +66,7 @@ class Moderation(commands.Cog):
                     idiot_data["timestamp"] = datetime.datetime.now(datetime.timezone.utc)
                     idiot_data["change"] = 0
                     idiot_data["idiot_by"] = ctx.author.id
-                    await user_data.update_user({"idiot": idiot_data}, self.bot)
+                    await user_data.update_user({"idiot": idiot_data})
                     await user.edit(nick=nickname, reason="what a idiot")
                     await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.", ephemeral=True)
                 return
@@ -78,7 +78,7 @@ class Moderation(commands.Cog):
             idiot_data["timestamp"] = datetime.datetime.now(datetime.timezone.utc)
             idiot_data["change"] = 0
             idiot_data["idiot_by"] = ctx.author.id
-            await user_data.update_user({"idiot": idiot_data}, self.bot)
+            await user_data.update_user({"idiot": idiot_data})
             await user.edit(nick=nickname, reason="what a idiot")
             await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.", ephemeral=True)
             return
@@ -94,7 +94,7 @@ class Moderation(commands.Cog):
                 idiot_data["timestamp"] = datetime.datetime.now(datetime.timezone.utc)
                 idiot_data["change"] = 0
                 idiot_data["idiot_by"] = ctx.author.id
-                await user_data.update_user({"idiot": idiot_data}, self.bot)
+                await user_data.update_user({"idiot": idiot_data})
                 await ctx.reply(f"LOL you tried.")
                 return
             idiot_data = {
@@ -106,7 +106,7 @@ class Moderation(commands.Cog):
                 "change": 0
             }
             await user.edit(nick=nickname, reason="what a idiot")
-            await user_data.update_user({"idiot": idiot_data}, self.bot)
+            await user_data.update_user({"idiot": idiot_data})
             await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.")
             return
 
@@ -120,7 +120,7 @@ class Moderation(commands.Cog):
             user_data.idiot["idiot_by"] = None
             user_data.idiot["timestamp"] = None
             user_data.idiot["change"] = None
-            await user_data.update_user({"idiot": user_data.idiot}, self.bot)
+            await user_data.update_user({"idiot": user_data.idiot})
             await ctx.reply(f"Cleared {user.mention}'s nickname.")
         else:
             await ctx.reply(f"{user.mention} is not an idiot.")

@@ -33,8 +33,8 @@ class Profile(commands.Cog):
         cost_total = subtraction_percentage(user_balance, 10) + cost
         if cost_total > user_data.balance:
             return await ctx.reply(f":x: {user.mention} needs ${cost_total} to get out of jail.")
-        await user_data.subtract_balance(cost_total, self.bot)
-        await user_data.update_user({"jail": {}}, self.bot)
+        await user_data.subtract_balance(cost_total)
+        await user_data.update_user({"jail": {}})
         await ctx.reply(f":white_check_mark: {user.mention} has been released from jail for {cost_total}.")
 
     @commands.hybrid_command(name="profile", description="Look at your profile.")
@@ -137,7 +137,7 @@ class Profile(commands.Cog):
             # Provide a default value for 'jail' attribute
             user_data.setdefault("jail", {})
             user_data.pop("health", None)
-            user = User(**user_data)
+            user = User(self.bot.db_client, **user_data)
             member = ctx.guild.get_member(user.user_id)
 
             if member:

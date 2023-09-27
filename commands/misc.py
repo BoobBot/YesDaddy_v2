@@ -160,7 +160,7 @@ class Misc(commands.Cog):
         if is_successful:
             user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
             cash = monster["value"]*random.randint(5, 10)
-            await user_data.add_balance(cash, self.bot)
+            await user_data.add_balance(cash)
             scenario = random.choice(success_list)
             outcome = random.choice(adv_success_strings)
             scenario_text = scenario[0].format(author, monster["emoji"])
@@ -189,7 +189,7 @@ class Misc(commands.Cog):
         user_id = ctx.author.id
         user_data = await ctx.bot.db_client.get_user(user_id=user_id)
         user_balance = user_data.balance
-        await user_data.add_balance(resource_value * resource_amount, self.bot)
+        await user_data.add_balance(resource_value * resource_amount)
         color = await generate_embed_color(ctx.author)
 
         embed = discord.Embed(title="You chopped some resources!",
@@ -212,7 +212,7 @@ class Misc(commands.Cog):
         user_id = ctx.author.id
         user_data = await ctx.bot.db_client.get_user(user_id=user_id)
         user_balance = user_data.balance
-        await user_data.add_balance(resource_value * resource_amount, self.bot)
+        await user_data.add_balance(resource_value * resource_amount)
         color = await generate_embed_color(ctx.author)
         embed = discord.Embed(title="You mined some resources!",
                               description=f"You mined x{resource_amount} {resource['emote']} {chosen_resource} worth ${resource_value}! You now have ${user_balance + resource_value}!",
@@ -227,7 +227,7 @@ class Misc(commands.Cog):
 
         user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
         user_balance = user_data.balance
-        await user_data.add_balance(fish_value, self.bot)
+        await user_data.add_balance(fish_value)
         color = await generate_embed_color(ctx.author)
 
         embed = discord.Embed(title="You caught a fish!",
@@ -249,7 +249,7 @@ class Misc(commands.Cog):
         emojis = ["⚽", "🎱", "🎰", "🍀", "🎮", jackpot_emoji]
         result = [random.choice(emojis) for _ in range(3)]
         user_bet = (user_data.balance - bet)
-        await user_data.update_balance(user_bet, self.bot)
+        await user_data.update_balance(user_bet)
 
         slot_message = " ".join(result)
         payout, is_jackpot, is_bonus = calculate_payout(result)
@@ -262,7 +262,7 @@ class Misc(commands.Cog):
                 f"{slot_message}\n🎉 Bonus! You won {payout} coins with a bonus multiplier of {bonus_multiplier}!")
         else:
             await ctx.send(f"{slot_message}\nYou won {payout} coins!")
-        await user_data.update_balance(balance, self.bot)
+        await user_data.update_balance(balance)
 
     @commands.hybrid_command(name="bail", description="get you or someone else out of jail")
     @app_commands.describe(user="User to bailout")
@@ -277,8 +277,8 @@ class Misc(commands.Cog):
         cost_total = subtraction_percentage(user_balance, 10) + cost
         if cost_total > user_data.balance:
             return await ctx.reply(f":x: {user.mention} needs ${cost_total} to get out of jail.")
-        await user_data.subtract_balance(cost_total, self.bot)
-        await user_data.update_user({"jail": {}}, self.bot)
+        await user_data.subtract_balance(cost_total)
+        await user_data.update_user({"jail": {}})
         await ctx.reply(f":white_check_mark: {user.mention} has been released from jail for {cost_total}.")
 
     @commands.hybrid_command(name="profile", description="Look at your profile.")
@@ -341,7 +341,7 @@ class Misc(commands.Cog):
         em.add_field(name="Amount Added", value=f"{money}")
         em.add_field(name="New Balance", value=f"{newbal}")
 
-        await user_data.add_balance(money, self.bot)
+        await user_data.add_balance(money)
         await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="weekly", description="Get your weekly coins!.")
@@ -370,7 +370,7 @@ class Misc(commands.Cog):
         em.add_field(name="Amount Added", value=f"{money}")
         em.add_field(name="New Balance", value=f"{newbal}")
 
-        await user_data.add_balance(money, self.bot)
+        await user_data.add_balance(money)
         await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="work", description="get a job")
@@ -394,7 +394,7 @@ class Misc(commands.Cog):
         em.set_thumbnail(
             url=ctx.author.display_avatar.with_static_format("png"))
         em.add_field(name="New Balance", value=f"{new_bal}")
-        await user_data.add_balance(cash, self.bot)
+        await user_data.add_balance(cash)
         await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="crime", description="do some crime")
@@ -418,7 +418,7 @@ class Misc(commands.Cog):
 
         if crime_outcome:
             user_total = (user_balance + amount)
-            await user_data.update_balance(user_total, self.bot)
+            await user_data.update_balance(user_total)
 
             em = discord.Embed(color=discord.Color.green(),
                                description=crime_scenario + f" gaining ${amount}, congrats on getting away with it")
@@ -435,10 +435,10 @@ class Misc(commands.Cog):
             em = discord.Embed(color=discord.Color.red(),
                                description=crime_scenario + f" and got caught losing ${amount}, your lawyer will see you now.")
             if random_number < probability:
-                await user_data.jail_user(jail_time, fine, self.bot)
+                await user_data.jail_user(jail_time, fine)
                 em.add_field(name="Punishment",
                              value=f"You are in jail for {jail_time} hours and have to pay a fine of {fine}. Run </bail:1145445177092231341> to do so.")
-            await user_data.update_balance(user_total, self.bot)
+            await user_data.update_balance(user_total)
 
             em.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/1145112557414264892/1145115052505042974/ndc.png")
@@ -481,7 +481,7 @@ class Misc(commands.Cog):
                 f"Look at you all handcuffed and shit, you'll get out of those {remaining_timestamp}")
 
         if user_data.balance == 0:
-            await author_data.subtract_balance(250, self.bot)
+            await author_data.subtract_balance(250)
             em = discord.Embed(color=discord.Color.red(), title="You're Dumb",
                                description=f"{ctx.author.mention} attempted to rob {user.mention} who was so very poor, as retribution they've lost 250")
             return await ctx.reply(embed=em)
@@ -492,8 +492,8 @@ class Misc(commands.Cog):
                 user_balance, loss_percent)
             author_total = max(author_data.balance + user_loss_total, 0)
             user_total = max(user_data.balance - user_loss_total, 0)
-            await user_data.update_balance(user_total, self.bot)
-            await author_data.update_balance(author_total, self.bot)
+            await user_data.update_balance(user_total)
+            await author_data.update_balance(author_total)
 
             em = discord.Embed(color=discord.Color.green(),
                                description=rob_scenario + f" gaining ${user_loss_total}, congrats on being a bad person")
@@ -512,10 +512,10 @@ class Misc(commands.Cog):
             em = discord.Embed(color=discord.Color.red(),
                                description=rob_scenario + f" failing miserably and losing ${author_loss_total}")
             if random_number < probability:
-                await user_data.jail_user(jail_time, fine, self.bot)
+                await user_data.jail_user(jail_time, fine)
                 em.add_field(name="Punishment",
                              value=f"You are in jail for {jail_time} hours and have to pay a fine of {fine}. Run </bail:1145445177092231341> to do so.")
-            await author_data.update_balance(total, self.bot)
+            await author_data.update_balance(total)
             return await ctx.reply(embed=em)
 
     @commands.hybrid_group(name="transactions", description="Manage transactions.")
@@ -552,8 +552,8 @@ class Misc(commands.Cog):
         recipient_balance = recipient_data.balance
         new_recipient_balance = recipient_balance + amount
         new_user_balance = user_balance - amount
-        await recipient_data.update_balance(new_recipient_balance, self.bot)
-        await user_data.update_balance(new_user_balance, self.bot)
+        await recipient_data.update_balance(new_recipient_balance)
+        await user_data.update_balance(new_user_balance)
         await ctx.reply(f":white_check_mark: You paid {member.mention} {amount} coins.")
 
     @transactions.command(name="deposit", description="Deposit money into your bank.")
@@ -574,8 +574,8 @@ class Misc(commands.Cog):
         user_bank_balance = user_data.bank_balance
         new_user_bank_balance = user_bank_balance + amount
         new_user_balance = user_balance - amount
-        await user_data.update_balance(new_user_balance, self.bot)
-        await user_data.update_bank_balance(new_user_bank_balance, self.bot)
+        await user_data.update_balance(new_user_balance)
+        await user_data.update_bank_balance(new_user_bank_balance)
         await ctx.reply(f":white_check_mark: You deposited {amount} coins into your bank.")
 
     @transactions.command(name="depall", description="Deposit all money into your bank.")
@@ -591,8 +591,8 @@ class Misc(commands.Cog):
 
         user_bank_balance = user_data.bank_balance
         new_user_bank_balance = user_bank_balance + user_balance
-        await user_data.update_balance(0, self.bot)
-        await user_data.update_bank_balance(new_user_bank_balance, self.bot)
+        await user_data.update_balance(0)
+        await user_data.update_bank_balance(new_user_bank_balance)
         await ctx.reply(f":white_check_mark: You deposited {user_balance} coins into your bank.")
 
     @transactions.command(name="withdraw", description="Withdraw money from your bank.")
@@ -613,8 +613,8 @@ class Misc(commands.Cog):
         user_balance = user_data.balance
         new_user_bank_balance = user_bank_balance - amount
         new_user_balance = user_balance + amount
-        await user_data.update_balance(new_user_balance, self.bot)
-        await user_data.update_bank_balance(new_user_bank_balance, self.bot)
+        await user_data.update_balance(new_user_balance)
+        await user_data.update_bank_balance(new_user_bank_balance)
         await ctx.reply(f":white_check_mark: You withdrew {amount} coins from your bank.")
 
     @transactions.command(name="withall", description="Withdraw all money from your bank.")
@@ -631,8 +631,8 @@ class Misc(commands.Cog):
         user_balance = user_data.balance
         new_user_bank_balance = user_bank_balance - user_bank_balance
         new_user_balance = user_balance + user_bank_balance
-        await user_data.update_balance(new_user_balance, self.bot)
-        await user_data.update_bank_balance(new_user_bank_balance, self.bot)
+        await user_data.update_balance(new_user_balance)
+        await user_data.update_bank_balance(new_user_bank_balance)
         await ctx.reply(f":white_check_mark: You withdrew {user_bank_balance} coins from your bank.")
 
     @transactions.command(name="balance", description="Check your balance.")
@@ -714,7 +714,7 @@ class Misc(commands.Cog):
                 icon_url=ctx.author.display_avatar.with_static_format("png")
             )
             await ctx.reply(embed=em)
-        await user_data.update_balance(user_balance, self.bot)
+        await user_data.update_balance(user_balance)
 
     @commands.hybrid_group(name="leaderboard", aliases=["lb"], description="View the leaderboard.")
     async def leaderboard(self, ctx):
@@ -731,7 +731,7 @@ class Misc(commands.Cog):
         for user_data in top_users:
             # Provide a default value for 'jail' attribute
             user_data.setdefault("jail", {})
-            user = User(**user_data)
+            user = User(self.bot.db_client, **user_data)
             member = ctx.guild.get_member(user.user_id)
 
             if member:
@@ -818,8 +818,8 @@ class Misc(commands.Cog):
 
                 if current_time >= release_time:
                     fine = user.jail.get("fine", 0)
-                    await user.subtract_balance(fine, self.bot)
-                    await user.update_user({"jail": {}}, self.bot)
+                    await user.subtract_balance(fine)
+                    await user.update_user({"jail": {}})
                     self.bot.log.info(
                         f"User {user_id} has been released from jail.")
 

@@ -102,8 +102,8 @@ class Loops(commands.Cog):
                                 1 for role in member.roles for r in data.bonus_roles if role.id == r.get("role_id"))
                             bonus_xp += 1
                             xp = random.randint(10, 50) * bonus_xp
-                            await user.add_xp(xp, self.bot)
-                            await user.update_last_seen(self.bot)
+                            await user.add_xp(xp)
+                            await user.update_last_seen()
                             self.bot.log.info(f"{member.name} {xp} -> {user.xp}")
         except Exception as e:
             self.bot.log.error(e)
@@ -122,8 +122,8 @@ class Loops(commands.Cog):
 
                 if current_time >= release_time:
                     fine = user.jail.get("fine", 0)
-                    await user.subtract_balance(fine, self.bot)
-                    await user.update_user({"jail": {}}, self.bot)
+                    await user.subtract_balance(fine)
+                    await user.update_user({"jail": {}})
                     self.bot.log.info(
                         f"User {user_id} has been released from jail.")
 

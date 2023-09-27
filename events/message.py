@@ -91,11 +91,11 @@ class Message(commands.Cog):
                 await msg.channel.send(
                     f"Congratulations {msg.author.mention}! You have leveled up to level {lvl}! <a:lvlup:1138933829185323149>")
                 user.level = lvl
-                await user.update_level(amount=user.level, bot=self.bot)
-                await process_level_roles(user, msg.author, msg.guild, self.bot)
-            await user.update_messages(bot=self.bot)
-            await user.add_xp(xp, bot=self.bot)
-            await user.update_last_seen(bot=self.bot)
+                await user.update_level(amount=user.level)
+                await process_level_roles(user, msg.author, msg.guild)
+            await user.update_messages()
+            await user.add_xp(xp)
+            await user.update_last_seen()
 
 
 async def setup(bot):

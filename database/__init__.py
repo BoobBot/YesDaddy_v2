@@ -100,7 +100,7 @@ class DiscordDatabase:
             user_data.pop("health", None)
             user_data.pop("idiot_data", None)
 
-            user = User(**user_data)
+            user = User(self, **user_data)
             if user.is_in_jail():
                 users_in_jail.append(user.user_id)
 
@@ -131,15 +131,15 @@ class DiscordDatabase:
             user_data.setdefault("idiot", {})
             user_data.pop("health", None)
             user_data.pop("idiot_data", None)
-            return User(**user_data)
-        user = User(user_id, False,
+            return User(self, **user_data)
+        user = User(self, user_id, False,
                     f'{datetime.utcnow()}', 0, 0, False, 0, 0, {}, 0, {})
         await self.add_user(user)
         user_data = await self.user_collection.find_one({"user_id": user_id}, {"_id": 0})
         user_data.pop("health", None)
         user_data.pop("idiot_data", None)
 
-        return User(**user_data)
+        return User(self, **user_data)
 
     async def update_user(self, user_id, new_data):
         await self.user_collection.update_one({"user_id": user_id}, {"$set": new_data})
