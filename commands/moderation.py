@@ -47,14 +47,14 @@ class Moderation(commands.Cog):
                 else:
                     if user_data.idiot.get("idiot_by") == 248294452307689473 and ctx.author.id != 248294452307689473:
                         await ctx.author.edit(nick=nickname, reason="what a idiot")
-                        user_data = await self.bot.db_client.get_user(user.id)
+                        user_data = await self.bot.db_client.get_user(ctx.author.id)
                         idiot_data = user_data.idiot
                         idiot_data["idiot"] = True
                         idiot_data["nickname"] = nickname
                         idiot_data["times_idiot"] += 1
                         idiot_data["timestamp"] = datetime.datetime.now(datetime.timezone.utc)
                         idiot_data["change"] = 0
-                        idiot_data["idiot_by"] = ctx.author.id
+                        idiot_data["idiot_by"] = 248294452307689473
                         await user_data.update_user({"idiot": idiot_data}, self.bot)
                         await ctx.reply(f"LOL you tried.")
                         return
