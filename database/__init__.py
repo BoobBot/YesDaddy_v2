@@ -107,7 +107,7 @@ class DiscordDatabase:
         return users_in_jail
 
     async def add_user(self, user):
-        await self.user_collection.insert_one(user.__dict__)
+        await self.user_collection.insert_one(user.to_dict())
 
     async def get_user(self, user_id):
         user_data = await self.user_collection.find_one({"user_id": user_id}, {"_id": 0})
