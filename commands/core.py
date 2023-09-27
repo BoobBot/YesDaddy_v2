@@ -133,8 +133,6 @@ class Core(commands.Cog):
     @commands.hybrid_command(name="help", description="have a list of commands")
     async def help(self, ctx):
         em = discord.Embed(title="Commands List", colour=discord.Colour.blue())
-        timestamp = discord.utils.format_dt(
-            datetime.datetime.now(datetime.timezone.utc), style="f")
         em.set_footer(
             text=f"Command ran by {ctx.author.display_name} at {timestamp}",
             icon_url=ctx.author.display_avatar.with_static_format("png"))
