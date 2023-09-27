@@ -51,7 +51,8 @@ class Dev(commands.Cog):
             try:
                 await self.bot.reload_extension(cog)
             except Exception as e:
-                status += f'{name:<15} FAILED\n    {getattr(e, "original", None) or e}\n'
+                self.bot.log.error('Loading cog {} failed', cog)
+                status += f'{name:<15} FAILED\n    {e}\n'
             else:
                 status += f'{name:<15} OK\n'
 
@@ -236,12 +237,12 @@ class Dev(commands.Cog):
                     corrected_names = [m.replace('/', '.') for m in reload_modules]
                     await self.reload_multiple(ctx, *corrected_names)
             else:
-                self.bot.logger.error(
+                self.bot.log.error(
                     f'Git pull failed with error code {result.returncode} and output:\n{command_output}')
                 # if the bot is logged out, it will not be able to send the message
                 await ctx.send(f'Git pull failed. Output:\n```{command_output}```')
         except subprocess.CalledProcessError as e:
-            self.bot.logger.error(
+            self.bot.log.error(
                 f'Git pull failed with error code {e.returncode} and output:\n{e.output}')
             # if the bot is logged out, it will not be able to send the message
             await ctx.send(f'An error occurred: {e}')
@@ -253,7 +254,7 @@ class Dev(commands.Cog):
             await ctx.send(f'Restarting with {sys.executable} {sys.argv}')
             os.execv(sys.executable, ['python'] + sys.argv)
         except subprocess.CalledProcessError as e:
-            self.bot.logger.error(
+            self.bot.log.error(
                 f'restart failed with error code {e.returncode} and output:\n{e.output}')
             await ctx.send(f'An error occurred: {e}')
 
