@@ -25,24 +25,8 @@ class User:
         self.idiot = self.idiot = idiot if idiot is not None else {}
 
     def to_dict(self):
-        return {
-            'user_id': self.user_id,
-            'blacklist': self.blacklist,
-            'last_seen': self.last_seen,
-            'xp': self.xp,
-            'level': self.level,
-            'premium': self.premium,
-            'balance': self.balance,
-            'bank_balance': self.bank_balance,
-            'cooldowns': self.cooldowns,
-            'messages': self.messages,
-            'jail': self.jail,
-            'last_daily_claim': self.last_daily_claim,
-            'last_weekly_claim': self.last_weekly_claim,
-            'daily_streak': self.daily_streak,
-            'weekly_streak': self.weekly_streak,
-            'idiot': self.idiot
-        }
+        fields = self.__dict__
+        return {k: v for k, v in fields.items() if not k.startswith('_')}
 
     async def jail_user(self, hours, fine):
         self.jail = {
