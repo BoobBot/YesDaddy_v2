@@ -84,9 +84,9 @@ class Moderation(commands.Cog):
             user_data.idiot["timestamp"] = None
             user_data.idiot["change"] = None
             await user_data.update_user({"idiot": user_data.idiot})
-            await ctx.reply(f"Cleared {user.mention}'s nickname.")
+            await ctx.reply(f"Cleared {user.mention}'s nickname.", ephemeral=True)
         else:
-            await ctx.reply(f"{user.mention} is not an idiot.")
+            await ctx.reply(f"{user.mention} is not an idiot.", ephemeral=True)
 
     @idiot.command(name="check", description="check if a user is an idiot")
     @app_commands.describe(user="The user to check.")
@@ -96,9 +96,9 @@ class Moderation(commands.Cog):
             color = await generate_embed_color(ctx.author)
             em = discord.Embed(color=color)
             em.description = f"{user.mention} is an idiot\nchanged by <@{user_data.idiot.get('idiot_by')}>\ntried to change {user_data.idiot['change']}\ntimes idioted {user_data.idiot['times_idiot']}."
-            await ctx.reply(embed=em)
+            await ctx.reply(embed=em, ephemeral=True)
         else:
-            await ctx.reply(f"{user.mention} is not an idiot.")
+            await ctx.reply(f"{user.mention} is not an idiot.", ephemeral=True)
 
     @app_commands.command(name="selfban", description="Ban yourself from the server.")
     async def selfban(self, interaction: discord.Interaction):
