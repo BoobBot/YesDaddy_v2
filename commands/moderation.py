@@ -16,6 +16,27 @@ class Moderation(commands.Cog):
         self.bot = bot
         self.nickname_task: Optional[asyncio.Task] = None
 
+    async def do_idiot(self, user: discord.Member, mod_id: int, nickname: str):
+        user_data = await self.bot.db_client.get_user(user.id)
+        if user_data.idiot.get("idiot", None):
+            idiot_data = user_data.idiot
+            idiot_data["idiot"] = True
+            idiot_data["nickname"] = None
+            idiot_data["idiot_by"] = mod_id
+            idiot_data["timestamp"] = datetime.datetime.now(datetime.timezone.utc)
+            idiot_data["times_idiot"] += 1
+            idiot_data["change"] = 0
+        idiot_data = {
+            "nickname": nickname,
+            "idiot": True,
+            "idiot_by": mod_id,
+            "timestamp": datetime.datetime.now(datetime.timezone.utc),
+            "times_idiot": 1,
+            "change": 0
+        }
+        await user_data.update_user({"idiot": idiot_data})
+        await user.edit(nick=None, reason="what a idiot")
+
     @commands.hybrid_group(name="idiot", description="idiot commands")
     @commands.has_any_role(694641646922498069, 694641646918434875)
     async def idiot(self, ctx):
@@ -25,96 +46,38 @@ class Moderation(commands.Cog):
     @app_commands.describe(user="The user to set the nickname of.")
     @app_commands.describe(nickname="The nickname to set.")
     async def idiot_set(self, ctx, user: discord.Member, *, nickname: str):
-        # TODO this is all very messy and bad, clean it up
         user_data = await self.bot.db_client.get_user(user.id)
-        print("ddd")
-        if user_data.idiot:
-            print("idiot")
-            if user_data.idiot.get("idiot"):
-                print("is idiot")
-                view = Confirm()
-                color = await generate_embed_color(ctx.author)
-                em = discord.Embed(color=color)
-                em.description = f"{user.mention} is already an idiot, changed by <@{user_data.idiot.get('idiot_by')}>, are you sure you want to change their nickname?"
-                view.message = await ctx.reply(embed=em, view=view, ephemeral=True)
-                await view.wait()
-                if view.value is None:
-                    await ctx.reply("Timed out.", ephemeral=True)
-                    return
-                elif view.value is False:
-                    await ctx.reply("Ok, I wont change it.", ephemeral=True)
-                    return
-                else:
-                    if user_data.idiot.get("idiot_by") == 248294452307689473 and ctx.author.id != 248294452307689473:
-                        await ctx.author.edit(nick=nickname, reason="what a idiot")
-                        user_data = await self.bot.db_client.get_user(ctx.author.id)
-                        idiot_data = user_data.idiot
-                        idiot_data["idiot"] = True
-                        idiot_data["nickname"] = nickname
-                        idiot_data["times_idiot"] += 1
-                        idiot_data["timestamp"] = datetime.datetime.now(datetime.timezone.utc)
-                        idiot_data["change"] = 0
-                        idiot_data["idiot_by"] = 248294452307689473
-                        await user_data.update_user({"idiot": idiot_data})
-                        await ctx.reply(f"LOL you tried.")
-                        return
-                    user_data = await self.bot.db_client.get_user(user.id)
-                    idiot_data = user_data.idiot
-                    idiot_data["idiot"] = True
-                    idiot_data["nickname"] = nickname
-                    idiot_data["times_idiot"] += 1
-                    idiot_data["timestamp"] = datetime.datetime.now(datetime.timezone.utc)
-                    idiot_data["change"] = 0
-                    idiot_data["idiot_by"] = ctx.author.id
-                    await user_data.update_user({"idiot": idiot_data})
-                    await user.edit(nick=nickname, reason="what a idiot")
-                    await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.", ephemeral=True)
+        if user_data.idiot.get("idiot"):
+            view = Confirm()
+            color = await generate_embed_color(ctx.author)
+            em = discord.Embed(color=color)
+            em.description = f"{user.mention} is already an idiot, changed by <@{user_data.idiot.get('idiot_by')}>, are you sure you want to change their nickname?"
+            view.message = await ctx.reply(embed=em, view=view, ephemeral=True)
+            await view.wait()
+            if view.value is None:
+                await ctx.reply("Timed out.", ephemeral=True)
                 return
-            user_data = await self.bot.db_client.get_user(user.id)
-            idiot_data = user_data.idiot
-            idiot_data["idiot"] = True
-            idiot_data["nickname"] = nickname
-            idiot_data["times_idiot"] += 1
-            idiot_data["timestamp"] = datetime.datetime.now(datetime.timezone.utc)
-            idiot_data["change"] = 0
-            idiot_data["idiot_by"] = ctx.author.id
-            await user_data.update_user({"idiot": idiot_data})
-            await user.edit(nick=nickname, reason="what a idiot")
-            await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.", ephemeral=True)
-            return
-
-        else:
-            if user_data.idiot.get("idiot_by") == 248294452307689473 and ctx.author.id != 248294452307689473:
-                await ctx.author.edit(nick=nickname, reason="what a idiot")
-                user_data = await self.bot.db_client.get_user(user.id)
-                idiot_data = user_data.idiot
-                idiot_data["idiot"] = True
-                idiot_data["nickname"] = nickname
-                idiot_data["times_idiot"] += 1
-                idiot_data["timestamp"] = datetime.datetime.now(datetime.timezone.utc)
-                idiot_data["change"] = 0
-                idiot_data["idiot_by"] = ctx.author.id
-                await user_data.update_user({"idiot": idiot_data})
-                await ctx.reply(f"LOL you tried.")
+            elif view.value is False:
+                await ctx.reply("Ok, I wont change it.", ephemeral=True)
                 return
-            idiot_data = {
-                "nickname": nickname,
-                "idiot": True,
-                "idiot_by": ctx.author.id,
-                "timestamp": datetime.datetime.now(datetime.timezone.utc),
-                "times_idiot": 1,
-                "change": 0
-            }
-            await user.edit(nick=nickname, reason="what a idiot")
-            await user_data.update_user({"idiot": idiot_data})
-            await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.")
-            return
+            else:
+                if user_data.idiot.get("idiot_by") == 248294452307689473 and ctx.author.id != 248294452307689473:
+                    await self.do_idiot(ctx.author, ctx.author.id, nickname)
+                    await ctx.reply(f"LOL you tried.")
+                    return
+                await self.do_idiot(user, ctx.author.id, nickname)
+                await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.", ephemeral=True)
+                return
+        user_data = await self.bot.db_client.get_user(user.id)
+        await self.do_idiot(user, ctx.author.id, nickname)
+        await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.", ephemeral=True)
+        return
 
     @idiot.command(name="clear", description="clear a idiots nickname")
     @app_commands.describe(user="The user to clear the nickname of.")
     async def idiot_clear(self, ctx, user: discord.Member):
         user_data = await self.bot.db_client.get_user(user.id)
-        if user_data.idiot["idiot"]:
+        if user_data.idiot.get("idiot"):
             user_data.idiot["idiot"] = False
             user_data.idiot["nickname"] = None
             user_data.idiot["idiot_by"] = None
@@ -129,11 +92,13 @@ class Moderation(commands.Cog):
     @app_commands.describe(user="The user to check.")
     async def idiot_check(self, ctx, user: discord.Member):
         user_data = await self.bot.db_client.get_user(user.id)
-        if user_data.idiot["idiot"]:
+        if user_data.idiot.get("idiot"):
             color = await generate_embed_color(ctx.author)
             em = discord.Embed(color=color)
-            em.description = f"{user.mention} is an idiot, changed by <@{user_data.idiot.get('idiot_by')}>, tried to change {user_data.idiot['change']} times idioted {user_data.idiot['times_idiot']}."
+            em.description = f"{user.mention} is an idiot\nchanged by <@{user_data.idiot.get('idiot_by')}>\ntried to change {user_data.idiot['change']}\ntimes idioted {user_data.idiot['times_idiot']}."
             await ctx.reply(embed=em)
+        else:
+            await ctx.reply(f"{user.mention} is not an idiot.")
 
     @app_commands.command(name="selfban", description="Ban yourself from the server.")
     async def selfban(self, interaction: discord.Interaction):
