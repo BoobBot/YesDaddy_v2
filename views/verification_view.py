@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 
 import discord
 
@@ -23,6 +23,11 @@ class VerificationView(discord.ui.View):
         # female = 694641646805057561
         # male = 694641646805057560
         # trans = 694641646805057562
+        if any(role.id == 694641646805057560 for role in interaction.user.roles):
+            if date.today().isoweekday() != 1:
+                return await interaction.response.send_message("As a male you can only verify on Mondays",
+                                                               ephemeral=True)
+
         genders = [694641646805057561, 694641646805057560, 694641646805057562]
         if not any(role.id in genders for role in interaction.user.roles):
             return await interaction.response.send_message("You need a gender role from <#1141869787895574598>",
@@ -31,10 +36,12 @@ class VerificationView(discord.ui.View):
         # Check if the user is already in the verification process
         retrieved_guild = await interaction.client.db_client.get_guild(interaction.guild.id)
 
-        open_ticket = next((ticket for ticket in retrieved_guild.tickets if ticket.get('user_id') == interaction.user.id and ticket.get('status') == 'open'), None)
+        open_ticket = next((ticket for ticket in retrieved_guild.tickets if
+                            ticket.get('user_id') == interaction.user.id and ticket.get('status') == 'open'), None)
 
         if open_ticket is not None:
-            return await interaction.response.send_message(f"You are already have an open ticket at <#{open_ticket['channel_id']}>", ephemeral=True)
+            return await interaction.response.send_message(
+                f"You are already have an open ticket at <#{open_ticket['channel_id']}>", ephemeral=True)
 
         count = len([ticket for ticket in retrieved_guild.tickets if
                      ticket.get("user_id") == interaction.user.id and
