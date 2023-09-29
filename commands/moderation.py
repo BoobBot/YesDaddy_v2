@@ -273,6 +273,9 @@ class Moderation(commands.Cog):
         em.add_field(name="SFW:", value=f"{sfw}")
         em.add_field(name="NSFW:", value=f"{nsfw}")
         em.add_field(name="All Channels:", value=f"{allchannels}")
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name}",
+            icon_url=ctx.author.display_avatar.with_static_format("png"))
         await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="new_ticket", description="Create a new ticket")
