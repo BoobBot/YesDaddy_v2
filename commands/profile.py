@@ -62,6 +62,7 @@ class Profile(commands.Cog):
 
     @commands.hybrid_command(name="rank", description="Generate a rank card")
     @app_commands.describe(user="The user to get the rank card of.")
+    @commands.guild_only()
     async def rank(self, ctx, user: discord.Member = None):
         user = user or ctx.author
         user_data: User = await self.bot.db_client.get_user(user.id)
