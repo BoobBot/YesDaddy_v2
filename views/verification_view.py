@@ -12,7 +12,7 @@ class VerificationView(discord.ui.View):
     @discord.ui.button(label='Start verification', style=discord.ButtonStyle.green,
                        custom_id='persistent_view:verification', emoji='✔️')
     async def verify(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.defer(thinking=True)
+        await interaction.response.defer(thinking=True, ephemeral=True)
         if any(r.id == 694641646821703741 for r in interaction.user.roles):
             return await interaction.followup.send("You are already verified!", ephemeral=True)
 
