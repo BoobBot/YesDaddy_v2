@@ -24,9 +24,10 @@ class VerificationView(discord.ui.View):
         # male = 694641646805057560
         # trans = 694641646805057562
         if any(role.id == 694641646805057560 for role in interaction.user.roles):
-            if date.today().isoweekday() != 1:
-                return await interaction.response.send_message("As a male you can only verify on Mondays",
-                                                               ephemeral=True)
+            if not any(role.id == 694641646838480978 for role in interaction.user.roles):
+                if date.today().isoweekday() != 1:
+                    return await interaction.response.send_message("As a male you can only verify on Mondays",
+                                                                   ephemeral=True)
 
         genders = [694641646805057561, 694641646805057560, 694641646805057562]
         if not any(role.id in genders for role in interaction.user.roles):
