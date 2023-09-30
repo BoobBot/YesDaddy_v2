@@ -218,7 +218,7 @@ class Dev(commands.Cog):
         #                    description=description, color=discord.Color.blurple())
         # await ctx.send(embed=em, view=RuleButton())
 
-    @commands.command()
+    @commands.hybrid_command()
     @app_commands.guilds(1138662591875518605)
     @commands.is_owner()
     async def pull(self, ctx):
