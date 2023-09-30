@@ -26,6 +26,9 @@ class Moderation(commands.Cog):
             idiot_data["timestamp"] = datetime.datetime.now(datetime.timezone.utc)
             idiot_data["times_idiot"] += 1
             idiot_data["change"] = 0
+            await user_data.update_user({"idiot": idiot_data})
+            await user.edit(nick=None, reason="what a idiot")
+            return
         idiot_data = {
             "nickname": nickname,
             "idiot": True,
@@ -36,7 +39,7 @@ class Moderation(commands.Cog):
         }
         await user_data.update_user({"idiot": idiot_data})
         await user.edit(nick=None, reason="what a idiot")
-
+        return
     @commands.hybrid_group(name="idiot", description="idiot commands")
     @commands.has_any_role(694641646922498069, 694641646918434875)
     async def idiot(self, ctx):
