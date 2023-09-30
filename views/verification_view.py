@@ -12,11 +12,9 @@ class VerificationView(discord.ui.View):
     @discord.ui.button(label='Start verification', style=discord.ButtonStyle.green,
                        custom_id='persistent_view:verification', emoji='✔️')
     async def verify(self, interaction: discord.Interaction, button: discord.ui.Button):
-
-        # for testing await interaction.client.db_client.delete_guild(interaction.guild.id)
-        # Check if the user is already verified
+        await interaction.response.defer(thinking=True)
         if any(r.id == 694641646821703741 for r in interaction.user.roles):
-            return await interaction.response.send_message("You are already verified!", ephemeral=True)
+            return await interaction.followup.send("You are already verified!", ephemeral=True)
 
         # check for gender role
         # TODO add to guild config
@@ -26,12 +24,12 @@ class VerificationView(discord.ui.View):
         if any(role.id == 694641646805057560 for role in interaction.user.roles):
             if not any(role.id == 694641646838480978 for role in interaction.user.roles):
                 if date.today().isoweekday() != 1:
-                    return await interaction.response.send_message("As a male you can only verify on Mondays",
+                    return await interaction.followup.send("As a male you can only verify on Mondays",
                                                                    ephemeral=True)
 
         genders = [694641646805057561, 694641646805057560, 694641646805057562]
         if not any(role.id in genders for role in interaction.user.roles):
-            return await interaction.response.send_message("You need a gender role from <#1141869787895574598>",
+            return await interaction.followup.send("You need a gender role from <#1141869787895574598>",
                                                            ephemeral=True)
 
         # Check if the user is already in the verification process
@@ -41,7 +39,7 @@ class VerificationView(discord.ui.View):
                             ticket.get('user_id') == interaction.user.id and ticket.get('status') == 'open'), None)
 
         if open_ticket is not None:
-            return await interaction.response.send_message(
+            return await interaction.followup.send(
                 f"You are already have an open ticket at <#{open_ticket['channel_id']}>", ephemeral=True)
 
         count = len([ticket for ticket in retrieved_guild.tickets if
@@ -63,7 +61,7 @@ class VerificationView(discord.ui.View):
             }
             new_channel = await interaction.guild.create_text_channel(interaction.user.name, category=category,
                                                                       overwrites=overwrites)
-            await interaction.response.send_message(f"Opened ticket {new_channel.mention}", ephemeral=True)
+            await interaction.followup.send(f"Opened ticket {new_channel.mention}", ephemeral=True)
             ticket_data = {
                 "channel_id": new_channel.id,
                 "user_id": interaction.user.id,
