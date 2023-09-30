@@ -50,6 +50,7 @@ class Moderation(commands.Cog):
     @app_commands.describe(nickname="The nickname to set.")
     async def idiot_set(self, ctx, user: discord.Member, *, nickname: str):
         user_data = await self.bot.db_client.get_user(user.id)
+        untouchables = [248294452307689473, 596330574109474848, 270393700394205185, 383932871985070085]
         if user_data.idiot.get("idiot"):
             view = Confirm()
             color = await generate_embed_color(ctx.author)
@@ -64,9 +65,10 @@ class Moderation(commands.Cog):
                 await ctx.reply("Ok, I wont change it.", ephemeral=True)
                 return
             else:
-                if user_data.idiot.get("idiot_by") == 248294452307689473 and ctx.author.id != 248294452307689473:
-                    await self.do_idiot(ctx.author, ctx.author.id, nickname)
-                    await ctx.reply(f"LOL you tried.")
+                if any(user_data.idiot.get("idiot_by") == no_touch for no_touch in untouchables):
+                    if not any(ctx.author.id == no_touch for no_touch in untouchables):
+                        await self.do_idiot(ctx.author, ctx.author.id, nickname)
+                        await ctx.reply(f"LOL you tried.")
                     return
                 await self.do_idiot(user, ctx.author.id, nickname)
                 await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.", ephemeral=True)
