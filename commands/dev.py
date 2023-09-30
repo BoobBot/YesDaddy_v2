@@ -13,6 +13,7 @@ from typing import Literal, Optional
 
 import discord
 import psutil
+from discord import app_commands
 from discord.ext import commands
 from discord.ext.commands import Context, Greedy
 
@@ -151,6 +152,7 @@ class Dev(commands.Cog):
     # stolen from random gist
     @commands.command()
     @commands.guild_only()
+    @app_commands.guilds(1138662591875518605)
     @commands.is_owner()
     async def sync(self, ctx: Context, guilds: Greedy[discord.Object],
                    spec: Optional[Literal["~", "*", "^"]] = None) -> None:
@@ -217,6 +219,7 @@ class Dev(commands.Cog):
         # await ctx.send(embed=em, view=RuleButton())
 
     @commands.command()
+    @app_commands.guilds(1138662591875518605)
     @commands.is_owner()
     async def pull(self, ctx):
         try:
