@@ -359,18 +359,12 @@ class Moderation(commands.Cog):
     async def shop_buy_role_autocomplete(self,
                                          interaction: discord.Interaction,
                                          current: str,
-                                         ) -> List[app_commands.Choice[int]]:
-        print('ac')
-        try:
-            roles = await self.bot.db_client.get_shop_roles(guild_id=interaction.guild.id)
-            return [
-                app_commands.Choice(name=role.get('name'), value=role.get('_id'))
-                for role in roles #if current.lower() in role.get('name').lower()
-            ][:25]
-        except:
-            print('err')
-            return []
-
+                                         ) -> List[app_commands.Choice[str]]:
+        roles = await self.bot.db_client.get_shop_roles(guild_id=interaction.guild.id)
+        return [
+            app_commands.Choice(name=role.get('name'), value=str(role.get('_id')))
+            for role in roles #if current.lower() in role.get('name').lower()
+        ][:25]
 
     @commands.hybrid_command(name="ratio", description="Check how many nsfw vs sfw channels there are")
     @commands.has_any_role(694641646922498069, 694641646918434875)
