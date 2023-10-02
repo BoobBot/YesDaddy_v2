@@ -295,7 +295,7 @@ class Moderation(commands.Cog):
     async def shop_admin_add_role(self, ctx: commands.Context, role: discord.Role, price: int):
         role_data = {
             "_id": role.id,
-            "name": role.id,
+            "name": role.name,
             "added_by": ctx.author.id,
             "color": role.color.to_rgb(),
             "add_at": datetime.datetime.utcnow(),
