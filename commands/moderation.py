@@ -332,6 +332,37 @@ class Moderation(commands.Cog):
     #     await self.bot.db_client.add_item(item_data)
     #     await ctx.send(f"Added {item} to the shop.")
 
+    @commands.hybrid_group(name="shop", description="Shop Commands")
+    async def shop(self, ctx):
+        if not ctx.invoked_subcommand:
+            await ctx.send_help(ctx.command)
+
+    @shop.command(name="list_roles", description="List all roles in the shop")
+    async def shop_list_roles(self, ctx: commands.Context):
+        roles = await self.bot.db_client.get_shop_roles(guild_id=ctx.guild.id)
+        em = discord.Embed(title="Shop Roles", color=await generate_embed_color(ctx.author))
+        for role_data in roles:
+            role = discord.utils.get(ctx.guild.roles, id=role_data.get('_id'))
+            em.add_field(name="", value=f"\nRole: {role.mention}\nPrice: {role_data.get('price')}", inline=False)
+        await ctx.send(embed=em)
+
+    @shop.command(name="buy_role", description="Buy a role from the shop")
+    @app_commands.describe(role="The role to buy.")
+    async def shop_buy_role(self, ctx: commands.Context, role: str):
+        return await ctx.send(role)
+
+    #learn how to do this
+    @shop_buy_role.autocomplete('role')
+    async def shop_buy_role_autocomplete(self,
+            interaction: discord.Interaction,
+            current: str,
+    ) -> List[app_commands.Choice[str]]:
+        fruits = ['Banana', 'Pineapple', 'Apple', 'Watermelon', 'Melon', 'Cherry']
+        return [
+            app_commands.Choice(name=fruit, value=fruit)
+            for fruit in fruits if current.lower() in fruit.lower()
+        ]
+
     @commands.hybrid_command(name="ratio", description="Check how many nsfw vs sfw channels there are")
     @commands.has_any_role(694641646922498069, 694641646918434875)
     async def ratio(self, ctx):
