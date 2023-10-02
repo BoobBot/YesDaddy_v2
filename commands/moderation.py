@@ -316,7 +316,9 @@ class Moderation(commands.Cog):
         em = discord.Embed(title="Shop Roles", color=await generate_embed_color(ctx.author))
         for role_data in roles:
             role = discord.utils.get(ctx.guild.roles, id=role_data.get('_id'))
-            em.add_field(name="", value=f"\nRole: {role.mention}\nPrice: {role_data.get('price')}\nAdded By: <@{role_data.get('added_by')}>", inline=False)
+            em.add_field(name="",
+                         value=f"\nRole: {role.mention}\nPrice: {role_data.get('price')}\nAdded By: <@{role_data.get('added_by')}>",
+                         inline=False)
         await ctx.send(embed=em)
 
     # @shop_admin.command(name="add_item", description="Add an item to the shop")
@@ -351,15 +353,15 @@ class Moderation(commands.Cog):
     async def shop_buy_role(self, ctx: commands.Context, role: str):
         return await ctx.send(role)
 
-    #learn how to do this
+    # learn how to do this
     @shop_buy_role.autocomplete('role')
     async def shop_buy_role_autocomplete(self,
-            interaction: discord.Interaction,
-            current: str,
-    ) -> List[app_commands.Choice[str]]:
+                                         interaction: discord.Interaction,
+                                         current: str,
+                                         ) -> List[app_commands.Choice[str]]:
         roles = await self.bot.db_client.get_shop_roles(guild_id=interaction.guild.id)
         return [
-            app_commands.Choice(name=role, value=role)
+            app_commands.Choice(name=role.get('name'), value=role.get('_id'))
             for role in roles if current.lower() in role.get('name').lower()
         ]
 
