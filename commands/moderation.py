@@ -362,7 +362,7 @@ class Moderation(commands.Cog):
         roles = await self.bot.db_client.get_shop_roles(guild_id=interaction.guild.id)
         return [
             app_commands.Choice(name=role.get('name'), value=role.get('_id'))
-            for role in roles if current.lower() in role.get('name').lower()
+            for role in roles #if current.lower() in role.get('name').lower()
         ]
 
     @commands.hybrid_command(name="ratio", description="Check how many nsfw vs sfw channels there are")
