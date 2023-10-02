@@ -351,7 +351,7 @@ class Moderation(commands.Cog):
 
     @shop.command(name="buy_role", description="Buy a role from the shop")
     @app_commands.describe(role="The role to buy.")
-    async def shop_buy_role(self, ctx: commands.Context, role: int):
+    async def shop_buy_role(self, ctx: commands.Context, role: str):
         return await ctx.send(role)
 
     # learn how to do this
@@ -359,10 +359,10 @@ class Moderation(commands.Cog):
     async def shop_buy_role_autocomplete(self,
                                          interaction: discord.Interaction,
                                          current: str,
-                                         ) -> List[app_commands.Choice[int]]:
+                                         ) -> List[app_commands.Choice[str]]:
         roles = await self.bot.db_client.get_shop_roles(guild_id=interaction.guild.id)
         return [
-            app_commands.Choice(name=role.get('name'), value=role.get('_id'))
+            app_commands.Choice(name=role.get('name'), value=role.get('name'))
             for role in roles #if current.lower() in role.get('name').lower()
         ]
 
