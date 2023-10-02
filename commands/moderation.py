@@ -314,8 +314,9 @@ class Moderation(commands.Cog):
     async def shop_admin_list_roles(self, ctx: commands.Context):
         roles = await self.bot.db_client.get_shop_roles(guild_id=ctx.guild.id)
         em = discord.Embed(title="Shop Roles", color=await generate_embed_color(ctx.author))
-        for role in roles:
-            em.add_field(name=f"<@&{role.get('_id')}>", value=f"Price: {role.get('price')}")
+        for role_data in roles:
+            role = discord.utils.get(role_data.get('_id'))
+            em.add_field(name={role.mention}, value=f"Price: {role_data.get('price')}\nAdded By: <@{role_data.get('added_by')}>", inline=False)
         await ctx.send(embed=em)
 
     # @shop_admin.command(name="add_item", description="Add an item to the shop")
@@ -352,9 +353,9 @@ class Moderation(commands.Cog):
             await ctx.reply(embed=em)
 
         em = discord.Embed(title="Ratio Check", colour=discord.Color.random())
-        em.add_field(name="SFW:", value=f"{sfw}")
-        em.add_field(name="NSFW:", value=f"{nsfw}")
-        em.add_field(name="All Channels:", value=f"{allchannels}")
+        em.add_field(name="SFW:", value=sfw)
+        em.add_field(name="NSFW:", value=nsfw)
+        em.add_field(name="All Channels:", value=allchannels)
         em.set_footer(
             text=f"Command ran by {ctx.author.display_name}",
             icon_url=ctx.author.display_avatar.with_static_format("png"))
