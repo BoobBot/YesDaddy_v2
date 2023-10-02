@@ -361,11 +361,17 @@ class Moderation(commands.Cog):
                                          interaction: discord.Interaction,
                                          current: str,
                                          ) -> List[app_commands.Choice[str]]:
-        roles = await self.bot.db_client.get_shop_roles(guild_id=interaction.guild.id)
-        return [
-            app_commands.Choice(name=role.get('name'), value=role.get('_id'))
-            for role in roles #if current.lower() in role.get('name').lower()
-        ]
+        print('autocomplete for shop roles')
+        try:
+            roles = await self.bot.db_client.get_shop_roles(guild_id=interaction.guild.id)
+            return [
+                app_commands.Choice(name=role.get('name'), value=str(role.get('_id')))
+                for role in roles #if current.lower() in role.get('name').lower()
+            ][:25]
+        except:
+            print('autocomplete error')
+            return []
+
 
     @commands.hybrid_command(name="ratio", description="Check how many nsfw vs sfw channels there are")
     @commands.has_any_role(694641646922498069, 694641646918434875)
