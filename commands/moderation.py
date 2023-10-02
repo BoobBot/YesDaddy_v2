@@ -307,7 +307,7 @@ class Moderation(commands.Cog):
     @shop_admin.command(name="remove_role", description="Remove an role from the shop")
     @app_commands.describe(role="The role to remove.")
     async def shop_admin_remove_role(self, ctx: commands.Context, role: discord.Role):
-        await self.bot.db_client.remove_role(role.id)
+        await self.bot.db_client.delete_shop_role(guild_id=ctx.guild.id, role_id=role.id)
         await ctx.send(f"Removed {role.mention} from the shop.")
 
     @shop_admin.command(name="list_roles", description="List all roles in the shop")
@@ -316,7 +316,7 @@ class Moderation(commands.Cog):
         em = discord.Embed(title="Shop Roles", color=await generate_embed_color(ctx.author))
         for role_data in roles:
             role = discord.utils.get(ctx.guild.roles, id=role_data.get('_id'))
-            em.add_field(name="", value=f"Role: {role.mention}\nPrice: {role_data.get('price')}\nAdded By: <@{role_data.get('added_by')}>", inline=False)
+            em.add_field(name="", value=f"\nRole: {role.mention}\nPrice: {role_data.get('price')}\nAdded By: <@{role_data.get('added_by')}>", inline=False)
         await ctx.send(embed=em)
 
     # @shop_admin.command(name="add_item", description="Add an item to the shop")
