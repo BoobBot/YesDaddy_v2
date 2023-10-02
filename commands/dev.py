@@ -202,6 +202,7 @@ class Dev(commands.Cog):
         🔴 Click the button below to verify 🔴
         """
         em = discord.Embed(title="Verification", description=message, color=discord.Color.blurple())
+        em.set_image(url=https://cdn.discordapp.com/attachments/1141745489927229563/1158509585502584932/Verifyexample.png?ex=651c81a1&is=651b3021&hm=da8623592c533a701ecceb889d0f541a770162e65664254c085966735efe8af9&)
         await ctx.send(embed=em, view=VerificationView())
 
         # description = "• This server is 18+. Adults acting like children, arguing with staff or causing drama will be removed.\n\n" \
