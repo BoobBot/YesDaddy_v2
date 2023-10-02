@@ -66,9 +66,21 @@ def progress_percentage(remain, total):
     return f"{bar_done}{bar_remain}"
 
 
-
 def subtraction_percentage(bal, percentage_to_subtract):
     fraction = percentage_to_subtract / 100
     subtraction_amount = int(fraction * bal)
     result = bal - subtraction_amount
     return max(result, 0)
+
+
+def search(s: str, substring: str) -> bool:
+    """
+    Searches ``s`` for ``substring``.
+    ``substring`` can be an incomplete string with characters in a certain order,
+    even with some missing in-between that can still yield a match.
+
+    For example, if ``s`` is "test string", and ``substring`` is "ts sg", this will
+    return True.
+    """
+    last_char_index = -1
+    return not any((last_char_index := s.find(c, last_char_index + 1)) == -1 for c in substring)

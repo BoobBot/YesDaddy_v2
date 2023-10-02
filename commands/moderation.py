@@ -4,10 +4,9 @@ from typing import List, Optional
 
 import discord
 from discord import app_commands
-
 from discord.ext import commands
 
-from utils.utilities import get_average_color, generate_embed_color
+from utils.utilities import generate_embed_color, get_average_color, search
 from views import support_view
 from views.confirm_view import Confirm
 
@@ -361,9 +360,11 @@ class Moderation(commands.Cog):
                                          current: str,
                                          ) -> List[app_commands.Choice[str]]:
         roles = await self.bot.db_client.get_shop_roles(guild_id=interaction.guild.id)
+
         return [
             app_commands.Choice(name=role.get('name'), value=str(role.get('_id')))
-            for role in roles #if current.lower() in role.get('name').lower()
+            for role in roles
+            if not current or search(role.get('name').lower(), current.lower())
         ][:25]
 
     @commands.hybrid_command(name="ratio", description="Check how many nsfw vs sfw channels there are")
