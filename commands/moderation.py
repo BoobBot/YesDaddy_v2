@@ -4,6 +4,7 @@ from typing import List, Optional
 
 import discord
 from discord import app_commands
+from discord.app_commands import Choice
 from discord.ext import commands
 
 from utils.utilities import get_average_color, generate_embed_color
@@ -350,8 +351,10 @@ class Moderation(commands.Cog):
 
     @shop.command(name="buy_role", description="Buy a role from the shop")
     @app_commands.describe(role="The role to buy.")
-    async def shop_buy_role(self, ctx: commands.Context, role: str):
+    async def shop_buy_role(self, ctx: commands.Context, role: Choice[str]):
         print(role)
+        print(role.value)
+        print(role.name)
         return await ctx.send(role)
 
     # learn how to do this
