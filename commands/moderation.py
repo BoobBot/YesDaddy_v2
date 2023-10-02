@@ -4,7 +4,7 @@ from typing import List, Optional
 
 import discord
 from discord import app_commands
-from discord.app_commands import Choice
+
 from discord.ext import commands
 
 from utils.utilities import get_average_color, generate_embed_color
@@ -351,10 +351,7 @@ class Moderation(commands.Cog):
 
     @shop.command(name="buy_role", description="Buy a role from the shop")
     @app_commands.describe(role="The role to buy.")
-    async def shop_buy_role(self, ctx: commands.Context, role: str):
-        print(dir(role))
-        print(role.value)
-        print(role.name)
+    async def shop_buy_role(self, ctx: commands.Context, role: app_commands.Choice[int]):
         return await ctx.send(role)
 
     # learn how to do this
@@ -362,10 +359,10 @@ class Moderation(commands.Cog):
     async def shop_buy_role_autocomplete(self,
                                          interaction: discord.Interaction,
                                          current: str,
-                                         ) -> List[app_commands.Choice[str]]:
+                                         ) -> List[app_commands.Choice[int]]:
         roles = await self.bot.db_client.get_shop_roles(guild_id=interaction.guild.id)
         return [
-            app_commands.Choice(name=role.get('name'), value=role.get('name'))
+            app_commands.Choice(name=role.get('name'), value=role.get('_id'))
             for role in roles #if current.lower() in role.get('name').lower()
         ]
 
