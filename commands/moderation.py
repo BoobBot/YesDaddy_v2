@@ -359,7 +359,7 @@ class Moderation(commands.Cog):
     async def shop_buy_role_autocomplete(self,
                                          interaction: discord.Interaction,
                                          current: str,
-                                         ) -> List[app_commands.Choice[str]]:
+                                         ) -> List[app_commands.Choice[int]]:
         roles = await self.bot.db_client.get_shop_roles(guild_id=interaction.guild.id)
         return [
             app_commands.Choice(name=role.get('name'), value=role.get('_id'))
