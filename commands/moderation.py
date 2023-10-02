@@ -257,6 +257,83 @@ class Moderation(commands.Cog):
         await ctx.author.send(
             f'Massnick results (updated: {updated} / failed: {failed}){" [cancelled]" if cancelled else ""}')
 
+
+    @commands.hybrid_command(name="purge", description="Purge messages from a channel")
+    @commands.has_any_role(694641646922498069, 694641646918434875)
+    @app_commands.describe(limit="The number of messages to purge.")
+    @app_commands.describe(channel="The channel to purge messages from.")
+    async def purge(self, ctx: commands.Context, limit: int, channel: Optional[discord.TextChannel]):
+        channel = channel or ctx.channel
+        await channel.purge(limit=limit)
+        await ctx.send(f"Purged {limit} messages from {channel.mention}", ephemeral=True)
+
+
+    @commands.hybrid_command(name="kick", description="Kick a user from the server")
+    @commands.has_any_role(694641646922498069, 694641646918434875)
+    @app_commands.describe(user="The user to kick.")
+    @app_commands.describe(reason="The reason for kicking the user.")
+    async def kick(self, ctx: commands.Context, user: discord.Member, *, reason: str):
+        await user.kick(reason=reason)
+        await ctx.send(f"Kicked {user.mention} for {reason}", ephemeral=True)
+
+
+    @commands.hybrid_command(name="ban", description="Ban a user from the server")
+    @commands.has_any_role(694641646922498069, 694641646918434875)
+    @app_commands.describe(user="The user to ban.")
+    @app_commands.describe(reason="The reason for banning the user.")
+    async def ban(self, ctx: commands.Context, user: discord.Member, *, reason: str):
+        await user.ban(reason=reason)
+        await ctx.send(f"Banned {user.mention} for {reason}", ephemeral=True)
+
+
+    @commands.hybrid_group(name="shop_admin", description="Shop Admin Commands")
+    @commands.has_any_role(694641646922498069, 694641646918434875)
+    async def shop_admin(self, ctx):
+        if not ctx.invoked_subcommand:
+            await ctx.send_help(ctx.command)
+
+    @shop_admin.command(name="add_role", description="Add an role to the shop")
+    @app_commands.describe(role="The role to add.")
+    async def shop_admin_add_role(self, ctx: commands.Context, role: discord.Role, price: int):
+        role_data = {
+            "_id": role.id,
+            "name": role.id,
+            "added_by": ctx.author.id,
+            "color": role.color,
+            "add_at": datetime.datetime.utcnow(),
+            "price": price
+        }
+        await self.bot.db_client.add_role(role_data)
+        await ctx.send(f"Added {role.mention} to the shop.")
+
+    @shop_admin.command(name="remove_role", description="Remove an role from the shop")
+    @app_commands.describe(role="The role to remove.")
+    async def shop_admin_remove_role(self, ctx: commands.Context, role: discord.Role):
+        await self.bot.db_client.remove_role(role.id)
+        await ctx.send(f"Removed {role.mention} from the shop.")
+
+    @shop_admin.command(name="list_roles", description="List all roles in the shop")
+    async def shop_admin_list_roles(self, ctx: commands.Context):
+        roles = await self.bot.db_client.get_shop_roles(guild_id=ctx.guild.id)
+        em = discord.Embed(title="Shop Roles", color=await generate_embed_color(ctx.author))
+        for role in roles:
+            em.add_field(name=f"<@&{role.get('_id')}>", value=f"Price: {role.get('price')}")
+        await ctx.send(embed=em)
+
+    # @shop_admin.command(name="add_item", description="Add an item to the shop")
+    # @app_commands.describe(item="The item to add.")
+    # async def shop_admin_add_item(self, ctx: commands.Context, item: str, price: int):
+    #     item_data = {
+    #         "_id": item,
+    #         "name": item,
+    #         "added_by": ctx.author.id,
+    #         "add_at": datetime.datetime.utcnow(),
+    #         "price": price
+    #     }
+    #     await self.bot.db_client.add_item(item_data)
+    #     await ctx.send(f"Added {item} to the shop.")
+
+
     @commands.hybrid_command(name="ratio", description="Check how many nsfw vs sfw channels there are")
     @commands.has_any_role(694641646922498069, 694641646918434875)
     async def ratio(self, ctx):

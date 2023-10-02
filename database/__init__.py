@@ -156,12 +156,14 @@ class DiscordDatabase:
         if guild_data:
             guild_data.setdefault("lvl_roles", [])
             guild_data.setdefault("bonus_roles", [])
+            guild_data.setdefault("shop_roles", {})
             return Guild(**guild_data)
         guild = Guild(guild_id)
         await self.add_guild(guild)
         guild_data = await self.guild_collection.find_one({"guild_id": guild_id}, {"_id": 0})
         guild_data.setdefault("lvl_roles", [])
         guild_data.setdefault("bonus_roles", [])
+        guild_data.setdefault("shop_roles", {})
         return Guild(**guild_data)
 
     async def update_guild(self, guild_id, new_data):
@@ -198,4 +200,28 @@ class DiscordDatabase:
         await self.guild_collection.update_one(
             {"guild_id": guild_id},
             {"$pull": {"tickets": {"channel_id": channel_id}}}
+        )
+
+    async def add_shop_role(self, guild_id, role_data):
+        await self.guild_collection.update_one(
+            {"guild_id": guild_id},
+            {"$push": {"shop_roles": role_data}}
+        )
+
+    async def get_shop_roles(self, guild_id):
+        guild_data = await self.guild_collection.find_one({"guild_id": guild_id})
+        if guild_data and "shop_roles" in guild_data:
+            return guild_data["shop_roles"]
+        return []
+
+    async def update_shop_role(self, guild_id, role_id, new_data):
+        await self.guild_collection.update_one(
+            {"guild_id": guild_id, "shop_roles._id": role_id},
+            {"$set": {"shop_roles.$": new_data}}
+        )
+
+    async def delete_shop_role(self, guild_id, role_id):
+        await self.guild_collection.update_one(
+            {"guild_id": guild_id},
+            {"$pull": {"shop_roles": {"_id": role_id}}}
         )
