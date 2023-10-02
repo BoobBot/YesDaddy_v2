@@ -359,7 +359,7 @@ class Moderation(commands.Cog):
     ) -> List[app_commands.Choice[str]]:
         roles = await self.bot.db_client.get_shop_roles(guild_id=interaction.guild.id)
         return [
-            app_commands.Choice(name=role.get('name'), value=role.get('_id'))
+            app_commands.Choice(name=role, value=role)
             for role in roles if current.lower() in role.get('name').lower()
         ]
 
