@@ -297,7 +297,7 @@ class Moderation(commands.Cog):
             "_id": role.id,
             "name": role.id,
             "added_by": ctx.author.id,
-            "color": role.color,
+            "color": role.color.to_rgb(),
             "add_at": datetime.datetime.utcnow(),
             "price": price
         }
