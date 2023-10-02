@@ -40,6 +40,7 @@ class Moderation(commands.Cog):
         await user_data.update_user({"idiot": idiot_data})
         await user.edit(nick=None, reason="what a idiot")
         return
+
     @commands.hybrid_group(name="idiot", description="idiot commands")
     @commands.has_any_role(694641646922498069, 694641646918434875)
     async def idiot(self, ctx):
@@ -257,7 +258,6 @@ class Moderation(commands.Cog):
         await ctx.author.send(
             f'Massnick results (updated: {updated} / failed: {failed}){" [cancelled]" if cancelled else ""}')
 
-
     @commands.hybrid_command(name="purge", description="Purge messages from a channel")
     @commands.has_any_role(694641646922498069, 694641646918434875)
     @app_commands.describe(limit="The number of messages to purge.")
@@ -267,7 +267,6 @@ class Moderation(commands.Cog):
         await channel.purge(limit=limit)
         await ctx.send(f"Purged {limit} messages from {channel.mention}", ephemeral=True)
 
-
     @commands.hybrid_command(name="kick", description="Kick a user from the server")
     @commands.has_any_role(694641646922498069, 694641646918434875)
     @app_commands.describe(user="The user to kick.")
@@ -275,7 +274,6 @@ class Moderation(commands.Cog):
     async def kick(self, ctx: commands.Context, user: discord.Member, *, reason: str):
         await user.kick(reason=reason)
         await ctx.send(f"Kicked {user.mention} for {reason}", ephemeral=True)
-
 
     @commands.hybrid_command(name="ban", description="Ban a user from the server")
     @commands.has_any_role(694641646922498069, 694641646918434875)
@@ -285,7 +283,6 @@ class Moderation(commands.Cog):
         await user.ban(reason=reason)
         await ctx.send(f"Banned {user.mention} for {reason}", ephemeral=True)
 
-
     @commands.hybrid_group(name="shop_admin", description="Shop Admin Commands")
     @commands.has_any_role(694641646922498069, 694641646918434875)
     async def shop_admin(self, ctx):
@@ -294,6 +291,7 @@ class Moderation(commands.Cog):
 
     @shop_admin.command(name="add_role", description="Add an role to the shop")
     @app_commands.describe(role="The role to add.")
+    @app_commands.describe(price="The price of the role.")
     async def shop_admin_add_role(self, ctx: commands.Context, role: discord.Role, price: int):
         role_data = {
             "_id": role.id,
@@ -303,7 +301,7 @@ class Moderation(commands.Cog):
             "add_at": datetime.datetime.utcnow(),
             "price": price
         }
-        await self.bot.db_client.add_role(role_data)
+        await self.bot.db_client.add_shop_role(guild_id=ctx.guild.id, role_data=role_data)
         await ctx.send(f"Added {role.mention} to the shop.")
 
     @shop_admin.command(name="remove_role", description="Remove an role from the shop")
@@ -332,7 +330,6 @@ class Moderation(commands.Cog):
     #     }
     #     await self.bot.db_client.add_item(item_data)
     #     await ctx.send(f"Added {item} to the shop.")
-
 
     @commands.hybrid_command(name="ratio", description="Check how many nsfw vs sfw channels there are")
     @commands.has_any_role(694641646922498069, 694641646918434875)
