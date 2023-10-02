@@ -360,11 +360,16 @@ class Moderation(commands.Cog):
                                          interaction: discord.Interaction,
                                          current: str,
                                          ) -> List[app_commands.Choice[int]]:
-        roles = await self.bot.db_client.get_shop_roles(guild_id=interaction.guild.id)
-        return [
-            app_commands.Choice(name=role.get('name'), value=index)#role.get('_id'))
-            for index, role in enumerate(roles) #if current.lower() in role.get('name').lower()
-        ][:25]
+        print('ac')
+        try:
+            roles = await self.bot.db_client.get_shop_roles(guild_id=interaction.guild.id)
+            return [
+                app_commands.Choice(name=role.get('name'), value=role.get('_id'))
+                for role in roles #if current.lower() in role.get('name').lower()
+            ][:25]
+        except:
+            print('err')
+            return []
 
 
     @commands.hybrid_command(name="ratio", description="Check how many nsfw vs sfw channels there are")
