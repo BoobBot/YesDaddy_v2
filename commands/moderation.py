@@ -315,7 +315,7 @@ class Moderation(commands.Cog):
         roles = await self.bot.db_client.get_shop_roles(guild_id=ctx.guild.id)
         em = discord.Embed(title="Shop Roles", color=await generate_embed_color(ctx.author))
         for role_data in roles:
-            role = discord.utils.get(role_data.get('_id'))
+            role = discord.utils.get(ctx.guild.roles, id=role_data.get('_id'))
             em.add_field(name={role.mention}, value=f"Price: {role_data.get('price')}\nAdded By: <@{role_data.get('added_by')}>", inline=False)
         await ctx.send(embed=em)
 
