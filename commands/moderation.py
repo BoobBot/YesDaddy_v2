@@ -351,8 +351,8 @@ class Moderation(commands.Cog):
 
     @shop.command(name="buy_role", description="Buy a role from the shop")
     @app_commands.describe(role="The role to buy.")
-    async def shop_buy_role(self, ctx: commands.Context, role: Choice[str]):
-        print(role)
+    async def shop_buy_role(self, ctx: commands.Context, role: str):
+        print(dir(role))
         print(role.value)
         print(role.name)
         return await ctx.send(role)
