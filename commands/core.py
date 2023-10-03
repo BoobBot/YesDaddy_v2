@@ -3,6 +3,8 @@ import datetime
 import discord
 from discord.ext import commands
 
+from utils.utilities import generate_embed_color
+
 
 class Core(commands.Cog):
     def __init__(self, bot):
@@ -10,7 +12,19 @@ class Core(commands.Cog):
 
     @commands.hybrid_command(name="ping", description="Show bot and API latency.")
     async def ping(self, ctx):
-        await ctx.reply(f"Pong! Bot latency: {self.bot.latency * 1000:.2f} ms")
+        color = await generate_embed_color(ctx.author)
+        em = discord.Embed(color=color, title="Pong!", description=f"Bot latency: {self.bot.latency * 1000:.2f} ms")
+        em.set_author(
+            name="Adventure",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png")
+        )
+        await ctx.send(embed=em)
+
 
     @commands.hybrid_command(name="invite", description="Invite the bot to your server.")
     async def invite(self, ctx):
