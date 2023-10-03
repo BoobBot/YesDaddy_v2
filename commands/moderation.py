@@ -357,10 +357,10 @@ class Moderation(commands.Cog):
 
     @roles.command(name="buy", description="Buy a role from the shop")
     @app_commands.describe(role="The role to buy.")
-    async def buy(self, ctx: commands.Context, role: str):
+    async def buy_role(self, ctx: commands.Context, role: str):
         return await ctx.send(role)
 
-    @buy.autocomplete('role')
+    @buy_role.autocomplete('role')
     async def buy_role_autocomplete(self,
                                          interaction: discord.Interaction,
                                          current: str,
@@ -390,10 +390,10 @@ class Moderation(commands.Cog):
 
     @items.command(name="buy", description="Buy an item from the shop")
     @app_commands.describe(item="The item to buy.")
-    async def buy(self, ctx: commands.Context, item: str):
+    async def buy_item(self, ctx: commands.Context, item: str):
         return await ctx.send(item)
 
-    @buy.autocomplete('item')
+    @buy_item.autocomplete('item')
     async def buy_item_autocomplete(self,
                                             interaction: discord.Interaction,
                                             current: str,
@@ -423,10 +423,10 @@ class Moderation(commands.Cog):
 
     @gift.command(name="buy", description="Buy a gift from the shop")
     @app_commands.describe(gift="The gift to buy.")
-    async def buy(self, ctx: commands.Context, gift: str):
+    async def buy_gift(self, ctx: commands.Context, gift: str):
         return await ctx.send(gift)
 
-    @buy.autocomplete('gift')
+    @buy_gift.autocomplete('gift')
     async def buy_gift_autocomplete(self,
                                             interaction: discord.Interaction,
                                             current: str,
