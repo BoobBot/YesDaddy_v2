@@ -370,7 +370,7 @@ class Moderation(commands.Cog):
         role = discord.utils.get(ctx.guild.roles, id=role_data.get('_id'))
         if role in ctx.author.roles:
             return await ctx.send("You already have that role.")
-        await ctx.author.add_roles(discord.utils.get(ctx.guild.roles, id=role_data("_id")))
+        await ctx.author.add_roles(discord.utils.get(ctx.guild.roles, id=role_data.get("_id")))
         await user_data.update_user({"balance": user_data.balance - role_data.get("price")})
         await ctx.send(f"Bought {role_data.get('name')} for {role_data.get('price')}.")
 
