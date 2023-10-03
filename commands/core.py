@@ -40,10 +40,20 @@ class Core(commands.Cog):
         )
         await ctx.send(embed=em)
 
-
     @commands.hybrid_command(name="support", description="Join the support server.")
     async def support(self, ctx):
-        await ctx.reply("https://discord.gg/boobbot")
+        color = await generate_embed_color(ctx.author)
+        em = discord.Embed(color=color, title="Get support", description="https://discord.gg/invite/bra")
+        em.set_author(
+            name="Support Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png")
+        )
+        await ctx.send(embed=em)
 
     @commands.hybrid_command(name="github", description="View the bot's GitHub repository.")
     async def github(self, ctx):
