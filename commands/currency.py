@@ -202,6 +202,16 @@ class Currency(commands.Cog):
             em.add_field(name="Streak Broken!",
                          value=f"You broke your daily streak of {daily_streak} days!")
 
+        em.set_author(
+            name="Daily Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png")
+        )
+
         await user_data.add_balance(claimed_money)
         await ctx.reply(embed=em)
 
@@ -232,10 +242,19 @@ class Currency(commands.Cog):
         em.add_field(name="New Balance", value=f"${newbal}")
 
         await user_data.add_balance(money)
+        em.set_author(
+            name="Weekly Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png")
+        )
         await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="work", description="get a job")
-    @persistent_cooldown(1, 7200, commands.BucketType.user)
+    @persistent_cooldown(1, 3600, commands.BucketType.user)
     async def work(self, ctx):
         random.shuffle(job_descriptions)
         job = random.choice(job_descriptions)
@@ -256,6 +275,15 @@ class Currency(commands.Cog):
             url=ctx.author.display_avatar.with_static_format("png"))
         em.add_field(name="New Balance", value=f"${new_bal}")
         await user_data.add_balance(cash)
+        em.set_author(
+            name="Work Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png")
+        )
         await ctx.reply(embed=em)
 
 
