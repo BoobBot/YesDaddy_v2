@@ -15,7 +15,7 @@ class Core(commands.Cog):
         color = await generate_embed_color(ctx.author)
         em = discord.Embed(color=color, title="Pong!", description=f"Bot latency: {self.bot.latency * 1000:.2f} ms")
         em.set_author(
-            name="Adventure",
+            name="Ping Command",
             icon_url=self.bot.user.display_avatar.with_static_format("png"),
             url="https://discord.gg/invite/tailss")
         timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
