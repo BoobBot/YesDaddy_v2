@@ -25,11 +25,21 @@ class Core(commands.Cog):
         )
         await ctx.send(embed=em)
 
-
     @commands.hybrid_command(name="invite", description="Invite the bot to your server.")
     async def invite(self, ctx):
-        await ctx.reply(
-            f"https://discord.com/api/oauth2/authorize?client_id={self.bot.user.id}&permissions=8&scope=bot+applications.commands")
+        color = await generate_embed_color(ctx.author)
+        em = discord.Embed(color=color, title="add me!", description=f"https://discord.com/api/oauth2/authorize?client_id={self.bot.user.id}&permissions=8&scope=bot+applications.commands")
+        em.set_author(
+            name="Invite Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png")
+        )
+        await ctx.send(embed=em)
+
 
     @commands.hybrid_command(name="support", description="Join the support server.")
     async def support(self, ctx):
