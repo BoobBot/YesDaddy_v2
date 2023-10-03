@@ -22,6 +22,7 @@ class Currency(commands.Cog):
         self.bot = bot
 
     @commands.hybrid_command(name="adventure", description="Go on an adventure!")
+    @persistent_cooldown(1, 500, commands.BucketType.user)
     async def adventure(self, ctx):
         author = ctx.author.mention
         user = ctx.author
