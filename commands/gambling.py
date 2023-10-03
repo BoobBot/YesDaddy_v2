@@ -85,6 +85,15 @@ class Gambling(commands.Cog):
                                description=crime_scenario + f" gaining ${amount}, congrats on getting away with it")
             em.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/1145112557414264892/1145112660208275528/dc.png")
+            em.set_author(
+                name="Crime Command",
+                icon_url=self.bot.user.display_avatar.with_static_format("png"),
+                url="https://discord.gg/invite/tailss")
+            timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+            em.set_footer(
+                text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+                icon_url=ctx.author.display_avatar.with_static_format("png")
+            )
             return await ctx.reply(embed=em)
         else:
             user_total = (user_balance - amount)
@@ -103,6 +112,15 @@ class Gambling(commands.Cog):
 
             em.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/1145112557414264892/1145115052505042974/ndc.png")
+            em.set_author(
+                name="Crime Command",
+                icon_url=self.bot.user.display_avatar.with_static_format("png"),
+                url="https://discord.gg/invite/tailss")
+            timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+            em.set_footer(
+                text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+                icon_url=ctx.author.display_avatar.with_static_format("png")
+            )
             return await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="rob", description="woke up and chose to be a thief")
@@ -158,6 +176,15 @@ class Gambling(commands.Cog):
 
             em = discord.Embed(color=discord.Color.green(),
                                description=rob_scenario + f" gaining ${user_loss_total}, congrats on being a bad person")
+            em.set_author(
+                name="Rob Command",
+                icon_url=self.bot.user.display_avatar.with_static_format("png"),
+                url="https://discord.gg/invite/tailss")
+            timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+            em.set_footer(
+                text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+                icon_url=ctx.author.display_avatar.with_static_format("png")
+            )
             return await ctx.reply(embed=em)
         else:
             author_balance = author_data.balance
@@ -177,9 +204,19 @@ class Gambling(commands.Cog):
                 em.add_field(name="Punishment",
                              value=f"You are in jail for {jail_time} hours and have to pay a fine of {fine}. Run </bail:1145445177092231341> to do so.")
             await author_data.update_balance(total)
+            em.set_author(
+                name="Rob Command",
+                icon_url=self.bot.user.display_avatar.with_static_format("png"),
+                url="https://discord.gg/invite/tailss")
+            timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+            em.set_footer(
+                text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+                icon_url=ctx.author.display_avatar.with_static_format("png")
+            )
             return await ctx.reply(embed=em)
 
     @commands.hybrid_command(description="Flip a coin.", aliases=["coin"])
+    @persistent_cooldown(1, 60, commands.BucketType.user)
     @app_commands.describe(side='pick a side, heads or tails')
     @app_commands.describe(bet='the amount of money to bet')
     async def coinflip(self, ctx, side: Literal['heads', 'tails'], bet: int):
@@ -250,6 +287,7 @@ class Gambling(commands.Cog):
 
     # rps
     @commands.hybrid_command(description="Play rock paper scissors.")
+    @persistent_cooldown(1, 60, commands.BucketType.user)
     @app_commands.describe(choice="rock, paper, or scissors")
     @app_commands.describe(bet='the amount of money to bet')
     async def rps(self, ctx, choice: Literal['rock', 'paper', 'scissors'], bet: int):
@@ -287,18 +325,47 @@ class Gambling(commands.Cog):
             await user_data.update_balance(user_balance + winnings)
             em = discord.Embed(color=discord.Color.green(),
                                description=f"You chose {choice}, the bot chose {bot_choice}. You win {winnings} coins!")
+            em.set_author(
+                name="rock, paper, or scissors",
+                icon_url=self.bot.user.display_avatar.with_static_format("png"),
+                url="https://discord.gg/invite/tailss")
+            timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+            em.set_footer(
+                text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+                icon_url=ctx.author.display_avatar.with_static_format("png")
+            )
             return await ctx.reply(embed=em)
         elif result == "lose":
             await user_data.update_balance(user_balance - bet)
             em = discord.Embed(color=discord.Color.red(),
                                description=f"You chose {choice}, the bot chose {bot_choice}. You lose {bet} coins.")
+            em.set_author(
+                name="rock, paper, or scissors",
+                icon_url=self.bot.user.display_avatar.with_static_format("png"),
+                url="https://discord.gg/invite/tailss")
+            timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+            em.set_footer(
+                text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+                icon_url=ctx.author.display_avatar.with_static_format("png")
+            )
             return await ctx.reply(embed=em)
         else:
             em = discord.Embed(color=discord.Color.yellow(),
                                description=f"You chose {choice}, the bot chose {bot_choice}. It's a tie!")
+            em.set_author(
+                name="rock, paper, or scissors",
+                icon_url=self.bot.user.display_avatar.with_static_format("png"),
+                url="https://discord.gg/invite/tailss")
+            timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+            em.set_footer(
+                text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+                icon_url=ctx.author.display_avatar.with_static_format("png")
+            )
+            return await ctx.reply(embed=em)
             await ctx.reply(embed=em)
 
     @commands.hybrid_command(description="Play rock paper scissors lizard spock.")
+    @persistent_cooldown(1, 60, commands.BucketType.user)
     @app_commands.describe(choice="rock, paper, scissors, lizard, or spock")
     @app_commands.describe(bet='the amount of money to bet')
     async def rpsls(self, ctx, choice: Literal['rock', 'paper', 'scissors', 'lizard', 'spock'], bet: int):
@@ -338,18 +405,46 @@ class Gambling(commands.Cog):
             await user_data.update_balance(user_balance + winnings)
             em = discord.Embed(color=discord.Color.green(),
                                description=f"You chose {choice}, the bot chose {bot_choice}. You win {winnings} coins!")
+            em.set_author(
+                name="rock, paper, scissors, lizard, or spock",
+                icon_url=self.bot.user.display_avatar.with_static_format("png"),
+                url="https://discord.gg/invite/tailss")
+            timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+            em.set_footer(
+                text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+                icon_url=ctx.author.display_avatar.with_static_format("png")
+            )
             return await ctx.reply(embed=em)
         elif result == "lose":
             await user_data.update_balance(user_balance - bet)
             em = discord.Embed(color=discord.Color.red(),
                                description=f"You chose {choice}, the bot chose {bot_choice}. You lose {bet} coins.")
+            em.set_author(
+                name="rock, paper, scissors, lizard, or spock",
+                icon_url=self.bot.user.display_avatar.with_static_format("png"),
+                url="https://discord.gg/invite/tailss")
+            timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+            em.set_footer(
+                text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+                icon_url=ctx.author.display_avatar.with_static_format("png")
+            )
             return await ctx.reply(embed=em)
         else:
             em = discord.Embed(color=discord.Color.yellow(),
                                description=f"You chose {choice}, the bot chose {bot_choice}. It's a tie!")
+            em.set_author(
+                name="rock, paper, scissors, lizard, or spock",
+                icon_url=self.bot.user.display_avatar.with_static_format("png"),
+                url="https://discord.gg/invite/tailss")
+            timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+            em.set_footer(
+                text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+                icon_url=ctx.author.display_avatar.with_static_format("png")
+            )
             await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="dice", description="Roll a dice.")
+    @persistent_cooldown(1, 60, commands.BucketType.user)
     @app_commands.describe(bet='the amount of money to bet')
     async def dice(self, ctx, bet: int):
         if bet <= 0:
@@ -372,18 +467,46 @@ class Gambling(commands.Cog):
             await user_data.update_balance(user_balance + winnings)
             em = discord.Embed(color=discord.Color.green(),
                                description=f"You rolled {user_roll}, the bot rolled {bot_roll}. You win {winnings} coins!")
+            em.set_author(
+                name="Dice Command",
+                icon_url=self.bot.user.display_avatar.with_static_format("png"),
+                url="https://discord.gg/invite/tailss")
+            timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+            em.set_footer(
+                text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+                icon_url=ctx.author.display_avatar.with_static_format("png")
+            )
             return await ctx.reply(embed=em)
         elif user_roll < bot_roll:
             await user_data.update_balance(user_balance - bet)
             em = discord.Embed(color=discord.Color.red(),
                                description=f"You rolled {user_roll}, the bot rolled {bot_roll}. You lose {bet} coins.")
+            em.set_author(
+                name="Dice Command",
+                icon_url=self.bot.user.display_avatar.with_static_format("png"),
+                url="https://discord.gg/invite/tailss")
+            timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+            em.set_footer(
+                text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+                icon_url=ctx.author.display_avatar.with_static_format("png")
+            )
             return await ctx.reply(embed=em)
         else:
             em = discord.Embed(color=discord.Color.yellow(),
                                description=f"You rolled {user_roll}, the bot rolled {bot_roll}. It's a tie!")
+            em.set_author(
+                name="Dice Command",
+                icon_url=self.bot.user.display_avatar.with_static_format("png"),
+                url="https://discord.gg/invite/tailss")
+            timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+            em.set_footer(
+                text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+                icon_url=ctx.author.display_avatar.with_static_format("png")
+            )
             await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="roulette", description="Spin the roulette wheel.")
+    @persistent_cooldown(1, 60, commands.BucketType.user)
     @app_commands.describe(bet='the amount of money to bet')
     @app_commands.describe(choice='the number to bet on')
     @app_commands.describe(color='the color to bet on')
@@ -431,17 +554,30 @@ class Gambling(commands.Cog):
         else:
             result = "lose"
 
+        color = await generate_embed_color(ctx.author)
+        em = discord.Embed(color=color, title="Spin the roulette wheel.")
+        em.set_author(
+            name="Roulette Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png")
+        )
         if result == "win":
             winnings = bet * winnings_multiplier
             await user_data.update_balance(user_balance + winnings)
-            await ctx.send(f"The result was {result}, you win {winnings} coins!")
+            em.description = "The result was {result}, you win {winnings} coins!"
         elif result == "lose":
             await user_data.update_balance(user_balance - bet)
-            await ctx.send(f"The result was {result}, you lose {bet} coins.")
+            em.description = f"The result was {result}, you lose {bet} coins."
         else:
-            await ctx.send(f"The result was {result}, it's a tie!")
+            em.description = f"The result was {result}, it's a tie!"
+        await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="blackjack", description="Play a game of blackjack.")
+    @persistent_cooldown(1, 60, commands.BucketType.user)
     @app_commands.describe(bet='the amount of money to bet')
     async def blackjack(self, ctx, bet: int):
         if bet <= 0:
@@ -479,20 +615,32 @@ class Gambling(commands.Cog):
 
         winnings_multiplier = 2
 
+        color = await generate_embed_color(ctx.author)
+        em = discord.Embed(color=color, title="blackjack")
+        em.set_author(
+            name="Blackjack Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png")
+        )
+
         if user_result == "win":
             winnings = bet * winnings_multiplier
             await user_data.update_balance(user_balance + winnings)
-            await ctx.send(
-                f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. You win {winnings} coins!")
+            em.description = f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. You win {winnings} coins!"
         elif user_result == "lose":
             await user_data.update_balance(user_balance - bet)
-            await ctx.send(
-                f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. You lose {bet} coins.")
+            em.description = f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. You lose {bet} coins."
         else:
-            await ctx.send(
-                f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. It's a tie!")
+            em.description = f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. It's a tie!"
+
+        await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="wheel", description="Spin the wheel of fortune.")
+    @persistent_cooldown(1, 60, commands.BucketType.user)
     @app_commands.describe(bet='the amount of money to bet')
     async def wheel(self, ctx, bet: int):
         if bet <= 0:
@@ -531,17 +679,31 @@ class Gambling(commands.Cog):
         else:
             result = "lose"
 
+        color = await generate_embed_color(ctx.author)
+        em = discord.Embed(color=color, title="Spin the wheel of fortune.")
+        em.set_author(
+            name="Wheel Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png")
+        )
+
         if result == "win":
             winnings = bet * winnings_multiplier
             await user_data.update_balance(user_balance + winnings)
-            await ctx.send(f"The result was {result}, you win {winnings} coins!")
+            em.description = f"The result was {result}, you win {winnings} coins!"
         elif result == "lose":
             await user_data.update_balance(user_balance - bet)
-            await ctx.send(f"The result was {result}, you lose {bet} coins.")
+            em.description = f"The result was {result}, you lose {bet} coins."
         else:
-            await ctx.send(f"The result was {result}, it's a tie!")
+            em.description = f"The result was {result}, it's a tie!"
+        await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="highlow", description="Play a game of high low.")
+    @persistent_cooldown(1, 60, commands.BucketType.user)
     @app_commands.describe(bet='the amount of money to bet')
     async def hilow(self, ctx, bet: int):
         if bet <= 0:
@@ -572,21 +734,30 @@ class Gambling(commands.Cog):
             user_result = "tie"
         else:
             user_result = "lose"
-
         winnings_multiplier = 2
+
+        color = await generate_embed_color(ctx.author)
+        em = discord.Embed(color=color, title="Play a game of high low.")
+        em.set_author(
+            name="HighLow Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png")
+        )
 
         if user_result == "win":
             winnings = bet * winnings_multiplier
             await user_data.update_balance(user_balance + winnings)
-            await ctx.send(
-                f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. You win {winnings} coins!")
+            em.description = f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. You win {winnings} coins!"
         elif user_result == "lose":
             await user_data.update_balance(user_balance - bet)
-            await ctx.send(
-                f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. You lose {bet} coins.")
+            em.description = f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. You lose {bet} coins."
         else:
-            await ctx.send(
-                f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. It's a tie!")
+            em.description = f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. It's a tie!"
+        await ctx.reply(embed=em)
 
 
 async def setup(bot):

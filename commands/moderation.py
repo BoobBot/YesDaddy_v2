@@ -292,14 +292,16 @@ class Moderation(commands.Cog):
     @shop_admin.command(name="add_role", description="Add an role to the shop")
     @app_commands.describe(role="The role to add.")
     @app_commands.describe(price="The price of the role.")
-    async def shop_admin_add_role(self, ctx: commands.Context, role: discord.Role, price: int):
+    @app_commands.describe(description="The description of the role.")
+    async def shop_admin_add_role(self, ctx: commands.Context, role: discord.Role, price: int, description: str):
         role_data = {
             "_id": role.id,
             "name": role.name,
             "added_by": ctx.author.id,
             "color": role.color.to_rgb(),
             "add_at": datetime.datetime.utcnow(),
-            "price": price
+            "price": price,
+            "description": description
         }
         await self.bot.db_client.add_shop_role(guild_id=ctx.guild.id, role_data=role_data)
         await ctx.send(f"Added {role.mention} to the shop.")
@@ -351,7 +353,7 @@ class Moderation(commands.Cog):
         for role_data in roles:
             role = discord.utils.get(ctx.guild.roles, id=role_data.get('_id'))
             em.add_field(name="",
-                         value=f"\nRole: {role.mention}\nPrice: {role_data.get('price')}\nAdded By: <@{role_data.get('added_by')}>",
+                         value=f"\nRole: {role.mention}\nPrice: {role_data.get('price')}\nDiscription: {role_data.get('description')}",
                          inline=False)
         await ctx.send(embed=em)
 

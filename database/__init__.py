@@ -20,6 +20,25 @@ class DiscordDatabase:
         self.log = logging.getLogger()
 
     # User operations
+    def initialize_default_user_data(self, user_data):
+        default_data = {
+            "blacklist": False,
+            "last_seen": f'{datetime.utcnow()}',
+            "xp": 0,
+            "level": 0,
+            "premium": False,
+            "balance": 0,
+            "bank_balance": 0,
+            "cooldowns": {},
+            "messages": 0,
+            "jail": {},
+            "idiot": {},
+        }
+        # Create a new dictionary with default values and update it with existing data
+        user_data = {**default_data, **user_data}
+        user_data.pop("health", None)
+        user_data.pop("idiot_data", None)
+        return user_data
 
     async def get_top_users_by_level(self, limit):
         pipeline = [
