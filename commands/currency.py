@@ -66,7 +66,6 @@ class Currency(commands.Cog):
             icon_url=self.bot.user.display_avatar.with_static_format("png"),
             url="https://discord.gg/invite/tailss")
 
-        em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
         timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
 
         em.set_footer(
