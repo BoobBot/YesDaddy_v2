@@ -70,7 +70,6 @@ class Core(commands.Cog):
         )
         await ctx.reply(embed=em)
 
-
     @commands.hybrid_group(name="lvlroles", description="View or change level roles.")
     @commands.has_guild_permissions(ban_members=True)
     async def lvlrole(self, ctx: commands.Context):
@@ -82,7 +81,7 @@ class Core(commands.Cog):
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
 
         if any(role.get('role_id') == role.id for role in guild.lvl_roles):
-            return await ctx.reply("That role is already a level role.")
+            return await ctx.reply(":x: That role is already a level role.")
 
         guild.lvl_roles.append({"level": level, "role_id": role.id})
         await self.bot.db_client.update_guild(ctx.guild.id, guild.__dict__)
@@ -101,7 +100,17 @@ class Core(commands.Cog):
         roles = guild.lvl_roles
         if not roles:
             return await ctx.reply("There are no level roles.")
-        embed = discord.Embed(title="Level Roles")
+        color = await generate_embed_color(ctx.author)
+        embed = discord.Embed(color=color, title="Level Roles")
+        embed.set_author(
+            name="level role list",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        embed.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png")
+        )
         for role in roles:
             embed.add_field(name=f"Level {role.get('level')}", value=f"<@&{role.get('role_id')}>")
         await ctx.reply(embed=embed)
