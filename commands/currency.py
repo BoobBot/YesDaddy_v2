@@ -140,6 +140,7 @@ class Currency(commands.Cog):
 
     # Fishing command
     @commands.hybrid_command(name="fish", description="Go fishing!")
+    @persistent_cooldown(1, 500, commands.BucketType.user)
     async def fish(self, ctx):
         fish_name = random.choice(list(fish_info.keys()))
         fish_value = random.randint(10, 100)
@@ -149,10 +150,19 @@ class Currency(commands.Cog):
         await user_data.add_balance(fish_value)
         color = await generate_embed_color(ctx.author)
 
-        embed = discord.Embed(title="You caught a fish!",
+        em = discord.Embed(title="You caught a fish!",
                               description=f"You caught a {fish_info[fish_name]} {fish_name} worth ${fish_value}!, you now have ${user_balance + fish_value} gold!",
                               color=color)
-        await ctx.send(embed=embed)
+        em.set_author(
+            name="Fish Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png")
+        )
+        await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="daily", description="Get your daily coins!.")
     @persistent_cooldown(1, 86400, commands.BucketType.user)
