@@ -339,33 +339,105 @@ class Moderation(commands.Cog):
         if not ctx.invoked_subcommand:
             await ctx.send_help(ctx.command)
 
-    @shop.command(name="list_roles", description="List all roles in the shop")
-    async def shop_list_roles(self, ctx: commands.Context):
+    @shop.hybrid_group(name="roles", description="Role Commands")
+    async def roles(self, ctx):
+        if not ctx.invoked_subcommand:
+            await ctx.send_help(ctx.command)
+
+    @roles.command(name="list", description="List all roles in the shop")
+    async def list(self, ctx: commands.Context):
         roles = await self.bot.db_client.get_shop_roles(guild_id=ctx.guild.id)
         em = discord.Embed(title="Shop Roles", color=await generate_embed_color(ctx.author))
         for role_data in roles:
             role = discord.utils.get(ctx.guild.roles, id=role_data.get('_id'))
-            em.add_field(name="", value=f"\nRole: {role.mention}\nPrice: {role_data.get('price')}", inline=False)
+            em.add_field(name="",
+                         value=f"\nRole: {role.mention}\nPrice: {role_data.get('price')}\nAdded By: <@{role_data.get('added_by')}>",
+                         inline=False)
         await ctx.send(embed=em)
 
-    @shop.command(name="buy_role", description="Buy a role from the shop")
+    @roles.command(name="buy", description="Buy a role from the shop")
     @app_commands.describe(role="The role to buy.")
-    async def shop_buy_role(self, ctx: commands.Context, role: str):
+    async def buy(self, ctx: commands.Context, role: str):
         return await ctx.send(role)
 
-    # learn how to do this
-    @shop_buy_role.autocomplete('role')
-    async def shop_buy_role_autocomplete(self,
+    @buy.autocomplete('role')
+    async def buy_role_autocomplete(self,
                                          interaction: discord.Interaction,
                                          current: str,
                                          ) -> List[app_commands.Choice[str]]:
         roles = await self.bot.db_client.get_shop_roles(guild_id=interaction.guild.id)
 
         return [
-            app_commands.Choice(name=role.get('name'), value=str(role.get('_id')))
-            for role in roles
-            if not current or search(role.get('name').lower(), current.lower())
-        ][:25]
+                   app_commands.Choice(name=role.get('name'), value=str(role.get('_id')))
+                   for role in roles
+                   if not current or search(role.get('name').lower(), current.lower())
+               ][:25]
+
+    @shop.hybrid_group(name="items", description="Item Commands")
+    async def items(self, ctx):
+        if not ctx.invoked_subcommand:
+            await ctx.send_help(ctx.command)
+
+    @items.command(name="list", description="List all items in the shop")
+    async def list(self, ctx: commands.Context):
+        items = await self.bot.db_client.get_shop_items(guild_id=ctx.guild.id)
+        em = discord.Embed(title="Shop Items", color=await generate_embed_color(ctx.author))
+        for item_data in items:
+            em.add_field(name="",
+                         value=f"\nItem: {item_data.get('name')}\nPrice: {item_data.get('price')}\nAdded By: <@{item_data.get('added_by')}>",
+                         inline=False)
+        await ctx.send(embed=em)
+
+    @items.command(name="buy", description="Buy an item from the shop")
+    @app_commands.describe(item="The item to buy.")
+    async def buy(self, ctx: commands.Context, item: str):
+        return await ctx.send(item)
+
+    @buy.autocomplete('item')
+    async def buy_item_autocomplete(self,
+                                            interaction: discord.Interaction,
+                                            current: str,
+                                            ) -> List[app_commands.Choice[str]]:
+            items = await self.bot.db_client.get_shop_items(guild_id=interaction.guild.id)
+
+            return [
+                    app_commands.Choice(name=item.get('name'), value=str(item.get('_id')))
+                    for item in items
+                    if not current or search(item.get('name').lower(), current.lower())
+                ][:25]
+
+    @shop.hybrid_group(name="gift", description="buy Commands")
+    async def gift(self, ctx):
+        if not ctx.invoked_subcommand:
+            await ctx.send_help(ctx.command)
+
+    @gift.command(name="list gifts", description="List all gifts in the shop")
+    async def list(self, ctx: commands.Context):
+        gifts = await self.bot.db_client.get_shop_gifts(guild_id=ctx.guild.id)
+        em = discord.Embed(title="Shop Gifts", color=await generate_embed_color(ctx.author))
+        for gift_data in gifts:
+            em.add_field(name="",
+                         value=f"\nGift: {gift_data.get('name')}\nPrice: {gift_data.get('price')}\nAdded By: <@{gift_data.get('added_by')}>",
+                         inline=False)
+        await ctx.send(embed=em)
+
+    @gift.command(name="buy", description="Buy a gift from the shop")
+    @app_commands.describe(gift="The gift to buy.")
+    async def buy(self, ctx: commands.Context, gift: str):
+        return await ctx.send(gift)
+
+    @buy.autocomplete('gift')
+    async def buy_gift_autocomplete(self,
+                                            interaction: discord.Interaction,
+                                            current: str,
+                                            ) -> List[app_commands.Choice[str]]:
+            gifts = await self.bot.db_client.get_shop_gifts(guild_id=interaction.guild.id)
+
+            return [
+                    app_commands.Choice(name=gift.get('name'), value=str(gift.get('_id')))
+                    for gift in gifts
+                    if not current or search(gift.get('name').lower(), current.lower())
+                ][:25]
 
     @commands.hybrid_command(name="ratio", description="Check how many nsfw vs sfw channels there are")
     @commands.has_any_role(694641646922498069, 694641646918434875)
