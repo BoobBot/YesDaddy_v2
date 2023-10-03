@@ -339,7 +339,7 @@ class Moderation(commands.Cog):
         if not ctx.invoked_subcommand:
             await ctx.send_help(ctx.command)
 
-    @shop.hybrid_group(name="roles", description="Role Commands")
+    @shop.group(name="roles", description="Role Commands")
     async def roles(self, ctx):
         if not ctx.invoked_subcommand:
             await ctx.send_help(ctx.command)
@@ -373,7 +373,7 @@ class Moderation(commands.Cog):
                    if not current or search(role.get('name').lower(), current.lower())
                ][:25]
 
-    @shop.hybrid_group(name="items", description="Item Commands")
+    @shop.group(name="items", description="Item Commands")
     async def items(self, ctx):
         if not ctx.invoked_subcommand:
             await ctx.send_help(ctx.command)
@@ -406,7 +406,7 @@ class Moderation(commands.Cog):
                     if not current or search(item.get('name').lower(), current.lower())
                 ][:25]
 
-    @shop.hybrid_group(name="gift", description="buy Commands")
+    @shop.group(name="gift", description="buy Commands")
     async def gift(self, ctx):
         if not ctx.invoked_subcommand:
             await ctx.send_help(ctx.command)
