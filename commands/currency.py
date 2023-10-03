@@ -45,14 +45,14 @@ class Currency(commands.Cog):
 
         if is_successful:
             user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
-            cash = monster["value"]*random.randint(5, 10)
+            cash = monster["value"] * random.randint(5, 10)
             await user_data.add_balance(cash)
             scenario = random.choice(success_list)
             outcome = random.choice(adv_success_strings)
             scenario_text = scenario[0].format(author, monster["emoji"])
             outcome = " " + \
-                outcome.format(
-                    author, monster["emoji"]) + f" you earned ${cash}!"
+                      outcome.format(
+                          author, monster["emoji"]) + f" you earned ${cash}!"
         else:
             scenario = random.choice(fail_list)
             scenario_text = scenario[0].format(author, monster["emoji"])
@@ -61,7 +61,7 @@ class Currency(commands.Cog):
 
         em = discord.Embed(color=user_color,
                            title=f"{user}'s adventure!",
-                           description=scenario_text+outcome)
+                           description=scenario_text + outcome)
         em.set_author(
             name="Adventure",
             icon_url=self.bot.user.display_avatar.with_static_format("png"),
@@ -91,11 +91,19 @@ class Currency(commands.Cog):
         user_balance = user_data.balance
         await user_data.add_balance(resource_value * resource_amount)
         color = await generate_embed_color(ctx.author)
-
-        embed = discord.Embed(title="You chopped some resources!",
-                              description=f"You chopped x{resource_amount} {resource['emote']} {chosen_resource} worth ${resource_value}!, you now have ${user_balance + resource_value * resource_amount}!",
-                              color=color)
-        await ctx.send(embed=embed)
+        em = discord.Embed(title="You chopped some resources!",
+                           description=f"You chopped x{resource_amount} {resource['emote']} {chosen_resource} worth ${resource_value}!, you now have ${user_balance + resource_value * resource_amount}!",
+                           color=color)
+        em.set_author(
+            name="Chop Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png")
+        )
+        await ctx.reply(embed=em)
 
     # mining command
     @commands.hybrid_command(name="mine", description="Go mining!")
