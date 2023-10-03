@@ -61,7 +61,18 @@ class Currency(commands.Cog):
         em = discord.Embed(color=user_color,
                            title=f"{user}'s adventure!",
                            description=scenario_text+outcome)
+        em.set_author(
+            name="Adventure",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+
         em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
+        timestamp = discord.utils.format_dt(
+            datetime.datetime.now(datetime.timezone.utc), style="f")
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png")
+        )
         await ctx.send(embed=em)
 
     # chop command
