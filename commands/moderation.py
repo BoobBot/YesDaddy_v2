@@ -411,7 +411,7 @@ class Moderation(commands.Cog):
         if not ctx.invoked_subcommand:
             await ctx.send_help(ctx.command)
 
-    @gift.command(name="list gifts", description="List all gifts in the shop")
+    @gift.command(name="lists", description="List all gifts in the shop")
     async def list(self, ctx: commands.Context):
         gifts = await self.bot.db_client.get_shop_gifts(guild_id=ctx.guild.id)
         em = discord.Embed(title="Shop Gifts", color=await generate_embed_color(ctx.author))
