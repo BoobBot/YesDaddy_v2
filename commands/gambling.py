@@ -22,6 +22,7 @@ class Gambling(commands.Cog):
         self.bot = bot
 
     @commands.hybrid_command(name="slots", description="what happens in vegas...")
+    @persistent_cooldown(1, 60, commands.BucketType.user)
     async def slots(self, ctx):
         user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
         user_balance = user_data.balance
