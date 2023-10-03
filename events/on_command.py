@@ -1,8 +1,3 @@
-import asyncio
-import contextlib
-import math
-import random
-
 import discord
 from discord.ext import commands
 
@@ -19,7 +14,8 @@ class OnCommand(commands.Cog):
 
         else:
             destination = '#{0.channel.name} ({0.guild.name})'.format(message)
-        self.bot.log.info('{2} : {0.created_at}: {0.author.name} in {1}: {0.content}'.format(message, destination, ctx.command))
+        self.bot.log.info(
+            '{2} : {0.created_at}: {0.author.name} in {1}: {0.content}'.format(message, destination, ctx.command))
 
 
 async def setup(bot):

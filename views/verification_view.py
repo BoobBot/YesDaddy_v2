@@ -25,12 +25,12 @@ class VerificationView(discord.ui.View):
             if not any(role.id == 694641646838480978 for role in interaction.user.roles):
                 if date.today().isoweekday() != 1:
                     return await interaction.followup.send("As a male you can only verify on Mondays",
-                                                                   ephemeral=True)
+                                                           ephemeral=True)
 
         genders = [694641646805057561, 694641646805057560, 694641646805057562]
         if not any(role.id in genders for role in interaction.user.roles):
             return await interaction.followup.send("You need a gender role from <#1141869787895574598>",
-                                                           ephemeral=True)
+                                                   ephemeral=True)
 
         # Check if the user is already in the verification process
         retrieved_guild = await interaction.client.db_client.get_guild(interaction.guild.id)

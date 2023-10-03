@@ -1,8 +1,3 @@
-import asyncio
-import contextlib
-import math
-import random
-
 import discord
 from discord.ext import commands
 

@@ -1,7 +1,5 @@
 from discord.ext import commands
 
-from database import User
-
 
 class Ready(commands.Cog):
     def __init__(self, bot):

@@ -1,8 +1,4 @@
-from datetime import datetime
-
 import discord
-
-from views.tickets_view import TicketView
 
 
 class RuleButton(discord.ui.View):

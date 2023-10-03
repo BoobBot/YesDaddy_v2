@@ -1,8 +1,9 @@
-import discord
 import random
-import aiohttp
-from PIL import Image
 from io import BytesIO
+
+import aiohttp
+import discord
+from PIL import Image
 
 
 async def get_average_color(url):

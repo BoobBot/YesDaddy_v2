@@ -4,8 +4,6 @@ import random
 import discord
 from discord.ext import tasks, commands
 
-from database import User
-
 
 class Loops(commands.Cog):
     def __init__(self, bot):

@@ -3,8 +3,6 @@ import traceback
 import discord
 from discord.ext import commands
 
-from utils.checks import persistent_cooldown
-
 
 class ErrorHandlerCog(commands.Cog):
     def __init__(self, bot):
@@ -53,7 +51,7 @@ class ErrorHandlerCog(commands.Cog):
     def format_traceback_info(traceback_info):
         calls = '\n'.join(traceback_info['function_calls'])
         variables = '\n'.join([f'{var_name}: {var_value}' for var_name,
-                              var_value in traceback_info['local_variables'].items()])
+        var_value in traceback_info['local_variables'].items()])
         error_message = f"**Error Type:** {traceback_info['error_type']}\n**Error Message:** {traceback_info['error_message']}\n"
         error_message += f"**File:** {traceback_info['file_name']}, Line: {traceback_info['line_number']}\n\n"
         error_message += f"**Function Calls:**\n{calls}\n\n"

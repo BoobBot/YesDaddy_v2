@@ -18,8 +18,9 @@ class SupportTicketView(discord.ui.View):
         if not data:
             interaction.client.log.error("No data found for ticket, this should not happen :/")
             return await interaction.response.send_message("Something went wrong", ephemeral=True)
-        
-        ticket = next((ticket for ticket in data.support_tickets if ticket.get("channel_id") == interaction.channel.id), None)
+
+        ticket = next((ticket for ticket in data.support_tickets if ticket.get("channel_id") == interaction.channel.id),
+                      None)
 
         if not ticket:
             return await interaction.response.send_message('Ticket data not found', ephemeral=True)
@@ -67,8 +68,10 @@ class SupportTicketView(discord.ui.View):
             transcript += f'\n<p><strong>{message.author}:</strong> {message.content}</p>'
 
         transcript += '\n</body>\n</html>'
-        transcript_bytes = BytesIO(transcript.encode())  # Create in-memory buffer. Encode just turns the string into bytes.
-        transcript_bytes.seek(0)  # Instantiating a buffer causes the pointer to be at EOF. Seek back to the beginning so we can read the entire buffer contents.
+        transcript_bytes = BytesIO(
+            transcript.encode())  # Create in-memory buffer. Encode just turns the string into bytes.
+        transcript_bytes.seek(
+            0)  # Instantiating a buffer causes the pointer to be at EOF. Seek back to the beginning so we can read the entire buffer contents.
 
         await ch.send(f"Ticket Transcript for <@{user_id}>:",
                       file=discord.File(transcript_bytes, filename="ticket_transcript.html"))

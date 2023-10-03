@@ -1,16 +1,11 @@
 import datetime
-import os
 import random
-import subprocess
-import sys
-from typing import Optional, Literal
-import random
+from typing import Optional
 
 import discord
-from discord import app_commands, Embed
-from discord.ext import commands, tasks
+from discord import app_commands
+from discord.ext import commands
 
-from database import User
 from config.lists import job_descriptions, adv_success_strings, adv_scenarios, adv_failure_strings
 from config.settings_config import chop_resource_info, mine_resource_info, fish_info, monsters
 from utils.checks import persistent_cooldown
@@ -125,8 +120,8 @@ class Currency(commands.Cog):
         await user_data.add_balance(resource_value * resource_amount)
         color = await generate_embed_color(ctx.author)
         em = discord.Embed(title="You mined some resources!",
-                              description=f"You mined x{resource_amount} {resource['emote']} {chosen_resource} worth ${resource_value}! You now have ${user_balance + resource_value}!",
-                              color=color)
+                           description=f"You mined x{resource_amount} {resource['emote']} {chosen_resource} worth ${resource_value}! You now have ${user_balance + resource_value}!",
+                           color=color)
         em.set_author(
             name="Mine Command",
             icon_url=self.bot.user.display_avatar.with_static_format("png"),
@@ -151,8 +146,8 @@ class Currency(commands.Cog):
         color = await generate_embed_color(ctx.author)
 
         em = discord.Embed(title="You caught a fish!",
-                              description=f"You caught a {fish_info[fish_name]} {fish_name} worth ${fish_value}!, you now have ${user_balance + fish_value} gold!",
-                              color=color)
+                           description=f"You caught a {fish_info[fish_name]} {fish_name} worth ${fish_value}!, you now have ${user_balance + fish_value} gold!",
+                           color=color)
         em.set_author(
             name="Fish Command",
             icon_url=self.bot.user.display_avatar.with_static_format("png"),

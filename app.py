@@ -10,13 +10,13 @@ from aiohttp import ClientSession
 from discord.ext import commands
 from motor import motor_asyncio
 
-from database import DiscordDatabase
-from views import tickets_view, support_view, support_channel_view
-from views.verification_view import VerificationView
-from views.rule_button_view import RuleButton
 from config.config import Config
+from database import DiscordDatabase
 from utils.logger import setup_logger
-import sys
+from views import tickets_view, support_view, support_channel_view
+from views.rule_button_view import RuleButton
+from views.verification_view import VerificationView
+
 sys.stdin.reconfigure(encoding="utf-8")
 sys.stdout.reconfigure(encoding="utf-8")
 config = Config()

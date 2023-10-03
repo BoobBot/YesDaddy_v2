@@ -3,7 +3,6 @@ from datetime import datetime
 import discord
 
 from views import support_view
-from views.tickets_view import TicketView
 
 
 class SupportChannelView(discord.ui.View):
@@ -15,10 +14,12 @@ class SupportChannelView(discord.ui.View):
     async def support(self, interaction: discord.Interaction, button: discord.ui.Button):
         retrieved_guild = await interaction.client.db_client.get_guild(interaction.guild.id)
 
-        open_ticket = next((ticket for ticket in retrieved_guild.support_tickets if ticket.get('user_id') == interaction.user.id and ticket.get('status') == 'open'), None)
+        open_ticket = next((ticket for ticket in retrieved_guild.support_tickets if
+                            ticket.get('user_id') == interaction.user.id and ticket.get('status') == 'open'), None)
 
         if open_ticket is not None:
-            return await interaction.response.send_message(f"You are already have an open ticket at <#{open_ticket['channel_id']}>", ephemeral=True)
+            return await interaction.response.send_message(
+                f"You are already have an open ticket at <#{open_ticket['channel_id']}>", ephemeral=True)
 
         try:
             dm_channel = await interaction.user.create_dm()

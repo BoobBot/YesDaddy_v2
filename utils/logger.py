@@ -61,7 +61,7 @@ class ColoredFormatter(logging.Formatter):
         level_name = record.levelname
         if self.use_color and level_name in COLORS:
             level_name_color = COLOR_SEQ % (
-                30 + COLORS[level_name]) + level_name + RESET_SEQ
+                    30 + COLORS[level_name]) + level_name + RESET_SEQ
             record.levelname = level_name_color
         message = record.msg
         if self.use_color and level_name in COLORS:

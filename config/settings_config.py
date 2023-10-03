@@ -37,28 +37,27 @@ chop_resource_info = {
     'Birch': {'emote': '<:birch:1146125694313697330>', 'min_value': 20, 'max_value': 30, 'rarity': 0.3},
 }
 
-
 monsters = [
     {"emoji": "The Dragon <a:dragon:1146865445547278457>",
-        "value": 100, "success_rate": 0.7, "rarity": 0.4},  # Legendary
+     "value": 100, "success_rate": 0.7, "rarity": 0.4},  # Legendary
     {"emoji": "a Kitsune <:kitsune:1146865719502442667>",
-        "value": 50, "success_rate": 0.9, "rarity": 0.5},  # Rare
+     "value": 50, "success_rate": 0.9, "rarity": 0.5},  # Rare
     {"emoji": "The Ancient Spirit <:spirit:1146869866599555082>",
-        "value": 80, "success_rate": 0.6, "rarity": 0.3},  # Epic
+     "value": 80, "success_rate": 0.6, "rarity": 0.3},  # Epic
     {"emoji": "a Rogue Bandit <:bandit:1146870790344683530>",
-        "value": 20, "success_rate": 0.95, "rarity": 0.9},  # Common
+     "value": 20, "success_rate": 0.95, "rarity": 0.9},  # Common
     {"emoji": "a Pixie <:pixie:1146872679866044467>", "value": 30,
-        "success_rate": 0.85, "rarity": 0.7},  # Uncommon
+     "success_rate": 0.85, "rarity": 0.7},  # Uncommon
     {"emoji": "The Shapeshifter <:shifter:1146874237387284580>",
-        "value": 70, "success_rate": 0.75, "rarity": 0.5},  # Rare
+     "value": 70, "success_rate": 0.75, "rarity": 0.5},  # Rare
     {"emoji": "a Rock Golem <:golem:1146874710186008676>",
-        "value": 90, "success_rate": 0.5, "rarity": 0.7},  # Uncommon
+     "value": 90, "success_rate": 0.5, "rarity": 0.7},  # Uncommon
     {"emoji": "The Haunted Spirit <:ghost:1146867993461133403>",
-        "value": 60, "success_rate": 0.8, "rarity": 0.9},  # Common
+     "value": 60, "success_rate": 0.8, "rarity": 0.9},  # Common
     {"emoji": "an Interdimensional Entity <:entity:1146875640675573810>",
-        "value": 120, "success_rate": 0.4, "rarity": 0.2},  # Mythical
+     "value": 120, "success_rate": 0.4, "rarity": 0.2},  # Mythical
     {"emoji": "a Band of Bandits <:bandit_group:1146870972301979658>",
-        "value": 40, "success_rate": 0.9, "rarity": 0.9}  # Common
+     "value": 40, "success_rate": 0.9, "rarity": 0.9}  # Common
 ]
 
 

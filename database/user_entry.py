@@ -1,4 +1,3 @@
-import math
 import datetime
 
 
@@ -106,14 +105,14 @@ class User:
 
     async def claim_daily(self):
         now = datetime.datetime.now(datetime.timezone.utc)
-    
+
         if not self.last_daily_claim:
             self.last_daily_claim = now
             self.daily_streak = 1
             await self.update_user({"last_daily_claim": self.last_daily_claim,
                                     "daily_streak": self.daily_streak})
             return False, self.daily_streak
-        
+
         days_since_last_claim = (now - self.last_daily_claim.replace(tzinfo=datetime.timezone.utc)).days
 
         if days_since_last_claim > 2:

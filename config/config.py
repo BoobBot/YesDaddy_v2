@@ -28,7 +28,8 @@ class Config:
         self.initial_extensions = ['commands.core', 'events.ready', 'events.message', 'events.loops', 'events.error',
                                    'commands.currency', 'commands.gambling', 'commands.profile',
                                    'commands.transactions', 'commands.dev', 'commands.moderation',
-                                   'events.on_member_update', 'events.on_member_join', 'events.on_command']  # List of initial extensions
+                                   'events.on_member_update', 'events.on_member_join',
+                                   'events.on_command']  # List of initial extensions
         # Use environment variable as prefix
         self.prefix = os.getenv('PREFIX', "")
         # Use environment variable as owner_ids

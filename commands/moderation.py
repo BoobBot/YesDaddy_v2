@@ -6,7 +6,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 
-from utils.utilities import generate_embed_color, get_average_color, search
+from utils.utilities import generate_embed_color, search
 from views import support_view
 from views.confirm_view import Confirm
 
@@ -378,9 +378,9 @@ class Moderation(commands.Cog):
 
     @buy_role.autocomplete('role')
     async def buy_role_autocomplete(self,
-                                         interaction: discord.Interaction,
-                                         current: str,
-                                         ) -> List[app_commands.Choice[str]]:
+                                    interaction: discord.Interaction,
+                                    current: str,
+                                    ) -> List[app_commands.Choice[str]]:
         roles = await self.bot.db_client.get_shop_roles(guild_id=interaction.guild.id)
 
         return [
@@ -411,16 +411,16 @@ class Moderation(commands.Cog):
 
     @buy_item.autocomplete('item')
     async def buy_item_autocomplete(self,
-                                            interaction: discord.Interaction,
-                                            current: str,
-                                            ) -> List[app_commands.Choice[str]]:
-            items = await self.bot.db_client.get_shop_items(guild_id=interaction.guild.id)
+                                    interaction: discord.Interaction,
+                                    current: str,
+                                    ) -> List[app_commands.Choice[str]]:
+        items = await self.bot.db_client.get_shop_items(guild_id=interaction.guild.id)
 
-            return [
-                    app_commands.Choice(name=item.get('name'), value=str(item.get('_id')))
-                    for item in items
-                    if not current or search(item.get('name').lower(), current.lower())
-                ][:25]
+        return [
+                   app_commands.Choice(name=item.get('name'), value=str(item.get('_id')))
+                   for item in items
+                   if not current or search(item.get('name').lower(), current.lower())
+               ][:25]
 
     @shop.group(name="gift", description="buy Commands")
     async def gift(self, ctx):
@@ -444,16 +444,16 @@ class Moderation(commands.Cog):
 
     @buy_gift.autocomplete('gift')
     async def buy_gift_autocomplete(self,
-                                            interaction: discord.Interaction,
-                                            current: str,
-                                            ) -> List[app_commands.Choice[str]]:
-            gifts = await self.bot.db_client.get_shop_gifts(guild_id=interaction.guild.id)
+                                    interaction: discord.Interaction,
+                                    current: str,
+                                    ) -> List[app_commands.Choice[str]]:
+        gifts = await self.bot.db_client.get_shop_gifts(guild_id=interaction.guild.id)
 
-            return [
-                    app_commands.Choice(name=gift.get('name'), value=str(gift.get('_id')))
-                    for gift in gifts
-                    if not current or search(gift.get('name').lower(), current.lower())
-                ][:25]
+        return [
+                   app_commands.Choice(name=gift.get('name'), value=str(gift.get('_id')))
+                   for gift in gifts
+                   if not current or search(gift.get('name').lower(), current.lower())
+               ][:25]
 
     @commands.hybrid_command(name="ratio", description="Check how many nsfw vs sfw channels there are")
     @commands.has_any_role(694641646922498069, 694641646918434875)

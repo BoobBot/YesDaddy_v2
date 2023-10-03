@@ -2,13 +2,12 @@ from io import BytesIO
 from typing import Optional
 
 import discord
+from PIL import Image, ImageDraw, ImageFilter, ImageFont
 from discord import app_commands
 from discord.ext import commands
-from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 from config.settings_config import create_leaderboard_pages
 from database import User
-from utils.checks import persistent_cooldown
 from utils.paginator import Paginator
 from utils.pillowutils import (arc_bar, font_auto_scale, get_brightness,
                                mask_ellipsis)
@@ -81,17 +80,18 @@ class Profile(commands.Cog):
 
         base = Image.new("RGBA", (600, 300))  # 300, 150
         filtered = user_avatar.copy().filter(ImageFilter.GaussianBlur(radius=10))
-        base.paste(filtered, (-((user_avatar.width - base.width) // 2), -((user_avatar.height - base.height) // 2)), user_avatar)
+        base.paste(filtered, (-((user_avatar.width - base.width) // 2), -((user_avatar.height - base.height) // 2)),
+                   user_avatar)
 
         mask_ellipsis(user_avatar)
         user_avatar = user_avatar.resize((220, 220), resample=Image.LANCZOS)
         base.paste(user_avatar, (20, 40), user_avatar)
 
         arc_bar(img=base, xy=(10, 30), size=(250, 270), progress_pc=100,
-                     width=10, fill=(255, 255, 255))
+                width=10, fill=(255, 255, 255))
 
         arc_bar(img=base, xy=(10, 30), size=(250, 270), progress_pc=(user_xp / max_xp) * 100,
-                     width=10, fill=(0, 191, 255))
+                width=10, fill=(0, 191, 255))
 
         brightness = get_brightness(base)
         text_fill, stroke_fill = ((255, 255, 255), (0, 0, 0)) if brightness <= 128 else ((0, 0, 0), (255, 255, 255))

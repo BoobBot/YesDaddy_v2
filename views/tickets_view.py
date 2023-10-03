@@ -17,7 +17,7 @@ class TicketView(discord.ui.View):
             interaction.client.log.error("No data found for Ticket, this should not happen :/")
             return await interaction.response.send_message("Something went wrong",
                                                            ephemeral=True)
-        
+
         ticket = next((ticket for ticket in data.tickets if ticket.get("channel_id") == interaction.channel.id \
                        and ticket.get("status") == "open"), None)
 
@@ -65,7 +65,8 @@ class TicketView(discord.ui.View):
         # log the verification
         ch = interaction.guild.get_channel(1142915549198823546)
         user = await interaction.client.fetch_user(user_id)
-        await ch.send(f"verification ticket by {user.name} ({user.id}) was verified by {interaction.user.mention} ({interaction.user.id})")
+        await ch.send(
+            f"verification ticket by {user.name} ({user.id}) was verified by {interaction.user.mention} ({interaction.user.id})")
         # store the ticket
         await interaction.client.db_client.add_ticket(interaction.guild.id, ticket)
         # respond to the user
@@ -81,7 +82,7 @@ class TicketView(discord.ui.View):
             interaction.client.log.error("No data found for Ticket, this should not happen :/")
             return await interaction.response.send_message("Something went wrong",
                                                            ephemeral=True)
-        
+
         ticket = next((ticket for ticket in data.tickets if ticket.get("channel_id") == interaction.channel.id), None)
 
         if not ticket:
@@ -104,9 +105,11 @@ class TicketView(discord.ui.View):
         except discord.NotFound:
             user = None
         if user:
-            await ch.send(f"verification ticket by {user.name} ({user.id}) was closed by {interaction.user.mention} ({interaction.user.id})")
+            await ch.send(
+                f"verification ticket by {user.name} ({user.id}) was closed by {interaction.user.mention} ({interaction.user.id})")
         else:
-            await ch.send(f"verification ticket by unknown/Deleted user was closed by {interaction.user.mention} ({interaction.user.id})")
+            await ch.send(
+                f"verification ticket by unknown/Deleted user was closed by {interaction.user.mention} ({interaction.user.id})")
 
         await interaction.response.send_message("Ticket Closed", ephemeral=True)
         await asyncio.sleep(5)
@@ -151,9 +154,11 @@ class TicketView(discord.ui.View):
         user = await interaction.client.fetch_user(user_id)
 
         if user:
-            await ch.send(f"verification ticket by {user.name} ({user.id}) was banned by {interaction.user.mention} ({interaction.user.id})")
+            await ch.send(
+                f"verification ticket by {user.name} ({user.id}) was banned by {interaction.user.mention} ({interaction.user.id})")
         else:
-            await ch.send(f"verification ticket by unknown {user_id} was banned by {interaction.user.mention} ({interaction.user.id})")
+            await ch.send(
+                f"verification ticket by unknown {user_id} was banned by {interaction.user.mention} ({interaction.user.id})")
 
         await interaction.response.send_message("Ticket Closed", ephemeral=True)
         await asyncio.sleep(5)
