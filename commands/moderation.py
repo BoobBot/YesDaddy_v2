@@ -367,12 +367,12 @@ class Moderation(commands.Cog):
         user_data = await self.bot.db_client.get_user(ctx.author.id)
         if user_data.balance < role.get("price"):
             return await ctx.send("You don't have enough money to buy that role.")
-        role = discord.utils.get(ctx.guild.roles, id=role.get("_id"))
+        role = discord.utils.get(ctx.guild.roles, id=role_data.get("_id"))
         if role in ctx.author.roles:
             return await ctx.send("You already have that role.")
         await ctx.author.add_roles(discord.utils.get(ctx.guild.roles, id=role_data("_id")))
         await user_data.update_user({"balance": user_data.balance - role_data.get("price")})
-        await ctx.send(f"Bought {role.get('name')} for {role.get('price')}.")
+        await ctx.send(f"Bought {role_data.get('name')} for {role_data.get('price')}.")
 
     @buy_role.autocomplete('role')
     async def buy_role_autocomplete(self,
