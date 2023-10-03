@@ -14,7 +14,7 @@ from database import User
 from config.lists import fake_robbery_scenarios, funny_crime_scenarios
 from config.settings_config import jackpot_emoji, calculate_payout, jackpot_payout, bonus_multiplier
 from utils.checks import persistent_cooldown
-from utils.utilities import subtraction_percentage
+from utils.utilities import subtraction_percentage, generate_embed_color
 
 
 class Gambling(commands.Cog):
@@ -26,29 +26,36 @@ class Gambling(commands.Cog):
         user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
         user_balance = user_data.balance
         bet = 500
-
         if bet > user_balance:
             return await ctx.send(
                 f"You don't have enough money to do this, your balance is ${user_balance}, maybe go earn some money lazy fuck",
                 ephemeral=True)
-
         emojis = ["⚽", "🎱", "🎰", "🍀", "🎮", jackpot_emoji]
         result = [random.choice(emojis) for _ in range(3)]
         user_bet = (user_data.balance - bet)
         await user_data.update_balance(user_bet)
-
         slot_message = " ".join(result)
         payout, is_jackpot, is_bonus = calculate_payout(result)
         balance = (user_data.balance + payout)
-
+        color = await generate_embed_color(ctx.author)
+        em = discord.Embed(color=color, title="Pull the lever!")
+        em.set_author(
+            name="slots Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png")
+        )
         if is_jackpot:
-            await ctx.send(f"{slot_message}\n🎉 Jackpot! You won {jackpot_payout} coins!")
+            em.description = f"{slot_message}\n🎉 Jackpot! You won {jackpot_payout} coins!"
         elif is_bonus:
-            await ctx.send(
-                f"{slot_message}\n🎉 Bonus! You won {payout} coins with a bonus multiplier of {bonus_multiplier}!")
+            em.description = f"{slot_message}\n🎉 Bonus! You won {payout} coins with a bonus multiplier of {bonus_multiplier}!"
         else:
-            await ctx.send(f"{slot_message}\nYou won {payout} coins!")
+            em.description = f"{slot_message}\nYou won {payout} coins!"
         await user_data.update_balance(balance)
+        await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="crime", description="do some crime")
     @persistent_cooldown(1, 21600, commands.BucketType.user)
