@@ -358,7 +358,7 @@ class Moderation(commands.Cog):
     @roles.command(name="buy", description="Buy a role from the shop")
     @app_commands.describe(role="The role to buy.")
     async def buy_role(self, ctx: commands.Context, role: str):
-        role_data = await self.bot.db_client.get_shop_roles(guild_id=ctx.guild.id, role_id=role)
+        role_data = await self.bot.db_client.get_shop_roles(guild_id=ctx.guild.id)
         role_data = next((r for r in role_data if r.get("_id") == role), None)
 
         if not role_data:
