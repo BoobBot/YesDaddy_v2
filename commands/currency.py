@@ -103,6 +103,7 @@ class Currency(commands.Cog):
 
     # mining command
     @commands.hybrid_command(name="mine", description="Go mining!")
+    @persistent_cooldown(1, 500, commands.BucketType.user)
     async def mine(self, ctx):
         chosen_resource = \
             random.choices(list(mine_resource_info.keys()),
