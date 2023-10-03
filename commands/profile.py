@@ -1,3 +1,4 @@
+import datetime
 from io import BytesIO
 from typing import Optional
 
@@ -24,6 +25,7 @@ class Profile(commands.Cog):
     async def bail(self, ctx, user: Optional[discord.Member]):
         user = user or ctx.author
         user_data = await ctx.bot.db_client.get_user(user_id=user.id)
+        user_color = await generate_embed_color(user)
         if not user_data.is_in_jail():
             return await ctx.reply(f":x: {user.mention} is not in jail.")
         user_balance = max(user_data.balance + user_data.bank_balance, 0)
@@ -34,7 +36,17 @@ class Profile(commands.Cog):
             return await ctx.reply(f":x: {user.mention} needs ${cost_total} to get out of jail.")
         await user_data.subtract_balance(cost_total)
         await user_data.update_user({"jail": {}})
-        await ctx.reply(f":white_check_mark: {user.mention} has been released from jail for {cost_total}.")
+        em = discord.Embed(title=f"{user}'s Bail", description=f":white_check_mark: {user.mention} has been released from jail for {cost_total}.", colour=user_color)
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        em.set_author(
+            name="Bail Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png"))
+        em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
+        await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="profile", description="Look at your profile.")
     async def profile(self, ctx, user: Optional[discord.Member]):
@@ -45,6 +57,14 @@ class Profile(commands.Cog):
         bar = progress_percentage(user_data.xp, exp_needed)
 
         em = discord.Embed(title=f"{user}'s Profile", color=user_color)
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        em.set_author(
+            name="Profile Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png"))
         em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
         em.add_field(
             name="Level", value=f"{user_data.level} {bar} {user_data.level + 1}", inline=False)
@@ -119,6 +139,15 @@ class Profile(commands.Cog):
         user = user or ctx.author
         user_color = await generate_embed_color(user)
         em = discord.Embed(title=f"{user}'s Avatar", color=user_color)
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        em.set_author(
+            name="Avatar Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png"))
+        em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
         em.set_image(url=user.display_avatar.with_static_format("png"))
         await ctx.reply(embed=em)
 

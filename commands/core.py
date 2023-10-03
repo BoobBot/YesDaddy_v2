@@ -189,12 +189,13 @@ class Core(commands.Cog):
     @commands.hybrid_command(name="help", description="have a list of commands")
     async def help(self, ctx):
         em = discord.Embed(title="Commands List", colour=discord.Colour.blue())
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
         em.set_author(
             name="Help Command",
             icon_url=self.bot.user.display_avatar.with_static_format("png"),
             url="https://discord.gg/invite/tailss")
         em.set_footer(
-            text=f"Command ran by {ctx.author.display_name}",
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
             icon_url=ctx.author.display_avatar.with_static_format("png"))
         em.add_field(name="<a:core:1158418275559022674> Core:",
                      value="</github:1146802715511492670>: view the bots github repo\n</invite:1146802715511492668>: invite the bot to your server\n</ping:1145445177092231339>: show bot and API latency\n</support:1146802715511492669>: join the support server\n",
