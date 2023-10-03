@@ -358,7 +358,21 @@ class Moderation(commands.Cog):
     @roles.command(name="buy", description="Buy a role from the shop")
     @app_commands.describe(role="The role to buy.")
     async def buy_role(self, ctx: commands.Context, role: str):
-        return await ctx.send(role)
+        role_data = await self.bot.db_client.get_shop_roles(guild_id=ctx.guild.id, role_id=role)
+        role_data = next((r for r in role_data if r.get("_id") == role), None)
+
+        if not role_data:
+            return await ctx.send("That role doesn't exist in the shop.")
+
+        user_data = await self.bot.db_client.get_user(ctx.author.id)
+        if user_data.balance < role.get("price"):
+            return await ctx.send("You don't have enough money to buy that role.")
+        role = discord.utils.get(ctx.guild.roles, id=role.get("_id"))
+        if role in ctx.author.roles:
+            return await ctx.send("You already have that role.")
+        await ctx.author.add_roles(discord.utils.get(ctx.guild.roles, id=role_data("_id")))
+        await user_data.update_user({"balance": user_data.balance - role_data.get("price")})
+        await ctx.send(f"Bought {role.get('name')} for {role.get('price')}.")
 
     @buy_role.autocomplete('role')
     async def buy_role_autocomplete(self,
