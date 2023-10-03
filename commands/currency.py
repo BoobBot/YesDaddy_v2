@@ -67,8 +67,8 @@ class Currency(commands.Cog):
             url="https://discord.gg/invite/tailss")
 
         em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
-        timestamp = discord.utils.format_dt(
-            datetime.datetime.now(datetime.timezone.utc), style="f")
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+
         em.set_footer(
             text=f"Command ran by {ctx.author.display_name} at {timestamp}",
             icon_url=ctx.author.display_avatar.with_static_format("png")
