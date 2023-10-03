@@ -77,6 +77,7 @@ class Currency(commands.Cog):
 
     # chop command
     @commands.hybrid_command(name="chop", description="Go chopping!")
+    @persistent_cooldown(1, 500, commands.BucketType.user)
     async def chop(self, ctx):
         chosen_resource = \
             random.choices(list(chop_resource_info.keys()),
@@ -123,10 +124,19 @@ class Currency(commands.Cog):
         user_balance = user_data.balance
         await user_data.add_balance(resource_value * resource_amount)
         color = await generate_embed_color(ctx.author)
-        embed = discord.Embed(title="You mined some resources!",
+        em = discord.Embed(title="You mined some resources!",
                               description=f"You mined x{resource_amount} {resource['emote']} {chosen_resource} worth ${resource_value}! You now have ${user_balance + resource_value}!",
                               color=color)
-        await ctx.send(embed=embed)
+        em.set_author(
+            name="Mine Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png")
+        )
+        await ctx.reply(embed=em)
 
     # Fishing command
     @commands.hybrid_command(name="fish", description="Go fishing!")
