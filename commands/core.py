@@ -188,6 +188,10 @@ class Core(commands.Cog):
     @commands.hybrid_command(name="help", description="have a list of commands")
     async def help(self, ctx):
         em = discord.Embed(title="Commands List", colour=discord.Colour.blue())
+        em.set_author(
+            name="Help Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
         em.set_footer(
             text=f"Command ran by {ctx.author.display_name}",
             icon_url=ctx.author.display_avatar.with_static_format("png"))
