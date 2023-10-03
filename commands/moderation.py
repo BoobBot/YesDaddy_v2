@@ -365,7 +365,7 @@ class Moderation(commands.Cog):
             return await ctx.send("That role doesn't exist in the shop.")
 
         user_data = await self.bot.db_client.get_user(ctx.author.id)
-        if user_data.balance < role.get("price"):
+        if user_data.balance < role_data.get("price"):
             return await ctx.send("You don't have enough money to buy that role.")
         role = discord.utils.get(ctx.guild.roles, id=role_data.get("_id"))
         if role in ctx.author.roles:
