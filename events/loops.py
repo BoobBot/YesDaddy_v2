@@ -25,17 +25,17 @@ class Loops(commands.Cog):
             support = self.bot.get_guild(440526421388165120)
             community = self.bot.get_guild(694641646780022818)
             lounge = self.bot.get_guild(449970824812953612)
-            contributor = discord.utils.get(support.roles, id=528615882709008430)
-            contributor_plus = discord.utils.get(support.roles, id=528615837305929748)
-            kissy_contributor = discord.utils.get(support.roles, id=528615659115118602)
-            nitro_booster = discord.utils.get(support.roles, id=585533009797578759)
-            lounge_booster = discord.utils.get(lounge.roles, id=588226955778850816)
+            contributor = support.get_role(528615882709008430)
+            contributor_plus = support.get_role(528615837305929748)
+            kissy_contributor = support.get_role(528615659115118602)
+            nitro_booster = support.get_role(585533009797578759)
+            lounge_booster = lounge.get_role(588226955778850816)
             for member in contributor.members:
                 try:
                     mem = await community.fetch_member(member.id)
                     # self.bot.log.info(f"Syncing {mem.name} to community")
                     if mem:
-                        await mem.add_roles(discord.utils.get(community.roles, id=694641646901395515))
+                        await mem.add_roles(community.get_role(694641646901395515))
                 except Exception as e:
                     pass
             for member in contributor_plus.members:
@@ -43,7 +43,7 @@ class Loops(commands.Cog):
                     mem = await community.fetch_member(member.id)
                     # self.bot.log.info(f"Syncing {mem.name} to community")
                     if mem:
-                        await mem.add_roles(discord.utils.get(community.roles, id=694641646914109460))
+                        await mem.add_roles(community.get_role(694641646914109460))
                 except Exception as e:
                     pass
             for member in kissy_contributor.members:
@@ -51,7 +51,7 @@ class Loops(commands.Cog):
                     mem = await community.fetch_member(member.id)
                     # self.bot.log.info(f"Syncing {mem.name} to community")
                     if mem:
-                        await mem.add_roles(discord.utils.get(community.roles, id=694641646838480978))
+                        await mem.add_roles(community.get_role(694641646838480978))
                 except Exception as e:
                     pass
             for member in nitro_booster.members:
@@ -59,14 +59,14 @@ class Loops(commands.Cog):
                     mem = await community.fetch_member(member.id)
                     # self.bot.log.info(f"Syncing {mem.name} to community")
                     if mem:
-                        await mem.add_roles(discord.utils.get(community.roles, id=872596931598225489))
+                        await mem.add_roles(community.get_role(872596931598225489))
                 except Exception as e:
                     pass
             for member in lounge_booster.members:
                 try:
                     mem = await community.fetch_member(member.id)
                     if mem:
-                        await mem.add_roles(discord.utils.get(community.roles, id=872596931598225489))
+                        await mem.add_roles(community.get_role(872596931598225489))
                 except Exception as e:
                     pass
         except Exception as e:

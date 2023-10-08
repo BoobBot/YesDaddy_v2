@@ -317,7 +317,7 @@ class Moderation(commands.Cog):
         roles = await self.bot.db_client.get_shop_roles(guild_id=ctx.guild.id)
         em = discord.Embed(title="Shop Roles", color=await generate_embed_color(ctx.author))
         for role_data in roles:
-            role = discord.utils.get(ctx.guild.roles, id=role_data.get('_id'))
+            role = ctx.guild.get_role(int(role_data.get('_id')))
             em.add_field(name="",
                          value=f"\nRole: {role.mention}\nPrice: {role_data.get('price')}\nAdded By: <@{role_data.get('added_by')}>",
                          inline=False)
@@ -351,7 +351,7 @@ class Moderation(commands.Cog):
         roles = await self.bot.db_client.get_shop_roles(guild_id=ctx.guild.id)
         em = discord.Embed(title="Shop Roles", color=await generate_embed_color(ctx.author))
         for role_data in roles:
-            role = discord.utils.get(ctx.guild.roles, id=role_data.get('_id'))
+            role = ctx.guild.get_role(int(role_data.get('_id')))
             em.add_field(name="",
                          value=f"\nRole: {role.mention}\nPrice: {role_data.get('price')}\nDiscription: {role_data.get('description')}",
                          inline=False)
@@ -369,10 +369,10 @@ class Moderation(commands.Cog):
         user_data = await self.bot.db_client.get_user(ctx.author.id)
         if user_data.balance < role_data.get("price"):
             return await ctx.send("You don't have enough money to buy that role.")
-        role = discord.utils.get(ctx.guild.roles, id=role_data.get('_id'))
+        role = ctx.guild.get_role(int(role_data.get('_id')))
         if role in ctx.author.roles:
             return await ctx.send("You already have that role.")
-        await ctx.author.add_roles(discord.utils.get(ctx.guild.roles, id=role_data.get("_id")))
+        await ctx.author.add_roles(role)
         await user_data.update_user({"balance": user_data.balance - role_data.get("price")})
         await ctx.send(f"Bought {role_data.get('name')} for {role_data.get('price')}.")
 
@@ -497,7 +497,7 @@ class Moderation(commands.Cog):
 
         category_id = 1141700782006222970
         category = ctx.guild.get_channel(category_id)
-        staff = discord.utils.get(ctx.guild.roles, id=694641646918434875)
+        staff = ctx.guild.get_role(694641646918434875)
         overwrites = {
             ctx.guild.default_role: discord.PermissionOverwrite(send_messages=False, read_messages=False),
             staff: discord.PermissionOverwrite(send_messages=True, read_messages=True, embed_links=True,

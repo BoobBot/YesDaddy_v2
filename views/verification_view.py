@@ -51,7 +51,7 @@ class VerificationView(discord.ui.View):
         category = discord.utils.get(interaction.guild.categories, id=1141700782006222970)
 
         if category:
-            staff = discord.utils.get(interaction.guild.roles, id=694641646918434875)
+            staff = interaction.guild.get_role(694641646918434875)
             overwrites = {
                 interaction.user: discord.PermissionOverwrite(send_messages=True, read_messages=True, embed_links=True,
                                                               read_message_history=True, attach_files=True),

@@ -30,7 +30,7 @@ class SupportChannelView(discord.ui.View):
 
         category_id = 1141700782006222970
         category = interaction.guild.get_channel(category_id)
-        staff = discord.utils.get(interaction.guild.roles, id=694641646918434875)
+        staff = interaction.guild.get_role(694641646918434875)
         overwrites = {
             interaction.guild.default_role: discord.PermissionOverwrite(send_messages=False, read_messages=False),
             staff: discord.PermissionOverwrite(send_messages=True, read_messages=True, embed_links=True,

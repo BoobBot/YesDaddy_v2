@@ -13,5 +13,5 @@ class RuleButton(discord.ui.View):
         if any(r.id == 694641646780022826 for r in interaction.user.roles):
             return await interaction.response.send_message("You already have the member role!", ephemeral=True)
 
-        await interaction.user.add_roles(discord.utils.get(interaction.guild.roles, id=694641646780022826))  # Member
+        await interaction.user.add_roles(interaction.guild.get_role(694641646780022826))  # Member
         await interaction.response.send_message("You have received the member role!", ephemeral=True)

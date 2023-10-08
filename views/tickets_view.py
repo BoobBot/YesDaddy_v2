@@ -46,22 +46,19 @@ class TicketView(discord.ui.View):
         async def switch(member):
             if any(r.id == 694641646805057561 for r in member.roles):
                 # add female role
-                await member.add_roles(
-                    discord.utils.get(interaction.guild.roles, id=694641646821703740))  # Verified female
+                await member.add_roles(interaction.guild.get_role(694641646821703740))  # Verified female
 
             if any(r.id == 694641646805057560 for r in member.roles):
                 # add male role
-                await member.add_roles(
-                    discord.utils.get(interaction.guild.roles, id=694641646813577267))  # Verified male
+                await member.add_roles(interaction.guild.get_role(694641646813577267))  # Verified male
 
             if any(r.id == 694641646805057562 for r in member.roles):
                 # add other role
-                await member.add_roles(
-                    discord.utils.get(interaction.guild.roles, id=694641646813577268))  # Verified trans
+                await member.add_roles(interaction.guild.get_role(694641646813577268))  # Verified trans
 
         await switch(member)
         # add verified role
-        await member.add_roles(discord.utils.get(interaction.guild.roles, id=694641646821703741))  # Verified
+        await member.add_roles(interaction.guild.get_role(694641646821703741))  # Verified
         # log the verification
         ch = interaction.guild.get_channel(1142915549198823546)
         user = await interaction.client.fetch_user(user_id)
