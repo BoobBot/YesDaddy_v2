@@ -60,6 +60,9 @@ class Message(commands.Cog):
                 return
         if msg.guild:
             data = await self.bot.db_client.get_guild(msg.guild.id)
+            for reaction in data.text_reactions:
+                if reaction.get("trigger") in msg.content.lower():
+                    await msg.add_reaction(reaction.get("response"))
             # percentage = 40
             # random_number = random.randint(1, 100)
             # if random_number <= percentage:
