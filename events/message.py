@@ -1,5 +1,6 @@
 import asyncio
 import contextlib
+import datetime
 import math
 import random
 
@@ -86,7 +87,8 @@ class Message(commands.Cog):
                             for attachment in msg.attachments:
                                 await channel.send(attachment.url)
                         return
-            user = await self.bot.db_client.get_user(user_id=msg.author.id)
+            guild = await self.bot.db_client.get_guild(msg.guild.id)
+            user = guild.get_user(msg.author.id)
             bonus_xp = sum(1 for role in msg.author.roles for r in data.bonus_roles if role.id == r.get("role_id"))
             bonus_xp += 1
             xp = random.randint(1, 10) * bonus_xp
@@ -97,9 +99,12 @@ class Message(commands.Cog):
                 user.level = lvl
                 await user.update_level(amount=user.level)
                 await process_level_roles(user, msg.author, msg.guild, self.bot)
-            await user.update_messages()
-            await user.add_xp(xp)
-            await user.update_last_seen()
+            user.messages += 1
+            user.xp += xp
+            user.last_seen = datetime.datetime.utcnow()
+            await guild.update_user(user.user_id, user)
+
+
 
 
 async def setup(bot):
