@@ -47,7 +47,7 @@ class User:
         """
         This method stores the user within the database.
         This will not do anything if the user already exists.
-        To update specific fields, you must use the applicable function or `update_field`.
+        To update specific fields, you must use the applicable function or `update_fields`.
         """
         await self._db.set_user(self)
         self._new = False
@@ -112,6 +112,9 @@ class User:
         await self.update_fields(premium=premium)
 
     async def set_blacklist(self, blacklist: bool):
+        if self.blacklist == blacklist:
+            return
+
         await self.update_fields(blacklist=blacklist)
 
     async def claim_daily(self):
