@@ -21,24 +21,24 @@ class DiscordDatabase:
     async def store_user(self, guild_id, user_data: User):
         await self.guild_collection.update_one(
             {"guild_id": guild_id},
-            {"$push": {f"users.{str(user_data.user_id)}": user_data.to_dict()}}
+            {"$push": {"users": user_data.to_dict()}}
         )
 
     async def retrieve_user(self, guild_id, user_id):
         guild_data = await self.guild_collection.find_one({"guild_id": guild_id}, {"_id": 0})
         if guild_data:
-            user_data = guild_data.get("users", {}).get(str(user_id), None).value()
-            if user_data:
-                return User(self, **user_data)
+            for user_data in guild_data["users"]:
+                if user_data["user_id"] == user_id:
+                    return User(self, **user_data)
             user = User(self, user_id, False,
                         f'{datetime.utcnow()}', 0, 0, False, 0, 0, {}, 0, {})
             await self.store_user(guild_id, user)
             return user
 
-    async def update_guild_user(self, guild_id, user_data: User):
+    async def update_guild_user(self, guild_id, user_id, user_data):
         await self.guild_collection.update_one(
-            {"guild_id": guild_id, f"users.{str(user_data.user_id)}": {"$exists": True}},
-            {"$set": {f"users.{str(user_data.user_id)}": user_data.to_dict()}}
+            {"guild_id": guild_id, "users.user_id": user_data['user_id']},
+            {"$set": {"users.$": user_data}}
         )
 
     # User operations
@@ -152,7 +152,7 @@ class DiscordDatabase:
             guild_data.setdefault("lvl_roles", [])
             guild_data.setdefault("bonus_roles", [])
             guild_data.setdefault("shop_roles", {})
-            guild_data.setdefault("users", {})
+            guild_data.setdefault("users", [])
             return Guild(**guild_data)
         guild = Guild(guild_id)
         await self.add_guild(guild)
@@ -160,7 +160,7 @@ class DiscordDatabase:
         guild_data.setdefault("lvl_roles", [])
         guild_data.setdefault("bonus_roles", [])
         guild_data.setdefault("shop_roles", {})
-        guild_data.setdefault("users", {})
+        guild_data.setdefault("users", [])
         return Guild(**guild_data)
 
     async def update_guild(self, guild_id, new_data):
