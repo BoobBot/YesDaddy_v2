@@ -73,7 +73,8 @@ class User:
         await self.update_user({"bank_balance": self.bank_balance})
 
     async def update_user(self, new_data):
-        await self._db.update_user(self.user_id, new_data)
+        print(new_data)
+        #await self._db.update_user(self.user_id, new_data)
 
     async def update_last_seen(self):
         self.last_seen = datetime.datetime.now(datetime.timezone.utc)
