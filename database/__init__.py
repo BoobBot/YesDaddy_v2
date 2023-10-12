@@ -18,26 +18,34 @@ class DiscordDatabase:
         self.guild_collection = self.client[self.database_name][self.guild_collection_name]
         self.log = logging.getLogger()
 
-    async def store_user(self, guild_id, user_data: User):
+    async def get_user(self, guild_id: int, user_id: int):
+        # TODO: Figure out if MongoDB has a way of just returning the user document directly
+        guild_data = await self.guild_collection.find_one({'guild_id': int(guild_id), 'users.user_id': int(user_id)})
+
+        if guild_data:
+            user_data = next((user for user in guild_id['users'] if user['user_id'] == user_id), None)
+
+            if user_data:
+                user_data.update({'guild_id': guild_id})  # Insert guild_id into user_data if it doesn't already exist.
+                return User(self, **user_data)
+        
+        user = User.create(self, user_id, guild_id)
+        await user.save()
+        return user
+
+    async def set_user(self, guild_id: int, user_data: User):
         await self.guild_collection.update_one(
-            {"guild_id": guild_id},
-            {"$push": {"users": user_data.to_dict()}}
+             # Insert into guilds where _id = guild_id, if there are no existing user documents with user_id
+            {'_id': guild_id, 'users.user_id': {'$ne': user_data.user_id}},
+            {'$addToSet': {'users': user_data}}
         )
 
     async def retrieve_user(self, guild_id, user_id):
-        guild_data = await self.guild_collection.find_one({"guild_id": guild_id}, {"_id": 0})
-        if guild_data:
-            for user_data in guild_data["users"]:
-                if user_data["user_id"] == user_id:
-                    return User(self, **user_data)
-            user = User(self, user_id, False,
-                        f'{datetime.utcnow()}', 0, 0, False, 0, 0, {}, 0, {})
-            await self.store_user(guild_id, user)
-            return user
+        ...
 
     async def update_guild_user(self, guild_id, user_id, user_data):
         await self.guild_collection.update_one(
-            {"guild_id": guild_id, "users": user_id},
+            {"guild_id": guild_id, "users.user_id": user_id},  # prev: users: user_id
             {"$set": {"users.$": user_data.to_dict()}}
         )
 
