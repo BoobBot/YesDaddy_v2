@@ -30,9 +30,12 @@ class DiscordDatabase:
             for user_data in guild_data["users"]:
                 if user_data["user_id"] == user_id:
                     return User(self, **user_data)
-        return None
+            user = User(self, user_id, False,
+                        f'{datetime.utcnow()}', 0, 0, False, 0, 0, {}, 0, {})
+            await self.store_user(guild_id, user)
+            return user
 
-    async def update_ticket(self, guild_id, channel_id, user_data):
+    async def update_guild_user(self, guild_id, channel_id, user_data):
         await self.guild_collection.update_one(
             {"guild_id": guild_id, "users.user_id": user_data['user_id']},
             {"$set": {"users.$": user_data}}
