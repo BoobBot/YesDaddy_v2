@@ -27,7 +27,7 @@ class DiscordDatabase:
     async def retrieve_user(self, guild_id, user_id):
         guild_data = await self.guild_collection.find_one({"guild_id": guild_id}, {"_id": 0})
         if guild_data:
-            user_data = guild_data.get("users", {}).get(user_id, None)
+            user_data = guild_data.get("users", {}).get(str(user_id), None)
             if user_data:
                 return User(self, **user_data)
             user = User(self, user_id, False,
@@ -37,7 +37,7 @@ class DiscordDatabase:
 
     async def update_guild_user(self, guild_id, user_data: User):
         await self.guild_collection.update_one(
-            {"guild_id": guild_id, "users.user_id": user_data['user_id']},
+            {"guild_id": guild_id, f"users.{str(user_data.user_id)}": {"$exists": True}},
             {"$set": {f"users.{str(user_data.user_id)}": user_data.to_dict()}}
         )
 
