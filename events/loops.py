@@ -118,22 +118,21 @@ class Loops(commands.Cog):
 
     @tasks.loop(minutes=5)
     async def check_jail_loop(self):
-        users_in_jail = []
-        guilds = await self.bot.db_client.get_all_guilds()
-        for guild in guilds:
-            for user in guild.users.values():
-                user = guild.get_user(user.get("user_id", None))
-                if user.is_in_jail():
-                    release_time = user.jail["start_time"].replace(tzinfo=datetime.timezone.utc) + datetime.timedelta(
-                        hours=user.jail["duration_hours"])
-                    current_time = datetime.datetime.now(datetime.timezone.utc)
+        users_in_jail = await self.bot.db_client.get_users_in_jail()
 
-                    if current_time >= release_time:
-                        fine = user.jail.get("fine", 0)
-                        await user.subtract_balance(fine)
-                        await guild.update_user(user.id, {"jail": {}})
-                        self.bot.log.info(
-                            f"User {user.id} has been released from jail.")
+        for user_id in users_in_jail:
+            user = await self.bot.db_client.get_user(user_id)
+            if user.is_in_jail():
+                release_time = user.jail["start_time"].replace(tzinfo=datetime.timezone.utc) + datetime.timedelta(
+                    hours=user.jail["duration_hours"])
+                current_time = datetime.datetime.now(datetime.timezone.utc)
+
+                if current_time >= release_time:
+                    fine = user.jail.get("fine", 0)
+                    await user.subtract_balance(fine)
+                    await user.update_user({"jail": {}})
+                    self.bot.log.info(
+                        f"User {user_id} has been released from jail.")
 
     @tasks.loop(minutes=5)  # Run the task every 5 minutes
     async def change_role_color(self):
