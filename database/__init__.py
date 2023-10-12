@@ -21,15 +21,15 @@ class DiscordDatabase:
     async def store_user(self, guild_id, user_data: User):
         await self.guild_collection.update_one(
             {"guild_id": guild_id},
-            {"$push": {"users": user_data.to_dict()}}
+            {"$push": {f"users.{user_data.user_id}": user_data.to_dict()}}
         )
 
     async def retrieve_user(self, guild_id, user_id):
         guild_data = await self.guild_collection.find_one({"guild_id": guild_id}, {"_id": 0})
         if guild_data:
-            for user_data in guild_data["users"]:
-                if user_data["user_id"] == user_id:
-                    return User(self, **user_data)
+            user_data = guild_data.get("users", {}).get(user_id, None)
+            if user_data:
+                return User(self, **user_data)
             user = User(self, user_id, False,
                         f'{datetime.utcnow()}', 0, 0, False, 0, 0, {}, 0, {})
             await self.store_user(guild_id, user)
@@ -38,7 +38,7 @@ class DiscordDatabase:
     async def update_guild_user(self, guild_id, user_data: User):
         await self.guild_collection.update_one(
             {"guild_id": guild_id, "users.user_id": user_data['user_id']},
-            {"$set": {"users.$": user_data.to_dict()}}
+            {"$set": {f"users.{user_data.user_id}": user_data.to_dict()}}
         )
 
     # User operations
