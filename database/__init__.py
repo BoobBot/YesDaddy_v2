@@ -3,7 +3,7 @@ from datetime import datetime
 
 import motor.motor_asyncio
 
-from database.gulld_entry import Guild
+from database.guild_entry import Guild
 from database.user_entry import User
 
 
@@ -27,6 +27,12 @@ class DiscordDatabase:
 
             if user_data:
                 user_data.update({'guild_id': guild_id})  # Insert guild_id into user_data if it doesn't already exist.
+                expected_fields = User.__slots__
+
+                for field in user_data:
+                    if field not in expected_fields:
+                        user_data.pop(field)
+
                 return User(self, **user_data)
         
         user = User.create(self, user_id, guild_id)
