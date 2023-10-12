@@ -35,10 +35,10 @@ class DiscordDatabase:
             await self.store_user(guild_id, user)
             return user
 
-    async def update_guild_user(self, guild_id, channel_id, user_data):
+    async def update_guild_user(self, guild_id, user_data: User):
         await self.guild_collection.update_one(
             {"guild_id": guild_id, "users.user_id": user_data['user_id']},
-            {"$set": {"users.$": user_data}}
+            {"$set": {"users.$": user_data.to_dict()}}
         )
 
     # User operations
