@@ -52,7 +52,7 @@ class Message(commands.Cog):
                 if reaction.get("trigger") in msg.content.lower():
                     await msg.add_reaction(reaction.get("response"))
 
-            percentage = 29
+            percentage = 20
             random_number = random.randint(1, 100)
             if msg.author.id == 596330574109474848:
                 if random_number <= percentage:

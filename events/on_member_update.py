@@ -17,15 +17,13 @@ class OnMemberUpdate(commands.Cog):
         #             "times_idiot": 1,
         #             "change": 0
         #         }
-        guild_data = await self.bot.db_client.get_guild(guild.id)
-        user_data = guild_data.get_user(after.id)
+        user_data = await self.bot.db_client.get_user(after.id)
         if before.nick != after.nick:
             if user_data.idiot.get("idiot", None):
                 if user_data.idiot.get('nickname', None) != after.nick:
                     await after.edit(nick=user_data.idiot.get('nickname'), reason="what a idiot")
                     user_data.idiot['change'] += 1
-                    await guild_data.update_user(user_data.id, {"idiot": user_data.idiot})
-
+                    await user_data.update_user({"idiot": user_data.idiot})
 
 
 async def setup(bot):
