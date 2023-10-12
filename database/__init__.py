@@ -152,6 +152,7 @@ class DiscordDatabase:
             guild_data.setdefault("lvl_roles", [])
             guild_data.setdefault("bonus_roles", [])
             guild_data.setdefault("shop_roles", {})
+            guild_data.setdefault("users", [])
             return Guild(**guild_data)
         guild = Guild(guild_id)
         await self.add_guild(guild)
@@ -159,6 +160,7 @@ class DiscordDatabase:
         guild_data.setdefault("lvl_roles", [])
         guild_data.setdefault("bonus_roles", [])
         guild_data.setdefault("shop_roles", {})
+        guild_data.setdefault("users", [])
         return Guild(**guild_data)
 
     async def update_guild(self, guild_id, new_data):
