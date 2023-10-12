@@ -27,7 +27,7 @@ class DiscordDatabase:
     async def retrieve_user(self, guild_id, user_id):
         guild_data = await self.guild_collection.find_one({"guild_id": guild_id}, {"_id": 0})
         if guild_data:
-            user_data = guild_data.get("users", {}).get(str(user_id), None)
+            user_data = guild_data.get("users", {}).get(str(user_id), None)[0]
             if user_data:
                 return User(self, **user_data)
             user = User(self, user_id, False,
