@@ -86,6 +86,8 @@ class Message(commands.Cog):
             await user.update_messages()
             await user.add_xp(xp)
             await user.update_last_seen()
+            data = await self.bot.db_client.get_guild(msg.guild.id)
+            print(data)
 
 
 async def setup(bot):
