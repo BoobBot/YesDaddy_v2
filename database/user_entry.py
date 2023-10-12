@@ -1,11 +1,28 @@
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 
+DEFAULT_DATA = {
+    "blacklist": False,
+    #"last_seen": f'{datetime.utcnow()}',
+    "xp": 0,
+    "level": 0,
+    "premium": False,
+    "balance": 0,
+    "bank_balance": 0,
+    "cooldowns": {},
+    "messages": 0,
+    "jail": {},
+    "idiot": {},
+}
+
 
 class User:
-    def __init__(self, db, user_id, guild_id, blacklist, last_seen, xp, level, premium, balance, bank_balance, cooldowns,
-                 messages, jail, last_daily_claim=None, last_weekly_claim=None, daily_streak=0, inventory=None,
-                 idiot=None):
+    __slots__ = ('_db', '_new', 'user_id', 'guild_id', 'blacklist', 'last_seen', 'xp', 'level', 'premium', 'balance', 'bank_balance', 'cooldowns',
+                 'messages', 'jail', 'last_daily_claim', 'last_weekly_claim', 'daily_streak', 'inventory', 'idiot')
+
+    def __init__(self, db, user_id, guild_id, blacklist=False, last_seen=datetime.utcnow(), xp=0, level=0, premium=False, balance=0, bank_balance=0,
+                 cooldowns={}, messages=0, jail={}, last_daily_claim=None, last_weekly_claim=None, daily_streak=0, inventory=None,
+                 idiot={}):
         self._db = db
         self._new: bool = False  # Whether this User was retrieved from the database.
         self.user_id = user_id
@@ -26,6 +43,13 @@ class User:
         self.inventory = inventory or {}
         self.idiot = idiot or {}
 
+        # ANY NEW FIELDS ADDED HERE *****MUST***** BE ADDED TO __slots__ TOO!!
+
+        # Initialise with defaults (will not replace fields present with value 'None', however):
+        # defaults = DEFAULT_DATA.copy()
+        # defaults['last_seen'] = datetime.utcnow()
+        # self.__dict__ = DEFAULT_DATA | self.__dict__
+
     def __getitem__(self, key):
         return super().__getattr__(key)  # Allows for self['a']
 
@@ -34,8 +58,7 @@ class User:
 
     @classmethod
     def create(cls, db, user_id, guild_id) -> 'User':
-        user = cls(db, user_id=user_id, guild_id=guild_id, blacklist=False, last_seen=datetime.utcnow(), xp=0, level=0,
-                   premium=False, balance=0, bank_balance=0, cooldowns={}, messages=0, jail={})
+        user = cls(db, user_id=user_id, guild_id=guild_id)
         user._new = True
         return user
 
