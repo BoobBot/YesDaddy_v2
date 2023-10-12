@@ -37,6 +37,7 @@ class DiscordDatabase:
         user_data = {**default_data, **user_data}
         user_data.pop("health", None)
         user_data.pop("idiot_data", None)
+        user_data.pop("weekly_streak", None)
         return user_data
 
     async def get_top_users_by_level(self, limit):
