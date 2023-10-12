@@ -18,6 +18,26 @@ class DiscordDatabase:
         self.guild_collection = self.client[self.database_name][self.guild_collection_name]
         self.log = logging.getLogger()
 
+    async def store_user(self, guild_id, user_data: User):
+        await self.guild_collection.update_one(
+            {"guild_id": guild_id},
+            {"$push": {"users": user_data.to_dict()}}
+        )
+
+    async def retrieve_user(self, guild_id, user_id):
+        guild_data = await self.guild_collection.find_one({"guild_id": guild_id}, {"_id": 0})
+        if guild_data:
+            for user_data in guild_data["users"]:
+                if user_data["user_id"] == user_id:
+                    return User(self, **user_data)
+        return None
+
+    async def update_ticket(self, guild_id, channel_id, user_data):
+        await self.guild_collection.update_one(
+            {"guild_id": guild_id, "users.user_id": user_data['user_id']},
+            {"$set": {"users.$": user_data}}
+        )
+
     # User operations
     def initialize_default_user_data(self, user_data):
         default_data = {
