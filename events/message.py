@@ -22,18 +22,6 @@ async def process_level_roles(user, member, guild, bot):
         #     await user.remove_role(role.get("role_id"), bot=bot)
 
 
-async def is_cute(msg):
-    await msg.add_reaction("🇨")
-    await asyncio.sleep(2)
-    await msg.add_reaction("🇺")
-    await asyncio.sleep(2)
-    await msg.add_reaction("🇹")
-    await asyncio.sleep(2)
-    await msg.add_reaction("🇪")
-    await asyncio.sleep(5)
-    await msg.add_reaction("<a:loves:536309416702509067>")
-
-
 class Message(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -60,14 +48,15 @@ class Message(commands.Cog):
                 return
         if msg.guild:
             data = await self.bot.db_client.get_guild(msg.guild.id)
-            # percentage = 40
-            # random_number = random.randint(1, 100)
-            # if random_number <= percentage:
-            #     await msg.add_reaction("<:indo:911816843126243338>")
-            # if msg.author.id == 596330574109474848:
-            #     await msg.add_reaction("🌹")
-            #     if random_number <= percentage:
-            #         await is_cute(msg)
+            for reaction in data.text_reactions:
+                if reaction.get("trigger") in msg.content.lower():
+                    await msg.add_reaction(reaction.get("response"))
+
+            percentage = 29
+            random_number = random.randint(1, 100)
+            if msg.author.id == 596330574109474848:
+                if random_number <= percentage:
+                    await msg.add_reaction("🌹")
 
             if msg.channel.category_id == 1141700782006222970:
                 if msg.content.startswith("-"):
