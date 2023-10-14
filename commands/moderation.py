@@ -17,7 +17,7 @@ class Moderation(commands.Cog):
         self.nickname_task: Optional[asyncio.Task] = None
 
     async def do_idiot(self, user: discord.Member, mod_id: int, nickname: str):
-        user_data = await self.bot.db_client.get_user(user.id)
+        user_data = await self.bot.db_client.get_user(user_id=user.id, guild_id=user.guild.id)
         if user_data.idiot.get("idiot", None):
             idiot_data = user_data.idiot
             idiot_data["idiot"] = True
@@ -50,7 +50,7 @@ class Moderation(commands.Cog):
     @app_commands.describe(user="The user to set the nickname of.")
     @app_commands.describe(nickname="The nickname to set.")
     async def idiot_set(self, ctx, user: discord.Member, *, nickname: str):
-        user_data = await self.bot.db_client.get_user(user.id)
+        user_data = await self.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         untouchables = [248294452307689473, 596330574109474848, 270393700394205185, 383932871985070085]
         if user_data.idiot.get("idiot"):
             view = Confirm()
@@ -77,7 +77,7 @@ class Moderation(commands.Cog):
                 await self.do_idiot(user, ctx.author.id, nickname)
                 await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.", ephemeral=True)
                 return
-        user_data = await self.bot.db_client.get_user(user.id)
+        user_data = await self.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         await self.do_idiot(user, ctx.author.id, nickname)
         await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.", ephemeral=True)
         return
@@ -85,7 +85,7 @@ class Moderation(commands.Cog):
     @idiot.command(name="clear", description="clear a idiots nickname")
     @app_commands.describe(user="The user to clear the nickname of.")
     async def idiot_clear(self, ctx, user: discord.Member):
-        user_data = await self.bot.db_client.get_user(user.id)
+        user_data = await self.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         if user_data.idiot.get("idiot"):
             user_data.idiot["idiot"] = False
             user_data.idiot["nickname"] = None
@@ -100,7 +100,7 @@ class Moderation(commands.Cog):
     @idiot.command(name="check", description="check if a user is an idiot")
     @app_commands.describe(user="The user to check.")
     async def idiot_check(self, ctx, user: discord.Member):
-        user_data = await self.bot.db_client.get_user(user.id)
+        user_data = await self.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         if user_data.idiot.get("idiot"):
             color = await generate_embed_color(ctx.author)
             em = discord.Embed(color=color)

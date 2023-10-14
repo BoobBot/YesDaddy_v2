@@ -24,7 +24,7 @@ class Profile(commands.Cog):
     @app_commands.describe(user="User to bailout")
     async def bail(self, ctx, user: Optional[discord.Member]):
         user = user or ctx.author
-        user_data = await ctx.bot.db_client.get_user(user_id=user.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         user_color = await generate_embed_color(user)
         if not user_data.is_in_jail():
             return await ctx.reply(f":x: {user.mention} is not in jail.")
@@ -51,7 +51,7 @@ class Profile(commands.Cog):
     @commands.hybrid_command(name="profile", description="Look at your profile.")
     async def profile(self, ctx, user: Optional[discord.Member]):
         user = user or ctx.author
-        #user_data = await ctx.bot.db_client.get_user(user_id=user.id)
+        #user_data = await ctx.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_color = await generate_embed_color(user)
         exp_needed = int(((user_data.level + 1) * 10) ** 2)
@@ -85,7 +85,7 @@ class Profile(commands.Cog):
     @commands.guild_only()
     async def rank(self, ctx, user: discord.Member = None):
         user = user or ctx.author
-        user_data: User = await self.bot.db_client.get_user(user.id)
+        user_data: User = await self.bot.db_client.get_user(user.id, ctx.guild.id)
 
         user_level = user_data.level
         user_xp = user_data.xp

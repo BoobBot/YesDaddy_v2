@@ -19,7 +19,7 @@ class Gambling(commands.Cog):
     @commands.hybrid_command(name="slots", description="what happens in vegas...")
     @persistent_cooldown(1, 60, commands.BucketType.user)
     async def slots(self, ctx):
-        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_balance = user_data.balance
         bet = 500
         if bet > user_balance:
@@ -62,7 +62,7 @@ class Gambling(commands.Cog):
         crime_scenario = crime[0].replace("{0}", ctx.author.mention)
         crime_outcome = crime[1]
 
-        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_balance = user_data.balance
 
         if user_data.is_in_jail():
@@ -144,8 +144,8 @@ class Gambling(commands.Cog):
         אחוז_הפסד = 25
         loss_percent = random.randint(10, 15)
 
-        user_data = await ctx.bot.db_client.get_user(user_id=user.id)
-        author_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
+        author_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
 
         if author_data.is_in_jail():
             release_time = author_data.is_in_jail()
@@ -222,7 +222,7 @@ class Gambling(commands.Cog):
         if not 1 <= bet <= 500:
             return await ctx.send("Hey whore, Only bets of 1 - 500 are allowed")
         user = ctx.author
-        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_balance = user_data.balance
 
         if user_data.is_in_jail():
@@ -292,7 +292,7 @@ class Gambling(commands.Cog):
         if bet >= 500:
             await ctx.send("Invalid bet. Please bet under 500.")
             return
-        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_balance = user_data.balance
         if bet > user_balance:
             await ctx.send("You don't have enough money to do this.")
@@ -370,7 +370,7 @@ class Gambling(commands.Cog):
         if bet >= 500:
             await ctx.send("Invalid bet. Please bet under 500.")
             return
-        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_balance = user_data.balance
         if bet > user_balance:
             await ctx.send("You don't have enough money to do this.")
@@ -448,7 +448,7 @@ class Gambling(commands.Cog):
         if bet >= 500:
             await ctx.send("Invalid bet. Please bet under 500.")
             return
-        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_balance = user_data.balance
         if bet > user_balance:
             await ctx.send("You don't have enough money to do this.")
@@ -513,7 +513,7 @@ class Gambling(commands.Cog):
         if bet >= 500:
             await ctx.send("Invalid bet. Please bet under 500.")
             return
-        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_balance = user_data.balance
         if bet > user_balance:
             await ctx.send("You don't have enough money to do this.")
@@ -581,7 +581,7 @@ class Gambling(commands.Cog):
         if bet >= 500:
             await ctx.send("Invalid bet. Please bet under 500.")
             return
-        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_balance = user_data.balance
         if bet > user_balance:
             await ctx.send("You don't have enough money to do this.")
@@ -644,7 +644,7 @@ class Gambling(commands.Cog):
         if bet >= 500:
             await ctx.send("Invalid bet. Please bet under 500.")
             return
-        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_balance = user_data.balance
         if bet > user_balance:
             await ctx.send("You don't have enough money to do this.")
@@ -707,7 +707,7 @@ class Gambling(commands.Cog):
         if bet >= 500:
             await ctx.send("Invalid bet. Please bet under 500.")
             return
-        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_balance = user_data.balance
         if bet > user_balance:
             await ctx.send("You don't have enough money to do this.")

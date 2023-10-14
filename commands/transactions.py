@@ -26,7 +26,7 @@ class Transactions(commands.Cog):
         """
         This subcommand can now be invoked with `?parent sub` or `/parent sub` (once synced).
         """
-        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_balance = user_data.balance
         if amount > user_balance:
             await ctx.reply(f":x: You don't have enough money to do this, your balance is ${user_balance}.")
@@ -41,7 +41,7 @@ class Transactions(commands.Cog):
             await ctx.reply(f":x: You can't pay yourself.")
             return
 
-        recipient_data = await ctx.bot.db_client.get_user(user_id=member.id)
+        recipient_data = await ctx.bot.db_client.get_user(user_id=member.id, guild_id=ctx.guild.id)
         recipient_balance = recipient_data.balance
         new_recipient_balance = recipient_balance + amount
         new_user_balance = user_balance - amount
@@ -55,7 +55,7 @@ class Transactions(commands.Cog):
         """
         This subcommand can now be invoked with `?parent sub <arg>` or `/parent sub <arg>` (once synced).
         """
-        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_balance = user_data.balance
         if amount > user_balance:
             await ctx.reply(f":x: You don't have enough money to do this, your balance is ${user_balance}.")
@@ -76,7 +76,7 @@ class Transactions(commands.Cog):
         """
         This subcommand can now be invoked with `?parent sub <arg>` or `/parent sub <arg>` (once synced).
         """
-        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_balance = user_data.balance
         if user_balance == 0:
             await ctx.reply(f":x: You don't have any money to deposit.")
@@ -94,7 +94,7 @@ class Transactions(commands.Cog):
         """
         This subcommand can now be invoked with `?parent sub <arg>` or `/parent sub <arg>` (once synced).
         """
-        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_bank_balance = user_data.bank_balance
         if amount > user_bank_balance:
             await ctx.reply(f":x: You don't have enough money to do this, your bank balance is ${user_bank_balance}.")
@@ -115,7 +115,7 @@ class Transactions(commands.Cog):
         """
         This subcommand can now be invoked with `?parent sub <arg>` or `/parent sub <arg>` (once synced).
         """
-        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_bank_balance = user_data.bank_balance
         if user_bank_balance == 0:
             await ctx.reply(f":x: You don't have any money to withdraw.")
@@ -132,7 +132,7 @@ class Transactions(commands.Cog):
     @app_commands.describe(user="The user to check the balance of.")
     async def balance(self, ctx: commands.Context, user: Optional[discord.Member]) -> None:
         user = user or ctx.author
-        user_data = await ctx.bot.db_client.get_user(user_id=user.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         user_color = await generate_embed_color(user)
 
         em = discord.Embed(title=f"{user}'s Balance", description=f"{user.mention} has {user_data.balance}",

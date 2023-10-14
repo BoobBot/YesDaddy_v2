@@ -39,7 +39,7 @@ class Currency(commands.Cog):
         is_successful = random.random() <= monster["success_rate"]
 
         if is_successful:
-            user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+            user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
             cash = monster["value"] * random.randint(5, 10)
             await user_data.add_balance(cash)
             scenario = random.choice(success_list)
@@ -141,7 +141,7 @@ class Currency(commands.Cog):
         fish_name = random.choice(list(fish_info.keys()))
         fish_value = random.randint(10, 100)
 
-        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_balance = user_data.balance
         await user_data.add_balance(fish_value)
         color = await generate_embed_color(ctx.author)
@@ -165,9 +165,9 @@ class Currency(commands.Cog):
     @app_commands.describe(user="The user to give your daily to.")
     async def daily(self, ctx, user: Optional[discord.Member]):
         user = user or ctx.author
-        user_data = await ctx.bot.db_client.get_user(user_id=user.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         user_color = await generate_embed_color(user)
-        author_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        author_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         streak_broken, daily_streak = await author_data.claim_daily()
         if not streak_broken:
             claimed_money = 5000 + (500 * daily_streak)
@@ -216,7 +216,7 @@ class Currency(commands.Cog):
     @app_commands.describe(user="The user to give your weekly to.")
     async def weekly(self, ctx, user: Optional[discord.Member]):
         user = user or ctx.author
-        user_data = await ctx.bot.db_client.get_user(user_id=user.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         user_color = await generate_embed_color(user)
 
         money = 20000
@@ -256,7 +256,7 @@ class Currency(commands.Cog):
         job = random.choice(job_descriptions)
         cash = random.randint(100, 1000)
         job = job.replace("{0}", ctx.author.mention)
-        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         if user_data.is_in_jail():
             release_time = user_data.is_in_jail()
             remaining_timestamp = discord.utils.format_dt(release_time, style="R"
