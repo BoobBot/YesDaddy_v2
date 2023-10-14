@@ -26,7 +26,7 @@ class Moderation(commands.Cog):
             idiot_data["timestamp"] = datetime.datetime.now(datetime.timezone.utc)
             idiot_data["times_idiot"] += 1
             idiot_data["change"] = 0
-            await user_data.update_user({"idiot": idiot_data})
+            await user_data.update_fields(idiot=idiot_data)
             await user.edit(nick=None, reason="what a idiot")
             return
         idiot_data = {
@@ -37,7 +37,7 @@ class Moderation(commands.Cog):
             "times_idiot": 1,
             "change": 0
         }
-        await user_data.update_user({"idiot": idiot_data})
+        await user_data.update_fields(idiot=idiot_data)
         await user.edit(nick=None, reason="what a idiot")
         return
 
