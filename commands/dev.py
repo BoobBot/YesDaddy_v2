@@ -144,7 +144,7 @@ class Dev(commands.Cog):
     @commands.is_owner()
     async def cdclear(self, ctx, user: discord.Member = None):
         user = user or ctx.author
-        user_data = await ctx.bot.db_client.get_user(user_id=user.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         user_data.cooldowns = {}
         await user_data.update_user({"cooldowns": user_data.cooldowns})
         await ctx.reply("Cooldowns cleared.")
@@ -281,7 +281,7 @@ class Dev(commands.Cog):
 
     @jail.command(name="check", description="Check jail time of a user.")
     async def check_jail(self, ctx, user: commands.UserConverter):
-        user_data = await self.bot.db_client.get_user(user.id)
+        user_data = await self.bot.db_client.get_user(user.id, ctx.guild.id)
         jail_info = user_data.jail
 
         if not jail_info:
@@ -295,7 +295,7 @@ class Dev(commands.Cog):
 
     @jail.command(name="clear", description="Clear jail time of a user.")
     async def clear_jail(self, ctx, user: commands.UserConverter):
-        user_data = await self.bot.db_client.get_user(user.id)
+        user_data = await self.bot.db_client.get_user(user.id, ctx.guild.id)
 
         if not user_data.jail:
             await ctx.send(f"{user.display_name} is not in jail.")
@@ -305,7 +305,7 @@ class Dev(commands.Cog):
 
     @jail.command(name="add", description="Add jail time for a user.")
     async def add_jail(self, ctx, user: commands.UserConverter, time_in_seconds: int):
-        user_data = await self.bot.db_client.get_user(user.id)
+        user_data = await self.bot.db_client.get_user(user.id, ctx.guild.id)
         current_jail_info = user_data.jail or {}
 
         remaining_time = current_jail_info.get(
@@ -320,7 +320,7 @@ class Dev(commands.Cog):
 
     @streaks.command(name="cleardaily", description="Clear the daily streak of a user.")
     async def clear_daily(self, ctx, user: commands.UserConverter):
-        user_data = await self.bot.db_client.get_user(user.id)
+        user_data = await self.bot.db_client.get_user(user.id, ctx.guild.id)
 
         if not user_data.daily_streak:
             await ctx.send(f"{user.display_name} has no streak.")
@@ -330,7 +330,7 @@ class Dev(commands.Cog):
 
     @streaks.command(name="clearweekly", description="Clear the weekly streak of a user.")
     async def clear_weekly(self, ctx, user: commands.UserConverter):
-        user_data = await self.bot.db_client.get_user(user.id)
+        user_data = await self.bot.db_client.get_user(user.i, ctx.guild.id)
 
         if not user_data.weekly_streak:
             await ctx.send(f"{user.display_name} has no streak.")
@@ -345,19 +345,19 @@ class Dev(commands.Cog):
 
     @economy.command(name="add", description="Add money to a user's balance.")
     async def add_money(self, ctx, user: commands.UserConverter, amount: int):
-        user_data = await self.bot.db_client.get_user(user.id)
+        user_data = await self.bot.db_client.get_user(user.id, ctx.guild.id)
         await user_data.add_balance(amount)
         await ctx.send(f"Added {amount} to {user.display_name}'s balance.")
 
     @economy.command(name="remove", description="Remove money from a user's balance.")
     async def remove_money(self, ctx, user: commands.UserConverter, amount: int):
-        user_data = await self.bot.db_client.get_user(user.id)
+        user_data = await self.bot.db_client.get_user(user.id, ctx.guild.id)
         await user_data.subtract_balance(amount)
         await ctx.send(f"Removed {amount} from {user.display_name}'s balance.")
 
     @economy.command(name="set", description="Set a user's balance.")
     async def set_money(self, ctx, user: commands.UserConverter, amount: int):
-        user_data = await self.bot.db_client.get_user(user.id)
+        user_data = await self.bot.db_client.get_user(user.id, ctx.guild.id)
         await user_data.update_balance(amount)
         await ctx.send(f"Set {user.display_name}'s balance to {amount}.")
 

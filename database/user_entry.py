@@ -81,7 +81,7 @@ class User:
         This will not do anything if the user already exists.
         To update specific fields, you must use the applicable function or `update_fields`.
         """
-        print(f'saving user: {self.to_dict()}')
+        #print(f'saving user: {self.to_dict()}')
         await self._db.set_user(guild_id, self)
         self._new = False
 

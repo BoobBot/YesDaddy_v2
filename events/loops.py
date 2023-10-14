@@ -8,10 +8,10 @@ from discord.ext import tasks, commands
 class Loops(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        # self.check_jail_loop.start()
-        # self.change_role_color.start()
-        # self.voice_xp.start()
-        # self.guild_sync_loop.start()
+        self.check_jail_loop.start()
+        self.change_role_color.start()
+        self.voice_xp.start()
+        self.guild_sync_loop.start()
 
     def cog_unload(self):
         self.check_jail_loop.cancel()
@@ -32,41 +32,46 @@ class Loops(commands.Cog):
             lounge_booster = lounge.get_role(588226955778850816)
             for member in contributor.members:
                 try:
-                    mem = await community.fetch_member(member.id)
-                    # self.bot.log.info(f"Syncing {mem.name} to community")
-                    if mem:
-                        await mem.add_roles(community.get_role(694641646901395515))
+                    if member in community.members:
+                        mem = await community.fetch_member(member.id)
+                        # self.bot.log.info(f"Syncing {mem.name} to community")
+                        if mem:
+                            await mem.add_roles(community.get_role(694641646901395515))
                 except Exception as e:
                     pass
             for member in contributor_plus.members:
                 try:
-                    mem = await community.fetch_member(member.id)
-                    # self.bot.log.info(f"Syncing {mem.name} to community")
-                    if mem:
-                        await mem.add_roles(community.get_role(694641646914109460))
+                    if member in community.members:
+                        mem = await community.fetch_member(member.id)
+                        # self.bot.log.info(f"Syncing {mem.name} to community")
+                        if mem:
+                            await mem.add_roles(community.get_role(694641646914109460))
                 except Exception as e:
                     pass
             for member in kissy_contributor.members:
                 try:
-                    mem = await community.fetch_member(member.id)
-                    # self.bot.log.info(f"Syncing {mem.name} to community")
-                    if mem:
-                        await mem.add_roles(community.get_role(694641646838480978))
+                    if member in community.members:
+                        mem = await community.fetch_member(member.id)
+                        # self.bot.log.info(f"Syncing {mem.name} to community")
+                        if mem:
+                            await mem.add_roles(community.get_role(694641646838480978))
                 except Exception as e:
                     pass
             for member in nitro_booster.members:
                 try:
-                    mem = await community.fetch_member(member.id)
-                    # self.bot.log.info(f"Syncing {mem.name} to community")
-                    if mem:
-                        await mem.add_roles(community.get_role(872596931598225489))
+                    if member in community.members:
+                        mem = await community.fetch_member(member.id)
+                        # self.bot.log.info(f"Syncing {mem.name} to community")
+                        if mem:
+                            await mem.add_roles(community.get_role(872596931598225489))
                 except Exception as e:
                     pass
             for member in lounge_booster.members:
                 try:
-                    mem = await community.fetch_member(member.id)
-                    if mem:
-                        await mem.add_roles(community.get_role(872596931598225489))
+                    if member in community.members:
+                        mem = await community.fetch_member(member.id)
+                        if mem:
+                            await mem.add_roles(community.get_role(872596931598225489))
                 except Exception as e:
                     pass
         except Exception as e:
@@ -102,7 +107,7 @@ class Loops(commands.Cog):
                         # - Member is self-deafened
                         if member.voice.deaf or member.voice.mute or member.voice.self_mute or member.voice.self_deaf:
                             continue  # Skip giving XP to this member
-                        user = await self.bot.db_client.get_user(member.id)
+                        user = await self.bot.db_client.get_user(member.id, guild.id)
                         if user:
                             data = await self.bot.db_client.get_guild(guild.id)
                             bonus_xp = sum(

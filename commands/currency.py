@@ -83,7 +83,7 @@ class Currency(commands.Cog):
             resource['min_value'], resource['max_value'])
 
         user_id = ctx.author.id
-        user_data = await ctx.bot.db_client.get_user(user_id=user_id)
+        user_data = await ctx.bot.db_client.get_user(user_id=user_id, guild_id=ctx.guild.id)
         user_balance = user_data.balance
         await user_data.add_balance(resource_value * resource_amount)
         color = await generate_embed_color(ctx.author)
@@ -116,7 +116,7 @@ class Currency(commands.Cog):
             resource['min_value'], resource['max_value'])
 
         user_id = ctx.author.id
-        user_data = await ctx.bot.db_client.get_user(user_id=user_id)
+        user_data = await ctx.bot.db_client.get_user(user_id=user_id, guild_id=ctx.guild.id)
         user_balance = user_data.balance
         await user_data.add_balance(resource_value * resource_amount)
         color = await generate_embed_color(ctx.author)

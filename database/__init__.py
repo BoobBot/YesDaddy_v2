@@ -23,7 +23,7 @@ class DiscordDatabase:
         guild_data = await self.guild_collection.find_one({'guild_id': int(guild_id), 'users.user_id': int(user_id)})
         if guild_data:
             user_data = next((user for user in guild_data['users'] if user['user_id'] == user_id), None)
-            print(f'found user: {user_data}')
+            #print(f'found user: {user_data}')
             if user_data:
                 user_data.update({'guild_id': guild_id})  # Insert guild_id into user_data if it doesn't already exist.
                 expected_fields = User.__slots__
@@ -116,10 +116,11 @@ class DiscordDatabase:
 
     async def get_all_users(self):
         all_users = []
-        async for user_data in self.user_collection.find({}, {"_id": 0}):
-            # Provide default values for missing attributes
-            user_data = self.initialize_default_user_data(user_data)
-            all_users.append(user_data)
+        async for guild in self.guild_collection.find({}, {"_id": 0}):
+            for user_data in guild["users"]:
+                # Provide default values for missing attributes
+                user_data = self.initialize_default_user_data(user_data)
+                all_users.append(user_data)
         return all_users
 
     async def get_users_in_jail(self):
