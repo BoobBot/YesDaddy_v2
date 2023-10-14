@@ -117,10 +117,11 @@ class DiscordDatabase:
     async def get_all_users(self):
         all_users = []
         async for guild in self.guild_collection.find({}, {"_id": 0}):
-            for user_data in guild["users"]:
-                # Provide default values for missing attributes
-                user_data = self.initialize_default_user_data(user_data)
-                all_users.append(user_data)
+            if "users" in guild:
+                for user_data in guild["users"]:
+                    # Provide default values for missing attributes
+                    user_data = self.initialize_default_user_data(user_data)
+                    all_users.append(user_data)
         return all_users
 
     async def get_users_in_jail(self):
