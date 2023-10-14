@@ -54,12 +54,11 @@ class Bot(commands.Bot):
         self.debug = debug
 
     async def setup_hook(self) -> None:
-        if not debug:
-            self.add_view(VerificationView())
-            self.add_view(tickets_view.TicketView())
-            self.add_view(RuleButton())
-            self.add_view(support_view.SupportTicketView())
-            self.add_view(support_channel_view.SupportChannelView())
+        self.add_view(VerificationView())
+        self.add_view(tickets_view.TicketView())
+        self.add_view(RuleButton())
+        self.add_view(support_view.SupportTicketView())
+        self.add_view(support_channel_view.SupportChannelView())
         self.remove_command('help')
 
         for extension in self.initial_extensions:
