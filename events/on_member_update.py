@@ -17,7 +17,7 @@ class OnMemberUpdate(commands.Cog):
         #             "times_idiot": 1,
         #             "change": 0
         #         }
-        user_data = await self.bot.db_client.get_user(after.id)
+        user_data = await self.bot.db_client.get_user(guild_id=guild.id, user_id=after.id)
         if before.nick != after.nick:
             if user_data.idiot.get("idiot", None):
                 if user_data.idiot.get('nickname', None) != after.nick:

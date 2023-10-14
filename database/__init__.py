@@ -21,10 +21,9 @@ class DiscordDatabase:
     async def get_user(self, guild_id: int, user_id: int):
         # TODO: Figure out if MongoDB has a way of just returning the user document directly
         guild_data = await self.guild_collection.find_one({'guild_id': int(guild_id), 'users.user_id': int(user_id)})
-
         if guild_data:
-            user_data = next((user for user in guild_id['users'] if user['user_id'] == user_id), None)
-
+            user_data = next((user for user in guild_data['users'] if user['user_id'] == user_id), None)
+            print(f'found user: {user_data}')
             if user_data:
                 user_data.update({'guild_id': guild_id})  # Insert guild_id into user_data if it doesn't already exist.
                 expected_fields = User.__slots__
@@ -36,14 +35,14 @@ class DiscordDatabase:
                 return User(self, **user_data)
         
         user = User.create(self, user_id, guild_id)
-        await user.save()
+        await user.save(guild_id=guild_id)
         return user
 
     async def set_user(self, guild_id: int, user_data: User):
         await self.guild_collection.update_one(
              # Insert into guilds where _id = guild_id, if there are no existing user documents with user_id
-            {'_id': guild_id, 'users.user_id': {'$ne': user_data.user_id}},
-            {'$addToSet': {'users': user_data}}
+            {'guild_id': guild_id, 'users.user_id': {'$ne': user_data.user_id}},
+            {'$addToSet': {'users': user_data.to_dict()}}
         )
 
     async def retrieve_user(self, guild_id, user_id):
@@ -138,17 +137,17 @@ class DiscordDatabase:
     async def add_user(self, user):
         await self.user_collection.insert_one(user.to_dict())
 
-    async def get_user(self, user_id):
-        user_data = await self.user_collection.find_one({"user_id": user_id}, {"_id": 0})
-        if user_data:
-            user_data = self.initialize_default_user_data(user_data)
-            return User(self, **user_data)
-        user = User(self, user_id, False,
-                    f'{datetime.utcnow()}', 0, 0, False, 0, 0, {}, 0, {})
-        await self.add_user(user)
-        user_data = await self.user_collection.find_one({"user_id": user_id}, {"_id": 0})
-        user_data = self.initialize_default_user_data(user_data)
-        return User(self, **user_data)
+    # async def get_user(self, user_id):
+    #     user_data = await self.user_collection.find_one({"user_id": user_id}, {"_id": 0})
+    #     if user_data:
+    #         user_data = self.initialize_default_user_data(user_data)
+    #         return User(self, **user_data)
+    #     user = User(self, user_id, False,
+    #                 f'{datetime.utcnow()}', 0, 0, False, 0, 0, {}, 0, {})
+    #     await self.add_user(user)
+    #     user_data = await self.user_collection.find_one({"user_id": user_id}, {"_id": 0})
+    #     user_data = self.initialize_default_user_data(user_data)
+    #     return User(self, **user_data)
 
     async def update_user(self, user_id, new_data):
         await self.user_collection.update_one({"user_id": user_id}, {"$set": new_data})

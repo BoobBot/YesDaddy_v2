@@ -8,10 +8,10 @@ from discord.ext import tasks, commands
 class Loops(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.check_jail_loop.start()
-        self.change_role_color.start()
-        self.voice_xp.start()
-        self.guild_sync_loop.start()
+        # self.check_jail_loop.start()
+        # self.change_role_color.start()
+        # self.voice_xp.start()
+        # self.guild_sync_loop.start()
 
     def cog_unload(self):
         self.check_jail_loop.cancel()

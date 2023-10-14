@@ -72,7 +72,7 @@ class Message(commands.Cog):
                             for attachment in msg.attachments:
                                 await channel.send(attachment.url)
                         return
-            user = await self.bot.db_client.get_user(user_id=msg.author.id)
+            user = await self.bot.db_client.get_user(user_id=msg.author.id, guild_id=msg.guild.id)
             bonus_xp = sum(1 for role in msg.author.roles for r in data.bonus_roles if role.id == r.get("role_id"))
             bonus_xp += 1
             xp = random.randint(1, 10) * bonus_xp
@@ -86,8 +86,9 @@ class Message(commands.Cog):
             await user.update_messages()
             await user.add_xp(xp)
             await user.update_last_seen()
-            data = await self.bot.db_client.get_guild(msg.guild.id)
-            print(data.__dict__)
+
+
+
 
 
 async def setup(bot):

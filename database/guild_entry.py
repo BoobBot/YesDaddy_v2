@@ -12,4 +12,4 @@ class Guild:
         self.shop_roles = shop_roles if shop_roles else {}
         self.shop_gifts = shop_gifts if shop_gifts else {}
         self.shop_items = shop_items if shop_items else {}
-        self.users = users if users else {}
+        self.users = users if users else []

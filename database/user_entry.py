@@ -3,7 +3,7 @@ from typing import Optional
 
 DEFAULT_DATA = {
     "blacklist": False,
-    #"last_seen": f'{datetime.utcnow()}',
+    # "last_seen": f'{datetime.utcnow()}',
     "xp": 0,
     "level": 0,
     "premium": False,
@@ -17,11 +17,15 @@ DEFAULT_DATA = {
 
 
 class User:
-    __slots__ = ('_db', '_new', 'user_id', 'guild_id', 'blacklist', 'last_seen', 'xp', 'level', 'premium', 'balance', 'bank_balance', 'cooldowns',
-                 'messages', 'jail', 'last_daily_claim', 'last_weekly_claim', 'daily_streak', 'inventory', 'idiot')
+    __slots__ = (
+    '__dict__', '_db', '_new', 'user_id', 'guild_id', 'blacklist', 'last_seen', 'xp', 'level', 'premium', 'balance',
+    'bank_balance', 'cooldowns',
+    'messages', 'jail', 'last_daily_claim', 'last_weekly_claim', 'daily_streak', 'inventory', 'idiot')
 
-    def __init__(self, db, user_id, guild_id, blacklist=False, last_seen=datetime.utcnow(), xp=0, level=0, premium=False, balance=0, bank_balance=0,
-                 cooldowns={}, messages=0, jail={}, last_daily_claim=None, last_weekly_claim=None, daily_streak=0, inventory=None,
+    def __init__(self, db, user_id, guild_id, blacklist=False, last_seen=datetime.utcnow(), xp=0, level=0,
+                 premium=False, balance=0, bank_balance=0,
+                 cooldowns={}, messages=0, jail={}, last_daily_claim=None, last_weekly_claim=None, daily_streak=0,
+                 inventory=None,
                  idiot={}):
         self._db = db
         self._new: bool = False  # Whether this User was retrieved from the database.
@@ -62,17 +66,23 @@ class User:
         user._new = True
         return user
 
-    def to_dict(self):
-        fields = self.__dict__
-        return {k: v for k, v in fields.items() if not k.startswith('_')}
+    # def to_dict(self):
+    #     fields = self.__dict__
+    #     print(fields)
+    #     print("to_dict")
+    #     return {k: v for k, v in fields.items() if not k.startswith('_')}
 
-    async def save(self):
+    def to_dict(self):
+        return {attr: getattr(self, attr) for attr in self.__slots__ if not attr.startswith('_')}
+
+    async def save(self, guild_id: int):
         """
         This method stores the user within the database.
         This will not do anything if the user already exists.
         To update specific fields, you must use the applicable function or `update_fields`.
         """
-        await self._db.set_user(self)
+        print(f'saving user: {self.to_dict()}')
+        await self._db.set_user(guild_id, self)
         self._new = False
 
     async def update_fields(self, **kwargs):
@@ -83,7 +93,7 @@ class User:
             await self.save()
         else:
             # TODO SET IN DATABASE HERE
-            ...
+            await self._db.update_guild_user(self.guild_id, self.user_id, self)
 
     async def jail_user(self, hours, fine):
         await self.update_fields(jail={'start_time': datetime.utcnow(), 'duration_hours': hours, 'fine': fine})
@@ -126,7 +136,7 @@ class User:
     #     await self.update_user({"cool_down": self.cool_down})
 
     async def update_messages(self):
-        self.update_fields(messages=self.messages + 1)
+        await self.update_fields(messages=self.messages + 1)
 
     async def set_premium(self, premium: bool):
         if self.premium == premium:

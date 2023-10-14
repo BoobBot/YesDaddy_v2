@@ -51,7 +51,8 @@ class Profile(commands.Cog):
     @commands.hybrid_command(name="profile", description="Look at your profile.")
     async def profile(self, ctx, user: Optional[discord.Member]):
         user = user or ctx.author
-        user_data = await ctx.bot.db_client.get_user(user_id=user.id)
+        #user_data = await ctx.bot.db_client.get_user(user_id=user.id)
+        user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_color = await generate_embed_color(user)
         exp_needed = int(((user_data.level + 1) * 10) ** 2)
         bar = progress_percentage(user_data.xp, exp_needed)
