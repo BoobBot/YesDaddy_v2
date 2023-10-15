@@ -97,19 +97,19 @@ def create_leaderboard_embed(title, entries, page_number):
     embed = Embed(title=f"{title} {page_number}")
 
     for index, (user, member) in enumerate(entries, start=page_number * 10 - 9):
-        emoji = "🥇" if index == 1 else "🥈" if index == 2 else "🥉" if index == 3 else f"{index}"
+        emoji = "🥇" if index == 1 else "🥈" if index == 2 else "🥉" if index == 3 else f""
 
         if title == "Leaderboard - Levels: Page":
-            value = f"{member.display_name}: {user.level}"
+            value = f"{emoji} {member.display_name}: {user.level}"
         elif title == "Leaderboard - Balance: Page":
-            value = f"{member.display_name}: {user.balance}"
+            value = f"{emoji} {member.display_name}: {user.balance}"
         elif title == "Leaderboard - Bank Balance: Page":
-            value = f"{member.display_name}: {user.bank_balance}"
+            value = f"{emoji} {member.display_name}: {user.bank_balance}"
         else:
-            value = f"{member.display_name}: {user.balance + user.bank_balance}"
+            value = f"{emoji} {member.display_name}: {user.balance + user.bank_balance}"
 
         value = value.replace(f"#{index} ", "")
 
-        embed.add_field(name=f"{emoji}", value=value, inline=False)
+        embed.add_field(name=f"", value=value, inline=False)
 
     return embed
