@@ -224,7 +224,7 @@ class Profile(commands.Cog):
     @leaderboard.command(name="total", aliases=["net"], description="View the total balance leaderboard.")
     async def leaderboard_combined(self, ctx):
         await ctx.defer()
-        top_users = top_users_by_balance = await self.get_top_users(
+        top_users = top_users_by_balance = await self.bot.db_client.get_top_users(
             limit=200, guild_id=ctx.guild.id, sort_key=lambda user: user.balance + user.bank_balance)
         guild = ctx.guild
         sorted_users = []
