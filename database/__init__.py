@@ -81,6 +81,11 @@ class DiscordDatabase:
                 users_in_jail.append(user)
         return users_in_jail
 
+    async def get_top_users(self, guild_id, limit, sort_key):
+        users = await self.get_users_in_guild(guild_id)
+        sorted_users = sorted(users, key=sort_key, reverse=True)
+        return sorted_users[:limit]
+
     #############################################
     # Guild operations                          #
     #############################################

@@ -35,9 +35,11 @@ class Profile(commands.Cog):
         if cost_total > user_data.balance:
             return await ctx.reply(f":x: {user.mention} needs ${cost_total} to get out of jail.")
         await user_data.subtract_balance(cost_total)
-        #await user_data.update_user({"jail": {}})
+        # await user_data.update_user({"jail": {}})
         await user_data.update_fields(jail={})
-        em = discord.Embed(title=f"{user}'s Bail", description=f":white_check_mark: {user.mention} has been released from jail for {cost_total}.", colour=user_color)
+        em = discord.Embed(title=f"{user}'s Bail",
+                           description=f":white_check_mark: {user.mention} has been released from jail for {cost_total}.",
+                           colour=user_color)
         timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
         em.set_author(
             name="Bail Command",
@@ -52,7 +54,7 @@ class Profile(commands.Cog):
     @commands.hybrid_command(name="profile", description="Look at your profile.")
     async def profile(self, ctx, user: Optional[discord.Member]):
         user = user or ctx.author
-        #user_data = await ctx.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
+        # user_data = await ctx.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         user_data = await self.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         user_color = await generate_embed_color(user)
         remain, total = calculate_remaining_xp(user_data.xp)
@@ -161,7 +163,8 @@ class Profile(commands.Cog):
     @leaderboard.command(name="level", aliases=["lvl"], description="View the level leaderboard.")
     async def leaderboard_level(self, ctx):
         await ctx.defer()
-        top_users = await self.bot.db_client.get_top_users_by_level(limit=200, guild_id=ctx.guild.id)
+        top_users = await self.bot.db_client.get_top_users_by_level(limit=200, guild_id=ctx.guild.id,
+                                                                    sort_key=lambda user: user.level)
 
         guild = ctx.guild
 
@@ -180,65 +183,65 @@ class Profile(commands.Cog):
     @leaderboard.command(name="balance", aliases=["bal"], description="View the balance leaderboard.")
     async def leaderboard_balance(self, ctx):
         await ctx.defer()
-        top_users = await self.bot.db_client.get_top_users_by_balance(
-            limit=200, guild_id=ctx.guild.id)
+        top_users = await self.bot.db_client.get_top_users(
+            limit=200, guild_id=ctx.guild.id, sort_key=lambda user: user.balance
 
         guild = ctx.guild
         sorted_users = []
         for user_data in top_users:
             user = user_data
-            member = ctx.guild.get_member(user.user_id)
+        member = ctx.guild.get_member(user.user_id)
 
-            if member:
-                sorted_users.append((user, member))
+        if member:
+            sorted_users.append((user, member))
 
         sorted_users.sort(key=lambda entry: entry[0].balance, reverse=True)
         pages = create_leaderboard_pages(
             sorted_users, "Leaderboard - Balance: Page")
         await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
 
-    @leaderboard.command(name="bank", description="View the bank balance leaderboard.")
-    async def leaderboard_balance(self, ctx):
-        await ctx.defer()
-        top_users = await self.bot.db_client.get_top_users_by_bank_balance(
-            limit=200, guild_id=ctx.guild.id)
+        @ leaderboard.command(name="bank", description="View the bank balance leaderboard.")
+        async
 
-        guild = ctx.guild
-        sorted_users = []
-        for user_data in top_users:
-            user = user_data
-            member = ctx.guild.get_member(user.user_id)
+        def leaderboard_balance(self, ctx):
+            await ctx.defer()
+            top_users = await self.bot.db_client.get_top_users_(
+                limit=200, guild_id=ctx.guild.id, sort_key=lambda user: user.bank_balance)
 
-            if member:
-                sorted_users.append((user, member))
+            guild = ctx.guild
+            sorted_users = []
+            for user_data in top_users:
+                user = user_data
+                member = ctx.guild.get_member(user.user_id)
 
-        sorted_users.sort(
-            key=lambda entry: entry[0].bank_balance, reverse=True)
-        pages = create_leaderboard_pages(
-            sorted_users, "Leaderboard - Bank Balance: Page")
-        await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
+                if member:
+                    sorted_users.append((user, member))
 
-    @leaderboard.command(name="total", aliases=["net"], description="View the total balance leaderboard.")
-    async def leaderboard_combined(self, ctx):
-        await ctx.defer()
-        top_users = await self.bot.db_client.get_top_users_by_combined_balance(
-            limit=200, guild_id=ctx.guild.id)
+            sorted_users.sort(
+                key=lambda entry: entry[0].bank_balance, reverse=True)
+            pages = create_leaderboard_pages(
+                sorted_users, "Leaderboard - Bank Balance: Page")
+            await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
 
-        guild = ctx.guild
-        sorted_users = []
-        for user_data in top_users:
-            user = user_data
-            member = ctx.guild.get_member(user.user_id)
+        @leaderboard.command(name="total", aliases=["net"], description="View the total balance leaderboard.")
+        async def leaderboard_combined(self, ctx):
+            await ctx.defer()
+            top_users = top_users_by_balance = await self.get_top_users(
+                limit=200, guild_id=ctx.guild.id, sort_key=lambda user: user.balance + user.bank_balance)
+            guild = ctx.guild
+            sorted_users = []
+            for user_data in top_users:
+                user = user_data
+                member = ctx.guild.get_member(user.user_id)
 
-            if member:
-                sorted_users.append((user, member))
+                if member:
+                    sorted_users.append((user, member))
 
-        sorted_users.sort(
-            key=lambda entry: entry[0].balance + entry[0].bank_balance, reverse=True)
-        pages = create_leaderboard_pages(
-            sorted_users, "Leaderboard - Total Balance: Page")
-        await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
+            sorted_users.sort(
+                key=lambda entry: entry[0].balance + entry[0].bank_balance, reverse=True)
+            pages = create_leaderboard_pages(
+                sorted_users, "Leaderboard - Total Balance: Page")
+            await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
 
-
-async def setup(bot):
-    await bot.add_cog(Profile(bot))
+    async def setup(bot):
+        await bot.add_cog(Profile(bot))
