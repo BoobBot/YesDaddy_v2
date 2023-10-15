@@ -18,15 +18,15 @@ DEFAULT_DATA = {
 
 class User:
     __slots__ = (
-    '__dict__', '_db', '_new', 'user_id', 'guild_id', 'blacklist', 'last_seen', 'xp', 'level', 'premium', 'balance',
-    'bank_balance', 'cooldowns',
-    'messages', 'jail', 'last_daily_claim', 'last_weekly_claim', 'daily_streak', 'inventory', 'idiot')
+        '__dict__', '_db', '_new', 'user_id', 'guild_id', 'blacklist', 'last_seen', 'xp', 'level', 'premium', 'balance',
+        'bank_balance', 'cooldowns',
+        'messages', 'jail', 'last_daily_claim', 'daily_streak', 'inventory', 'idiot')
 
     def __init__(self, db, user_id, guild_id, blacklist=False, last_seen=datetime.utcnow(), xp=0, level=0,
                  premium=False, balance=0, bank_balance=0,
-                 cooldowns={}, messages=0, jail={}, last_daily_claim=None, last_weekly_claim=None, daily_streak=0,
+                 cooldowns=None, messages=0, jail=None, last_daily_claim=None, daily_streak=0,
                  inventory=None,
-                 idiot={}):
+                 idiot=None):
         self._db = db
         self._new: bool = False  # Whether this User was retrieved from the database.
         self.user_id = user_id
@@ -38,11 +38,10 @@ class User:
         self.premium = premium
         self.balance = balance
         self.bank_balance = bank_balance
-        self.cooldowns = cooldowns
+        self.cooldowns = cooldowns or {}
         self.messages = messages
         self.jail = jail or {}
         self.last_daily_claim = last_daily_claim
-        self.last_weekly_claim = last_weekly_claim
         self.daily_streak = daily_streak
         self.inventory = inventory or {}
         self.idiot = idiot or {}
@@ -55,7 +54,7 @@ class User:
         # self.__dict__ = DEFAULT_DATA | self.__dict__
 
     def __getitem__(self, key):
-        return super().__getattr__(key)  # Allows for self['a']
+        return super().__getattribute__(key)  # Allows for self['a']
 
     def __setitem__(self, key, value):
         return super().__setattr__(key, value)  # Allows for self['a'] = value
@@ -66,12 +65,6 @@ class User:
         user._new = True
         return user
 
-    # def to_dict(self):
-    #     fields = self.__dict__
-    #     print(fields)
-    #     print("to_dict")
-    #     return {k: v for k, v in fields.items() if not k.startswith('_')}
-
     def to_dict(self):
         return {attr: getattr(self, attr) for attr in self.__slots__ if not attr.startswith('_')}
 
@@ -81,7 +74,6 @@ class User:
         This will not do anything if the user already exists.
         To update specific fields, you must use the applicable function or `update_fields`.
         """
-        #print(f'saving user: {self.to_dict()}')
         await self._db.set_user(guild_id, self)
         self._new = False
 
@@ -90,9 +82,8 @@ class User:
             self[key] = value
 
         if self._new:
-            await self.save()
+            await self.save(guild_id=self.guild_id)
         else:
-            # TODO SET IN DATABASE HERE
             await self._db.update_guild_user(self.guild_id, self.user_id, self)
 
     async def jail_user(self, hours, fine):
@@ -165,24 +156,3 @@ class User:
 
         await self.update_fields(daily_streak=self.daily_streak + 1, last_daily_claim=now)
         return False, self.daily_streak
-
-    async def claim_weekly(self):
-        now = datetime.utcnow()
-        if self.last_weekly_claim is None or (now - self.last_weekly_claim).days >= 7:
-            # Check if the weekly streak is broken
-            if (self.last_weekly_claim is not None and
-                    (now - self.last_weekly_claim).days > 7):
-                self.weekly_streak = 0  # Reset streak if broken
-
-            # Claim the weekly reward
-            money = 20000 + (self.weekly_streak * 5000)  # Add streak bonus
-            self.last_weekly_claim = now
-            self.weekly_streak += 1
-
-            # Update user data and send an embed
-            await self.update_fields(balance=money,
-                                     weekly_streak=self.weekly_streak + 1,
-                                     last_weekly_claim=now)
-            return money, self.weekly_streak
-        else:
-            return 0, self.weekly_streak

@@ -11,29 +11,35 @@ class DiscordDatabase:
     def __init__(self, mongo_uri, database_name, user_collection_name, guild_collection_name):
         self.mongo_uri = mongo_uri
         self.database_name = database_name
-        self.user_collection_name = user_collection_name
         self.guild_collection_name = guild_collection_name
         self.client = motor.motor_asyncio.AsyncIOMotorClient(self.mongo_uri)
-        self.user_collection = self.client[self.database_name][self.user_collection_name]
         self.guild_collection = self.client[self.database_name][self.guild_collection_name]
         self.log = logging.getLogger()
 
+    #############################################
+    # User operations                           #
+    #############################################
+
     async def get_user(self, guild_id: int, user_id: int):
-        # TODO: Figure out if MongoDB has a way of just returning the user document directly
-        guild_data = await self.guild_collection.find_one({'guild_id': int(guild_id), 'users.user_id': int(user_id)})
-        if guild_data:
-            user_data = next((user for user in guild_data['users'] if user['user_id'] == user_id), None)
-            #print(f'found user: {user_data}')
-            if user_data:
-                user_data.update({'guild_id': guild_id})  # Insert guild_id into user_data if it doesn't already exist.
-                expected_fields = User.__slots__
+        guild_data = await self.guild_collection.find_one(
+            {
+                'guild_id': int(guild_id),
+                'users.user_id': int(user_id)
+            },
+            projection={'users.$': 1}
+        )
 
-                for field in user_data:
-                    if field not in expected_fields:
-                        user_data.pop(field)
+        if guild_data and 'users' in guild_data:
+            user_data = guild_data['users'][0]
+            user_data['guild_id'] = guild_id  # Insert guild_id into user_data if it doesn't already exist.
+            expected_fields = User.__slots__
 
-                return User(self, **user_data)
-        
+            for field in user_data.copy():
+                if field not in expected_fields:
+                    user_data.pop(field)
+
+            return User(self, **user_data)
+
         user = User.create(self, user_id, guild_id)
         await user.save(guild_id=guild_id)
         return user
@@ -45,36 +51,11 @@ class DiscordDatabase:
             {'$addToSet': {'users': user_data.to_dict()}}
         )
 
-    async def retrieve_user(self, guild_id, user_id):
-        ...
-
     async def update_guild_user(self, guild_id, user_id, user_data):
         await self.guild_collection.update_one(
             {"guild_id": guild_id, "users.user_id": user_id},  # prev: users: user_id
             {"$set": {"users.$": user_data.to_dict()}}
         )
-
-    # User operations
-    def initialize_default_user_data(self, user_data):
-        default_data = {
-            "blacklist": False,
-            "last_seen": f'{datetime.utcnow()}',
-            "xp": 0,
-            "level": 0,
-            "premium": False,
-            "balance": 0,
-            "bank_balance": 0,
-            "cooldowns": {},
-            "messages": 0,
-            "jail": {},
-            "idiot": {},
-        }
-        # Create a new dictionary with default values and update it with existing data
-        user_data = {**default_data, **user_data}
-        user_data.pop("health", None)
-        user_data.pop("idiot_data", None)
-        user_data.pop("weekly_streak", None)
-        return user_data
 
     async def get_users_in_guild(self, guild_id):
         guild_data = await self.guild_collection.find_one({'guild_id': int(guild_id)})
@@ -83,50 +64,26 @@ class DiscordDatabase:
             return users
         return []
 
-
-    async def get_top_users_by_level(self, guild_id, limit):
-        users = await self.get_users_in_guild(guild_id)
-        sorted_users = sorted(users, key=lambda user: user.level, reverse=True)
-        return sorted_users[:limit]
-
-    async def get_top_users_by_bank_balance(self, guild_id, limit):
-        users = await self.get_users_in_guild(guild_id)
-        sorted_users = sorted(users, key=lambda user: user.bank_balance, reverse=True)
-        return sorted_users[:limit]
-
-    async def get_top_users_by_balance(self, guild_id, limit):
-        users = await self.get_users_in_guild(guild_id)
-        sorted_users = sorted(users, key=lambda user: user.balance, reverse=True)
-        return sorted_users[:limit]
-
-    async def get_top_users_by_combined_balance(self, guild_id, limit):
-        users = await self.get_users_in_guild(guild_id)
-        sorted_users = sorted(users, key=lambda user: user.balance + user.bank_balance, reverse=True)
-        return sorted_users[:limit]
-
     async def get_all_users(self):
         all_users = []
         async for guild in self.guild_collection.find({}, {"_id": 0}):
             if "users" in guild:
                 for user_data in guild["users"]:
-                    # Provide default values for missing attributes
-                    user_data = self.initialize_default_user_data(user_data)
                     all_users.append(user_data)
         return all_users
 
     async def get_users_in_jail(self):
         users_in_jail = []
         all_users = await self.get_all_users()
-
         for user_data in all_users:
-            user_data = self.initialize_default_user_data(user_data)
-            user = User(self, **user_data)
+            user = await self.get_user(user_data["guild_id"], user_data["user_id"])
             if user.is_in_jail():
                 users_in_jail.append(user)
-
         return users_in_jail
 
-    # Guild operations
+    #############################################
+    # Guild operations                          #
+    #############################################
     async def add_guild(self, guild):
         await self.guild_collection.insert_one(guild.__dict__)
 
