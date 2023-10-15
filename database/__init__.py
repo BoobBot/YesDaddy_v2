@@ -80,9 +80,7 @@ class DiscordDatabase:
 
     async def get_top_users(self, guild_id, limit, sort_key):
         users = await self.get_users_in_guild(guild_id)
-        print(users)
         sorted_users = sorted(users, key=sort_key, reverse=True)
-        print(sorted_users)
         return sorted_users[:limit]
 
     #############################################
