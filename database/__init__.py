@@ -60,7 +60,13 @@ class DiscordDatabase:
     async def get_users_in_guild(self, guild_id):
         guild_data = await self.guild_collection.find_one({'guild_id': int(guild_id)})
         if guild_data and 'users' in guild_data:
-            users = [User(self, **user_data) for user_data in guild_data['users']]
+            users = []
+            for user in guild_data['users']:
+                expected_fields = User.__slots__
+                for field in user.copy():
+                    if field not in expected_fields:
+                        user.pop(field)
+                users.append(User(self, **user))
             return users
         return []
 
