@@ -149,26 +149,27 @@ class Moderation(commands.Cog):
 
         This can take a while for servers with lots of bans.
         """
+        await ctx.typing(ephemeral=False)
         await ctx.reply(f"Gathering stats up to the last {limit} bans.")
         limit, bans = await self.get_ban_limit(ctx.guild, limit)
         if not bans:
             return await ctx.reply(":x: No bans found.")
-        async with ctx.typing():
-            counter = Counter()
-            async for entry in ctx.guild.audit_logs(
-                    action=discord.AuditLogAction.ban, limit=limit
-            ):
-                if entry.user.bot and entry.reason:
-                    match = ID_RE.search(entry.reason)
-                    if match:
-                        mod_id = int(match.group(0))
-                        user = self.bot.get_user(mod_id) or mod_id
-                    else:
-                        user = entry.user
+
+        counter = Counter()
+        async for entry in ctx.guild.audit_logs(
+                action=discord.AuditLogAction.ban, limit=limit
+        ):
+            if entry.user.bot and entry.reason:
+                match = ID_RE.search(entry.reason)
+                if match:
+                    mod_id = int(match.group(0))
+                    user = self.bot.get_user(mod_id) or mod_id
                 else:
                     user = entry.user
-                counter[self.get_name(user)] += 1
-            chart_file = await self.get_chart_file(ctx, counter)
+            else:
+                user = entry.user
+            counter[self.get_name(user)] += 1
+        chart_file = await self.get_chart_file(ctx, counter)
         await ctx.reply(file=chart_file)
 
     @commands.hybrid_group(name="idiot", description="idiot commands")
