@@ -193,6 +193,7 @@ class Profile(commands.Cog):
         member = ctx.guild.get_member(user.user_id)
 
         if member:
+            print(user.balance)
             sorted_users.append((user, member))
 
         sorted_users.sort(key=lambda entry: entry[0].balance, reverse=True)
