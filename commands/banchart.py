@@ -16,7 +16,7 @@ plt.switch_backend("agg")
 from collections import Counter
 
 ID_RE = re.compile(r"\d{15,21}")
-LIMIT = None
+LIMIT = 1000000
 
 
 class BanChart(commands.Cog):
