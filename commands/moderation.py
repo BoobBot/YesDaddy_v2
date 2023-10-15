@@ -41,9 +41,9 @@ class Moderation(commands.Cog):
         bans = [entry async for entry in ctx.guild.bans(limit=limit)]
         ban_count = len(bans)
         if not ban_count:
-            await ctx.send(":x: This server has no bans.")
+            await ctx.reply(":x: This server has no bans.")
         limit = min(LIMIT, min(limit, ban_count))
-        await ctx.send(f"Gathering stats up to the last {limit} bans.")
+        await ctx.reply(f"Gathering stats up to the last {limit} bans.")
         return limit, bans
 
     @staticmethod
@@ -169,7 +169,7 @@ class Moderation(commands.Cog):
                     user = entry.user
                 counter[self.get_name(user)] += 1
             chart_file = await self.get_chart_file(ctx, counter)
-        await ctx.send(file=chart_file)
+        await ctx.reply(file=chart_file)
 
     @commands.hybrid_group(name="idiot", description="idiot commands")
     @commands.has_any_role(694641646922498069, 694641646918434875)
