@@ -182,19 +182,16 @@ class Profile(commands.Cog):
 
     @leaderboard.command(name="balance", aliases=["bal"], description="View the balance leaderboard.")
     async def leaderboard_balance(self, ctx):
-        await ctx.defer()
+        await ctx.typing()
         top_users = await self.bot.db_client.get_top_users(
             limit=200, guild_id=ctx.guild.id, sort_key=lambda user: user.balance)
-
         guild = ctx.guild
         sorted_users = []
         for user_data in top_users:
             user = user_data
-        member = ctx.guild.get_member(user.user_id)
-
-        if member:
-            print(user.balance)
-            sorted_users.append((user, member))
+            member = ctx.guild.get_member(user.user_id)
+            if member:
+                sorted_users.append((user, member))
 
         sorted_users.sort(key=lambda entry: entry[0].balance, reverse=True)
         pages = create_leaderboard_pages(
