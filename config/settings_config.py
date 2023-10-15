@@ -108,6 +108,10 @@ def create_leaderboard_embed(title, entries, page_number):
         else:
             value = f"{emoji} {member.display_name}: {user.balance + user.bank_balance}"
 
+            # Check if the entry is in the top 3, and remove the #1, #2, #3 if true
+        if index <= 3:
+            value = value.replace(f"#{index} ", "")
+
         embed.add_field(name=f"#{index}", value=value, inline=False)
 
     return embed
