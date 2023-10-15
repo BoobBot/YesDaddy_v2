@@ -16,7 +16,7 @@ plt.switch_backend("agg")
 from collections import Counter
 
 ID_RE = re.compile(r"\d{15,21}")
-LIMIT = 10000
+LIMIT = None
 
 
 class BanChart(commands.Cog):
@@ -29,7 +29,7 @@ class BanChart(commands.Cog):
 
     @staticmethod
     async def get_ban_limit(ctx: commands.Context, limit: int) -> Tuple[int, list]:
-        bans = await ctx.guild.bans()
+        bans = [entry async for entry in ctx.guild.bans(limit=limit)]
         ban_count = len(bans)
         if not ban_count:
             raise commands.UserFeedbackCheckFailure("This server has no bans.")
