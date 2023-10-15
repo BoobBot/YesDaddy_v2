@@ -241,5 +241,6 @@ class Profile(commands.Cog):
             sorted_users, "Leaderboard - Total Balance: Page")
         await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
 
-    async def setup(bot):
-        await bot.add_cog(Profile(bot))
+
+async def setup(bot):
+    await bot.add_cog(Profile(bot))
