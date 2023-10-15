@@ -1,6 +1,7 @@
 import datetime
 
 import discord
+from discord import app_commands
 from discord.ext import commands
 
 from utils.utilities import generate_embed_color
@@ -71,13 +72,20 @@ class Core(commands.Cog):
         )
         await ctx.reply(embed=em)
 
-    @commands.hybrid_group(name="lvlroles", description="View or change level roles.")
+    @commands.hybrid_group(name="settings", description="Shop Commands")
+    async def guild_settings(self, ctx):
+        if not ctx.invoked_subcommand:
+            await ctx.send_help(ctx.command)
+
+    @guild_settings.group(name="lvlroles", description="View or change level roles.")
     @commands.has_guild_permissions(ban_members=True)
     async def lvlrole(self, ctx: commands.Context):
         if not ctx.invoked_subcommand:
             await ctx.send_help(ctx.command)
 
     @lvlrole.command(name="add", description="Add a level role.")
+    @app_commands.describe(level="The level to add the role for.")
+    @app_commands.describe(role="The role to add.")
     async def lvlrole_add(self, ctx, level: int, role: discord.Role):
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
 
@@ -116,12 +124,13 @@ class Core(commands.Cog):
             embed.add_field(name=f"Level {role.get('level')}", value=f"<@&{role.get('role_id')}>")
         await ctx.reply(embed=embed)
 
-    @commands.hybrid_group(name="bonus_roles", description="View or change bonus roles.")
+    @guild_settings.group(name="bonus_roles", description="View or change bonus roles.")
     @commands.has_guild_permissions(ban_members=True)
     async def bonus_role(self, ctx):
         await ctx.send("Please use a valid subcommand")
 
     @bonus_role.command(name="add", description="Add a bonus role.")
+    @app_commands.describe(role="The role to add.")
     async def bonus_role_add(self, ctx, role: discord.Role):
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
         if role.id in [role.get("role_id") for role in guild.bonus_roles]:
@@ -131,6 +140,7 @@ class Core(commands.Cog):
         await ctx.reply(f"Added {role.mention} as a bonus role.")
 
     @bonus_role.command(name="remove", description="Remove a bonus role.")
+    @app_commands.describe(role="The role to remove.")
     async def bonus_role_remove(self, ctx, role: discord.Role):
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
         guild.bonus_roles.remove({"role_id": role.id})
@@ -148,13 +158,69 @@ class Core(commands.Cog):
             embed.add_field(name=f"Role", value=f"<@&{role.get('role_id')}>")
         await ctx.reply(embed=embed)
 
-    @commands.hybrid_group(name="text_reactions", description="View or change text reactions.")
+    @guild_settings.group(name="shop_admin", description="Shop Admin Commands")
+    @commands.has_any_role(694641646922498069, 694641646918434875)
+    async def shop_admin(self, ctx):
+        if not ctx.invoked_subcommand:
+            await ctx.send_help(ctx.command)
+
+
+    @shop_admin.command(name="add_role", description="Add an role to the shop")
+    @app_commands.describe(role="The role to add.")
+    @app_commands.describe(price="The price of the role.")
+    @app_commands.describe(description="The description of the role.")
+    async def shop_admin_add_role(self, ctx: commands.Context, role: discord.Role, price: int, description: str):
+        role_data = {
+            "_id": role.id,
+            "name": role.name,
+            "added_by": ctx.author.id,
+            "color": role.color.to_rgb(),
+            "add_at": datetime.datetime.utcnow(),
+            "price": price,
+            "description": description
+        }
+        await self.bot.db_client.add_shop_role(guild_id=ctx.guild.id, role_data=role_data)
+        await ctx.send(f"Added {role.mention} to the shop.")
+
+    @shop_admin.command(name="remove_role", description="Remove an role from the shop")
+    @app_commands.describe(role="The role to remove.")
+    async def shop_admin_remove_role(self, ctx: commands.Context, role: discord.Role):
+        await self.bot.db_client.delete_shop_role(guild_id=ctx.guild.id, role_id=role.id)
+        await ctx.send(f"Removed {role.mention} from the shop.")
+
+    @shop_admin.command(name="list_roles", description="List all roles in the shop")
+    async def shop_admin_list_roles(self, ctx: commands.Context):
+        roles = await self.bot.db_client.get_shop_roles(guild_id=ctx.guild.id)
+        em = discord.Embed(title="Shop Roles", color=await generate_embed_color(ctx.author))
+        for role_data in roles:
+            role = ctx.guild.get_role(int(role_data.get('_id')))
+            em.add_field(name="",
+                         value=f"\nRole: {role.mention}\nPrice: {role_data.get('price')}\nAdded By: <@{role_data.get('added_by')}>",
+                         inline=False)
+        await ctx.send(embed=em)
+
+    # @shop_admin.command(name="add_item", description="Add an item to the shop")
+    # @app_commands.describe(item="The item to add.")
+    # async def shop_admin_add_item(self, ctx: commands.Context, item: str, price: int):
+    #     item_data = {
+    #         "_id": item,
+    #         "name": item,
+    #         "added_by": ctx.author.id,
+    #         "add_at": datetime.datetime.utcnow(),
+    #         "price": price
+    #     }
+    #     await self.bot.db_client.add_item(item_data)
+    #     await ctx.send(f"Added {item} to the shop.")
+
+    @guild_settings.group(name="text_reactions", description="View or change text reactions.")
     @commands.has_guild_permissions(ban_members=True)
     async def text_reaction(self, ctx):
         if not ctx.invoked_subcommand:
             await ctx.send_help(ctx.command)
 
     @text_reaction.command(name="add", description="Add a text reaction.")
+    @app_commands.describe(trigger="The trigger for the text reaction.")
+    @app_commands.describe(response="The response for the text reaction.")
     async def text_reaction_add(self, ctx, trigger: str, response: str):
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
         if trigger in [reaction.get("trigger") for reaction in guild.text_reactions]:
@@ -164,6 +230,7 @@ class Core(commands.Cog):
         await ctx.reply(f"Added `{trigger}` as a text reaction.")
 
     @text_reaction.command(name="remove", description="Remove a text reaction.")
+    @app_commands.describe(trigger="The trigger for the text reaction.")
     async def text_reaction_remove(self, ctx, trigger: str):
         # if ctx.author.id == 383932871985070085:
         #     return await ctx.reply("404 forbidden\nYou do not have permission to use this command.\ntry gitting gud.")

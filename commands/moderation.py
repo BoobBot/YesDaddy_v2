@@ -414,59 +414,6 @@ class Moderation(commands.Cog):
         await user.ban(reason=reason)
         await ctx.send(f"Banned {user.mention} for {reason}", ephemeral=True)
 
-    @commands.hybrid_group(name="shop_admin", description="Shop Admin Commands")
-    @commands.has_any_role(694641646922498069, 694641646918434875)
-    async def shop_admin(self, ctx):
-        if not ctx.invoked_subcommand:
-            await ctx.send_help(ctx.command)
-
-    @shop_admin.command(name="add_role", description="Add an role to the shop")
-    @app_commands.describe(role="The role to add.")
-    @app_commands.describe(price="The price of the role.")
-    @app_commands.describe(description="The description of the role.")
-    async def shop_admin_add_role(self, ctx: commands.Context, role: discord.Role, price: int, description: str):
-        role_data = {
-            "_id": role.id,
-            "name": role.name,
-            "added_by": ctx.author.id,
-            "color": role.color.to_rgb(),
-            "add_at": datetime.datetime.utcnow(),
-            "price": price,
-            "description": description
-        }
-        await self.bot.db_client.add_shop_role(guild_id=ctx.guild.id, role_data=role_data)
-        await ctx.send(f"Added {role.mention} to the shop.")
-
-    @shop_admin.command(name="remove_role", description="Remove an role from the shop")
-    @app_commands.describe(role="The role to remove.")
-    async def shop_admin_remove_role(self, ctx: commands.Context, role: discord.Role):
-        await self.bot.db_client.delete_shop_role(guild_id=ctx.guild.id, role_id=role.id)
-        await ctx.send(f"Removed {role.mention} from the shop.")
-
-    @shop_admin.command(name="list_roles", description="List all roles in the shop")
-    async def shop_admin_list_roles(self, ctx: commands.Context):
-        roles = await self.bot.db_client.get_shop_roles(guild_id=ctx.guild.id)
-        em = discord.Embed(title="Shop Roles", color=await generate_embed_color(ctx.author))
-        for role_data in roles:
-            role = ctx.guild.get_role(int(role_data.get('_id')))
-            em.add_field(name="",
-                         value=f"\nRole: {role.mention}\nPrice: {role_data.get('price')}\nAdded By: <@{role_data.get('added_by')}>",
-                         inline=False)
-        await ctx.send(embed=em)
-
-    # @shop_admin.command(name="add_item", description="Add an item to the shop")
-    # @app_commands.describe(item="The item to add.")
-    # async def shop_admin_add_item(self, ctx: commands.Context, item: str, price: int):
-    #     item_data = {
-    #         "_id": item,
-    #         "name": item,
-    #         "added_by": ctx.author.id,
-    #         "add_at": datetime.datetime.utcnow(),
-    #         "price": price
-    #     }
-    #     await self.bot.db_client.add_item(item_data)
-    #     await ctx.send(f"Added {item} to the shop.")
-
     @commands.hybrid_group(name="shop", description="Shop Commands")
     async def shop(self, ctx):
         if not ctx.invoked_subcommand:
