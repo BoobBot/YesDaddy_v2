@@ -29,7 +29,6 @@ class BanChart(commands.Cog):
 
     @staticmethod
     async def get_ban_limit(ctx: commands.Context, limit: int) -> Tuple[int, list]:
-        await ctx.trigger_typing()
         bans = await ctx.guild.bans()
         ban_count = len(bans)
         if not ban_count:
