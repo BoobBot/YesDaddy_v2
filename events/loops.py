@@ -115,8 +115,7 @@ class Loops(commands.Cog):
                                 1 for role in member.roles for r in data.bonus_roles if role.id == r.get("role_id"))
                             bonus_xp += 1
                             xp = random.randint(10, 50) * bonus_xp
-                            await user.add_xp(xp)
-                            await user.update_last_seen()
+                            await user.update_fields(xp=user.xp + xp)
                             self.bot.log.info(f"{member.name} {xp} -> {user.xp}")
         except Exception as e:
             self.bot.log.error(e)
