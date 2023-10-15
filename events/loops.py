@@ -99,15 +99,12 @@ class Loops(commands.Cog):
                     if guild.afk_channel and channel.id == guild.afk_channel.id:
                         continue
 
-                    count = sum(1 for member in channel.members if not member.bot)
+                    members = list(filter(lambda member: not member.bot, channel.members))
 
-                    if count <= 1:
+                    if len(members) <= 1:
                         continue
 
-                    for member in channel.members:
-                        if member.bot:
-                            continue
-
+                    for member in members:
                         # Check if any of the following conditions are met:
                         # - Member is deafened by the guild
                         # - Member is muted by the guild
