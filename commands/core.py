@@ -250,7 +250,7 @@ class Core(commands.Cog):
             return await ctx.reply("There are no text reactions.")
         embed = discord.Embed(title="Text Reactions")
         for reaction in reactions:
-            embed.add_field(name=f"Trigger", value=f"`{reaction.get('trigger')}`")
+            embed.add_field(name=f"Treaction.get('trigger')", value=f"{reaction.get('response')}")
         await ctx.reply(embed=embed)
 
     @commands.hybrid_command(name="help", description="have a list of commands")
