@@ -105,6 +105,9 @@ class Loops(commands.Cog):
                         continue
 
                     for member in channel.members:
+                        if member.bot:
+                            continue
+
                         # Check if any of the following conditions are met:
                         # - Member is deafened by the guild
                         # - Member is muted by the guild
