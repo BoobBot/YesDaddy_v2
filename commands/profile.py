@@ -13,7 +13,7 @@ from utils.paginator import Paginator
 from utils.pillowutils import (arc_bar, font_auto_scale, get_brightness,
                                mask_ellipsis)
 from utils.utilities import (generate_embed_color, progress_percentage,
-                             subtraction_percentage)
+                             subtraction_percentage, calculate_remaining_xp)
 
 
 class Profile(commands.Cog):
@@ -55,7 +55,7 @@ class Profile(commands.Cog):
         #user_data = await ctx.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_color = await generate_embed_color(user)
-        exp_needed = int(((user_data.level + 1) * 10) ** 2)
+        exp_needed = calculate_remaining_xp(user_data.level)
         bar = progress_percentage(user_data.xp, exp_needed)
 
         em = discord.Embed(title=f"{user}'s Profile", color=user_color)

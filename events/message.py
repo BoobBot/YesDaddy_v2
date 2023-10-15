@@ -6,6 +6,8 @@ import random
 import discord
 from discord.ext import commands
 
+from utils.utilities import calculate_level
+
 
 async def dump_delete(msg):
     with contextlib.suppress(Exception):
@@ -76,16 +78,14 @@ class Message(commands.Cog):
             bonus_xp = sum(1 for role in msg.author.roles for r in data.bonus_roles if role.id == r.get("role_id"))
             bonus_xp += 1
             xp = random.randint(1, 10) * bonus_xp
-            lvl = math.floor(0.1 * math.sqrt(user.xp + xp))
+            lvl = calculate_level(user.xp + xp)
             if lvl > user.level:
                 await msg.channel.send(
                     f"Congratulations {msg.author.mention}! You have leveled up to level {lvl}! <a:lvlup:1138933829185323149>")
                 user.level = lvl
-                await user.update_level(amount=user.level)
+                await user.update_fields(level=lvl)
                 await process_level_roles(user, msg.author, msg.guild, self.bot)
-            await user.update_messages()
-            await user.add_xp(xp)
-            await user.update_last_seen()
+            await user.update_fields(xp=user.xp + xp, messages=user.messages + 1, last_seen=msg.created_at)
 
 
 

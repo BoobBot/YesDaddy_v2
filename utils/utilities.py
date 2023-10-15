@@ -1,9 +1,12 @@
+import math
 import random
 from io import BytesIO
 
 import aiohttp
 import discord
 from PIL import Image
+
+xp_constant = 100  # Adjust this value as needed
 
 
 async def get_average_color(url):
@@ -49,6 +52,18 @@ async def generate_embed_color(member):
         return discord.Colour(random.randint(0, 0xFFFFFF))
     else:
         return embed_color
+
+
+def calculate_level(user_xp):
+    return math.floor(0.1 * math.sqrt(user_xp + xp_constant))
+
+
+def calculate_remaining_xp(user_xp):
+    current_level = calculate_level(user_xp)
+    next_level = current_level + 1
+    next_level_xp = ((next_level * 10) ** 2) - xp_constant  # Calculate the XP needed for the next level
+    remaining_xp = next_level_xp - user_xp
+    return remaining_xp
 
 
 def progress_percentage(remain, total):
