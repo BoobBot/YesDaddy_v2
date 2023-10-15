@@ -211,13 +211,13 @@ class Profile(commands.Cog):
         sorted_users = []
         for user_data in top_users:
             user = user_data
-            member = ctx.guild.get_member(user['user_id'])
+            member = ctx.guild.get_member(user.user_id)
 
             if member:
                 sorted_users.append((user, member))
 
         sorted_users.sort(
-            key=lambda entry: entry[0]['bank_balance'], reverse=True)
+            key=lambda entry: entry[0].bank_balance, reverse=True)
         pages = create_leaderboard_pages(
             sorted_users, "Leaderboard - Bank Balance: Page")
         await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
