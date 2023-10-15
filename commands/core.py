@@ -92,15 +92,15 @@ class Core(commands.Cog):
         if any(role.get('role_id') == role.id for role in guild.lvl_roles):
             return await ctx.reply(":x: That role is already a level role.")
 
-        guild.lvl_roles.append({"level": level, "role_id": role.id})
-        await self.bot.db_client.update_guild(ctx.guild.id, guild.__dict__)
+        guild.lvl_roles.append({"level": level, "role_id": role.id})  # TODO dedicated method to handle updating just this field
+        await self.bot.db_client.update_guild(ctx.guild.id, guild.to_dict())  # Call Guild.save()?
         await ctx.reply(f"Added {role.mention} as a level role for level {level}.")
 
     @lvlrole.command(name="remove", description="Remove a level role.")
     async def lvlrole_remove(self, ctx, level: int, role: discord.Role):
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
-        guild.lvl_roles.remove({"level": level, "role_id": role.id})
-        await self.bot.db_client.update_guild(ctx.guild.id, guild.__dict__)
+        guild.lvl_roles.remove({"level": level, "role_id": role.id})  # TODO dedicated method to handle updating just this field
+        await self.bot.db_client.update_guild(ctx.guild.id, guild.to_dict())
         await ctx.reply(f"Removed {role.mention} as a level role for level {level}.")
 
     @lvlrole.command(name="list", description="List all level roles.")
@@ -135,16 +135,16 @@ class Core(commands.Cog):
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
         if role.id in [role.get("role_id") for role in guild.bonus_roles]:
             return await ctx.reply("That role is already a bonus role.")
-        guild.bonus_roles.append({"role_id": role.id})
-        await self.bot.db_client.update_guild(ctx.guild.id, guild.__dict__)
+        guild.bonus_roles.append({"role_id": role.id})  # TODO dedicated method to handle updating just this field
+        await self.bot.db_client.update_guild(ctx.guild.id, guild.to_dict())
         await ctx.reply(f"Added {role.mention} as a bonus role.")
 
     @bonus_role.command(name="remove", description="Remove a bonus role.")
     @app_commands.describe(role="The role to remove.")
     async def bonus_role_remove(self, ctx, role: discord.Role):
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
-        guild.bonus_roles.remove({"role_id": role.id})
-        await self.bot.db_client.update_guild(ctx.guild.id, guild.__dict__)
+        guild.bonus_roles.remove({"role_id": role.id})  # TODO dedicated method to handle updating just this field
+        await self.bot.db_client.update_guild(ctx.guild.id, guild.to_dict())
         await ctx.reply(f"Removed {role.mention} as a bonus role.")
 
     @bonus_role.command(name="list", description="List all bonus roles.")
@@ -225,8 +225,8 @@ class Core(commands.Cog):
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
         if trigger in [reaction.get("trigger") for reaction in guild.text_reactions]:
             return await ctx.reply("That trigger is already a text reaction.")
-        guild.text_reactions.append({"trigger": trigger, "response": response})
-        await self.bot.db_client.update_guild(ctx.guild.id, guild.__dict__)
+        guild.text_reactions.append({"trigger": trigger, "response": response})  # TODO dedicated method to handle updating just this field
+        await self.bot.db_client.update_guild(ctx.guild.id, guild.to_dict())
         await ctx.reply(f"Added `{trigger}` as a text reaction.")
 
     @text_reaction.command(name="remove", description="Remove a text reaction.")
@@ -238,8 +238,8 @@ class Core(commands.Cog):
         react = next((reaction for reaction in guild.text_reactions if reaction.get("trigger") == trigger), None)
         if not react:
             return await ctx.reply("That trigger is not a text reaction.")
-        guild.text_reactions.remove(react)
-        await self.bot.db_client.update_guild(ctx.guild.id, guild.__dict__)
+        guild.text_reactions.remove(react)  # TODO dedicated method to handle updating just this field
+        await self.bot.db_client.update_guild(ctx.guild.id, guild.to_dict())
         await ctx.reply(f"Removed `{trigger}` as a text reaction.")
 
     @text_reaction.command(name="list", description="List all text reactions.")

@@ -1,6 +1,13 @@
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from . import DiscordDatabase
+
+
 class Guild:
-    def __init__(self, guild_id, member_data=None, tickets=None, support_tickets=None, config=None, lvl_roles=None,
-                 bonus_roles=None, text_reactions=None, shop_roles=None, shop_gifts=None, shop_items=None, users=None):
+    def __init__(self, db, guild_id, member_data=None, tickets=None, support_tickets=None, config=None, lvl_roles=[],
+                 bonus_roles=[], text_reactions=None, shop_roles=[], shop_gifts=None, shop_items=None, users=[]):
+        self._db: 'DiscordDatabase' = db
         self.guild_id = guild_id
         self.member_data = member_data if member_data else []
         self.tickets = tickets if tickets is not None else []
@@ -13,3 +20,21 @@ class Guild:
         self.shop_gifts = shop_gifts if shop_gifts else {}
         self.shop_items = shop_items if shop_items else {}
         self.users = users if users else []
+
+    def to_dict(self):
+        return {k: v for k, v in self.__dict__ if not k.startswith('_')}
+
+    @classmethod
+    def create(cls, db, guild_id: int):
+        return cls(db, guild_id)
+
+    @classmethod
+    def from_existing(cls, db, data: dict):
+        data.setdefault("lvl_roles", [])
+        data.setdefault("bonus_roles", [])
+        data.setdefault("shop_roles", {})
+        data.setdefault("users", [])
+        return cls(db, **data)
+
+    async def save(self):
+        return await self._db.add_guild(self)

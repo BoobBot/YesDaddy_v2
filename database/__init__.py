@@ -32,13 +32,7 @@ class DiscordDatabase:
         if guild_data and 'users' in guild_data:
             user_data = guild_data['users'][0]
             user_data['guild_id'] = guild_id  # Insert guild_id into user_data if it doesn't already exist.
-            expected_fields = User.__slots__
-
-            for field in user_data.copy():
-                if field not in expected_fields:
-                    user_data.pop(field)
-
-            return User(self, **user_data)
+            return User.from_existing(user_data)
 
         user = User.create(self, user_id, guild_id)
         await user.save(guild_id=guild_id)
@@ -59,29 +53,26 @@ class DiscordDatabase:
 
     async def get_users_in_guild(self, guild_id):
         guild_data = await self.guild_collection.find_one({'guild_id': int(guild_id)})
+
         if guild_data and 'users' in guild_data:
-            users = []
-            for user in guild_data['users']:
-                expected_fields = User.__slots__
-                for field in user.copy():
-                    if field not in expected_fields:
-                        user.pop(field)
-                users.append(User(self, **user))
-            return users
+            return list(map(lambda user: User.from_existing(self, user), guild_data['users']))
+
         return []
 
     async def get_all_users(self):
         all_users = []
+
         async for guild in self.guild_collection.find({}, {"_id": 0}):
             if "users" in guild:
-                for user_data in guild["users"]:
-                    all_users.append(user_data)
+                all_users.extend(guild["users"])
+
         return all_users
 
     async def get_users_in_jail(self):
         users_in_jail = []
         all_users = await self.get_all_users()
         for user_data in all_users:
+            # TODO: This could be optimised
             user = await self.get_user(user_data["guild_id"], user_data["user_id"])
             if user.is_in_jail():
                 users_in_jail.append(user)
@@ -95,25 +86,19 @@ class DiscordDatabase:
     #############################################
     # Guild operations                          #
     #############################################
-    async def add_guild(self, guild):
-        await self.guild_collection.insert_one(guild.__dict__)
+    async def add_guild(self, guild: Guild):
+        await self.guild_collection.insert_one(guild.to_dict())
 
-    async def get_guild(self, guild_id):
+    async def get_guild(self, guild_id: int):
         guild_data = await self.guild_collection.find_one({"guild_id": guild_id}, {"_id": 0})
+
         if guild_data:
-            guild_data.setdefault("lvl_roles", [])
-            guild_data.setdefault("bonus_roles", [])
-            guild_data.setdefault("shop_roles", {})
-            guild_data.setdefault("users", [])
-            return Guild(**guild_data)
-        guild = Guild(guild_id)
-        await self.add_guild(guild)
-        guild_data = await self.guild_collection.find_one({"guild_id": guild_id}, {"_id": 0})
-        guild_data.setdefault("lvl_roles", [])
-        guild_data.setdefault("bonus_roles", [])
-        guild_data.setdefault("shop_roles", {})
-        guild_data.setdefault("users", [])
-        return Guild(**guild_data)
+            return Guild.from_existing(self, guild_data)
+
+        guild = Guild.create(self, guild_id)
+        await guild.save()
+
+        return guild
 
     async def update_guild(self, guild_id, new_data):
         await self.guild_collection.update_one({"guild_id": guild_id}, {"$set": new_data})
