@@ -160,7 +160,7 @@ class Profile(commands.Cog):
     @leaderboard.command(name="level", aliases=["lvl"], description="View the level leaderboard.")
     async def leaderboard_level(self, ctx):
         await ctx.defer()
-        top_users = await self.bot.db_client.get_top_users_by_level(limit=200)
+        top_users = await self.bot.db_client.get_top_users_by_level(limit=200, guild_id=ctx.guild.id)
 
         guild = ctx.guild
 
@@ -185,7 +185,7 @@ class Profile(commands.Cog):
     async def leaderboard_balance(self, ctx):
         await ctx.defer()
         top_users = await self.bot.db_client.get_top_users_by_balance(
-            limit=200)
+            limit=200, guild_id=ctx.guild.id)
 
         guild = ctx.guild
         sorted_users = []
@@ -205,7 +205,7 @@ class Profile(commands.Cog):
     async def leaderboard_balance(self, ctx):
         await ctx.defer()
         top_users = await self.bot.db_client.get_top_users_by_bank_balance(
-            limit=200)
+            limit=200, guild_id=ctx.guild.id)
 
         guild = ctx.guild
         sorted_users = []
@@ -226,7 +226,7 @@ class Profile(commands.Cog):
     async def leaderboard_combined(self, ctx):
         await ctx.defer()
         top_users = await self.bot.db_client.get_top_users_by_combined_balance(
-            limit=200)
+            limit=200, guild_id=ctx.guild.id)
 
         guild = ctx.guild
         sorted_users = []
