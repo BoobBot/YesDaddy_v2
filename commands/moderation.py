@@ -437,7 +437,8 @@ class Moderation(commands.Cog):
 
     @roles.command(name="buy", description="Buy a role from the shop")
     @app_commands.describe(role="The role to buy.")
-    async def buy_role(self, ctx: commands.Context, role: str):
+    async def buy_role(self, ctx: commands.Context, role: str, user: Optional[discord.Member] = None):
+        user = user or ctx.author
         role_data = await self.bot.db_client.get_shop_roles(guild_id=ctx.guild.id)
         role_data = next((r for r in role_data if str(r.get("_id")) == role), None)
 
@@ -447,11 +448,22 @@ class Moderation(commands.Cog):
         user_data = await self.bot.db_client.get_user(ctx.author.id, ctx.guild.id)
         if user_data.balance < role_data.get("price"):
             return await ctx.send("You don't have enough money to buy that role.")
+
+        if user_data.inventory.get("roles", None) is None:
+            await user_data.update_fields(inventory={"roles": []})
+            user_data = await self.bot.db_client.get_user(user.id, ctx.guild.id)
+
+        user_data = await self.bot.db_client.get_user(user.id, ctx.guild.id)
         role = ctx.guild.get_role(int(role_data.get('_id')))
+        inv_roles = user_data.inventory.get("roles", [])
+        if role_data in inv_roles:
+            return await ctx.send("You already have that role.")
         if role in ctx.author.roles:
             return await ctx.send("You already have that role.")
         await ctx.author.add_roles(role)
-        await user_data.update_fields(balance=user_data.balance - role_data.get("price"))
+        inv_roles = user_data.inventory.get("roles", [])
+        inv_roles.append(role_data)
+        await user_data.update_fields(balance=user_data.balance - role_data.get("price"), inventory=user_data.inventory)
         await ctx.send(f"Bought {role_data.get('name')} for {role_data.get('price')}.")
 
     @buy_role.autocomplete('role')
@@ -471,7 +483,6 @@ class Moderation(commands.Cog):
     async def items(self, ctx):
         if not ctx.invoked_subcommand:
             await ctx.send_help(ctx.command)
-
     @items.command(name="list", description="List all items in the shop")
     async def list(self, ctx: commands.Context):
         items = await self.bot.db_client.get_shop_items(guild_id=ctx.guild.id)

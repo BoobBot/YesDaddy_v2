@@ -196,7 +196,7 @@ class Core(commands.Cog):
         for role_data in roles:
             role = ctx.guild.get_role(int(role_data.get('_id')))
             em.add_field(name="",
-                         value=f"\nRole: {role.mention}\nPrice: {role_data.get('cash')}\nAdded By: <@{role_data.get('added_by')}>",
+                         value=f"\nRole: {role.mention}\nCash: {role_data.get('cash')}\nAdded By: <@{role_data.get('added_by')}>",
                          inline=False)
         await ctx.send(embed=em)
 
