@@ -53,7 +53,7 @@ class Profile(commands.Cog):
     async def profile(self, ctx, user: Optional[discord.Member]):
         user = user or ctx.author
         #user_data = await ctx.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
-        user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
+        user_data = await self.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         user_color = await generate_embed_color(user)
         remain, total = calculate_remaining_xp(user_data.xp)
         print(f'{remain} {total}')
