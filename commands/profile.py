@@ -57,7 +57,7 @@ class Profile(commands.Cog):
         user_color = await generate_embed_color(user)
         remain, total = calculate_remaining_xp(user_data.xp)
         print(f'{remain} {total}')
-        bar = progress_percentage(remain=remain, total=total)
+        bar = progress_percentage(remain=user.xp, total=total)
 
         em = discord.Embed(title=f"{user}'s Profile", color=user_color)
         timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
