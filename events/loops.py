@@ -4,6 +4,8 @@ import random
 import discord
 from discord.ext import tasks, commands
 
+from utils.utilities import calculate_level
+
 
 class Loops(commands.Cog):
     def __init__(self, bot):
@@ -106,18 +108,25 @@ class Loops(commands.Cog):
                         # - Member is muted by the guild
                         # - Member is self-muted
                         # - Member is self-deafened
-                        if member.voice.deaf or member.voice.mute or member.voice.self_mute or member.voice.self_deaf:
-                            continue  # Skip giving XP to this member
-                        user = await self.bot.db_client.get_user(user_id=member.id, guild_id=guild.id)
-                        print(f'{member.name} {user.xp}')
-                        if user:
-                            data = await self.bot.db_client.get_guild(guild.id)
-                            bonus_xp = sum(
-                                1 for role in member.roles for r in data.bonus_roles if role.id == r.get("role_id"))
-                            bonus_xp += 1
-                            xp = random.randint(10, 50) * bonus_xp
-                            await user.update_fields(xp=user.xp + xp)
-                            self.bot.log.info(f"{member.name} {xp} -> {user.xp}")
+
+                        if not (member.voice.deaf or member.voice.mute or member.voice.self_mute or member.voice.self_deaf):
+                            user = await self.bot.db_client.get_user(user_id=member.id, guild_id=guild.id)
+                            print(f'{member.name} {user.xp}')
+                            if user:
+                                data = await self.bot.db_client.get_guild(guild.id)
+                                bonus_xp = sum(
+                                    1 for role in member.roles for r in data.bonus_roles if role.id == r.get("role_id"))
+                                bonus_xp += 1
+                                xp = random.randint(10, 50) * bonus_xp
+                                lvl = calculate_level(user.xp + xp)
+                                if lvl > user.level:
+                                    self.bot.log.info(f"{member.name} {user.level} -> {lvl}")
+                                    user.level = lvl
+                                    await user.update_fields(level=lvl)
+                                await user.update_fields(xp=user.xp + xp)
+
+                                self.bot.log.info(f"{member.name} {xp} -> {user.xp}")
+
         except Exception as e:
             self.bot.log.error(e)
             pass
