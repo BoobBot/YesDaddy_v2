@@ -37,11 +37,9 @@ class Moderation(commands.Cog):
         self.nickname_task: Optional[asyncio.Task] = None
 
     @staticmethod
-    async def get_ban_limit(ctx: commands.Context, limit: int) -> Tuple[int, list]:
-        bans = [entry async for entry in ctx.guild.bans(limit=limit)]
+    async def get_ban_limit(guild, limit: int) -> Tuple[int, list]:
+        bans = [entry async for entry in guild.bans(limit=limit)]
         ban_count = len(bans)
-        if not ban_count:
-            await ctx.reply(":x: This server has no bans.")
         limit = min(LIMIT, min(limit, ban_count))
         return limit, bans
 
@@ -152,7 +150,9 @@ class Moderation(commands.Cog):
         This can take a while for servers with lots of bans.
         """
         await ctx.reply(f"Gathering stats up to the last {limit} bans.")
-        limit, _ = await self.get_ban_limit(ctx, limit)
+        limit, bans = await self.get_ban_limit(ctx.guild, limit)
+        if not bans:
+            return await ctx.reply(":x: No bans found.")
         async with ctx.typing():
             counter = Counter()
             async for entry in ctx.guild.audit_logs(
