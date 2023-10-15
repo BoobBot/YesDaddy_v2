@@ -63,7 +63,7 @@ def calculate_remaining_xp(user_xp):
     next_level = current_level + 1
     next_level_xp = ((next_level * 10) ** 2) - xp_constant  # Calculate the XP needed for the next level
     remaining_xp = next_level_xp - user_xp
-    return remaining_xp
+    return remaining_xp, next_level_xp
 
 
 def progress_percentage(remain, total):
