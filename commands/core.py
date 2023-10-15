@@ -170,7 +170,7 @@ class Core(commands.Cog):
     @app_commands.describe(role="The role to add.")
     @app_commands.describe(cash="The amount of cash to give.")
     @app_commands.describe(description="The description of the role.")
-    async def shop_admin_add_role(self, ctx: commands.Context, role: discord.Role, cash: int, description: str):
+    async def bonus_cash_add_role(self, ctx: commands.Context, role: discord.Role, cash: int, description: str):
         role_data = {
             "_id": role.id,
             "name": role.name,
@@ -185,12 +185,12 @@ class Core(commands.Cog):
 
     @bonus_cash_roles.command(name="remove_role", description="Remove an role from cash roles")
     @app_commands.describe(role="The role to remove.")
-    async def shop_admin_remove_role(self, ctx: commands.Context, role: discord.Role):
+    async def bonus_cash_remove_role(self, ctx: commands.Context, role: discord.Role):
         await self.bot.db_client.delete_cash_role(guild_id=ctx.guild.id, role_id=role.id)
         await ctx.send(f"Removed {role.mention} from the shop.")
 
     @bonus_cash_roles.command(name="list_roles", description="List all cash roles")
-    async def shop_admin_list_roles(self, ctx: commands.Context):
+    async def bonus_cash_list_roles(self, ctx: commands.Context):
         roles = await self.bot.db_client.get_cash_roles(guild_id=ctx.guild.id)
         em = discord.Embed(title="Cash Roles", color=await generate_embed_color(ctx.author))
         for role_data in roles:
