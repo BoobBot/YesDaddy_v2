@@ -159,3 +159,27 @@ class DiscordDatabase:
             {"guild_id": guild_id},
             {"$pull": {"shop_roles": {"_id": role_id}}}
         )
+
+    async def add_cash_role(self, guild_id, role_data):
+        await self.guild_collection.update_one(
+            {"guild_id": guild_id},
+            {"$push": {"bonus_cash_roles": role_data}}
+        )
+
+    async def get_cash_roles(self, guild_id):
+        guild_data = await self.guild_collection.find_one({"guild_id": guild_id})
+        if guild_data and "bonus_cash_roles" in guild_data:
+            return guild_data["bonus_cash_roles"]
+        return []
+
+    async def update_cash_role(self, guild_id, role_id, new_data):
+        await self.guild_collection.update_one(
+            {"guild_id": guild_id, "bonus_cash_roles._id": role_id},
+            {"$set": {"bonus_cash_roles.$": new_data}}
+        )
+
+    async def delete_cash_role(self, guild_id, role_id):
+        await self.guild_collection.update_one(
+            {"guild_id": guild_id},
+            {"$pull": {"bonus_cash_roles": {"_id": role_id}}}
+        )

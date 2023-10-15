@@ -92,14 +92,16 @@ class Core(commands.Cog):
         if any(role.get('role_id') == role.id for role in guild.lvl_roles):
             return await ctx.reply(":x: That role is already a level role.")
 
-        guild.lvl_roles.append({"level": level, "role_id": role.id})  # TODO dedicated method to handle updating just this field
+        guild.lvl_roles.append(
+            {"level": level, "role_id": role.id})  # TODO dedicated method to handle updating just this field
         await self.bot.db_client.update_guild(ctx.guild.id, guild.to_dict())  # Call Guild.save()?
         await ctx.reply(f"Added {role.mention} as a level role for level {level}.")
 
     @lvlrole.command(name="remove", description="Remove a level role.")
     async def lvlrole_remove(self, ctx, level: int, role: discord.Role):
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
-        guild.lvl_roles.remove({"level": level, "role_id": role.id})  # TODO dedicated method to handle updating just this field
+        guild.lvl_roles.remove(
+            {"level": level, "role_id": role.id})  # TODO dedicated method to handle updating just this field
         await self.bot.db_client.update_guild(ctx.guild.id, guild.to_dict())
         await ctx.reply(f"Removed {role.mention} as a level role for level {level}.")
 
@@ -158,12 +160,51 @@ class Core(commands.Cog):
             embed.add_field(name=f"Role", value=f"<@&{role.get('role_id')}>")
         await ctx.reply(embed=embed)
 
+    @guild_settings.group(name="bonus_cash_roles", description="View or change Bonus roles")
+    @commands.has_any_role(694641646922498069, 694641646918434875)
+    async def bonus_cash_roles(self, ctx):
+        if not ctx.invoked_subcommand:
+            await ctx.send_help(ctx.command)
+
+    @bonus_cash_roles.command(name="add_role", description="Add an role to cash roles")
+    @app_commands.describe(role="The role to add.")
+    @app_commands.describe(cash="The amount of cash to give.")
+    @app_commands.describe(description="The description of the role.")
+    async def shop_admin_add_role(self, ctx: commands.Context, role: discord.Role, cash: int, description: str):
+        role_data = {
+            "_id": role.id,
+            "name": role.name,
+            "added_by": ctx.author.id,
+            "color": role.color.to_rgb(),
+            "add_at": datetime.datetime.utcnow(),
+            "cash": cash,
+            "description": description
+        }
+        await self.bot.db_client.add_cash_role(guild_id=ctx.guild.id, role_data=role_data)
+        await ctx.send(f"Added {role.mention} to the cash roles.")
+
+    @bonus_cash_roles.command(name="remove_role", description="Remove an role from cash roles")
+    @app_commands.describe(role="The role to remove.")
+    async def shop_admin_remove_role(self, ctx: commands.Context, role: discord.Role):
+        await self.bot.db_client.delete_cash_role(guild_id=ctx.guild.id, role_id=role.id)
+        await ctx.send(f"Removed {role.mention} from the shop.")
+
+    @bonus_cash_roles.command(name="list_roles", description="List all cash roles")
+    async def shop_admin_list_roles(self, ctx: commands.Context):
+        roles = await self.bot.db_client.get_cash_roles(guild_id=ctx.guild.id)
+        em = discord.Embed(title="Cash Roles", color=await generate_embed_color(ctx.author))
+        for role_data in roles:
+            role = ctx.guild.get_role(int(role_data.get('_id')))
+            em.add_field(name="",
+                         value=f"\nRole: {role.mention}\nPrice: {role_data.get('cash')}\nAdded By: <@{role_data.get('added_by')}>",
+                         inline=False)
+        await ctx.send(embed=em)
+
     @guild_settings.group(name="shop_admin", description="Shop Admin Commands")
     @commands.has_any_role(694641646922498069, 694641646918434875)
     async def shop_admin(self, ctx):
         if not ctx.invoked_subcommand:
             await ctx.send_help(ctx.command)
-
 
     @shop_admin.command(name="add_role", description="Add an role to the shop")
     @app_commands.describe(role="The role to add.")
@@ -225,7 +266,8 @@ class Core(commands.Cog):
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
         if trigger in [reaction.get("trigger") for reaction in guild.text_reactions]:
             return await ctx.reply("That trigger is already a text reaction.")
-        guild.text_reactions.append({"trigger": trigger, "response": response})  # TODO dedicated method to handle updating just this field
+        guild.text_reactions.append(
+            {"trigger": trigger, "response": response})  # TODO dedicated method to handle updating just this field
         await self.bot.db_client.update_guild(ctx.guild.id, guild.to_dict())
         await ctx.reply(f"Added `{trigger}` as a text reaction.")
 
