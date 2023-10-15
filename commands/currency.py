@@ -17,7 +17,7 @@ class Currency(commands.Cog):
         self.bot = bot
 
     @commands.hybrid_command(name="adventure", description="Go on an adventure!")
-    @persistent_cooldown(1, 500, commands.BucketType.user)
+    @persistent_cooldown(1, 600, commands.BucketType.user)
     async def adventure(self, ctx):
         author = ctx.author.mention
         user = ctx.author
@@ -72,15 +72,14 @@ class Currency(commands.Cog):
 
     # chop command
     @commands.hybrid_command(name="chop", description="Go chopping!")
-    @persistent_cooldown(1, 500, commands.BucketType.user)
+    @persistent_cooldown(1, 120, commands.BucketType.user)
     async def chop(self, ctx):
         chosen_resource = \
             random.choices(list(chop_resource_info.keys()),
                            weights=[info['rarity'] for info in chop_resource_info.values()], k=1)[0]
         resource = chop_resource_info[chosen_resource]
         resource_amount = random.randint(1, 5)
-        resource_value = random.randint(
-            resource['min_value'], resource['max_value'])
+        resource_value = random.randint(resource['min_value'], resource['max_value'])
 
         user_id = ctx.author.id
         user_data = await ctx.bot.db_client.get_user(user_id=user_id, guild_id=ctx.guild.id)
@@ -103,7 +102,7 @@ class Currency(commands.Cog):
 
     # mining command
     @commands.hybrid_command(name="mine", description="Go mining!")
-    @persistent_cooldown(1, 500, commands.BucketType.user)
+    @persistent_cooldown(1, 120, commands.BucketType.user)
     async def mine(self, ctx):
         chosen_resource = \
             random.choices(list(mine_resource_info.keys()),
@@ -136,7 +135,7 @@ class Currency(commands.Cog):
 
     # Fishing command
     @commands.hybrid_command(name="fish", description="Go fishing!")
-    @persistent_cooldown(1, 500, commands.BucketType.user)
+    @persistent_cooldown(1, 120, commands.BucketType.user)
     async def fish(self, ctx):
         fish_name = random.choice(list(fish_info.keys()))
         fish_value = random.randint(10, 100)
@@ -170,21 +169,21 @@ class Currency(commands.Cog):
         author_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         streak_broken, daily_streak = await author_data.claim_daily()
         if not streak_broken:
-            claimed_money = 5000 + (500 * daily_streak)
+            claimed_money = 1000 + 100 * min(daily_streak, 50)
         else:
-            claimed_money = 5000
+            claimed_money = 1000
 
         if user.id == ctx.author.id:
             description = f"Daily: + ${claimed_money}"
-            if claimed_money > 5000:
+            if claimed_money > 1000:
                 description = f"Daily: + ${claimed_money} (Streak: {daily_streak})"
             em = discord.Embed(
                 color=user_color, title=f"{ctx.author}'s daily", description=description)
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
         else:
-            description = "\nGifted Currency: +$1000"
-            claimed_money += 1000
-            if claimed_money > 6000:
+            description = "\nGifted Currency: +$100"
+            claimed_money += 100
+            if claimed_money > 1100:
                 description = f"Gifted: + ${claimed_money} (Streak: {daily_streak})"
             em = discord.Embed(color=user_color,
                                title=f"{ctx.author} has given {user} their daily, plus a bonus!",
@@ -219,7 +218,7 @@ class Currency(commands.Cog):
         user_data = await ctx.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         user_color = await generate_embed_color(user)
 
-        money = 20000
+        money = 10000
         newbal = user_data.balance + money
 
         if user.id == ctx.author.id:
@@ -228,7 +227,7 @@ class Currency(commands.Cog):
                 color=user_color, title=f"{ctx.author}'s weekly", description=description)
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
         else:
-            description = "\nGifted Currency: +$10000"
+            description = "\nGifted Currency: +$1000"
             em = discord.Embed(color=user_color,
                                title=f"{ctx.author} has given {user} their weekly, plus a bonus!",
                                description=description)
@@ -254,7 +253,7 @@ class Currency(commands.Cog):
     async def work(self, ctx):
         random.shuffle(job_descriptions)
         job = random.choice(job_descriptions)
-        cash = random.randint(100, 1000)
+        cash = random.randint(20, 250)
         job = job.replace("{0}", ctx.author.mention)
         user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         if user_data.is_in_jail():

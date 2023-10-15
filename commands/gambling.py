@@ -58,7 +58,7 @@ class Gambling(commands.Cog):
     async def crime(self, ctx):
         random.shuffle(funny_crime_scenarios)
         crime = random.choice(funny_crime_scenarios)
-        amount = random.randint(100, 10000)
+        amount = random.randint(100, 1500)
         crime_scenario = crime[0].replace("{0}", ctx.author.mention)
         crime_outcome = crime[1]
 
