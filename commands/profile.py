@@ -55,7 +55,7 @@ class Profile(commands.Cog):
         #user_data = await ctx.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_color = await generate_embed_color(user)
-        remain, total = calculate_remaining_xp(user_data.level)
+        remain, total = calculate_remaining_xp(user_data.xp)
         print(f'{remain} {total}')
         bar = progress_percentage(remain=remain, total=total)
 
