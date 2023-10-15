@@ -56,6 +56,7 @@ class Profile(commands.Cog):
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_color = await generate_embed_color(user)
         exp_needed = calculate_remaining_xp(user_data.level)
+        print(f'{user_data.xp} {exp_needed}')
         bar = progress_percentage(user_data.xp, exp_needed)
 
         em = discord.Embed(title=f"{user}'s Profile", color=user_color)
