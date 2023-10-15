@@ -108,6 +108,7 @@ class Loops(commands.Cog):
                         if member.voice.deaf or member.voice.mute or member.voice.self_mute or member.voice.self_deaf:
                             continue  # Skip giving XP to this member
                         user = await self.bot.db_client.get_user(member.id, guild.id)
+                        print(f'{member.name} {user.xp}')
                         if user:
                             data = await self.bot.db_client.get_guild(guild.id)
                             bonus_xp = sum(
