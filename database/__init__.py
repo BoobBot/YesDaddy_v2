@@ -76,43 +76,33 @@ class DiscordDatabase:
         user_data.pop("weekly_streak", None)
         return user_data
 
-    async def get_top_users_by_level(self, limit):
-        pipeline = [
-            {"$sort": {"level": -1}},
-            {"$limit": limit},
-            {"$project": {"_id": 0}}
-        ]
-        top_users = await self.user_collection.aggregate(pipeline).to_list(None)
-        return top_users
+    async def get_users_in_guild(self, guild_id):
+        guild_data = await self.guild_collection.find_one({'guild_id': int(guild_id)})
+        if guild_data and 'users' in guild_data:
+            users = [User(self, **user_data) for user_data in guild_data['users']]
+            return users
+        return []
 
-    async def get_top_users_by_bank_balance(self, limit):
-        pipeline = [
-            {"$sort": {"bank_balance": -1}},
-            {"$limit": limit},
-            {"$project": {"_id": 0}}
-        ]
-        top_users = await self.user_collection.aggregate(pipeline).to_list(None)
-        return top_users
 
-    async def get_top_users_by_balance(self, limit):
-        pipeline = [
-            {"$sort": {"balance": -1}},
-            {"$limit": limit},
-            {"$project": {"_id": 0}}
-        ]
-        top_users = await self.user_collection.aggregate(pipeline).to_list(None)
-        return top_users
+    async def get_top_users_by_level(self, guild_id, limit):
+        users = await self.get_users_in_guild(guild_id)
+        sorted_users = sorted(users, key=lambda user: user.level, reverse=True)
+        return sorted_users[:limit]
 
-    async def get_top_users_by_combined_balance(self, limit):
-        pipeline = [
-            {"$addFields": {"combined_balance": {
-                "$add": ["$balance", "$bank_balance"]}}},
-            {"$sort": {"combined_balance": -1}},
-            {"$limit": limit},
-            {"$project": {"_id": 0}}
-        ]
-        top_users = await self.user_collection.aggregate(pipeline).to_list(None)
-        return top_users
+    async def get_top_users_by_bank_balance(self, guild_id, limit):
+        users = await self.get_users_in_guild(guild_id)
+        sorted_users = sorted(users, key=lambda user: user.bank_balance, reverse=True)
+        return sorted_users[:limit]
+
+    async def get_top_users_by_balance(self, guild_id, limit):
+        users = await self.get_users_in_guild(guild_id)
+        sorted_users = sorted(users, key=lambda user: user.balance, reverse=True)
+        return sorted_users[:limit]
+
+    async def get_top_users_by_combined_balance(self, guild_id, limit):
+        users = await self.get_users_in_guild(guild_id)
+        sorted_users = sorted(users, key=lambda user: user.balance + user.bank_balance, reverse=True)
+        return sorted_users[:limit]
 
     async def get_all_users(self):
         all_users = []
@@ -132,30 +122,9 @@ class DiscordDatabase:
             user_data = self.initialize_default_user_data(user_data)
             user = User(self, **user_data)
             if user.is_in_jail():
-                users_in_jail.append(user.user_id)
+                users_in_jail.append(user)
 
         return users_in_jail
-
-    async def add_user(self, user):
-        await self.user_collection.insert_one(user.to_dict())
-
-    # async def get_user(self, user_id):
-    #     user_data = await self.user_collection.find_one({"user_id": user_id}, {"_id": 0})
-    #     if user_data:
-    #         user_data = self.initialize_default_user_data(user_data)
-    #         return User(self, **user_data)
-    #     user = User(self, user_id, False,
-    #                 f'{datetime.utcnow()}', 0, 0, False, 0, 0, {}, 0, {})
-    #     await self.add_user(user)
-    #     user_data = await self.user_collection.find_one({"user_id": user_id}, {"_id": 0})
-    #     user_data = self.initialize_default_user_data(user_data)
-    #     return User(self, **user_data)
-
-    async def update_user(self, user_id, new_data):
-        await self.user_collection.update_one({"user_id": user_id}, {"$set": new_data})
-
-    async def delete_user(self, user_id):
-        await self.user_collection.delete_one({"user_id": user_id})
 
     # Guild operations
     async def add_guild(self, guild):

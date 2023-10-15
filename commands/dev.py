@@ -146,7 +146,8 @@ class Dev(commands.Cog):
         user = user or ctx.author
         user_data = await ctx.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         user_data.cooldowns = {}
-        await user_data.update_user({"cooldowns": user_data.cooldowns})
+        #await user_data.update_user({"cooldowns": user_data.cooldowns})
+        await user_data.update_fields(cooldowns={})
         await ctx.reply("Cooldowns cleared.")
 
     # stolen from random gist
@@ -300,7 +301,7 @@ class Dev(commands.Cog):
         if not user_data.jail:
             await ctx.send(f"{user.display_name} is not in jail.")
         else:
-            await user_data.update_user({"jail": {}})
+            await user_data.update_fields(jail={})
             await ctx.send(f"Cleared jail time for {user.display_name}.")
 
     @jail.command(name="add", description="Add jail time for a user.")
@@ -310,7 +311,8 @@ class Dev(commands.Cog):
 
         remaining_time = current_jail_info.get(
             "remaining_time", 0) + time_in_seconds
-        await user_data.update_user({"jail": {"remaining_time": remaining_time}})
+        #await user_data.update_user({"jail": {"remaining_time": remaining_time}})
+        await user_data.update_fields(jail={"remaining_time": remaining_time})
         await ctx.send(f"Added {time_in_seconds} seconds of jail time for {user.display_name}.")
 
     @commands.group("streaks", description="Manage user streaks.", invoke_without_command=True)
@@ -325,7 +327,7 @@ class Dev(commands.Cog):
         if not user_data.daily_streak:
             await ctx.send(f"{user.display_name} has no streak.")
         else:
-            await user_data.update_user({"daily_streak": {}})
+            await user_data.update_fields(daily_streak={})
             await ctx.send(f"Cleared streak for {user.display_name}.")
 
     @streaks.command(name="clearweekly", description="Clear the weekly streak of a user.")
@@ -335,7 +337,7 @@ class Dev(commands.Cog):
         if not user_data.weekly_streak:
             await ctx.send(f"{user.display_name} has no streak.")
         else:
-            await user_data.update_user({"weekly_streak": {}})
+            await user_data.update_fields(weekly_streak={})
             await ctx.send(f"Cleared streak for {user.display_name}.")
 
     @commands.group("economy", description="Manage user economy.", invoke_without_command=True)

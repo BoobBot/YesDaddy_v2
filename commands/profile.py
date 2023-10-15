@@ -35,7 +35,8 @@ class Profile(commands.Cog):
         if cost_total > user_data.balance:
             return await ctx.reply(f":x: {user.mention} needs ${cost_total} to get out of jail.")
         await user_data.subtract_balance(cost_total)
-        await user_data.update_user({"jail": {}})
+        #await user_data.update_user({"jail": {}})
+        await user_data.update_fields(jail={})
         em = discord.Embed(title=f"{user}'s Bail", description=f":white_check_mark: {user.mention} has been released from jail for {cost_total}.", colour=user_color)
         timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
         em.set_author(
