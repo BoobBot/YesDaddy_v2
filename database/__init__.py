@@ -32,7 +32,7 @@ class DiscordDatabase:
         if guild_data and 'users' in guild_data:
             user_data = guild_data['users'][0]
             user_data['guild_id'] = guild_id  # Insert guild_id into user_data if it doesn't already exist.
-            return User.from_existing(user_data)
+            return User.from_existing(self, user_data)
 
         user = User.create(self, user_id, guild_id)
         await user.save(guild_id=guild_id)
