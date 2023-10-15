@@ -12,20 +12,21 @@ class SupportChannelView(discord.ui.View):
     @discord.ui.button(label='Start a support ticket', style=discord.ButtonStyle.green,
                        custom_id='persistent_view:support', emoji='🆘')
     async def support(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.defer(thinking=True, ephemeral=True)
         retrieved_guild = await interaction.client.db_client.get_guild(interaction.guild.id)
 
         open_ticket = next((ticket for ticket in retrieved_guild.support_tickets if
                             ticket.get('user_id') == interaction.user.id and ticket.get('status') == 'open'), None)
 
         if open_ticket is not None:
-            return await interaction.response.send_message(
+            return await interaction.followup.send(
                 f"You are already have an open ticket at <#{open_ticket['channel_id']}>", ephemeral=True)
 
         try:
             dm_channel = await interaction.user.create_dm()
             await dm_channel.send("Hello! opening a support ticket for you.")
         except discord.Forbidden:
-            return await interaction.response.send_message("I couldn't DM you! Do you have DMs disabled?",
+            return await interaction.followup.send("I couldn't DM you! Do you have DMs disabled?",
                                                            ephemeral=True)
 
         category_id = 1141700782006222970
@@ -38,7 +39,7 @@ class SupportChannelView(discord.ui.View):
         }
         new_channel = await interaction.guild.create_text_channel(interaction.user.name, category=category,
                                                                   overwrites=overwrites)
-        await interaction.response.send_message("Opened support ticket, check your DMs!", ephemeral=True)
+        await interaction.followup.send("Opened support ticket, check your DMs!", ephemeral=True)
         ticket_data = {
             "channel_id": new_channel.id,
             "dm_channel_id": dm_channel.id,

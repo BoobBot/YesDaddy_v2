@@ -14,19 +14,20 @@ class SupportTicketView(discord.ui.View):
 
     @discord.ui.button(label='close', style=discord.ButtonStyle.grey, custom_id='support_view:close')
     async def support_ticket_close(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.defer(thinking=True, ephemeral=True)
         data = await interaction.client.db_client.get_guild(interaction.guild.id)
         if not data:
             interaction.client.log.error("No data found for ticket, this should not happen :/")
-            return await interaction.response.send_message("Something went wrong", ephemeral=True)
+            return await interaction.followup.send("Something went wrong", ephemeral=True)
 
         ticket = next((ticket for ticket in data.support_tickets if ticket.get("channel_id") == interaction.channel.id),
                       None)
 
         if not ticket:
-            return await interaction.response.send_message('Ticket data not found', ephemeral=True)
+            return await interaction.followup.send('Ticket data not found', ephemeral=True)
 
         if ticket.get("user_id") == interaction.user.id:
-            return await interaction.response.send_message("You can't close this yourself, this is not your button",
+            return await interaction.followup.send("You can't close this yourself, this is not your button",
                                                            ephemeral=True)
 
         user_id = ticket.get("user_id")
@@ -77,6 +78,6 @@ class SupportTicketView(discord.ui.View):
                       file=discord.File(transcript_bytes, filename="ticket_transcript.html"))
 
         # Delete the ticket channel
-        await interaction.response.send_message("Ticket Closed", ephemeral=True)
+        await interaction.followup.send("Ticket Closed", ephemeral=True)
         await asyncio.sleep(5)
         await interaction.channel.delete()
