@@ -43,7 +43,6 @@ class Moderation(commands.Cog):
         if not ban_count:
             await ctx.reply(":x: This server has no bans.")
         limit = min(LIMIT, min(limit, ban_count))
-        await ctx.reply(f"Gathering stats up to the last {limit} bans.")
         return limit, bans
 
     @staticmethod
@@ -152,6 +151,7 @@ class Moderation(commands.Cog):
 
         This can take a while for servers with lots of bans.
         """
+        await ctx.reply(f"Gathering stats up to the last {limit} bans.")
         limit, _ = await self.get_ban_limit(ctx, limit)
         async with ctx.typing():
             counter = Counter()
