@@ -144,7 +144,7 @@ class Moderation(commands.Cog):
         return
 
     @commands.bot_has_permissions(ban_members=True, view_audit_log=True)
-    @commands.hybrid_command(name="ban chart", description="Display a chart of the moderators with the most bans.")
+    @commands.hybrid_command(name="ban_chart", description="Display a chart of the moderators with the most bans.")
     @app_commands.describe(limit="The number of bans to check, between 1 and 1,000,000")
     async def ban_chart(self, ctx: commands.Context, limit: Optional[int] = LIMIT):
         """
