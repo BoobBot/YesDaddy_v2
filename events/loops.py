@@ -97,6 +97,7 @@ class Loops(commands.Cog):
                     if guild.afk_channel and channel.id == guild.afk_channel.id:
                         continue
                     count = len([member for member in channel.members if not member.bot])
+
                     if count <= 1:
                         continue
                     for member in channel.members:
