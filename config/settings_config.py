@@ -102,11 +102,11 @@ def create_leaderboard_embed(title, entries, page_number):
         if title == "Leaderboard - Levels: Page":
             value = f"{emoji} {member.display_name}: {user.level}"
         elif title == "Leaderboard - Balance: Page":
-            value = f"{emoji} {member.display_name}: {user['balance']}"
+            value = f"{emoji} {member.display_name}: {user.balance}"
         elif title == "Leaderboard - Bank Balance: Page":
-            value = f"{emoji} {member.display_name}: {user['bank_balance']}"
+            value = f"{emoji} {member.display_name}: {user.bank_balance}"
         else:
-            value = f"{emoji} {member.display_name}: {user['balance'] + user['bank_balance']}"
+            value = f"{emoji} {member.display_name}: {user.balance + user.bank_balance}"
 
         embed.add_field(name=f"#{index}", value=value, inline=False)
 
