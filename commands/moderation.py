@@ -523,7 +523,7 @@ class Moderation(commands.Cog):
     async def buy_gift(self, ctx: commands.Context, gift: str, quantity: int = 1):
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         gift_data = await self.bot.db_client.get_shop_gifts(guild_id=ctx.guild.id)
-        gift_data = next((gift for gift in gift_data if str(gift.get("_id")) == str(gift)), None)
+        gift_data = next((gd for gd in gift_data if str(gd.get("_id")) == str(gift)), None)
         if not gift_data:
             return await ctx.send("That gift doesn't exist in the shop.")
         if user_data.balance < gift_data.get("price"):
