@@ -260,8 +260,8 @@ class Core(commands.Cog):
         if not is_emote:
             return await ctx.send("That is not a valid emote.")
         gift_data = {
-            "_id": name,
-            "name": name,
+            "_id": name.lower(),
+            "name": name.capitalize(),
             "added_by": ctx.author.id,
             "add_at": datetime.datetime.utcnow(),
             "price": price,

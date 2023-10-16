@@ -511,8 +511,9 @@ class Moderation(commands.Cog):
         gifts = await self.bot.db_client.get_shop_gifts(guild_id=ctx.guild.id)
         em = discord.Embed(title="Shop Gifts", color=await generate_embed_color(ctx.author))
         for gift_data in gifts:
+            e = "➕" if gift_data.get("positive") else "➖"
             em.add_field(name="",
-                         value=f"\nGift: {gift_data.get('name')}\nPrice: {gift_data.get('price')}\nAdded By: <@{gift_data.get('added_by')}>",
+                         value=f"\nGift: {gift_data.get('name')} {gift_data.get('emote')}\nPrice: {gift_data.get('price')}\nValue: {e} {gift_data.get('value')}\n",
                          inline=False)
         await ctx.send(embed=em)
 
