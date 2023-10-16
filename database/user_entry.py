@@ -164,7 +164,7 @@ class User:
             await self.update_fields(daily_streak=1, last_daily_claim=now)
             return False, self.daily_streak
 
-        days_since_last_claim = (now - self.last_daily_claim.replace(tzinfo=timezone.utc)).days
+        days_since_last_claim = (now.replace(tzinfo=timezone.utc) - self.last_daily_claim.replace(tzinfo=timezone.utc)).days
 
         if days_since_last_claim > 2:
             await self.update_fields(daily_streak=1, last_daily_claim=now)
