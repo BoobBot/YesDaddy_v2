@@ -311,11 +311,13 @@ class Profile(commands.Cog):
                 for role_data_two in user_two_data.inventory.get("roles", []):
                     if role_data_two.get("_id") == role:
                         return await ctx.reply("User already has role.")
-                if role_data.get("_id") in [str(role.id) for role in ctx.author.roles]:
+                if str(role_data.get("_id")) in [str(role.id) for role in ctx.author.roles]:
                     await ctx.author.remove_roles(ctx.guild.get_role(int(role_data.get("_id"))))
                 user_data.inventory.get("roles").remove(role_data)
                 await user_data.update_fields(inventory=user_data.inventory)
-                user_two_data.inventory.get("roles", []).append(role_data)
+                user_two_inv = user_two_data.inventory.get("roles", [])
+                user_two_inv.append(role_data)
+                print(user_two_data.inventory)
                 await user_two_data.update_fields(inventory=user_two_data.inventory)
                 return await ctx.reply(f"{role_data.get('name')} given to {user.mention}")
         return await ctx.reply("Role not found in inventory.")
