@@ -60,6 +60,55 @@ monsters = [
      "value": 40, "success_rate": 0.9, "rarity": 0.9}  # Common
 ]
 
+claim_titles = {
+    1: "The Solo Admirer",
+    5: "The Companion Collector",
+    10: "The Waifu Enthusiast",
+    25: "The Devoted Admirer",
+    50: "The Harem Builder",
+    75: "The Waifu Master",
+    100: "The Harem God",
+    150: "The Ultimate Waifu Overlord",
+    200: "The Supreme Harem Monarch",
+    250: "The Grand Waifu Sovereign",
+    300: "The Waifu Connoisseur Extraordinaire",
+    350: "The Waifu Dominator",
+    400: "The Celestial Harem Emperor",
+    450: "The Infinite Waifu Overlord",
+    500: "The Waifu Universe Creator",
+    550: "The Legendary Harem Deity",
+    600: "The Omniscient Waifu Almighty",
+    1000: "The Waifu Divinity",
+}
+
+divorce_titles = {
+    1: "The Heartbroken",
+    5: "The Divorce Novice",
+    10: "The Relationship Tester",
+    25: "The Unlucky Lover",
+    50: "The Breakup Survivor",
+    75: "The Divorce Expert",
+    100: "The Resilient Heart",
+    150: "The Eternal Optimist",
+    200: "The Battle-Hardened Heart",
+    300: "The Divorce Veteran",
+}
+
+affinity_titles = {
+    1: "The Affinity Explorer",
+    5: "The Ever-Shifting Heart",
+    10: "The Change Enthusiast",
+    25: "The Adaptable Soul",
+    50: "The Affinity Chameleon",
+    75: "The Heart in Flux",
+    100: "The Eternal Wanderer",
+    150: "The Ever-Evolving Spirit",
+    300: "The Boundless Heart",
+}
+
+
+
+
 
 def calculate_payout(result):
     total_payout = 0
