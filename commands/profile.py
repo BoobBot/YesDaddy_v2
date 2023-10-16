@@ -340,11 +340,11 @@ class Profile(commands.Cog):
                    if not current or search(role.get('name').lower(), current.lower())
                ][:25]
 
-    @inventory.group(name="'gift", description="gift commands")
+    @inventory.group(name="'gift_inventory", description="gift commands")
     async def inventory_gift(self, ctx):
         await ctx.send("Please use a valid subcommand: `view` or `give`.")
 
-    @inventory_gift.command(name="view", description="view gift inventory")
+    @inventory_gift.command(name="view_gifts", description="view gift inventory")
     async def inventory_gift_view(self, ctx):
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         if not user_data.inventory.get("gifts"):
