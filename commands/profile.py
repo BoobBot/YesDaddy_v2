@@ -378,7 +378,7 @@ class Profile(commands.Cog):
             return await ctx.reply("You can't claim yourself, wtf is wrong with you?")
         guild_data = await self.bot.db_client.get_guild(guild_id=ctx.guild.id)
         waifu_data = await guild_data.get_waifu(waifu.id)
-        if waifu_data and str(waifu_data["owner"]) == str(ctx.author.id):
+        if waifu_data and str(waifu_data["owner_id"]) == str(ctx.author.id):
             return await ctx.reply("You already own that waifu! Raise their value by giving them gifts!")
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         if user_data.balance < value:
@@ -387,7 +387,7 @@ class Profile(commands.Cog):
             return await ctx.reply("That waifu is worth more than that.")
         if str(waifu_data["affinity"]) == str(ctx.author.id):
             new_value = int(value * 1.5)
-        waifu_data["owner"] = ctx.author.id
+        waifu_data["owner_id"] = ctx.author.id
         waifu_data["value"] = new_value
         await guild_data.update_waifu(waifu_data)
         self_waifu = await guild_data.get_waifu(ctx.author.id)
