@@ -337,7 +337,7 @@ class Core(commands.Cog):
             if data['list']:
                 definition = data['list'][0]
                 color = await generate_embed_color(ctx.author)
-                em = discord.Embed(color=color, title=definition['word'], description=f"Search term: {term}")
+                em = discord.Embed(color=color, title="Urban dictionary", description=f"**Search term**: {term}")
                 em.add_field(name='**Definition**', value=definition['definition'], inline=False)
                 em.add_field(name='**Example**', value=definition['example'], inline=False)
                 em.add_field(name='**Thumbs Up**', value=definition['thumbs_up'], inline=True)
