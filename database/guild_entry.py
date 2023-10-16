@@ -17,9 +17,9 @@ class Guild:
         self.lvl_roles = lvl_roles if lvl_roles else []
         self.bonus_roles = bonus_roles if bonus_roles else []
         self.text_reactions = text_reactions if text_reactions else []
-        self.shop_roles = shop_roles if shop_roles else {}
-        self.shop_gifts = shop_gifts if shop_gifts else {}
-        self.shop_items = shop_items if shop_items else {}
+        self.shop_roles = shop_roles if shop_roles else []
+        self.shop_gifts = shop_gifts if shop_gifts else []
+        self.shop_items = shop_items if shop_items else []
         self.users = users if users else []
         self.bonus_cash_roles = bonus_cash_roles if bonus_cash_roles else []
 
