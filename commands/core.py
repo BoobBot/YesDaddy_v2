@@ -338,9 +338,11 @@ class Core(commands.Cog):
                 definition = data['list'][0]
                 color = await generate_embed_color(ctx.author)
                 em = discord.Embed(color=color, title=definition['word'], description=f"Search term: {term}")
-                em.add_field(name='Example', value=definition['example'], inline=False)
-                em.add_field(name='Thumbs Up', value=definition['thumbs_up'], inline=True)
-                em.add_field(name='Thumbs Down', value=definition['thumbs_down'], inline=True)
+                em.add_field(name='**Definition**', value=definition['definition'], inline=False)
+                em.add_field(name='**Example**', value=definition['example'], inline=False)
+                em.add_field(name='**Thumbs Up**', value=definition['thumbs_up'], inline=True)
+                em.add_field(name='**Thumbs Down**', value=definition['thumbs_down'], inline=True)
+                em.add_field(name='**Link**', value=definition['permalink'], inline=False)
                 em.set_author(
                     name="Urban Command",
                     icon_url=self.bot.user.display_avatar.with_static_format("png"),
