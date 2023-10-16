@@ -1,6 +1,6 @@
 import datetime
 from io import BytesIO
-from typing import Optional
+from typing import Optional, List
 
 import discord
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
@@ -13,7 +13,7 @@ from utils.paginator import Paginator
 from utils.pillowutils import (arc_bar, font_auto_scale, get_brightness,
                                mask_ellipsis)
 from utils.utilities import (generate_embed_color, progress_percentage,
-                             subtraction_percentage, calculate_remaining_xp)
+                             subtraction_percentage, calculate_remaining_xp, search)
 
 
 class Profile(commands.Cog):
@@ -164,7 +164,7 @@ class Profile(commands.Cog):
     async def leaderboard_level(self, ctx):
         await ctx.defer()
         top_users = await self.bot.db_client.get_top_users(limit=200, guild_id=ctx.guild.id,
-                                                                    sort_key=lambda user: user.level)
+                                                           sort_key=lambda user: user.level)
 
         guild = ctx.guild
 
@@ -238,6 +238,99 @@ class Profile(commands.Cog):
         pages = create_leaderboard_pages(
             sorted_users, "Leaderboard - Total Balance: Page")
         await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
+
+    @commands.hybrid_group(name="inventory", description="inventory commands")
+    async def inventory(self, ctx):
+        await ctx.send("Please use a valid subcommand: `view` or `use`.")
+
+    @inventory.group(name="role", description="role inventory commands")
+    async def inventory_role(self, ctx):
+        await ctx.send("Please use a valid subcommand: `view` or `use`.")
+
+    @inventory_role.command(name="view", description="view role inventory")
+    async def inventory_role_view(self, ctx):
+        user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
+        if not user_data.inventory.get("roles"):
+            return await ctx.reply("You don't have any roles in your inventory.")
+        em = discord.Embed(title=f"{ctx.author}'s Role Inventory", color=discord.Color.blurple())
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        em.set_author(
+            name="Role Inventory Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png"))
+        for role in user_data.inventory.get("roles"):
+            role_obj = ctx.guild.get_role(int(role.get("role_id")))
+            if role_obj:
+                em.add_field(name=role_obj.name, value=f"{role_obj.mention} {role.get('description')}")
+        await ctx.reply(embed=em)
+
+    @inventory_role.command(name="toggle", description="toggle role")
+    async def inventory_role_toggle(self, ctx, role: str):
+        user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
+        if not user_data.inventory.get("roles"):
+            return await ctx.reply("You don't have any roles in your inventory.")
+        for role in user_data.inventory.get("roles"):
+            role_obj = ctx.guild.get_role(int(role.get("role_id")))
+            if role_obj:
+                if role_obj in ctx.author.roles:
+                    await ctx.author.remove_roles(role_obj)
+                    return await ctx.reply(f"{role_obj.mention} removed.")
+                else:
+                    await ctx.author.add_roles(role_obj)
+                    return await ctx.reply(f"{role_obj.mention} added.")
+        await ctx.reply("Roles removed.")
+
+    @inventory_role_toggle.autocomplete('role')
+    async def buy_role_autocomplete(self,
+                                    interaction: discord.Interaction,
+                                    current: str,
+                                    ) -> List[app_commands.Choice[str]]:
+
+        user_data = await self.bot.db_client.get_user(user_id=interaction.user.id, guild_id=interaction.guild.id)
+        roles = user_data.inventory.get("roles")
+
+        return [
+                   app_commands.Choice(name=role.get('name'), value=str(role.get('_id')))
+                   for role in roles
+                   if not current or search(role.get('name').lower(), current.lower())
+               ][:25]
+
+    @inventory_role.command(name="give_role", description="give role")
+    @app_commands.describe(user="User to give role to")
+    async def inventory_role_give_role(self, ctx, role: str, user: discord.Member):
+        user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
+        if not user_data.inventory.get("roles"):
+            return await ctx.reply("You don't have any roles in your inventory.")
+        for role_data in user_data.inventory.get("roles"):
+            if role_data.get("_id") == role:
+                user_two_data = await self.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
+                for role_data_two in user_two_data.inventory.get("roles"):
+                    if role_data_two.get("_id") == role:
+                        return await ctx.reply("User already has role.")
+
+                user_data.inventory.get("roles").remove(role_data)
+                await user_data.update_fields(inventory=user_data.inventory)
+                user_two_data.inventory.get("roles").append(role_data)
+                await user_two_data.update_fields(inventory=user_two_data.inventory)
+                return await ctx.reply(f"{role_data.get('name')} given to {user.mention}")
+        return await ctx.reply("Role not found in inventory.")
+
+    @inventory_role_give_role.autocomplete('role')
+    async def buy_role_autocomplete(self,
+                                    interaction: discord.Interaction,
+                                    current: str,
+                                    ) -> List[app_commands.Choice[str]]:
+
+        user_data = await self.bot.db_client.get_user(user_id=interaction.user.id, guild_id=interaction.guild.id)
+        roles = user_data.inventory.get("roles")
+        return [
+                   app_commands.Choice(name=role.get('name'), value=str(role.get('_id')))
+                   for role in roles
+                   if not current or search(role.get('name').lower(), current.lower())
+               ][:25]
 
 
 async def setup(bot):
