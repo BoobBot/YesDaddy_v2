@@ -53,7 +53,7 @@ def font_auto_scale(font: ImageFont, text: str, desired_width: int, size_max: in
                     size_min: int, stepping: int = 1) -> ImageFont:
     for size in range(size_max, size_min - 1, -stepping):
         new_font: ImageFont.truetype = font.font_variant(size=size)
-        longest_line = max(new_font.getlength(line)[0] for line in text.splitlines())
+        longest_line = max(new_font.getlength(line) for line in text.splitlines())
         if longest_line <= desired_width:
             return new_font
 
