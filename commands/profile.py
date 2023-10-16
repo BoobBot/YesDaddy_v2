@@ -308,7 +308,7 @@ class Profile(commands.Cog):
             if str(role_data.get("_id")) == str(role):
                 print("found role")
                 user_two_data = await self.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
-                for role_data_two in user_two_data.inventory.get("roles"):
+                for role_data_two in user_two_data.inventory.get("roles", []):
                     if role_data_two.get("_id") == role:
                         return await ctx.reply("User already has role.")
                 if role_data.get("_id") in [str(role.id) for role in ctx.author.roles]:
