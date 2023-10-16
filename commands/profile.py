@@ -273,7 +273,7 @@ class Profile(commands.Cog):
         if not user_data.inventory.get("roles"):
             return await ctx.reply("You don't have any roles in your inventory.")
         for role in user_data.inventory.get("roles"):
-            role_obj = ctx.guild.get_role(int(role.get("role_id")))
+            role_obj = ctx.guild.get_role(int(role.get("_id")))
             if role_obj:
                 if role_obj in ctx.author.roles:
                     await ctx.author.remove_roles(role_obj)
@@ -284,7 +284,7 @@ class Profile(commands.Cog):
         await ctx.reply("Roles removed.")
 
     @inventory_role_toggle.autocomplete('role')
-    async def buy_role_autocomplete(self,
+    async def toggle_role_autocomplete(self,
                                     interaction: discord.Interaction,
                                     current: str,
                                     ) -> List[app_commands.Choice[str]]:
@@ -319,7 +319,7 @@ class Profile(commands.Cog):
         return await ctx.reply("Role not found in inventory.")
 
     @inventory_role_give_role.autocomplete('role')
-    async def buy_role_autocomplete(self,
+    async def give_role_autocomplete(self,
                                     interaction: discord.Interaction,
                                     current: str,
                                     ) -> List[app_commands.Choice[str]]:
