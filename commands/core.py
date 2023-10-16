@@ -1,6 +1,7 @@
 import datetime
 
 import discord
+import emoji
 from discord import app_commands
 from discord.ext import commands
 
@@ -10,6 +11,12 @@ from utils.utilities import generate_embed_color
 class Core(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+
+    async def is_emote(self, emote):
+        for e in self.bot.emojis:
+            if emote == str(e):
+                return True
+        return emoji.is_emoji(emote)
 
     @commands.hybrid_command(name="ping", description="Show bot and API latency.")
     async def ping(self, ctx):
@@ -237,6 +244,54 @@ class Core(commands.Cog):
             role = ctx.guild.get_role(int(role_data.get('_id')))
             em.add_field(name="",
                          value=f"\nRole: {role.mention}\nPrice: {role_data.get('price')}\nAdded By: <@{role_data.get('added_by')}>",
+                         inline=False)
+        await ctx.send(embed=em)
+
+    @shop_admin.command(name="add_gift", description="Add an gift to the shop")
+    @app_commands.describe(name="The name gift to add.")
+    @app_commands.describe(price="The price of the gift.")
+    @app_commands.describe(description="The description of the gift.")
+    @app_commands.describe(value="The value of the gift.")
+    @app_commands.describe(emote="The emote of the gift.")
+    @app_commands.describe(positive="Is the gift positive?")
+    async def shop_admin_add_gift(self, ctx: commands.Context, name: str, price: int, description: str, value: int,
+                                  emote: str, positive: bool):
+        is_emote = await self.is_emote(emote)
+        if not is_emote:
+            return await ctx.send("That is not a valid emote.")
+        gift_data = {
+            "_id": name,
+            "name": name,
+            "added_by": ctx.author.id,
+            "add_at": datetime.datetime.utcnow(),
+            "price": price,
+            "description": description,
+            "value": value,
+            "emote": emote,
+            "positive": positive
+        }
+        await self.bot.db_client.add_shop_gift(guild_id=ctx.guild.id, gift_data=gift_data)
+        await ctx.send(f"Added {name}{emote} to the shop.")
+
+    @shop_admin.command(name="remove_gift", description="Remove an gift from the shop")
+    @app_commands.describe(name="The name of the gift to remove.")
+    async def shop_admin_remove_gift(self, ctx: commands.Context, name: str):
+        await self.bot.db_client.delete_shop_gift(guild_id=ctx.guild.id, name=name)
+        await ctx.send(f"Removed {name} from the shop.")
+
+    @shop_admin.command(name="list_gifts", description="List all gifts in the shop")
+    async def shop_admin_list_gifts(self, ctx: commands.Context):
+        gifts = await self.bot.db_client.get_shop_gifts(guild_id=ctx.guild.id)
+        em = discord.Embed(title="Shop Gifts", color=await generate_embed_color(ctx.author))
+        for gift_data in gifts:
+            em.add_field(name="",
+                         value=f"\nName: {gift_data.get('name')}\n"
+                               f"Price: {gift_data.get('price')}\n"
+                               f"Description: {gift_data.get('description')}\n"
+                               f"Value: {gift_data.get('value')}\n"
+                               f"Emote: {gift_data.get('emote')}\n"
+                               f"Positive: {gift_data.get('positive')}\n"
+                               f"Added By: <@{gift_data.get('added_by')}>",
                          inline=False)
         await ctx.send(embed=em)
 

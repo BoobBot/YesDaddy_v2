@@ -21,7 +21,7 @@ from discord.ext import commands
 matplotlib.use("agg")
 import asyncio
 import functools
-
+import emoji
 import matplotlib.pyplot as plt
 
 plt.switch_backend("agg")
@@ -472,6 +472,7 @@ class Moderation(commands.Cog):
     async def items(self, ctx):
         if not ctx.invoked_subcommand:
             await ctx.send_help(ctx.command)
+
     @items.command(name="list", description="List all items in the shop")
     async def list(self, ctx: commands.Context):
         items = await self.bot.db_client.get_shop_items(guild_id=ctx.guild.id)
