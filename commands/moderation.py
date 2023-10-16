@@ -528,7 +528,7 @@ class Moderation(commands.Cog):
             return await ctx.send("That gift doesn't exist in the shop.")
         if user_data.balance < gift_data.get("price"):
             return await ctx.send("You don't have enough money to buy that gift.")
-        owned_gift = user_data.get_item_by_key("gift_id", gift_data.get("_id"), "gifts")
+        owned_gift = user_data.get_item_by_key("_id", gift_data.get("_id"), "gifts")
         await user_data.update_fields(balance=user_data.balance - gift_data.get("price") * quantity)
         if owned_gift is not None:
             owned_gift["quantity"] += quantity
