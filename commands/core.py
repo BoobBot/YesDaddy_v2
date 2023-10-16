@@ -350,7 +350,7 @@ class Core(commands.Cog):
                     text=f"Command ran by {ctx.author.display_name} at {timestamp}",
                     icon_url=ctx.author.display_avatar.with_static_format("png"))
                 em.set_thumbnail(
-                    url="https://cdn.discordapp.com/attachments/1145445177092231345/1145445181458847232/urban.png")
+                    url="https://static2.tgstat.ru/channels/_0/69/69eacff302f587d399c3b99c1183d94a.jpg")
                 return await ctx.reply(embed=em)
             return await ctx.reply(f'No definitions found for "{term}" on Urban Dictionary.')
         except Exception as e:
