@@ -262,7 +262,7 @@ class Profile(commands.Cog):
             text=f"Command ran by {ctx.author.display_name} at {timestamp}",
             icon_url=ctx.author.display_avatar.with_static_format("png"))
         for role in user_data.inventory.get("roles"):
-            role_obj = ctx.guild.get_role(int(role.get("role_id")))
+            role_obj = ctx.guild.get_role(int(role.get("_id")))
             if role_obj:
                 em.add_field(name=role_obj.name, value=f"{role_obj.mention} {role.get('description')}")
         await ctx.reply(embed=em)
@@ -310,7 +310,8 @@ class Profile(commands.Cog):
                 for role_data_two in user_two_data.inventory.get("roles"):
                     if role_data_two.get("_id") == role:
                         return await ctx.reply("User already has role.")
-
+                if role_data.get("_id") in [str(role.id) for role in ctx.author.roles]:
+                    await ctx.author.remove_roles(ctx.guild.get_role(int(role_data.get("_id"))))
                 user_data.inventory.get("roles").remove(role_data)
                 await user_data.update_fields(inventory=user_data.inventory)
                 user_two_data.inventory.get("roles").append(role_data)
