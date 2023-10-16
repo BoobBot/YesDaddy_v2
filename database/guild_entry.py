@@ -65,7 +65,6 @@ class Guild:
     async def create_waifu(self, user_id):
         waifu_data = {"user_id": user_id,
                       "owner_id": None,
-                      "price": 1,
                       "value": 1,
                       "affinity": None,
                       "affinity_changes": 0,

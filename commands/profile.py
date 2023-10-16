@@ -365,6 +365,72 @@ class Profile(commands.Cog):
                          inline=False)
         await ctx.reply(embed=em)
 
+    @commands.hybrid_group(name="waifu", description="waifu commands")
+    async def waifu(self, ctx):
+        await ctx.send("Please use a valid subcommand")
+
+    @waifu.command(name="claim", description="claim waifu")
+    @app_commands.describe(waifu="Waifu to claim")
+    async def waifu_claim(self, ctx, waifu: discord.Member, value: int):
+        await ctx.typing(ephemeral=False)
+        new_value = value
+        if waifu.id == ctx.author.id:
+            return await ctx.reply("You can't claim yourself, wtf is wrong with you?")
+        guild_data = await self.bot.db_client.get_guild(guild_id=ctx.guild.id)
+        waifu_data = await guild_data.get_waifu(waifu.id)
+        if waifu_data and str(waifu_data["owner"]) == str(ctx.author.id):
+            return await ctx.reply("You already own that waifu! Raise their value by giving them gifts!")
+        user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
+        if user_data.balance < value:
+            return await ctx.reply("You don't have enough coins to claim that waifu.")
+        if waifu_data['value'] > value:
+            return await ctx.reply("That waifu is worth more than that.")
+        if str(waifu_data["affinity"]) == str(ctx.author.id):
+            new_value = int(value * 1.5)
+        waifu_data["owner"] = ctx.author.id
+        waifu_data["value"] = new_value
+        await guild_data.update_waifu(waifu.id, waifu_data)
+        self_waifu = await guild_data.get_waifu(ctx.author.id)
+        self_waifu["claimed"].append(waifu.id)
+        await guild_data.update_waifu(ctx.author.id, self_waifu)
+        await user_data.subtract_balance(value)
+        await ctx.reply(f"You claimed {waifu.mention} for ${value}.")
+
+    @waifu.command(name="set_affinity", description="set affinity")
+    @app_commands.describe(waifu="Waifu to set affinity")
+    async def waifu_set_affinity(self, ctx, waifu: discord.Member):
+        await ctx.typing(ephemeral=False)
+        guild_data = await self.bot.db_client.get_guild(guild_id=ctx.guild.id)
+        waifu_data = await guild_data.get_waifu(ctx.author.id)
+        waifu_data["affinity"] = waifu.id
+        waifu_data["affinity_changes"] += 1
+        await guild_data.update_waifu(ctx.author.id, waifu_data)
+        return await ctx.reply(f"You set {waifu.mention} as your affinity.")
+
+    @waifu.command(name="divorce", description="divorce waifu")
+    @app_commands.describe(waifu="Waifu to divorce")
+    async def waifu_divorce(self, ctx, waifu: discord.Member):
+        await ctx.typing(ephemeral=False)
+        guild_data = await self.bot.db_client.get_guild(guild_id=ctx.guild.id)
+        waifu_data = await guild_data.get_waifu(waifu.id)
+        if waifu_data["owner"] != ctx.author.id:
+            return await ctx.reply("You don't own that waifu.")
+        waifu_data["owner"] = None
+        await guild_data.update_waifu(waifu.id, waifu_data)
+        self_waifu = await guild_data.get_waifu(ctx.author.id)
+        self_waifu["claimed"].remove(waifu.id)
+        self_waifu["divorces"] += 1
+        await guild_data.update_waifu(ctx.author.id, self_waifu)
+        return await ctx.reply(f"You divorced {waifu.mention}.")
+
+
+
+
+
+
+
+
+
 
 async def setup(bot):
     await bot.add_cog(Profile(bot))
