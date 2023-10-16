@@ -305,6 +305,8 @@ class Profile(commands.Cog):
         if not user_data.inventory.get("roles"):
             return await ctx.reply("You don't have any roles in your inventory.")
         for role_data in user_data.inventory.get("roles"):
+            print(role_data.get("_id"))
+            print(role)
             if role_data.get("_id") == role:
                 user_two_data = await self.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
                 for role_data_two in user_two_data.inventory.get("roles"):
