@@ -285,9 +285,9 @@ class Profile(commands.Cog):
 
     @inventory_role_toggle.autocomplete('role')
     async def toggle_role_autocomplete(self,
-                                    interaction: discord.Interaction,
-                                    current: str,
-                                    ) -> List[app_commands.Choice[str]]:
+                                       interaction: discord.Interaction,
+                                       current: str,
+                                       ) -> List[app_commands.Choice[str]]:
 
         user_data = await self.bot.db_client.get_user(user_id=interaction.user.id, guild_id=interaction.guild.id)
         roles = user_data.inventory.get("roles")
@@ -305,9 +305,10 @@ class Profile(commands.Cog):
         if not user_data.inventory.get("roles"):
             return await ctx.reply("You don't have any roles in your inventory.")
         for role_data in user_data.inventory.get("roles"):
-            print(role_data.get("_id"))
-            print(role)
+            print("sees" + role_data.get("_id"))
+            print("qwwq" + role)
             if role_data.get("_id") == role:
+                print("found role")
                 user_two_data = await self.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
                 for role_data_two in user_two_data.inventory.get("roles"):
                     if role_data_two.get("_id") == role:
@@ -323,9 +324,9 @@ class Profile(commands.Cog):
 
     @inventory_role_give_role.autocomplete('role')
     async def give_role_autocomplete(self,
-                                    interaction: discord.Interaction,
-                                    current: str,
-                                    ) -> List[app_commands.Choice[str]]:
+                                     interaction: discord.Interaction,
+                                     current: str,
+                                     ) -> List[app_commands.Choice[str]]:
 
         user_data = await self.bot.db_client.get_user(user_id=interaction.user.id, guild_id=interaction.guild.id)
         roles = user_data.inventory.get("roles")
