@@ -5,7 +5,7 @@ from discord import app_commands
 from discord.ext import commands
 
 from utils.utilities import generate_embed_color
-
+from urbandictionary import define
 
 class Core(commands.Cog):
     def __init__(self, bot):
@@ -326,6 +326,28 @@ class Core(commands.Cog):
                      inline=False)
         await ctx.reply(embed=em)
 
+    @commands.hybrid_command(name="urban", description="Search the urban dictionary.")
+    @app_commands.describe(term="The term to search for.")
+    async def urban(self, ctx, term: str):
+        definitions = define(term)
+        if not definitions:
+            return await ctx.reply(f'No definitions found for "{term}" on Urban Dictionary.')
+        definition = definitions[0]
+        color = await generate_embed_color(ctx.author)
+        em = discord.Embed(color=color, title=definition.word, description=f"Search term: {term}")
+        em.add_field(name='Example', value=definition.example, inline=False)
+        em.add_field(name='Thumbs Up', value=definition.thumbs_up, inline=True)
+        em.add_field(name='Thumbs Down', value=definition.thumbs_down, inline=True)
+        em.set_author(
+            name="Urban Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png"))
+        em.set_thumbnail(url="https://cdn.discordapp.com/attachments/1145445177092231345/1145445181458847232/urban.png")
+        await ctx.reply(embed=em)
 
 async def setup(bot):
     await bot.add_cog(Core(bot))
