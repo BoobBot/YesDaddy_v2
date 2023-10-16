@@ -102,6 +102,29 @@ class User:
         else:
             await self._db.update_guild_user(self.guild_id, self.user_id, self)
 
+    def get_item_by_key(self, key, value, inventory_key):
+        if inventory_key in self.inventory:
+            for item in self.inventory[inventory_key]:
+                if item.get(key) == value:
+                    return item
+        return None
+
+    async def set_item_by_key(self, key, value, new_item, inventory_key):
+        if inventory_key in self.inventory:
+            for item in self.inventory[inventory_key]:
+                if item.get(key) == value:
+                    item.update(new_item)
+                    await self.update_fields(inventory=self.inventory)
+                    return
+            # If the item with the specified key-value pair doesn't exist, add it.
+            self.inventory[inventory_key].append(new_item)
+            await self.update_fields(inventory=self.inventory)
+
+        else:
+            # If the inventory_key doesn't exist, create a new list with the new item.
+            self.inventory[inventory_key] = [new_item]
+            await self.update_fields(inventory=self.inventory)
+
     async def jail_user(self, hours, fine):
         await self.update_fields(jail={'start_time': datetime.utcnow(), 'duration_hours': hours, 'fine': fine})
 

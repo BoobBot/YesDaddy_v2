@@ -448,22 +448,12 @@ class Moderation(commands.Cog):
         user_data = await self.bot.db_client.get_user(ctx.author.id, ctx.guild.id)
         if user_data.balance < role_data.get("price"):
             return await ctx.send("You don't have enough money to buy that role.")
-
-        if user_data.inventory.get("roles", None) is None:
-            await user_data.update_fields(inventory={"roles": []})
-            user_data = await self.bot.db_client.get_user(user.id, ctx.guild.id)
-
-        user_data = await self.bot.db_client.get_user(user.id, ctx.guild.id)
         role = ctx.guild.get_role(int(role_data.get('_id')))
-        inv_roles = user_data.inventory.get("roles", [])
-        if role_data in inv_roles:
-            return await ctx.send("You already have that role.")
-        if role in ctx.author.roles:
-            return await ctx.send("You already have that role.")
-        await ctx.author.add_roles(role)
-        inv_roles = user_data.inventory.get("roles", [])
-        inv_roles.append(role_data)
-        await user_data.update_fields(balance=user_data.balance - role_data.get("price"), inventory=user_data.inventory)
+        retrieved_role = user_data.get_item_by_key("role_id", role.id, "roles")
+        if retrieved_role is not None:
+            return await ctx.send("You already own that role.")
+        await user_data.set_item_by_key("_id", role_data.get('_id'), role_data, "roles")
+        await user_data.update_fields(balance=user_data.balance - role_data.get("price"))
         await ctx.send(f"Bought {role_data.get('name')} for {role_data.get('price')}.")
 
     @buy_role.autocomplete('role')
