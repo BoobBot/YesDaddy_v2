@@ -340,6 +340,31 @@ class Profile(commands.Cog):
                    if not current or search(role.get('name').lower(), current.lower())
                ][:25]
 
+    @inventory.group(name="'gift", description="gift commands")
+    async def inventory_gift(self, ctx):
+        await ctx.send("Please use a valid subcommand: `view` or `give`.")
+
+    @inventory_gift.command(name="view", description="view gift inventory")
+    async def inventory_gift_view(self, ctx):
+        user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
+        if not user_data.inventory.get("gifts"):
+            return await ctx.reply(":x: You don't have any gifts in your inventory.")
+        em = discord.Embed(title=f"{ctx.author}'s Gift Inventory", color=discord.Color.blurple())
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        em.set_author(
+            name="Gift Inventory Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png"))
+        for gift_data in user_data.inventory.get("gifts"):
+            e = "➕" if gift_data.get("positive") else "➖"
+            em.add_field(name="",
+                         value=f"\nGift: {gift_data.get('name')} {gift_data.get('emote')}\nPrice: {gift_data.get('price')}\nValue: {e} {gift_data.get('value')}\nQuantity: {gift_data.get('quantity')}",
+                         inline=False)
+        await ctx.reply(embed=em)
+
 
 async def setup(bot):
     await bot.add_cog(Profile(bot))

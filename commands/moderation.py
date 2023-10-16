@@ -519,8 +519,23 @@ class Moderation(commands.Cog):
 
     @gift.command(name="buy", description="Buy a gift from the shop")
     @app_commands.describe(gift="The gift to buy.")
-    async def buy_gift(self, ctx: commands.Context, gift: str):
-        return await ctx.send(gift)
+    @app_commands.describe(quantity="The quantity of the gift to buy.")
+    async def buy_gift(self, ctx: commands.Context, gift: str, quantity: int = 1):
+        user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
+        gift_data = await self.bot.db_client.get_shop_gifts(guild_id=ctx.guild.id)
+        gift_data = next((gift for gift in gift_data if str(gift.get("_id")) == str(gift)), None)
+        if not gift_data:
+            return await ctx.send("That gift doesn't exist in the shop.")
+        if user_data.balance < gift_data.get("price"):
+            return await ctx.send("You don't have enough money to buy that gift.")
+        owned_gift = user_data.get_item_by_key("gift_id", gift_data.get("_id"), "gifts")
+        await user_data.update_fields(balance=user_data.balance - gift_data.get("price") * quantity)
+        if owned_gift is not None:
+            owned_gift["quantity"] += quantity
+            await user_data.set_item_by_key("_id", gift_data.get("_id"), owned_gift, "gifts")
+        else:
+            gift_data["quantity"] = quantity
+            await user_data.set_item_by_key("_id", gift_data.get("_id"), gift_data, "gifts")
 
     @buy_gift.autocomplete('gift')
     async def buy_gift_autocomplete(self,
