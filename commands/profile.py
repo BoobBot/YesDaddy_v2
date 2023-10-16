@@ -315,10 +315,7 @@ class Profile(commands.Cog):
                     await ctx.author.remove_roles(ctx.guild.get_role(int(role_data.get("_id"))))
                 user_data.inventory.get("roles").remove(role_data)
                 await user_data.update_fields(inventory=user_data.inventory)
-                user_two_inv = user_two_data.inventory.get("roles", [])
-                user_two_inv.append(role_data)
-                print(user_two_data.inventory)
-                await user_two_data.update_fields(inventory=user_two_data.inventory)
+                await user_two_data.set_item_by_key("_id", role_data.get('_id'), role_data, "roles")
                 return await ctx.reply(f"{role_data.get('name')} given to {user.mention}")
         return await ctx.reply("Role not found in inventory.")
 
