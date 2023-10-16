@@ -533,9 +533,11 @@ class Moderation(commands.Cog):
         if owned_gift is not None:
             owned_gift["quantity"] += quantity
             await user_data.set_item_by_key("_id", gift_data.get("_id"), owned_gift, "gifts")
+            return await ctx.send(f"Bought {gift_data.get('name')} for {gift_data.get('price')}.")
         else:
             gift_data["quantity"] = quantity
             await user_data.set_item_by_key("_id", gift_data.get("_id"), gift_data, "gifts")
+            await ctx.send(f"Bought {gift_data.get('name')} for {gift_data.get('price')}.")
 
     @buy_gift.autocomplete('gift')
     async def buy_gift_autocomplete(self,
