@@ -122,6 +122,12 @@ class Loops(commands.Cog):
                                 xp = random.randint(10, 50) * bonus_xp
                                 lvl = calculate_level(user.xp + xp)
                                 if lvl > user.level:
+                                    channel_id = await data.get_config("lvl_up_channel")
+                                    if channel_id:
+                                        channel = member.guild.get_channel(int(channel_id))
+                                        if channel:
+                                            await channel.send(
+                                                f"Congratulations {member.mention}! You have leveled up to level {lvl}! <a:lvlup:1138933829185323149>")
                                     self.bot.log.info(f"{member.name} {user.level} -> {lvl}")
                                     user.level = lvl
                                     await user.update_fields(level=lvl)

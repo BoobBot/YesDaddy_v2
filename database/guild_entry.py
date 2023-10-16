@@ -41,3 +41,22 @@ class Guild:
 
     async def save(self):
         return await self._db.add_guild(self)
+
+    async def get_config(self, key):
+        return self.config.get(key)
+
+    async def set_config(self, key, value):
+        self.config[key] = value
+        await self.save_config()
+
+    async def update_config(self, key, value):
+        if key in self.config:
+            self.config[key] = value
+            await self.save_config()
+        else:
+            await self.set_config(key, value)
+
+    async def save_config(self):
+        if self.guild_id is not None:
+            new_data = {"config": self.config}
+            await self._db.update_guild(self.guild_id, new_data)

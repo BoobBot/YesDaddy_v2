@@ -80,15 +80,23 @@ class Message(commands.Cog):
             xp = random.randint(1, 10) * bonus_xp
             lvl = calculate_level(user.xp + xp)
             if lvl > user.level:
-                await msg.channel.send(
-                    f"Congratulations {msg.author.mention}! You have leveled up to level {lvl}! <a:lvlup:1138933829185323149>")
+                guild = await self.bot.db_client.get_guild(msg.guild.id)
+                channel_id = await guild.get_config("lvl_up_channel")
+                if channel_id:
+                    channel = msg.guild.get_channel(int(channel_id))
+                    if channel:
+                        await channel.send(
+                            f"Congratulations {msg.author.mention}! You have leveled up to level {lvl}! <a:lvlup:1138933829185323149>")
+                    else:
+                        await msg.channel.send(
+                            f"Congratulations {msg.author.mention}! You have leveled up to level {lvl}! <a:lvlup:1138933829185323149>")
+                else:
+                    await msg.channel.send(
+                        f"Congratulations {msg.author.mention}! You have leveled up to level {lvl}! <a:lvlup:1138933829185323149>")
                 user.level = lvl
                 await user.update_fields(level=lvl)
                 await process_level_roles(user, msg.author, msg.guild, self.bot)
             await user.update_fields(xp=user.xp + xp, messages=user.messages + 1, last_seen=msg.created_at)
-
-
-
 
 
 async def setup(bot):

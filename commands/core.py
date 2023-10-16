@@ -253,6 +253,34 @@ class Core(commands.Cog):
     #     await self.bot.db_client.add_item(item_data)
     #     await ctx.send(f"Added {item} to the shop.")
 
+    @guild_settings.group(name="lvl_up_channel", description="View or change the level up channel.")
+    @commands.has_guild_permissions(ban_members=True)
+    async def lvl_up_channel(self, ctx):
+        if not ctx.invoked_subcommand:
+            await ctx.send_help(ctx.command)
+
+    @lvl_up_channel.command(name="set_lvl_channel", description="Set the level up channel.")
+    @app_commands.describe(channel="The channel to set.")
+    async def lvl_up_channel_set(self, ctx, channel: discord.TextChannel):
+        guild = await self.bot.db_client.get_guild(ctx.guild.id)
+        await guild.update_config("lvl_up_channel", channel.id)
+        await ctx.reply(f"Set the level up channel to {channel.mention}.")
+
+    @lvl_up_channel.command(name="remove_lvl_channel", description="Remove the level up channel.")
+    async def lvl_up_channel_remove(self, ctx):
+        guild = await self.bot.db_client.get_guild(ctx.guild.id)
+        await guild.update_config("lvl_up_channel", None)
+        await ctx.reply("Removed the level up channel.")
+
+    @lvl_up_channel.command(name="view_lvl_channel", description="View the level up channel.")
+    async def lvl_up_channel_view(self, ctx):
+        guild = await self.bot.db_client.get_guild(ctx.guild.id)
+        channel_id = await guild.get_config("lvl_up_channel")
+        if not channel_id:
+            return await ctx.reply("There is no level up channel.")
+        channel = ctx.guild.get_channel(channel_id)
+        await ctx.reply(f"The level up channel is {channel.mention}.")
+
     @guild_settings.group(name="text_reactions", description="View or change text reactions.")
     @commands.has_guild_permissions(ban_members=True)
     async def text_reaction(self, ctx):
