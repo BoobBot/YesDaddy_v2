@@ -444,7 +444,7 @@ class Moderation(commands.Cog):
         if not role_data:
             return await ctx.send("That role doesn't exist in the shop.")
 
-        user_data = await self.bot.db_client.get_user(ctx.author.id, ctx.guild.id)
+        user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         if user_data.balance < role_data.get("price"):
             return await ctx.send("You don't have enough money to buy that role.")
         role = ctx.guild.get_role(int(role_data.get('_id')))
