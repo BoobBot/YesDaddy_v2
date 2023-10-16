@@ -193,12 +193,12 @@ class DiscordDatabase:
 
     async def get_shop_gifts(self, guild_id):
         guild_data = await self.guild_collection.find_one({"guild_id": guild_id})
-        if guild_data and "shop_roles" in guild_data:
+        if guild_data and "shop_gifts" in guild_data:
             return guild_data["shop_gifts"]
         return []
 
     async def delete_shop_gift(self, guild_id, gift_id):
         await self.guild_collection.update_one(
             {"guild_id": guild_id},
-            {"$pull": {"shop_gift": {"_id": gift_id}}}
+            {"$pull": {"shop_gifts": {"_id": gift_id}}}
         )
