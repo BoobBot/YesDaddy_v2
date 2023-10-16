@@ -89,7 +89,7 @@ class Profile(commands.Cog):
     @commands.guild_only()
     async def rank(self, ctx, user: discord.Member = None):
         user = user or ctx.author
-        user_data: User = await self.bot.db_client.get_user(user.id, ctx.guild.id)
+        user_data: User = await self.bot.db_client.get_user(guild_id=ctx.guild.id, user_id=user.id)
 
         user_level = user_data.level
         user_xp = user_data.xp
