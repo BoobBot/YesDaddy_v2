@@ -389,10 +389,10 @@ class Profile(commands.Cog):
             new_value = int(value * 1.5)
         waifu_data["owner"] = ctx.author.id
         waifu_data["value"] = new_value
-        await guild_data.update_waifu(waifu.id, waifu_data)
+        await guild_data.update_waifu(waifu_data)
         self_waifu = await guild_data.get_waifu(ctx.author.id)
         self_waifu["claimed"].append(waifu.id)
-        await guild_data.update_waifu(ctx.author.id, self_waifu)
+        await guild_data.update_waifu(self_waifu)
         await user_data.subtract_balance(value)
         await ctx.reply(f"You claimed {waifu.mention} for ${value}.")
 
@@ -404,7 +404,7 @@ class Profile(commands.Cog):
         waifu_data = await guild_data.get_waifu(ctx.author.id)
         waifu_data["affinity"] = waifu.id
         waifu_data["affinity_changes"] += 1
-        await guild_data.update_waifu(ctx.author.id, waifu_data)
+        await guild_data.update_waifu(waifu_data)
         return await ctx.reply(f"You set {waifu.mention} as your affinity.")
 
     @waifu.command(name="divorce", description="divorce waifu")
@@ -420,7 +420,7 @@ class Profile(commands.Cog):
         self_waifu = await guild_data.get_waifu(ctx.author.id)
         self_waifu["claimed"].remove(waifu.id)
         self_waifu["divorces"] += 1
-        await guild_data.update_waifu(ctx.author.id, self_waifu)
+        await guild_data.update_waifu(self_waifu)
         return await ctx.reply(f"You divorced {waifu.mention}.")
 
 
