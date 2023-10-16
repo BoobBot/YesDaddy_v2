@@ -7,7 +7,7 @@ if TYPE_CHECKING:
 class Guild:
     def __init__(self, db, guild_id, member_data=None, tickets=None, support_tickets=None, config=None, lvl_roles=[],
                  bonus_roles=[], text_reactions=None, shop_roles=[], shop_gifts=None, shop_items=None, users=[],
-                 bonus_cash_roles=[]):
+                 bonus_cash_roles=[], waifus=[]):
         self._db: 'DiscordDatabase' = db
         self.guild_id = guild_id
         self.member_data = member_data if member_data else []
@@ -22,6 +22,7 @@ class Guild:
         self.shop_items = shop_items if shop_items else []
         self.users = users if users else []
         self.bonus_cash_roles = bonus_cash_roles if bonus_cash_roles else []
+        self.waifus = waifus if waifus else []
 
     def to_dict(self):
         return {k: v for k, v in self.__dict__ if not k.startswith('_')}
@@ -60,3 +61,43 @@ class Guild:
         if self.guild_id is not None:
             new_data = {"config": self.config}
             await self._db.update_guild(self.guild_id, new_data)
+
+    async def create_waifu(self, user_id):
+        waifu_data = {"user_id": user_id,
+                      "owner_id": None,
+                      "price": 1,
+                      "value": 1,
+                      "affinity": None,
+                      "affinity_changes": 0,
+                      "divorce_count": 0,
+                      "claimed": [],
+                      "gifts": [],
+                      }
+        self.waifus.append(waifu_data)
+        await self._db.update_guild(self.guild_id, {"waifus": self.waifus})
+        return waifu_data
+
+    async def get_waifu(self, user_id):
+        for waifu in self.waifus:
+            if waifu.get("user_id") == user_id:
+                return waifu
+        waifu = await self.create_waifu(user_id)
+        return waifu
+
+    def get_waifus_by_owner(self, owner_id):
+        owned = []
+        for waifu in self.waifus:
+            if waifu.get("owner_id") == owner_id:
+                owned.append(waifu)
+        return owned
+
+    async def update_waifu(self, waifu):
+        for i, w in enumerate(self.waifus):
+            if w.get("user_id") == waifu.get("user_id"):
+                self.waifus[i] = waifu
+                await self._db.update_guild(self.guild_id, {"waifus": self.waifus})
+                return
+
+
+
+
