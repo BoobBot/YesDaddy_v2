@@ -276,7 +276,7 @@ class Core(commands.Cog):
     @shop_admin.command(name="remove_gift", description="Remove an gift from the shop")
     @app_commands.describe(name="The name of the gift to remove.")
     async def shop_admin_remove_gift(self, ctx: commands.Context, name: str):
-        await self.bot.db_client.delete_shop_gift(guild_id=ctx.guild.id, name=name)
+        await self.bot.db_client.delete_shop_gift(guild_id=ctx.guild.id, gift_id=name)
         await ctx.send(f"Removed {name} from the shop.")
 
     @shop_admin.command(name="list_gifts", description="List all gifts in the shop")
