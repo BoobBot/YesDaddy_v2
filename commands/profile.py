@@ -340,7 +340,7 @@ class Profile(commands.Cog):
                    if not current or search(role.get('name').lower(), current.lower())
                ][:25]
 
-    @inventory.group(name="'gift_inventory", description="gift commands")
+    @inventory.group(name="gift_inventory", description="gift commands")
     async def inventory_gift(self, ctx):
         await ctx.send("Please use a valid subcommand: `view` or `give`.")
 
