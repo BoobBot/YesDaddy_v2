@@ -251,7 +251,7 @@ class Profile(commands.Cog):
     async def inventory_role_view(self, ctx):
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         if not user_data.inventory.get("roles"):
-            return await ctx.reply("You don't have any roles in your inventory.")
+            return await ctx.reply(":x: You don't have any roles in your inventory.")
         em = discord.Embed(title=f"{ctx.author}'s Role Inventory", color=discord.Color.blurple())
         timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
         em.set_author(
@@ -271,17 +271,24 @@ class Profile(commands.Cog):
     async def inventory_role_toggle(self, ctx, role: str):
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         if not user_data.inventory.get("roles"):
-            return await ctx.reply("You don't have any roles in your inventory.")
+            return await ctx.reply(":x: You don't have any roles in your inventory.")
         for role in user_data.inventory.get("roles"):
-            role_obj = ctx.guild.get_role(int(role.get("_id")))
-            if role_obj:
-                if role_obj in ctx.author.roles:
-                    await ctx.author.remove_roles(role_obj)
-                    return await ctx.reply(f"{role_obj.mention} removed.")
-                else:
-                    await ctx.author.add_roles(role_obj)
-                    return await ctx.reply(f"{role_obj.mention} added.")
-        await ctx.reply("Roles removed.")
+            if str(role.get("_id")) == str(role):
+                role_obj = ctx.guild.get_role(int(role.get("_id")))
+                if role_obj:
+                    if role_obj in ctx.author.roles:
+                        await ctx.author.remove_roles(role_obj)
+                        color = await generate_embed_color(ctx.author)
+                        em = discord.Embed(title=f"", color=color)
+                        em.description = f"{role_obj.mention} removed."
+                        return await ctx.reply(embed=em)
+                    else:
+                        await ctx.author.add_roles(role_obj)
+                        color = await generate_embed_color(ctx.author)
+                        em = discord.Embed(title=f"", color=color)
+                        em.description = f"{role_obj.mention} added."
+                        return await ctx.reply(embed=em)
+        return await ctx.reply("Role not found in inventory.")
 
     @inventory_role_toggle.autocomplete('role')
     async def toggle_role_autocomplete(self,
