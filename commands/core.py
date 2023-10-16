@@ -346,6 +346,9 @@ class Core(commands.Cog):
     @app_commands.describe(trigger="The trigger for the text reaction.")
     @app_commands.describe(response="The response for the text reaction.")
     async def text_reaction_add(self, ctx, trigger: str, response: str):
+        is_emote = self.is_emote(response)
+        if not is_emote:
+            return await ctx.reply("That is not a valid emote.")
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
         if trigger in [reaction.get("trigger") for reaction in guild.text_reactions]:
             return await ctx.reply("That trigger is already a text reaction.")
