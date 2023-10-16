@@ -424,8 +424,8 @@ class Moderation(commands.Cog):
         if not ctx.invoked_subcommand:
             await ctx.send_help(ctx.command)
 
-    @roles.command(name="list", description="List all roles in the shop")
-    async def list(self, ctx: commands.Context):
+    @roles.command(name="shop_role_list", description="List all roles in the shop")
+    async def shop_role_list(self, ctx: commands.Context):
         roles = await self.bot.db_client.get_shop_roles(guild_id=ctx.guild.id)
         em = discord.Embed(title="Shop Roles", color=await generate_embed_color(ctx.author))
         for role_data in roles:
