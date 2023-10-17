@@ -239,6 +239,52 @@ class Profile(commands.Cog):
             sorted_users, "Leaderboard - Total Balance: Page")
         await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=pages)
 
+    @leaderboard.command(name="waifu", description="waifu leaderboard")
+    async def waifu_leaderboard(self, ctx):
+        await ctx.typing(ephemeral=False)
+        guild_data = await self.bot.db_client.get_guild(guild_id=ctx.guild.id)
+        all_waifus = guild_data.waifus
+        # Sort the list of dictionaries by the 'value' field
+        sorted_data = sorted(all_waifus, key=lambda x: x['value'], reverse=True)
+
+        # Create an empty list for embeds
+        embeds = []
+        # Initialize an empty string to accumulate entries
+        page_entries = ""
+        for index, waifu in enumerate(sorted_data, start=1):
+            if not waifu["user_id"]:
+                guild_data.waifus.remove(waifu)
+                await ctx.bot.db_client.update_guild(ctx.guild.id, {"waifus": guild_data.waifus})
+            user = ctx.guild.get_member(int(waifu["user_id"])).display_name
+            owner = ctx.guild.get_member(int(waifu["owner_id"])).display_name if waifu["owner_id"] else "No owner"
+            entry = f"**#{index}** - <:money:1163891159349866526> ${waifu['value']}\n" \
+                    f"**{user}** claimed by **{owner}**\n"
+            if not waifu["affinity"]:
+                entry += f"**{user}'s** heart is empty\n\n"
+            elif waifu["affinity"] == waifu["owner_id"]:
+                entry += f"**{user}** likes **{owner}** too ❤️\n\n"
+            else:
+                affinity_user = ctx.guild.get_member(int(waifu["affinity"])).display_name
+                entry += f"{user} likes **{affinity_user}**\n\n"
+            page_entries += entry
+            # Create a new embed after accumulating 10 entries or at the end
+            if index % 10 == 0 or index == len(sorted_data):
+                em = discord.Embed(title=f"Top Waifus (Page {len(embeds) + 1})")
+                em.description = page_entries
+                em.set_author(
+                    name="Waifu Leaderboard Command",
+                    icon_url=self.bot.user.display_avatar.with_static_format("png"),
+                    url="https://discord.gg/invite/tailss")
+                timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+                em.set_footer(
+                    text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+                    icon_url=ctx.author.display_avatar.with_static_format("png"))
+                embeds.append(em)
+                # Reset page_entries for the next page
+                page_entries = ""
+
+        await Paginator(delete_on_timeout=False, timeout=120).start(ctx, pages=embeds)
+
     @commands.hybrid_group(name="inventory", description="inventory commands")
     async def inventory(self, ctx):
         await ctx.send("Please use a valid subcommand: `view` or `use`.")
@@ -433,7 +479,7 @@ class Profile(commands.Cog):
             return await ctx.reply("You don't have enough coins to claim that waifu.")
         if waifu_data["owner_id"]:
             if waifu_data['value'] * 1.10 > value:
-                return await ctx.reply(f"That waifu is worth {int(waifu_data['value'] * 1.10)+1}, try again.")
+                return await ctx.reply(f"That waifu is worth {int(waifu_data['value'] * 1.10) + 1}, try again.")
         if waifu_data['value'] > value:
             return await ctx.reply("That waifu is worth more than that.")
         if str(waifu_data["affinity"]) == str(ctx.author.id):
@@ -554,55 +600,15 @@ class Profile(commands.Cog):
         em.add_field(name="<:money:1163891159349866526> **Value**", value=f"${value}", inline=False)
         em.add_field(name="<:Gift:1163891158137700492> **Gifts** ➕:", value=f"{plus_gifts_value}")
         em.add_field(name="<a:explode2:1163902836300591175> **Gifts** ➖:", value=f"{minus_gifts_value}")
-        em.add_field(name="<:apink_hearts:1163891155285594212> **Liked By**", value=f"{formatted_liked_by}", inline=False)
-        em.add_field(name="<:handcuffs:1163892821036646534> **Claimed**", value=f"{formatted_claimed_names}", inline=False)
-        em.add_field(name="<a:divorce:1163891160192921671> **Divorces**", value=f"{divorce_title} {waifu_data.get('divorce_count')}", inline=False)
+        em.add_field(name="<:apink_hearts:1163891155285594212> **Liked By**", value=f"{formatted_liked_by}",
+                     inline=False)
+        em.add_field(name="<:handcuffs:1163892821036646534> **Claimed**", value=f"{formatted_claimed_names}",
+                     inline=False)
+        em.add_field(name="<a:divorce:1163891160192921671> **Divorces**",
+                     value=f"{divorce_title} {waifu_data.get('divorce_count')}", inline=False)
         em.add_field(name="💌 **Affinity Changes**", value=f"{affinity_title} {waifu_data.get('affinity_changes')}",
                      inline=False)
         await ctx.reply(embed=em)
-
-    @waifu.command(name="leaderboard", description="waifu leaderboard")
-    async def waifu_leaderboard(self, ctx):
-        await ctx.typing(ephemeral=False)
-        guild_data = await self.bot.db_client.get_guild(guild_id=ctx.guild.id)
-        all_waifus = guild_data.waifus
-        # Sort the list of dictionaries by the 'value' field
-        sorted_data = sorted(all_waifus, key=lambda x: x['value'], reverse=True)
-
-        # Create an empty list for embeds
-        embeds = []
-        # Initialize an empty string to accumulate entries
-        page_entries = ""
-        for index, waifu in enumerate(sorted_data, start=1):
-            user = ctx.guild.get_member(int(waifu["user_id"])).display_name
-            owner = ctx.guild.get_member(int(waifu["owner_id"])).display_name if waifu["owner_id"] else "No owner"
-            entry = f"**#{index}** - <:money:1163891159349866526> ${waifu['value']}\n" \
-                    f"**{user}** claimed by **{owner}**\n"
-            if not waifu["affinity"]:
-                entry += f"**{user}'s** heart is empty\n\n"
-            elif waifu["affinity"] == waifu["owner_id"]:
-                entry += f"**{user}** likes **{owner}** too ❤️\n\n"
-            else:
-                affinity_user = ctx.guild.get_member(int(waifu["affinity"])).display_name
-                entry += f"{user} likes **{affinity_user}**\n\n"
-            page_entries += entry
-            # Create a new embed after accumulating 10 entries or at the end
-            if index % 10 == 0 or index == len(sorted_data):
-                em = discord.Embed(title=f"Top Waifus (Page {len(embeds) + 1})")
-                em.description = page_entries
-                em.set_author(
-                    name="Waifu Leaderboard Command",
-                    icon_url=self.bot.user.display_avatar.with_static_format("png"),
-                    url="https://discord.gg/invite/tailss")
-                timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
-                em.set_footer(
-                    text=f"Command ran by {ctx.author.display_name} at {timestamp}",
-                    icon_url=ctx.author.display_avatar.with_static_format("png"))
-                embeds.append(em)
-                # Reset page_entries for the next page
-                page_entries = ""
-
-        await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=embeds)
 
 
 async def setup(bot):
