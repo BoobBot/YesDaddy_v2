@@ -6,6 +6,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 
+from utils.paginator import Paginator
 from utils.utilities import generate_embed_color, search
 from views import support_view
 from views.confirm_view import Confirm
@@ -509,13 +510,33 @@ class Moderation(commands.Cog):
     @gift.command(name="list", description="List all gifts in the shop")
     async def list(self, ctx: commands.Context):
         gifts = await self.bot.db_client.get_shop_gifts(guild_id=ctx.guild.id)
-        em = discord.Embed(title="Shop Gifts", color=await generate_embed_color(ctx.author))
-        for gift_data in gifts:
-            e = "➕" if gift_data.get("positive") else "➖"
-            em.add_field(name="",
-                         value=f"\nGift: {gift_data.get('name')} {gift_data.get('emote')}\nPrice: {gift_data.get('price')}\nValue: {e} {gift_data.get('value')}\n",
-                         inline=False)
-        await ctx.send(embed=em)
+        # Sort the list of dictionaries by the 'value' key
+        sorted_gifts = sorted(gifts, key=lambda x: x['value'], reverse=True)
+
+        # Create an empty list for embeds
+        embeds = []
+
+        # Define a title for the first page
+        first_page_title = "Gift list"
+
+        # Split the sorted list into chunks of maximum 10 items per embed
+        for i in range(0, len(sorted_gifts), 10):
+            chunk = sorted_gifts[i:i + 10]
+            # Create a new embed for each chunk
+            em = discord.Embed(title=first_page_title if i == 0 else "", description="")
+            # Add the sorted gifts to the description of the embed
+            for gift_data in chunk:
+                em.description += f"\nGift: {gift_data.get('name')} {gift_data.get('emote')}\nPrice: {gift_data.get('price')}\nValue: {e} {gift_data.get('value')}\n",
+            # Append the embed to the list of embeds
+            embeds.append(em)
+        await Paginator(delete_on_timeout=False, timeout=120).start(ctx, pages=embeds)
+        #em = discord.Embed(title="Shop Gifts", color=await generate_embed_color(ctx.author))
+        # for gift_data in gifts:
+        #     e = "➕" if gift_data.get("positive") else "➖"
+        #     em.add_field(name="",
+        #                  value=f"\nGift: {gift_data.get('name')} {gift_data.get('emote')}\nPrice: {gift_data.get('price')}\nValue: {e} {gift_data.get('value')}\n",
+        #                  inline=False)
+        # await ctx.send(embed=em)
 
     @gift.command(name="buy", description="Buy a gift from the shop")
     @app_commands.describe(gift="The gift to buy.")
