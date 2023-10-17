@@ -433,7 +433,7 @@ class Profile(commands.Cog):
             return await ctx.reply("You don't have enough coins to claim that waifu.")
         if waifu_data["owner_id"]:
             if waifu_data['value'] * 1.10 > value:
-                return await ctx.reply(f"That waifu is worth {waifu_data['value'] * 1.10}, try again.")
+                return await ctx.reply(f"That waifu is worth {int(waifu_data['value'] * 1.10)}, try again.")
         if waifu_data['value'] > value:
             return await ctx.reply("That waifu is worth more than that.")
         if str(waifu_data["affinity"]) == str(ctx.author.id):
