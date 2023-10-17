@@ -553,7 +553,7 @@ class Profile(commands.Cog):
         em.add_field(name="<a:1bye_money_r_ateez:1163891153796616242> **Price**", value=f"${price}", inline=False)
         em.add_field(name="<:money:1163891159349866526> **Value**", value=f"${value}", inline=False)
         em.add_field(name="<:Gift:1163891158137700492> **Gifts** ➕:", value=f"{plus_gifts_value}")
-        em.add_field(name="<:neg:1163892413446750328> **Gifts** ➖:", value=f"{minus_gifts_value}")
+        em.add_field(name="<a:explode2:1163902836300591175> **Gifts** ➖:", value=f"{minus_gifts_value}")
         em.add_field(name="<:apink_hearts:1163891155285594212> **Liked By**", value=f"{formatted_liked_by}", inline=False)
         em.add_field(name="<:handcuffs:1163892821036646534> **Claimed**", value=f"{formatted_claimed_names}", inline=False)
         em.add_field(name="<a:divorce:1163891160192921671> **Divorces**", value=f"{divorce_title} {waifu_data.get('divorce_count')}", inline=False)
