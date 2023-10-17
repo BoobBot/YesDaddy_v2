@@ -577,7 +577,7 @@ class Profile(commands.Cog):
             owner = ctx.guild.get_member(int(waifu["owner_id"])).display_name if waifu["owner_id"] else "No owner"
 
             em = discord.Embed(title=f"Top Waifus (Page {len(embeds) + 1})")
-            em.add_field(name=f"#{index} - {self.bot.emoji('currency.coin')} {waifu['value']:,}",
+            em.add_field(name=f"#{index} - ${waifu['value']}",
                          value=f"{user} claimed by {owner}")
 
             if not waifu["affinity"]:
