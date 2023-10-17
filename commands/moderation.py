@@ -527,7 +527,7 @@ class Moderation(commands.Cog):
             # Add the sorted gifts to the description of the embed
             for gift_data in chunk:
                 e = "➕" if gift_data.get("positive") else "➖"
-                em.description += f"\nGift: {gift_data.get('name')} {gift_data.get('emote')}\nPrice: {gift_data.get('price')}\nValue: {e} {gift_data.get('value')}\n",
+                em.description += f"\nGift: {gift_data.get('name')} {gift_data.get('emote')}\nPrice: {gift_data.get('price')}\nValue: {e} {gift_data.get('value')}\n"
             # Append the embed to the list of embeds
             embeds.append(em)
         await Paginator(delete_on_timeout=False, timeout=120).start(ctx, pages=embeds)
