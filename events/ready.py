@@ -10,9 +10,11 @@ class Ready(commands.Cog):
         self.bot.log.info('Ready!')
         self.bot.log.info(f'Logged in as ----> {self.bot.user}')
         self.bot.log.info(f'ID: {self.bot.user.id}')
-        guild = self.bot.get_guild(694641646780022818)
+        guild = self.bot.get_guild(694641649044685285)
         guild_data = await self.bot.db_client.get_guild(guild.id)
-        print(guild_data.waifus)
+        for w in guild_data.waifus:
+            if w.get("user_id") is str:
+                print(w)
 
 
 async def setup(bot):
