@@ -537,7 +537,7 @@ class Moderation(commands.Cog):
         else:
             gift_data["quantity"] = quantity
             await user_data.set_item_by_key("_id", gift_data.get("_id"), gift_data, "gifts")
-            await ctx.send(f"Bought {gift_data.get('name')} for {gift_data.get('price')}.")
+            await ctx.send(f"Bought {quantity} {gift_data.get('name')} for {gift_data.get('price')}.")
 
     @buy_gift.autocomplete('gift')
     async def buy_gift_autocomplete(self,
