@@ -13,7 +13,8 @@ class Ready(commands.Cog):
         guild = self.bot.get_guild(694641646780022818)
         guild_data = await self.bot.db_client.get_guild(guild.id)
         for w in guild_data.waifus:
-            if w.get("user_id") is str:
+            res = isinstance(w.get("user_id"), str)
+            if res:
                 print(w)
 
 
