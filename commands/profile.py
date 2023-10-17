@@ -583,12 +583,12 @@ class Profile(commands.Cog):
                     f"{user} claimed by {owner}\n"
 
             if not waifu["affinity"]:
-                entry += f"Affinity: {user}'s heart is empty\n"
+                entry += f"{user}'s heart is empty\n"
             elif waifu["affinity"] == waifu["owner_id"]:
-                entry += f"Affinity: {user} likes {owner} too <3\n"
+                entry += f"{user} likes {owner} too <3\n"
             else:
                 affinity_user = ctx.guild.get_member(int(waifu["affinity"])).display_name
-                entry += f"Affinity: {user} likes {affinity_user}\n"
+                entry += f"{user} likes {affinity_user}\n"
 
             page_entries += entry
 
@@ -597,7 +597,6 @@ class Profile(commands.Cog):
                 em = discord.Embed(title=f"Top Waifus (Page {len(embeds) + 1})")
                 em.description = page_entries
                 embeds.append(em)
-
                 # Reset page_entries for the next page
                 page_entries = ""
 
