@@ -13,7 +13,7 @@ from utils.paginator import Paginator
 from utils.pillowutils import (arc_bar, font_auto_scale, get_brightness,
                                mask_ellipsis)
 from utils.utilities import (generate_embed_color, progress_percentage,
-                             subtraction_percentage, calculate_remaining_xp, search)
+                             subtraction_percentage, calculate_remaining_xp, search, get_title)
 
 
 class Profile(commands.Cog):
@@ -469,6 +469,41 @@ class Profile(commands.Cog):
         await guild_data.update_waifu(self_waifu)
         return await ctx.reply(f"You divorced {waifu.mention}.")
 
+    @waifu.command(name="info", description="waifu info")
+    @app_commands.describe(waifu="Waifu to get info of")
+    async def waifu_info(self, ctx, waifu: Optional[discord.Member]):
+        waifu = waifu or ctx.author
+        guild_data = await self.bot.db_client.get_guild(guild_id=ctx.guild.id)
+        waifu_data = await guild_data.get_waifu(waifu.id)
+        all_waifus = await guild_data.waifus
+        price = waifu_data.get("value") * 1.10
+        value = waifu_data.get("value")
+        liked_by = [ctx.guild.get_member(waifu.get("user_id")).display_name for waifu in all_waifus if str(waifu.get("affinity")) == str(waifu.id)]
+        plus_gifts = [gift for gift in waifu_data.get("gifts") if gift.get("positive")]
+        minus_gifts = [gift for gift in waifu_data.get("gifts") if not gift.get("positive")]
+        claim_title = get_title(rank= waifu_data.get("claimed"), title_type="claim")
+        divorce_title = get_title(rank= waifu_data.get("divorces"), title_type="divorce")
+        affinity_title = get_title(rank= waifu_data.get("affinity_changes"), title_type="affinity")
+        claimed_names = [ctx.guild.get_member(claim).display_name for claim in waifu_data.get("claimed")]
+        owner_name = ctx.guild.get_member(waifu_data.get("owner_id")).display_name if waifu_data.get("owner_id") else "None"
+        em = discord.Embed(title=f"{waifu.display_name}'s Info", color=discord.Color.blurple())
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        em.set_author(
+            name="Waifu Info Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png"))
+        em.add_field(name="Owner", value=f"{owner_name}")
+        em.add_field(name="Price", value=f"${price}")
+        em.add_field(name="Value", value=f"${value}")
+        em.add_field(name="Liked By", value=f"{liked_by}")
+        em.add_field(name="Gifts", value=f"➕{plus_gifts}\n➖{minus_gifts}")
+        em.add_field(name="Claimed", value=f"{claim_title} {claimed_names}")
+        em.add_field(name="Divorces", value=f"{divorce_title} {waifu_data.get('divorces')}")
+        em.add_field(name="Affinity Changes", value=f"{affinity_title} {waifu_data.get('affinity_changes')}")
+        await ctx.reply(embed=em)
 
 async def setup(bot):
     await bot.add_cog(Profile(bot))

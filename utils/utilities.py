@@ -6,7 +6,23 @@ import aiohttp
 import discord
 from PIL import Image
 
-xp_constant = 100  # Adjust this value as needed
+xp_constant = 100
+from config.settings_config import affinity_titles, divorce_titles, claim_titles
+
+
+def get_title(rank, title_type):
+    titles = None
+    if title_type == "affinity":
+        titles = affinity_titles
+    elif title_type == "divorce":
+        titles = divorce_titles
+    elif title_type == "claim":
+        titles = claim_titles
+    if titles is not None:
+        for threshold, title in titles.items():
+            if rank >= threshold:
+                return title
+    return None
 
 
 async def get_average_color(url):
