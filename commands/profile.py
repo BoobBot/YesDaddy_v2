@@ -572,27 +572,34 @@ class Profile(commands.Cog):
         # Create an empty list for embeds
         embeds = []
 
+        # Initialize an empty string to accumulate entries
+        page_entries = ""
+
         for index, waifu in enumerate(sorted_data, start=1):
-            if not waifu["user_id"]:
-                guild_data.waifus.remove(waifu)
-                await ctx.bot.db_client.update_guild(ctx.guild.id, {"waifus": guild_data.waifus})
             user = ctx.guild.get_member(int(waifu["user_id"])).display_name
             owner = ctx.guild.get_member(int(waifu["owner_id"])).display_name if waifu["owner_id"] else "No owner"
 
-            em = discord.Embed(title=f"Top Waifus (Page {len(embeds) + 1})")
-            em.add_field(name=f"#{index} - ${waifu['value']}",
-                         value=f"{user} claimed by {owner}")
+            entry = f"#{index} - ${waifu['value']}\n" \
+                    f"{user} claimed by {owner}\n"
 
             if not waifu["affinity"]:
-                em.add_field(name="Affinity", value=f"{user}'s heart is empty")
+                entry += f"Affinity: {user}'s heart is empty\n"
             elif waifu["affinity"] == waifu["owner_id"]:
-                em.add_field(name="Affinity", value=f"{user} likes {owner} too <3")
+                entry += f"Affinity: {user} likes {owner} too <3\n"
             else:
                 affinity_user = ctx.guild.get_member(int(waifu["affinity"])).display_name
-                em.add_field(name="Affinity", value=f"{user} likes {affinity_user}")
+                entry += f"Affinity: {user} likes {affinity_user}\n"
 
+            page_entries += entry
+
+            # Create a new embed after accumulating 10 entries or at the end
             if index % 10 == 0 or index == len(sorted_data):
+                em = discord.Embed(title=f"Top Waifus (Page {len(embeds) + 1})")
+                em.description = page_entries
                 embeds.append(em)
+
+                # Reset page_entries for the next page
+                page_entries = ""
 
         await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=embeds)
 
