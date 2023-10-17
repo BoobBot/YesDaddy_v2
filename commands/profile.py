@@ -445,7 +445,6 @@ class Profile(commands.Cog):
         waifu_data["owner_id"] = ctx.author.id
         waifu_data["value"] = new_value
         await guild_data.update_waifu(waifu_data)
-        stolen = await guild_data.get_waifu(waifu_data['owner_id'])
         self_waifu = await guild_data.get_waifu(ctx.author.id)
         self_waifu["claimed"].append(waifu.id)
         await guild_data.update_waifu(self_waifu)
