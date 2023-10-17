@@ -577,7 +577,7 @@ class Profile(commands.Cog):
             user = ctx.guild.get_member(int(waifu["user_id"])).display_name
             owner = ctx.guild.get_member(int(waifu["owner_id"])).display_name if waifu["owner_id"] else "No owner"
             entry = f"**#{index}** - <:money:1163891159349866526> ${waifu['value']}\n" \
-                    f"{user} claimed by {owner}\n"
+                    f"**{user}** claimed by **{owner}**\n"
             if not waifu["affinity"]:
                 entry += f"**{user}'s** heart is empty\n\n"
             elif waifu["affinity"] == waifu["owner_id"]:
