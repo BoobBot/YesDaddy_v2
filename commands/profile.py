@@ -477,7 +477,7 @@ class Profile(commands.Cog):
         guild_data = await self.bot.db_client.get_guild(guild_id=ctx.guild.id)
         waifu_data = await guild_data.get_waifu(waifu.id)
         all_waifus = guild_data.waifus
-        price = waifu_data.get("value") * 1.10
+        price = int(waifu_data.get("value") * 1.10)
         value = waifu_data.get("value")
         liked_by = [ctx.guild.get_member(int(w.get("user_id"))).display_name for w in all_waifus if
                     str(w.get("affinity")) == str(waifu.id)]
