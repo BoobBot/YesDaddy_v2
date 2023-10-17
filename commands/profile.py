@@ -365,6 +365,43 @@ class Profile(commands.Cog):
                          inline=False)
         await ctx.reply(embed=em)
 
+    @inventory_gift.command(name="give", description="give gift")
+    @app_commands.describe(waifu="waifu to give gift to")
+    async def inventory_gift_give(self, ctx, gift: str, waifu: discord.Member, quantity: int = 1):
+        user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
+        if not user_data.inventory.get("gifts"):
+            return await ctx.reply("You don't have any gifts in your inventory.")
+        for gift_data in user_data.inventory.get("gifts"):
+            if str(gift_data.get("_id")) == str(gift):
+                print("found gift")
+                if gift_data.get("quantity") < quantity:
+                    return await ctx.reply("You don't have enough of that gift.")
+                gift_data["quantity"] -= quantity
+                if gift_data["quantity"] <= 0:
+                    user_data.inventory.get("gifts").remove(gift_data)
+                await user_data.update_fields(inventory=user_data.inventory)
+                guild_data = await self.bot.db_client.get_guild(guild_id=ctx.guild.id)
+                waifu_data = await guild_data.get_waifu(waifu.id)
+                value = gift_data.get("value") * quantity
+                if waifu_data["affinity"] == ctx.author.id:
+                    value = int(value * 1.5)
+                waifu_data["value"] += value
+                gift_data["quantity"] = quantity
+                waifu_data["gifts"].append(gift_data)
+                await guild_data.update_waifu(waifu_data)
+                return await ctx.reply(f"{gift_data.get('name')} given to {waifu.mention}")
+        return await ctx.reply("Gift not found in inventory.")
+
+    @inventory_gift_give.autocomplete('gift')
+    async def give_gift_autocomplete(self, interaction: discord.Interaction, current: str) -> List[app_commands.Choice[str]]:
+        user_data = await self.bot.db_client.get_user(user_id=interaction.user.id, guild_id=interaction.guild.id)
+        gifts = user_data.inventory.get("gifts")
+        return [
+                   app_commands.Choice(name=gift.get('name'), value=str(gift.get('_id')))
+                   for gift in gifts
+                   if not current or search(gift.get('name').lower(), current.lower())
+               ][:25]
+
     @commands.hybrid_group(name="waifu", description="waifu commands")
     async def waifu(self, ctx):
         await ctx.send("Please use a valid subcommand")
