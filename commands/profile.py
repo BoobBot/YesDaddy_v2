@@ -390,11 +390,16 @@ class Profile(commands.Cog):
                 else:
                     waifu_data["value"] -= value
                 gift_data["quantity"] = quantity
-                waifu_data["gifts"].append(gift_data)
+                if gift_data["_id"] in [gift.get("_id") for gift in waifu_data["gifts"]]:
+                    for gift in waifu_data["gifts"]:
+                        if gift["_id"] == gift_data["_id"]:
+                            gift["quantity"] += quantity
+                else:
+                    waifu_data["gifts"].append(gift_data)
                 await guild_data.update_waifu(waifu_data)
                 e = "➕" if gift_data.get("positive") else "➖"
                 return await ctx.reply(
-                    f"{e} Gift: {gift_data.get('name')}: {gift_data.get('emote')} given to {waifu.mention}")
+                    f"{e} Gift: {quantity} {gift_data.get('name')}: {gift_data.get('emote')} given to {waifu.mention}")
         return await ctx.reply("Gift not found in inventory.")
 
     @inventory_gift_give.autocomplete('gift')
