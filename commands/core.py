@@ -346,7 +346,7 @@ class Core(commands.Cog):
     @app_commands.describe(trigger="The trigger for the text reaction.")
     @app_commands.describe(response="The response for the text reaction.")
     async def text_reaction_add(self, ctx, trigger: str, response: str):
-        is_emote = self.is_emote(response)
+        is_emote = await self.is_emote(response)
         if not is_emote:
             return await ctx.reply("That is not a valid emote.")
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
@@ -354,7 +354,7 @@ class Core(commands.Cog):
             return await ctx.reply("That trigger is already a text reaction.")
         guild.text_reactions.append(
             {"trigger": trigger, "response": response})  # TODO dedicated method to handle updating just this field
-        await self.bot.db_client.update_guild(ctx.guild.id, guild.text_reactions)
+        await self.bot.db_client.update_guild(ctx.guild.id, {"text_reactions": guild.text_reactions})
         await ctx.reply(f"Added `{trigger}` as a text reaction.")
 
     @text_reaction.command(name="remove", description="Remove a text reaction.")
