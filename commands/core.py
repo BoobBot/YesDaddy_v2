@@ -286,19 +286,6 @@ class Core(commands.Cog):
         sorted_gifts = sorted(gifts, key=lambda x: x['value'], reverse=True)
         embeds = []
         first_page_title = "Gift list"
-        em = discord.Embed(title="Shop Gifts", color=await generate_embed_color(ctx.author))
-        for gift_data in gifts:
-            em.add_field(name="",
-                         value=f"\nName: {gift_data.get('name')}\n"
-                               f"Price: {gift_data.get('price')}\n"
-                               f"Description: {gift_data.get('description')}\n"
-                               f"Value: {gift_data.get('value')}\n"
-                               f"Emote: {gift_data.get('emote')}\n"
-                               f"Positive: {gift_data.get('positive')}\n"
-                               f"Added By: <@{gift_data.get('added_by')}>",
-                         inline=False)
-        await ctx.send(embed=em)
-
         for i in range(0, len(sorted_gifts), 10):
             chunk = sorted_gifts[i:i + 10]
             # Create a new embed for each chunk
@@ -326,7 +313,6 @@ class Core(commands.Cog):
             # Append the embed to the list of embeds
             embeds.append(em)
         await Paginator(delete_on_timeout=False, timeout=120).start(ctx, pages=embeds)
-
 
     # @shop_admin.command(name="add_item", description="Add an item to the shop")
     # @app_commands.describe(item="The item to add.")
