@@ -34,7 +34,7 @@ chop_resource_info = {
     'Wood': {'emote': '<:wood:1146123952662515832>', 'min_value': 5, 'max_value': 15, 'rarity': 0.7},
     'Oak': {'emote': '<:oak:1146125043550650399>', 'min_value': 10, 'max_value': 20, 'rarity': 0.6},
     'Maple': {'emote': '<:maple:1146126198901047366>', 'min_value': 15, 'max_value': 25, 'rarity': 0.4},
-    'Birch': {'emote': '<:birch:1146125694313697330>', 'min_value': 20, 'max_value': 30, 'rarity': 0.3},
+    'Birch': {'emote': '<:birch:1146125694313697330>', 'min_value': 20, 'max_value': 40, 'rarity': 0.3},
 }
 
 monsters = [
