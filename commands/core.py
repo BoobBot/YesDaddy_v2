@@ -354,7 +354,7 @@ class Core(commands.Cog):
             return await ctx.reply("That trigger is already a text reaction.")
         guild.text_reactions.append(
             {"trigger": trigger, "response": response})  # TODO dedicated method to handle updating just this field
-        await self.bot.db_client.update_guild(ctx.guild.id, guild.to_dict())
+        await self.bot.db_client.update_guild(ctx.guild.id, guild.text_reactions)
         await ctx.reply(f"Added `{trigger}` as a text reaction.")
 
     @text_reaction.command(name="remove", description="Remove a text reaction.")
