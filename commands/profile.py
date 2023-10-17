@@ -428,7 +428,7 @@ class Profile(commands.Cog):
             return await ctx.reply("You don't have enough coins to claim that waifu.")
         if waifu_data["owner_id"]:
             if waifu_data['value'] * 1.10 > value:
-                return await ctx.reply(f"That waifu is worth {waifu_data['value'] * 1.10 }, try again.")
+                return await ctx.reply(f"That waifu is worth {waifu_data['value'] * 1.10}, try again.")
         if waifu_data['value'] > value:
             return await ctx.reply("That waifu is worth more than that.")
         if str(waifu_data["affinity"]) == str(ctx.author.id):
@@ -478,14 +478,16 @@ class Profile(commands.Cog):
         all_waifus = guild_data.waifus
         price = waifu_data.get("value") * 1.10
         value = waifu_data.get("value")
-        liked_by = [ctx.guild.get_member(waifu.get("user_id")).display_name for waifu in all_waifus if str(waifu.get("affinity")) == str(waifu.id)]
+        liked_by = [ctx.guild.get_member(w.get("user_id")).display_name for w in all_waifus if
+                    str(w.get("affinity")) == str(waifu.id)]
         plus_gifts = [gift for gift in waifu_data.get("gifts") if gift.get("positive")]
         minus_gifts = [gift for gift in waifu_data.get("gifts") if not gift.get("positive")]
-        claim_title = get_title(rank= waifu_data.get("claimed"), title_type="claim")
-        divorce_title = get_title(rank= waifu_data.get("divorces"), title_type="divorce")
-        affinity_title = get_title(rank= waifu_data.get("affinity_changes"), title_type="affinity")
+        claim_title = get_title(rank=waifu_data.get("claimed"), title_type="claim")
+        divorce_title = get_title(rank=waifu_data.get("divorces"), title_type="divorce")
+        affinity_title = get_title(rank=waifu_data.get("affinity_changes"), title_type="affinity")
         claimed_names = [ctx.guild.get_member(claim).display_name for claim in waifu_data.get("claimed")]
-        owner_name = ctx.guild.get_member(waifu_data.get("owner_id")).display_name if waifu_data.get("owner_id") else "None"
+        owner_name = ctx.guild.get_member(waifu_data.get("owner_id")).display_name if waifu_data.get(
+            "owner_id") else "None"
         em = discord.Embed(title=f"{waifu.display_name}'s Info", color=discord.Color.blurple())
         timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
         em.set_author(
@@ -504,6 +506,7 @@ class Profile(commands.Cog):
         em.add_field(name="Divorces", value=f"{divorce_title} {waifu_data.get('divorces')}")
         em.add_field(name="Affinity Changes", value=f"{affinity_title} {waifu_data.get('affinity_changes')}")
         await ctx.reply(embed=em)
+
 
 async def setup(bot):
     await bot.add_cog(Profile(bot))
