@@ -573,7 +573,8 @@ class Profile(commands.Cog):
         embeds = []
 
         for index, waifu in enumerate(sorted_data, start=1):
-            print(waifu)
+            if not waifu["user_id"]:
+                continue
             user = ctx.guild.get_member(int(waifu["user_id"])).display_name
             owner = ctx.guild.get_member(int(waifu["owner_id"])).display_name if waifu["owner_id"] else "No owner"
 
