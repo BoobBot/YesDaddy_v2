@@ -467,7 +467,7 @@ class Profile(commands.Cog):
         if str(waifu_data.get("owner_id", 0)) != str(ctx.author.id):
             return await ctx.reply("You don't own that waifu.")
         waifu_data["owner"] = None
-        await guild_data.update_waifu(waifu.id, waifu_data)
+        await guild_data.update_waifu(waifu_data)
         self_waifu = await guild_data.get_waifu(ctx.author.id)
         self_waifu["claimed"].remove(waifu.id)
         self_waifu["divorce_count"] += 1
