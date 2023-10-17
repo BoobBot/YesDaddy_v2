@@ -464,13 +464,13 @@ class Profile(commands.Cog):
         await ctx.typing(ephemeral=False)
         guild_data = await self.bot.db_client.get_guild(guild_id=ctx.guild.id)
         waifu_data = await guild_data.get_waifu(waifu.id)
-        if waifu_data["owner"] != ctx.author.id:
+        if str(waifu_data.get("owner_id", 0)) != str(ctx.author.id):
             return await ctx.reply("You don't own that waifu.")
         waifu_data["owner"] = None
         await guild_data.update_waifu(waifu.id, waifu_data)
         self_waifu = await guild_data.get_waifu(ctx.author.id)
         self_waifu["claimed"].remove(waifu.id)
-        self_waifu["divorces"] += 1
+        self_waifu["divorce_count"] += 1
         await guild_data.update_waifu(self_waifu)
         return await ctx.reply(f"You divorced {waifu.mention}.")
 
