@@ -524,6 +524,14 @@ class Moderation(commands.Cog):
             chunk = sorted_gifts[i:i + 10]
             # Create a new embed for each chunk
             em = discord.Embed(title=first_page_title if i == 0 else "", description="")
+            em.set_author(
+                name="Gift list Command",
+                icon_url=self.bot.user.display_avatar.with_static_format("png"),
+                url="https://discord.gg/invite/tailss")
+            timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+            em.set_footer(
+                text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+                icon_url=ctx.author.display_avatar.with_static_format("png"))
             # Add the sorted gifts to the description of the embed
             for gift_data in chunk:
                 e = "➕" if gift_data.get("positive") else "➖"
