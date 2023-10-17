@@ -574,7 +574,8 @@ class Profile(commands.Cog):
 
         for index, waifu in enumerate(sorted_data, start=1):
             if not waifu["user_id"]:
-                continue
+                guild_data.waifus.remove(waifu)
+                await ctx.bot.db_client.update_guild(ctx.guild.id, {"waifus": guild_data.waifus})
             user = ctx.guild.get_member(int(waifu["user_id"])).display_name
             owner = ctx.guild.get_member(int(waifu["owner_id"])).display_name if waifu["owner_id"] else "No owner"
 
