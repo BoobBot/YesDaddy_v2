@@ -503,6 +503,12 @@ class Profile(commands.Cog):
             remaining_names = len(claimed_names) - max_names
             formatted_claimed_names += f"...and {remaining_names} more."
 
+        if len(claimed_names) == 0:
+            formatted_claimed_names = "No one :("
+
+        if len(liked_by) == 0:
+            formatted_liked_by = "No one :("
+
         plus_gifts = [gift for gift in waifu_data.get("gifts") if gift.get("positive")]
         minus_gifts = [gift for gift in waifu_data.get("gifts") if not gift.get("positive")]
 
@@ -510,16 +516,18 @@ class Profile(commands.Cog):
         plus_gifts_list = [plus_gifts_str[i:i + 4] for i in range(0, len(plus_gifts_str), 4)]
         minus_gifts_str = [f"{gift.get('emote')}x{gift.get('quantity')}" for gift in minus_gifts]
         minus_gifts_list = [minus_gifts_str[i:i + 4] for i in range(0, len(minus_gifts_str), 4)]
+        plus_gifts_value = '\n'.join([' '.join(line) for line in plus_gifts_list]) if plus_gifts_list else "No gifts"
+        minus_gifts_value = '\n'.join([' '.join(line) for line in minus_gifts_list]) if minus_gifts_list else "No gifts"
 
-        claim_title = get_title(rank=len(waifu_data.get("claimed")), title_type="claim")
-        divorce_title = get_title(rank=waifu_data.get("divorce_count"), title_type="divorce")
-        affinity_title = get_title(rank=waifu_data.get("affinity_changes"), title_type="affinity")
+        claim_title = get_title(rank=len(waifu_data.get("claimed")), title_type="claim") or ""
+        divorce_title = get_title(rank=waifu_data.get("divorce_count"), title_type="divorce") or ""
+        affinity_title = get_title(rank=waifu_data.get("affinity_changes"), title_type="affinity") or ""
 
         owner_name = ctx.guild.get_member(int(waifu_data.get("owner_id"))).display_name if waifu_data.get(
-            "owner_id") else "None"
+            "owner_id") else "Nobody..."
 
         likes = ctx.guild.get_member(int(waifu_data.get("affinity"))).display_name if waifu_data.get(
-            "affinity") else "None"
+            "affinity") else "Nobody..."
 
         em = discord.Embed(title=f"{waifu.display_name} {claim_title} Info", color=discord.Color.blurple())
         timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
@@ -530,15 +538,16 @@ class Profile(commands.Cog):
         em.set_footer(
             text=f"Command ran by {ctx.author.display_name} at {timestamp}",
             icon_url=ctx.author.display_avatar.with_static_format("png"))
+        em.set_thumbnail(url=waifu.display_avatar.with_static_format("png"))
         em.add_field(name="Owner", value=f"{owner_name}")
         em.add_field(name="Likes", value=f"{likes}")
         em.add_field(name="Price", value=f"${price}")
         em.add_field(name="Value", value=f"${value}")
         em.add_field(name="Liked By", value=f"{formatted_liked_by}")
-        em.add_field(name="➕ Gifts:", value=f"{[' '.join(line) for line in plus_gifts_list]}")
-        em.add_field(name="➖ Gifts:", value=f"{[' '.join(line) for line in minus_gifts_list]}")
+        em.add_field(name="➕ Gifts:", value=f"{plus_gifts_value}")
+        em.add_field(name="➖ Gifts:", value=f"{minus_gifts_value}")
         em.add_field(name="Claimed", value=f"{formatted_claimed_names}")
-        em.add_field(name="Divorces", value=f"{divorce_title} {waifu_data.get('divorces')}")
+        em.add_field(name="Divorces", value=f"{divorce_title} {waifu_data.get('divorce_count')}")
         em.add_field(name="Affinity Changes", value=f"{affinity_title} {waifu_data.get('affinity_changes')}")
         await ctx.reply(embed=em)
 
