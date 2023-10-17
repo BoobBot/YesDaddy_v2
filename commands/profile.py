@@ -561,6 +561,38 @@ class Profile(commands.Cog):
                      inline=False)
         await ctx.reply(embed=em)
 
+    @waifu.command(name="leaderboard", description="waifu leaderboard")
+    async def waifu_leaderboard(self, ctx):
+        await ctx.typing(ephemeral=False)
+        guild_data = await self.bot.db_client.get_guild(guild_id=ctx.guild.id)
+        all_waifus = guild_data.waifus
+        # Sort the list of dictionaries by the 'value' field
+        sorted_data = sorted(all_waifus, key=lambda x: x['value'], reverse=True)
+
+        # Create an empty list for embeds
+        embeds = []
+
+        for index, waifu in enumerate(sorted_data, start=1):
+            user = ctx.guild.get_member(int(waifu["user_id"])).display_name
+            owner = ctx.guild.get_member(int(waifu["owner_id"])).display_name if waifu["owner_id"] else "No owner"
+
+            em = discord.Embed(title=f"Top Waifus (Page {len(embeds) + 1})")
+            em.add_field(name=f"#{index} - {self.bot.emoji('currency.coin')} {waifu['value']:,}",
+                         value=f"{user} claimed by {owner}")
+
+            if not waifu["affinity"]:
+                em.add_field(name="Affinity", value=f"{user}'s heart is empty")
+            elif waifu["affinity"] == waifu["owner_id"]:
+                em.add_field(name="Affinity", value=f"{user} likes {owner} too <3")
+            else:
+                affinity_user = ctx.guild.get_member(int(waifu["affinity"])).display_name
+                em.add_field(name="Affinity", value=f"{user} likes {affinity_user}")
+
+            if index % 10 == 0 or index == len(sorted_data):
+                embeds.append(em)
+
+        await Paginator(delete_on_timeout=True, timeout=120).start(ctx, pages=embeds)
+
 
 async def setup(bot):
     await bot.add_cog(Profile(bot))
