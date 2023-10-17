@@ -472,23 +472,56 @@ class Profile(commands.Cog):
     @waifu.command(name="info", description="waifu info")
     @app_commands.describe(waifu="Waifu to get info of")
     async def waifu_info(self, ctx, waifu: Optional[discord.Member]):
+        max_names = 10
         waifu = waifu or ctx.author
         guild_data = await self.bot.db_client.get_guild(guild_id=ctx.guild.id)
         waifu_data = await guild_data.get_waifu(waifu.id)
         all_waifus = guild_data.waifus
         price = waifu_data.get("value") * 1.10
         value = waifu_data.get("value")
-        liked_by = [ctx.guild.get_member(w.get("user_id")).display_name for w in all_waifus if
+        liked_by = [ctx.guild.get_member(int(w.get("user_id"))).display_name for w in all_waifus if
                     str(w.get("affinity")) == str(waifu.id)]
+        formatted_liked_by = ""
+        for i, name in enumerate(liked_by):
+            formatted_liked_by += name + "\n"
+            if i == max_names - 1:
+                break
+
+        if len(liked_by) > max_names:
+            remaining_names = len(liked_by) - max_names
+            formatted_liked_by += f"...and {remaining_names} more."
+
+        claimed_names = [ctx.guild.get_member(int(claim)).display_name for claim in waifu_data.get("claimed")]
+
+        formatted_claimed_names = ""
+        for i, name in enumerate(claimed_names):
+            formatted_claimed_names += name + "\n"
+            if i == max_names - 1:
+                break
+
+        if len(claimed_names) > max_names:
+            remaining_names = len(claimed_names) - max_names
+            formatted_claimed_names += f"...and {remaining_names} more."
+
         plus_gifts = [gift for gift in waifu_data.get("gifts") if gift.get("positive")]
         minus_gifts = [gift for gift in waifu_data.get("gifts") if not gift.get("positive")]
+
+        plus_gifts_str = [f"{gift.get('emote')}x{gift.get('quantity')}" for gift in plus_gifts]
+        plus_gifts_list = [plus_gifts_str[i:i + 4] for i in range(0, len(plus_gifts_str), 4)]
+        minus_gifts_str = [f"{gift.get('emote')}x{gift.get('quantity')}" for gift in minus_gifts]
+        minus_gifts_list = [minus_gifts_str[i:i + 4] for i in range(0, len(minus_gifts_str), 4)]
+
         claim_title = get_title(rank=len(waifu_data.get("claimed")), title_type="claim")
         divorce_title = get_title(rank=waifu_data.get("divorce_count"), title_type="divorce")
         affinity_title = get_title(rank=waifu_data.get("affinity_changes"), title_type="affinity")
-        claimed_names = [ctx.guild.get_member(claim).display_name for claim in waifu_data.get("claimed")]
-        owner_name = ctx.guild.get_member(waifu_data.get("owner_id")).display_name if waifu_data.get(
+
+        owner_name = ctx.guild.get_member(int(waifu_data.get("owner_id"))).display_name if waifu_data.get(
             "owner_id") else "None"
-        em = discord.Embed(title=f"{waifu.display_name}'s Info", color=discord.Color.blurple())
+
+        likes = ctx.guild.get_member(int(waifu_data.get("affinity"))).display_name if waifu_data.get(
+            "affinity") else "None"
+
+        em = discord.Embed(title=f"{waifu.display_name} {claim_title} Info", color=discord.Color.blurple())
         timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
         em.set_author(
             name="Waifu Info Command",
@@ -498,11 +531,13 @@ class Profile(commands.Cog):
             text=f"Command ran by {ctx.author.display_name} at {timestamp}",
             icon_url=ctx.author.display_avatar.with_static_format("png"))
         em.add_field(name="Owner", value=f"{owner_name}")
+        em.add_field(name="Likes", value=f"{likes}")
         em.add_field(name="Price", value=f"${price}")
         em.add_field(name="Value", value=f"${value}")
-        em.add_field(name="Liked By", value=f"{liked_by}")
-        em.add_field(name="Gifts", value=f"➕{plus_gifts}\n➖{minus_gifts}")
-        em.add_field(name="Claimed", value=f"{claim_title} {claimed_names}")
+        em.add_field(name="Liked By", value=f"{formatted_liked_by}")
+        em.add_field(name="➕ Gifts:", value=f"{[' '.join(line) for line in plus_gifts_list]}")
+        em.add_field(name="➖ Gifts:", value=f"{[' '.join(line) for line in minus_gifts_list]}")
+        em.add_field(name="Claimed", value=f"{formatted_claimed_names}")
         em.add_field(name="Divorces", value=f"{divorce_title} {waifu_data.get('divorces')}")
         em.add_field(name="Affinity Changes", value=f"{affinity_title} {waifu_data.get('affinity_changes')}")
         await ctx.reply(embed=em)
