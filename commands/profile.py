@@ -393,11 +393,13 @@ class Profile(commands.Cog):
                 waifu_data["gifts"].append(gift_data)
                 await guild_data.update_waifu(waifu_data)
                 e = "➕" if gift_data.get("positive") else "➖"
-                return await ctx.reply(f"{e} Gift: {gift_data.get('name')}: {gift_data.get('emote')} given to {waifu.mention}")
+                return await ctx.reply(
+                    f"{e} Gift: {gift_data.get('name')}: {gift_data.get('emote')} given to {waifu.mention}")
         return await ctx.reply("Gift not found in inventory.")
 
     @inventory_gift_give.autocomplete('gift')
-    async def give_gift_autocomplete(self, interaction: discord.Interaction, current: str) -> List[app_commands.Choice[str]]:
+    async def give_gift_autocomplete(self, interaction: discord.Interaction, current: str) -> List[
+        app_commands.Choice[str]]:
         user_data = await self.bot.db_client.get_user(user_id=interaction.user.id, guild_id=interaction.guild.id)
         gifts = user_data.inventory.get("gifts")
         return [
@@ -424,6 +426,9 @@ class Profile(commands.Cog):
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         if user_data.balance < value:
             return await ctx.reply("You don't have enough coins to claim that waifu.")
+        if waifu_data["owner_id"]:
+            if waifu_data['value'] * 1.10 > value:
+                return await ctx.reply(f"That waifu is worth {waifu_data['value'] * 1.10 }, try again.")
         if waifu_data['value'] > value:
             return await ctx.reply("That waifu is worth more than that.")
         if str(waifu_data["affinity"]) == str(ctx.author.id):
@@ -463,14 +468,6 @@ class Profile(commands.Cog):
         self_waifu["divorces"] += 1
         await guild_data.update_waifu(self_waifu)
         return await ctx.reply(f"You divorced {waifu.mention}.")
-
-
-
-
-
-
-
-
 
 
 async def setup(bot):
