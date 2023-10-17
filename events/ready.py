@@ -11,7 +11,7 @@ class Ready(commands.Cog):
         self.bot.log.info(f'Logged in as ----> {self.bot.user}')
         self.bot.log.info(f'ID: {self.bot.user.id}')
         guild = self.bot.get_guild(694641649044685285)
-        guild_data = await self.bot.db.get_guild(guild.id)
+        guild_data = await self.bot.db_client.get_guild(guild.id)
         print(guild_data.waifus)
 
 
