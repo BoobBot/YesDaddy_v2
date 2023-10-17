@@ -5,6 +5,7 @@ import emoji
 from discord import app_commands
 from discord.ext import commands
 
+from utils.paginator import Paginator
 from utils.utilities import generate_embed_color
 
 
@@ -282,6 +283,9 @@ class Core(commands.Cog):
     @shop_admin.command(name="list_gifts", description="List all gifts in the shop")
     async def shop_admin_list_gifts(self, ctx: commands.Context):
         gifts = await self.bot.db_client.get_shop_gifts(guild_id=ctx.guild.id)
+        sorted_gifts = sorted(gifts, key=lambda x: x['value'], reverse=True)
+        embeds = []
+        first_page_title = "Gift list"
         em = discord.Embed(title="Shop Gifts", color=await generate_embed_color(ctx.author))
         for gift_data in gifts:
             em.add_field(name="",
@@ -294,6 +298,35 @@ class Core(commands.Cog):
                                f"Added By: <@{gift_data.get('added_by')}>",
                          inline=False)
         await ctx.send(embed=em)
+
+        for i in range(0, len(sorted_gifts), 10):
+            chunk = sorted_gifts[i:i + 10]
+            # Create a new embed for each chunk
+            em = discord.Embed(title=first_page_title if i == 0 else "", description="")
+            em.set_author(
+                name="Gift list Command",
+                icon_url=self.bot.user.display_avatar.with_static_format("png"),
+                url="https://discord.gg/invite/tailss")
+            timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+            em.set_footer(
+                text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+                icon_url=ctx.author.display_avatar.with_static_format("png"))
+            # Add the sorted gifts to the description of the embed
+            for gift_data in chunk:
+                em.add_field(name="",
+                             value=f"\nName: {gift_data.get('name')}\n"
+                                   f"Price: {gift_data.get('price')}\n"
+                                   f"Description: {gift_data.get('description')}\n"
+                                   f"Value: {gift_data.get('value')}\n"
+                                   f"Emote: {gift_data.get('emote')}\n"
+                                   f"Positive: {gift_data.get('positive')}\n"
+                                   f"Added By: <@{gift_data.get('added_by')}>",
+                             inline=False)
+
+            # Append the embed to the list of embeds
+            embeds.append(em)
+        await Paginator(delete_on_timeout=False, timeout=120).start(ctx, pages=embeds)
+
 
     # @shop_admin.command(name="add_item", description="Add an item to the shop")
     # @app_commands.describe(item="The item to add.")
