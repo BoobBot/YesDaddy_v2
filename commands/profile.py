@@ -483,7 +483,7 @@ class Profile(commands.Cog):
         plus_gifts = [gift for gift in waifu_data.get("gifts") if gift.get("positive")]
         minus_gifts = [gift for gift in waifu_data.get("gifts") if not gift.get("positive")]
         claim_title = get_title(rank=len(waifu_data.get("claimed")), title_type="claim")
-        divorce_title = get_title(rank=waifu_data.get("divorces_count"), title_type="divorce")
+        divorce_title = get_title(rank=waifu_data.get("divorce_count"), title_type="divorce")
         affinity_title = get_title(rank=waifu_data.get("affinity_changes"), title_type="affinity")
         claimed_names = [ctx.guild.get_member(claim).display_name for claim in waifu_data.get("claimed")]
         owner_name = ctx.guild.get_member(waifu_data.get("owner_id")).display_name if waifu_data.get(
