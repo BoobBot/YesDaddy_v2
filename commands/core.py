@@ -302,9 +302,9 @@ class Core(commands.Cog):
             for gift_data in chunk:
                 em.add_field(name="",
                              value=f"\nName: {gift_data.get('name')}\n"
-                                   f"Price: {gift_data.get('price')}\n"
+                                   f"Price: {gift_data.get('price'):,}\n"
                                    f"Description: {gift_data.get('description')}\n"
-                                   f"Value: {gift_data.get('value')}\n"
+                                   f"Value: {gift_data.get('value'):,}\n"
                                    f"Emote: {gift_data.get('emote')}\n"
                                    f"Positive: {gift_data.get('positive')}\n"
                                    f"Added By: <@{gift_data.get('added_by')}>",

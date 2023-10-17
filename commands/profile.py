@@ -74,8 +74,8 @@ class Profile(commands.Cog):
         em.add_field(
             name="Level", value=f"{user_data.level} {bar} {user_data.level + 1}", inline=False)
         em.add_field(name="Experience", value=f"{user_data.xp} / {total}")
-        em.add_field(name="Balance", value=f"{user_data.balance}")
-        em.add_field(name="Bank Balance", value=f"{user_data.bank_balance}")
+        em.add_field(name="Balance", value=f"{user_data.balance:,}")
+        em.add_field(name="Bank Balance", value=f"{user_data.bank_balance:,}")
         if user_data.is_in_jail():
             release_time = user_data.is_in_jail()
             remaining_timestamp = discord.utils.format_dt(release_time, style="R"
@@ -407,7 +407,7 @@ class Profile(commands.Cog):
         for gift_data in user_data.inventory.get("gifts"):
             e = "➕" if gift_data.get("positive") else "➖"
             em.add_field(name="",
-                         value=f"\nGift: {gift_data.get('name')} {gift_data.get('emote')}\nPrice: {gift_data.get('price')}\nValue: {e} {gift_data.get('value')}\nQuantity: {gift_data.get('quantity')}",
+                         value=f"\nGift: {gift_data.get('name')} {gift_data.get('emote')}\nPrice: {gift_data.get('price'):,}\nValue: {e} {gift_data.get('value'):,}\nQuantity: {gift_data.get('quantity')}",
                          inline=False)
         await ctx.reply(embed=em)
 
@@ -479,7 +479,7 @@ class Profile(commands.Cog):
             return await ctx.reply("You don't have enough coins to claim that waifu.")
         if waifu_data["owner_id"]:
             if waifu_data['value'] * 1.10 > value:
-                return await ctx.reply(f"That waifu is worth {int(waifu_data['value'] * 1.10) + 1}, try again.")
+                return await ctx.reply(f"That waifu is worth {int(waifu_data['value'] * 1.10) + 1:,}, try again.")
         if waifu_data['value'] > value:
             return await ctx.reply("That waifu is worth more than that.")
         if str(waifu_data["affinity"]) == str(ctx.author.id):
@@ -596,8 +596,8 @@ class Profile(commands.Cog):
         em.set_thumbnail(url=waifu.display_avatar.with_static_format("png"))
         em.add_field(name="<:black_hearts_padlock:1163891156392878182> **Owner**", value=f"{owner_name}")
         em.add_field(name="<:master:1163888867192078356> **Likes**", value=f"{likes}")
-        em.add_field(name="<a:1bye_money_r_ateez:1163891153796616242> **Price**", value=f"${price}", inline=False)
-        em.add_field(name="<:money:1163891159349866526> **Value**", value=f"${value}", inline=False)
+        em.add_field(name="<a:1bye_money_r_ateez:1163891153796616242> **Price**", value=f"${price:,}", inline=False)
+        em.add_field(name="<:money:1163891159349866526> **Value**", value=f"${value:,}", inline=False)
         em.add_field(name="<:Gift:1163891158137700492> **Gifts** ➕:", value=f"{plus_gifts_value}")
         em.add_field(name="<a:explode2:1163902836300591175> **Gifts** ➖:", value=f"{minus_gifts_value}")
         em.add_field(name="<:apink_hearts:1163891155285594212> **Liked By**", value=f"{formatted_liked_by}",
