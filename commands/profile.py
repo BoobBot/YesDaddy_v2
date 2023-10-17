@@ -571,27 +571,21 @@ class Profile(commands.Cog):
 
         # Create an empty list for embeds
         embeds = []
-
         # Initialize an empty string to accumulate entries
         page_entries = ""
-
         for index, waifu in enumerate(sorted_data, start=1):
             user = ctx.guild.get_member(int(waifu["user_id"])).display_name
             owner = ctx.guild.get_member(int(waifu["owner_id"])).display_name if waifu["owner_id"] else "No owner"
-
-            entry = f"#{index} - <:money:1163891159349866526> ${waifu['value']}\n" \
-                    f"{user} claimed by {owner}\n\n"
-
+            entry = f"**#{index}** - <:money:1163891159349866526> ${waifu['value']}\n" \
+                    f"{user} claimed by {owner}\n"
             if not waifu["affinity"]:
-                entry += f"{user}'s heart is empty\n\n"
+                entry += f"**{user}'s** heart is empty\n\n"
             elif waifu["affinity"] == waifu["owner_id"]:
-                entry += f"{user} likes {owner} too ❤️\n\n"
+                entry += f"**{user}** likes **{owner}** too ❤️\n\n"
             else:
                 affinity_user = ctx.guild.get_member(int(waifu["affinity"])).display_name
-                entry += f"{user} likes {affinity_user}\n\n"
-
+                entry += f"{user} likes **{affinity_user}**\n\n"
             page_entries += entry
-
             # Create a new embed after accumulating 10 entries or at the end
             if index % 10 == 0 or index == len(sorted_data):
                 em = discord.Embed(title=f"Top Waifus (Page {len(embeds) + 1})")
