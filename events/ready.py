@@ -16,6 +16,9 @@ class Ready(commands.Cog):
             res = isinstance(w.get("user_id"), str)
             if res:
                 print(w)
+                #remove
+                guild_data.waifus.remove(w)
+                await self.bot.db_client.update_guild(guild.id, {"waifus": guild_data.waifus})
 
 
 async def setup(bot):
