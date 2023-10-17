@@ -548,16 +548,16 @@ class Profile(commands.Cog):
             text=f"Command ran by {ctx.author.display_name} at {timestamp}",
             icon_url=ctx.author.display_avatar.with_static_format("png"))
         em.set_thumbnail(url=waifu.display_avatar.with_static_format("png"))
-        em.add_field(name="**Owner**", value=f"{owner_name}")
-        em.add_field(name="**Likes**", value=f"{likes}")
-        em.add_field(name="**Price**", value=f"${price}", inline=False)
-        em.add_field(name="**Value**", value=f"${value}", inline=False)
-        em.add_field(name="**Gifts** ➕:", value=f"{plus_gifts_value}")
-        em.add_field(name="**Gifts** ➖:", value=f"{minus_gifts_value}")
-        em.add_field(name="**Liked By**", value=f"{formatted_liked_by}", inline=False)
-        em.add_field(name="**Claimed**", value=f"{formatted_claimed_names}", inline=False)
-        em.add_field(name="**Divorces**", value=f"{divorce_title} {waifu_data.get('divorce_count')}", inline=False)
-        em.add_field(name="**Affinity Changes**", value=f"{affinity_title} {waifu_data.get('affinity_changes')}",
+        em.add_field(name="🔒 **Owner**", value=f"{owner_name}")
+        em.add_field(name="❤️ **Likes**", value=f"{likes}")
+        em.add_field(name="💸 **Price**", value=f"${price}", inline=False)
+        em.add_field(name="💰 **Value**", value=f"${value}", inline=False)
+        em.add_field(name="🎁 **Gifts** ➕:", value=f"{plus_gifts_value}")
+        em.add_field(name="💣 **Gifts** ➖:", value=f"{minus_gifts_value}")
+        em.add_field(name="💘 **Liked By**", value=f"{formatted_liked_by}", inline=False)
+        em.add_field(name="🔗 **Claimed**", value=f"{formatted_claimed_names}", inline=False)
+        em.add_field(name="💔 **Divorces**", value=f"{divorce_title} {waifu_data.get('divorce_count')}", inline=False)
+        em.add_field(name="💌 **Affinity Changes**", value=f"{affinity_title} {waifu_data.get('affinity_changes')}",
                      inline=False)
         await ctx.reply(embed=em)
 
