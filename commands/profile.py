@@ -439,8 +439,9 @@ class Profile(commands.Cog):
         if str(waifu_data["affinity"]) == str(ctx.author.id):
             new_value = int(value * 1.5)
         stolen = await guild_data.get_waifu(waifu_data['owner_id'])
-        stolen["claimed"].remove(waifu.id)
-        await guild_data.update_waifu(stolen)
+        if waifu.id in stolen["claimed"]:
+            stolen["claimed"].remove(waifu.id)
+            await guild_data.update_waifu(stolen)
         waifu_data["owner_id"] = ctx.author.id
         waifu_data["value"] = new_value
         await guild_data.update_waifu(waifu_data)
