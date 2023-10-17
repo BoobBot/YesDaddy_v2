@@ -579,16 +579,16 @@ class Profile(commands.Cog):
             user = ctx.guild.get_member(int(waifu["user_id"])).display_name
             owner = ctx.guild.get_member(int(waifu["owner_id"])).display_name if waifu["owner_id"] else "No owner"
 
-            entry = f"#{index} - ${waifu['value']}\n" \
-                    f"{user} claimed by {owner}\n"
+            entry = f"#{index} - <:money:1163891159349866526> ${waifu['value']}\n" \
+                    f"{user} claimed by {owner}\n\n"
 
             if not waifu["affinity"]:
-                entry += f"{user}'s heart is empty\n"
+                entry += f"{user}'s heart is empty\n\n"
             elif waifu["affinity"] == waifu["owner_id"]:
-                entry += f"{user} likes {owner} too <3\n"
+                entry += f"{user} likes {owner} too ❤️\n\n"
             else:
                 affinity_user = ctx.guild.get_member(int(waifu["affinity"])).display_name
-                entry += f"{user} likes {affinity_user}\n"
+                entry += f"{user} likes {affinity_user}\n\n"
 
             page_entries += entry
 
@@ -596,6 +596,14 @@ class Profile(commands.Cog):
             if index % 10 == 0 or index == len(sorted_data):
                 em = discord.Embed(title=f"Top Waifus (Page {len(embeds) + 1})")
                 em.description = page_entries
+                em.set_author(
+                    name="Waifu Leaderboard Command",
+                    icon_url=self.bot.user.display_avatar.with_static_format("png"),
+                    url="https://discord.gg/invite/tailss")
+                timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+                em.set_footer(
+                    text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+                    icon_url=ctx.author.display_avatar.with_static_format("png"))
                 embeds.append(em)
                 # Reset page_entries for the next page
                 page_entries = ""
