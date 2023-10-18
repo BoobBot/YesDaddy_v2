@@ -260,12 +260,12 @@ class Profile(commands.Cog):
             entry = f"**#{index}** - <:money:1163891159349866526> ${waifu['value']:,}\n" \
                     f"**{user}** claimed by **{owner}**\n"
             if not waifu["affinity"]:
-                entry += f"**{user}'s** heart is empty\n\n"
+                entry += f"**{user}'s** heart is empty;(\n\n"
             elif waifu["affinity"] == waifu["owner_id"]:
-                entry += f"**{user}** likes **{owner}** too ❤️\n\n"
+                entry += f"and **{user}** likes **{owner}** too ❤️\n\n"
             else:
                 affinity_user = ctx.guild.get_member(int(waifu["affinity"])).display_name
-                entry += f"{user} likes **{affinity_user}**\n\n"
+                entry += f"but {user} likes **{affinity_user}**\n\n"
             page_entries += entry
             # Create a new embed after accumulating 10 entries or at the end
             if index % 10 == 0 or index == len(sorted_data):
