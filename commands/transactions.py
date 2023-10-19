@@ -135,7 +135,7 @@ class Transactions(commands.Cog):
         user_data = await ctx.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         user_color = await generate_embed_color(user)
 
-        em = discord.Embed(title=f"{user}'s Balance", description=f"{user.mention} has {user_data.balance}",
+        em = discord.Embed(title=f"{user}'s Balance", description=f"{user.mention} has {user_data.balance} and {user_data.bank_balance} in their bank.",
                            color=user_color)
         em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
         await ctx.reply(embed=em)
