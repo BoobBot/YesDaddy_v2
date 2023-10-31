@@ -372,7 +372,7 @@ class Core(commands.Cog):
         if trigger in [reaction.get("trigger") for reaction in guild.text_reactions]:
             return await ctx.reply("That trigger is already a text reaction.")
         guild.text_reactions.append(
-            {"trigger": trigger, "response": response})  # TODO dedicated method to handle updating just this field
+            {"trigger": trigger, "response": response})
         await self.bot.db_client.update_guild(ctx.guild.id, {"text_reactions": guild.text_reactions})
         await ctx.reply(f"Added `{trigger}` as a text reaction.")
 
@@ -385,8 +385,8 @@ class Core(commands.Cog):
         react = next((reaction for reaction in guild.text_reactions if reaction.get("trigger") == trigger), None)
         if not react:
             return await ctx.reply("That trigger is not a text reaction.")
-        guild.text_reactions.remove(react)  # TODO dedicated method to handle updating just this field
-        await self.bot.db_client.update_guild(ctx.guild.id, guild.to_dict())
+        guild.text_reactions.remove(react)
+        await self.bot.db_client.update_guild(ctx.guild.id, {"text_reactions": guild.text_reactions})
         await ctx.reply(f"Removed `{trigger}` as a text reaction.")
 
     @text_reaction.command(name="list", description="List all text reactions.")
@@ -464,6 +464,45 @@ class Core(commands.Cog):
             print(e)
             await ctx.send('An error occurred while fetching the Urban Dictionary definition.')
 
+    @guild_settings.group(name="pings", description="View or change ping commands.")
+    @commands.has_guild_permissions(ban_members=True)
+    async def ping_roles(self, ctx):
+        if not ctx.invoked_subcommand:
+            await ctx.send_help(ctx.command)
+
+    @ping_roles.command(name="add", description="Add a ping command.")
+    @app_commands.describe(trigger="The trigger for the ping command.")
+    @app_commands.describe(response="The role to ping")
+    async def ping_role_add(self, ctx, trigger: str, response: discord.Role):
+        guild = await self.bot.db_client.get_guild(ctx.guild.id)
+        if trigger in [ping_tag.get("ping") for ping_tag in guild.ping_tags]:
+            return await ctx.reply("That is already a ping.")
+        guild.ping_tags.append(
+            {"ping": trigger, "role": response.id})
+        await self.bot.db_client.update_guild(ctx.guild.id, {"ping_tags": guild.ping_tags})
+        await ctx.reply(f"Added `{trigger}` as a text reaction.")
+
+    @ping_roles.command(name="remove", description="Remove a ping command.")
+    @app_commands.describe(trigger="The trigger for the ping command.")
+    async def ping_role_remove(self, ctx, trigger: str):
+        guild = await self.bot.db_client.get_guild(ctx.guild.id)
+        ping = next((ping_tag for ping_tag in guild.ping_tags if ping_tag.get("ping") == trigger), None)
+        if not ping:
+            return await ctx.reply("That trigger is not a ping.")
+        guild.text_reactions.remove(ping)
+        await self.bot.db_client.update_guild(ctx.guild.id, {"ping_tags": guild.ping_tags})
+        await ctx.reply(f"Removed `{trigger}` as a ping.")
+
+    @ping_roles.command(name="list", description="List all pings.")
+    async def ping_role_list(self, ctx):
+        guild = await self.bot.db_client.get_guild(ctx.guild.id)
+        ping_tags = guild.ping_tags
+        if not ping_tags:
+            return await ctx.reply("There are no pings.")
+        embed = discord.Embed(title="ping roles")
+        for ping_tag in ping_tags:
+            embed.add_field(name="react", value=f"{ping_tag.get('ping')}: {ping_tag.get('response')}", inline=False)
+        await ctx.reply(embed=embed)
 
 async def setup(bot):
     await bot.add_cog(Core(bot))

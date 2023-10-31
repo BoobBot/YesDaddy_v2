@@ -7,7 +7,7 @@ if TYPE_CHECKING:
 class Guild:
     def __init__(self, db, guild_id, member_data=None, tickets=None, support_tickets=None, config=None, lvl_roles=[],
                  bonus_roles=[], text_reactions=None, shop_roles=[], shop_gifts=None, shop_items=None, users=[],
-                 bonus_cash_roles=[], waifus=[]):
+                 bonus_cash_roles=[], waifus=[], ping_tags=[]):
         self._db: 'DiscordDatabase' = db
         self.guild_id = guild_id
         self.member_data = member_data if member_data else []
@@ -23,6 +23,7 @@ class Guild:
         self.users = users if users else []
         self.bonus_cash_roles = bonus_cash_roles if bonus_cash_roles else []
         self.waifus = waifus if waifus else []
+        self.ping_tags = ping_tags if ping_tags else []
 
     def to_dict(self):
         return {k: v for k, v in self.__dict__ if not k.startswith('_')}
@@ -35,9 +36,10 @@ class Guild:
     def from_existing(cls, db, data: dict):
         data.setdefault("lvl_roles", [])
         data.setdefault("bonus_roles", [])
-        data.setdefault("shop_roles", {})
+        data.setdefault("shop_roles", [])
         data.setdefault("users", [])
         data.setdefault("bonus_cash_roles", [])
+        data.setdefault("ping_tags", [])
         return cls(db, **data)
 
     async def save(self):
