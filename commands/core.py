@@ -501,7 +501,7 @@ class Core(commands.Cog):
             return await ctx.reply("There are no pings.")
         embed = discord.Embed(title="ping roles")
         for ping_tag in ping_tags:
-            embed.add_field(name="react", value=f"{ping_tag.get('ping')}: <@&{ping_tag.get('role')}>", inline=False)
+            embed.add_field(name=" ", value=f"{ping_tag.get('ping')}: <@&{ping_tag.get('role')}>", inline=False)
         await ctx.reply(embed=embed)
 
 
