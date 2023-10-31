@@ -504,5 +504,6 @@ class Core(commands.Cog):
             embed.add_field(name="react", value=f"{ping_tag.get('ping')}: <@&{ping_tag.get('role')}>", inline=False)
         await ctx.reply(embed=embed)
 
+
 async def setup(bot):
     await bot.add_cog(Core(bot))
