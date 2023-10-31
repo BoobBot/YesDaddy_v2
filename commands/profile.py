@@ -255,9 +255,10 @@ class Profile(commands.Cog):
             if not waifu["user_id"]:
                 guild_data.waifus.remove(waifu)
                 await ctx.bot.db_client.update_guild(ctx.guild.id, {"waifus": guild_data.waifus})
-            user = ctx.guild.get_member(int(waifu["user_id"])).display_name
+            user = ctx.guild.get_member(int(waifu["user_id"]))
+            user_name = user.display_name if user else "No user found, left?"
             owner = ctx.guild.get_member(int(waifu["owner_id"]))
-            owner_name = owner.display_name if owner else "No owner"
+            owner_name = owner.display_name if owner else "No owner, left?"
             entry = f"**#{index}** - <:money:1163891159349866526> ${waifu['value']:,}\n" \
                     f"**{user}** claimed by **{owner}**\n"
             if not waifu["affinity"]:
@@ -265,7 +266,8 @@ class Profile(commands.Cog):
             elif waifu["affinity"] == waifu["owner_id"]:
                 entry += f"and **{user}** likes **{owner}** too ❤️\n\n"
             else:
-                affinity_user = ctx.guild.get_member(int(waifu["affinity"])).display_name
+                affinity_user = ctx.guild.get_member(int(waifu["affinity"]))
+                affinity_user_name = affinity_user.display_name if affinity_user else "No affinity user, left?"
                 entry += f"but **{user}** likes **{affinity_user}** 💔\n\n"
             page_entries += entry
             # Create a new embed after accumulating 10 entries or at the end
