@@ -13,7 +13,7 @@ class Ready(commands.Cog):
         self.bot.log.info('------')
         guild = await self.bot.db_client.get_guild(694641646780022818)
         for user in guild.users:
-            if user.get("user_id") == 248294452307689473:
+            if 'guild_id' not in user:
                 print(user)
 async def setup(bot):
     await bot.add_cog(Ready(bot))
