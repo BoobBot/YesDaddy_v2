@@ -556,8 +556,13 @@ class Profile(commands.Cog):
             remaining_names = len(liked_by) - max_names
             formatted_liked_by += f"...and {remaining_names} more."
 
-        claimed_names = [ctx.guild.get_member(int(claim)).display_name for claim in waifu_data.get("claimed")]
-
+        claimed_names = []
+        for claim in waifu_data.get("claimed"):
+            member = ctx.guild.get_member(int(claim))
+            if member:
+                claimed_names.append(member.display_name)
+            else:
+                claimed_names.append("User not found, Left?")
         formatted_claimed_names = ""
         for i, name in enumerate(claimed_names):
             formatted_claimed_names += name + "\n"
