@@ -256,6 +256,7 @@ class Profile(commands.Cog):
             if not waifu["user_id"]:
                 guild_data.waifus.remove(waifu)
                 await ctx.bot.db_client.update_guild(ctx.guild.id, {"waifus": guild_data.waifus})
+                continue
             user = ctx.guild.get_member(int(waifu["user_id"]))
             user_name = user.display_name if user else "No user found, left?"
             if not waifu["owner_id"]:
