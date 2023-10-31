@@ -15,6 +15,9 @@ class Ready(commands.Cog):
         for user in guild.users:
             if 'user_id' not in user:
                 print(user)
+                guild.users.remove(user)
+        await self.bot.db_client.update_guild(guild.guild_id, {'users': guild.users})
+        print("Done!")
 
 async def setup(bot):
     await bot.add_cog(Ready(bot))
