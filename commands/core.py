@@ -480,7 +480,7 @@ class Core(commands.Cog):
         guild.ping_tags.append(
             {"ping": trigger, "role": response.id})
         await self.bot.db_client.update_guild(ctx.guild.id, {"ping_tags": guild.ping_tags})
-        await ctx.reply(f"Added `{trigger}` as a text reaction.")
+        await ctx.reply(f"Added `{trigger}` as a ping command.")
 
     @ping_roles.command(name="remove", description="Remove a ping command.")
     @app_commands.describe(trigger="The trigger for the ping command.")
@@ -501,7 +501,7 @@ class Core(commands.Cog):
             return await ctx.reply("There are no pings.")
         embed = discord.Embed(title="ping roles")
         for ping_tag in ping_tags:
-            embed.add_field(name="react", value=f"{ping_tag.get('ping')}: {ping_tag.get('response')}", inline=False)
+            embed.add_field(name="react", value=f"{ping_tag.get('ping')}: <@&{ping_tag.get('role')}>", inline=False)
         await ctx.reply(embed=embed)
 
 async def setup(bot):
