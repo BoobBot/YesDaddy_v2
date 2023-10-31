@@ -655,7 +655,7 @@ class Moderation(commands.Cog):
     @persistent_cooldown(1, 120, commands.BucketType.user)
     @app_commands.describe(ping="The ping to use.")
     async def pings(self, ctx: commands.Context, ping: str,):
-        guild_data = self.bot.db_client.get_guild(ctx.guild.id)
+        guild_data = await self.bot.db_client.get_guild(ctx.guild.id)
         ping_data = next((gd for gd in guild_data.ping_tags if str(gd.get("role")) == str(ping)), None)
         if not ping_data:
             return await ctx.send("That ping doesn't exist")
@@ -666,7 +666,7 @@ class Moderation(commands.Cog):
                                     interaction: discord.Interaction,
                                     current: str,
                                     ) -> List[app_commands.Choice[str]]:
-        guild_data = self.bot.db_client.get_guild(interaction.guild.id)
+        guild_data = await self.bot.db_client.get_guild(interaction.guild.id)
 
         return [
                    app_commands.Choice(name=ping.get('name'), value=str(ping.get('role')))
