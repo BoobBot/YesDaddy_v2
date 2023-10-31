@@ -95,11 +95,14 @@ class User:
 
     async def update_fields(self, **kwargs):
         for key, value in kwargs.items():
+            print(f"Updating {key} to {value}")
             self[key] = value
 
         if self._new:
+            print("New user, saving...")
             await self.save(guild_id=self.guild_id)
         else:
+            print("Existing user, updating...")
             await self._db.update_guild_user(self.guild_id, self.user_id, self)
 
     def get_item_by_key(self, key, value, inventory_key):
