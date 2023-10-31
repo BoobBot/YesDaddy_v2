@@ -3,7 +3,7 @@ import datetime
 from typing import List, Optional
 
 import discord
-from discord import app_commands
+from discord import app_commands, AllowedMentions
 from discord.ext import commands
 
 from utils.checks import persistent_cooldown
@@ -659,7 +659,7 @@ class Moderation(commands.Cog):
         ping_data = next((gd for gd in guild_data.ping_tags if str(gd.get("role")) == str(ping)), None)
         if not ping_data:
             return await ctx.send("That ping doesn't exist")
-        await ctx.send(f"<@&{ping_data.get('role')}>")
+        await ctx.send(f"<@&{ping_data.get('role')}>", allowed_mentions=AllowedMentions.all())
 
     @pings.autocomplete('ping')
     async def pings_autocomplete(self,
