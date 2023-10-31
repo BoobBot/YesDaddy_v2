@@ -182,6 +182,7 @@ class User:
 
     async def claim_daily(self):
         now = datetime.utcnow()
+        current_streak = self.daily_streak
 
         if not self.last_daily_claim:
             await self.update_fields(daily_streak=1, last_daily_claim=now)
@@ -191,7 +192,7 @@ class User:
 
         if days_since_last_claim > 2:
             await self.update_fields(daily_streak=1, last_daily_claim=now)
-            return True, self.daily_streak
+            return True, current_streak
 
         await self.update_fields(daily_streak=self.daily_streak + 1, last_daily_claim=now)
         return False, self.daily_streak
