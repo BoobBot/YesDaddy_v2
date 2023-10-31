@@ -12,7 +12,7 @@ class Ready(commands.Cog):
         self.bot.log.info(f'ID: {self.bot.user.id}')
         self.bot.log.info('------')
         guild = await self.bot.db_client.get_guild(694641646780022818)
-        for user in guild.users:
+        for user in reversed(guild.users):
             if 'guild_id' not in user:
                 print(user)
                 guild.users.remove(user)
