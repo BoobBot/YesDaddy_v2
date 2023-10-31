@@ -256,7 +256,8 @@ class Profile(commands.Cog):
                 guild_data.waifus.remove(waifu)
                 await ctx.bot.db_client.update_guild(ctx.guild.id, {"waifus": guild_data.waifus})
             user = ctx.guild.get_member(int(waifu["user_id"])).display_name
-            owner = ctx.guild.get_member(int(waifu["owner_id"])).display_name if waifu["owner_id"] else "No owner"
+            owner = ctx.guild.get_member(int(waifu["owner_id"]))
+            owner_name = owner.display_name if owner else "No owner"
             entry = f"**#{index}** - <:money:1163891159349866526> ${waifu['value']:,}\n" \
                     f"**{user}** claimed by **{owner}**\n"
             if not waifu["affinity"]:
