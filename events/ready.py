@@ -15,7 +15,7 @@ class Ready(commands.Cog):
         for user in reversed(guild.users):
             if 'guild_id' not in user:
                 print(user)
-                guild.users.pop(user)
+                guild.users.remove(user)
             #if 'user_id' not in user:
                 #print(user)
                 #guild.users.pop(user)
