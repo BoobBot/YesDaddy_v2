@@ -659,7 +659,7 @@ class Moderation(commands.Cog):
         ping_data = next((gd for gd in guild_data.ping_tags if str(gd.get("role")) == str(ping)), None)
         if not ping_data:
             return await ctx.send("That ping doesn't exist")
-        await ctx.send(f"<@&{ping_data.get('role')}")
+        await ctx.send(f"<@&{ping_data.get('role')}>")
 
     @pings.autocomplete('ping')
     async def pings_autocomplete(self,
