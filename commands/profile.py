@@ -252,6 +252,7 @@ class Profile(commands.Cog):
         # Initialize an empty string to accumulate entries
         page_entries = ""
         for index, waifu in enumerate(sorted_data, start=1):
+            print(waifu)
             if not waifu["user_id"]:
                 guild_data.waifus.remove(waifu)
                 await ctx.bot.db_client.update_guild(ctx.guild.id, {"waifus": guild_data.waifus})
