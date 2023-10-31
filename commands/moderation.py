@@ -654,7 +654,7 @@ class Moderation(commands.Cog):
     @commands.hybrid_command(name="pings", description="role pings")
     @persistent_cooldown(1, 120, commands.BucketType.user)
     @app_commands.describe(ping="The ping to use.")
-    async def pings(self, ctx: commands.Context, ping: str,):
+    async def pings(self, ctx: commands.Context, ping: str):
         guild_data = await self.bot.db_client.get_guild(ctx.guild.id)
         ping_data = next((gd for gd in guild_data.ping_tags if str(gd.get("role")) == str(ping)), None)
         if not ping_data:
@@ -669,7 +669,7 @@ class Moderation(commands.Cog):
         guild_data = await self.bot.db_client.get_guild(interaction.guild.id)
 
         return [
-                   app_commands.Choice(name=ping.get('name'), value=str(ping.get('role')))
+                   app_commands.Choice(name=ping.get('ping'), value=str(ping.get('role')))
                    for ping in guild_data.ping_tags
                    if not current or search(ping.get('ping').lower(), current.lower())
                ][:25]
