@@ -258,6 +258,11 @@ class Profile(commands.Cog):
                 await ctx.bot.db_client.update_guild(ctx.guild.id, {"waifus": guild_data.waifus})
             user = ctx.guild.get_member(int(waifu["user_id"]))
             user_name = user.display_name if user else "No user found, left?"
+            if not waifu["owner_id"]:
+                entry = f"**#{index}** - <:money:1163891159349866526> ${waifu['value']:,}\n" \
+                        f"**{user_name}** is unclaimed\n"
+                page_entries += entry
+                continue
             owner = ctx.guild.get_member(int(waifu["owner_id"]))
             owner_name = owner.display_name if owner else "No owner, left?"
             entry = f"**#{index}** - <:money:1163891159349866526> ${waifu['value']:,}\n" \
