@@ -489,7 +489,7 @@ class Core(commands.Cog):
         ping = next((ping_tag for ping_tag in guild.ping_tags if ping_tag.get("ping") == trigger), None)
         if not ping:
             return await ctx.reply("That trigger is not a ping.")
-        guild.text_reactions.remove(ping)
+        guild.ping_tags.remove(ping)
         await self.bot.db_client.update_guild(ctx.guild.id, {"ping_tags": guild.ping_tags})
         await ctx.reply(f"Removed `{trigger}` as a ping.")
 
