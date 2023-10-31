@@ -6,6 +6,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 
+from utils.checks import persistent_cooldown
 from utils.paginator import Paginator
 from utils.utilities import generate_embed_color, search
 from views import support_view
@@ -649,6 +650,29 @@ class Moderation(commands.Cog):
         await new_channel.send(
             f"<@&981426793925992448> Support Ticket by {user.mention}",
             view=support_view.SupportTicketView())
+
+    @commands.hybrid_command(name="pings", description="role pings")
+    @persistent_cooldown(1, 120, commands.BucketType.user)
+    @app_commands.describe(ping="The ping to use.")
+    async def pings(self, ctx: commands.Context, ping: str,):
+        guild_data = self.bot.db_client.get_guild(ctx.guild.id)
+        ping_data = next((gd for gd in guild_data.ping_tags if str(gd.get("role")) == str(ping)), None)
+        if not ping_data:
+            return await ctx.send("That ping doesn't exist")
+        await ctx.send(f"<@&{ping_data.get('role')}")
+
+    @pings.autocomplete('ping')
+    async def pings_autocomplete(self,
+                                    interaction: discord.Interaction,
+                                    current: str,
+                                    ) -> List[app_commands.Choice[str]]:
+        guild_data = self.bot.db_client.get_guild(interaction.guild.id)
+
+        return [
+                   app_commands.Choice(name=ping.get('name'), value=str(ping.get('role')))
+                   for ping in guild_data.ping_tags
+                   if not current or search(ping.get('ping').lower(), current.lower())
+               ][:25]
 
 
 async def setup(bot):
