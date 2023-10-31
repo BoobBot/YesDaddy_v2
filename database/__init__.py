@@ -51,10 +51,10 @@ class DiscordDatabase:
             {"$set": {"users.$": user_data.to_dict()}}
         )
 
-    async def update_guild_user_data(self, guild_id, user_id, user_data):
+    async def update_guild_user_data(self, guild_id, user_id, updated_fields):
         await self.guild_collection.update_one(
-            {"guild_id": guild_id, "users.user_id": user_id},  # prev: users: user_id
-            {"$set": {"users.$": user_data}}
+            {"guild_id": guild_id, "users.user_id": user_id},
+            {"$set": {f"users.$.{field}": updated_fields[field] for field in updated_fields}}
         )
 
     async def get_users_in_guild(self, guild_id):

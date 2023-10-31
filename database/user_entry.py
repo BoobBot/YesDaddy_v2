@@ -103,9 +103,9 @@ class User:
             await self.save(guild_id=self.guild_id)
         else:
             print("Existing user, updating...")
-            #for key, value in kwargs.items():
-               # await self._db.update_guild_user_data(self.guild_id, self.user_id, {key: value})
-            await self._db.update_guild_user(self.guild_id, self.user_id, self)
+            for key, value in kwargs.items():
+               await self._db.update_guild_user_data(self.guild_id, self.user_id, {key: value})
+            #await self._db.update_guild_user(self.guild_id, self.user_id, self)
 
     def get_item_by_key(self, key, value, inventory_key):
         if inventory_key in self.inventory:
