@@ -4,7 +4,7 @@ import typing
 from typing import Literal, Optional
 
 import discord
-from discord import app_commands
+from discord import app_commands, AllowedMentions
 from discord.ext import commands
 import random
 
@@ -65,7 +65,7 @@ class Race(commands.Cog):
         """Starts s race."""
         await ctx.defer(ephemeral=False)
         if self.active[ctx.guild.id]:
-            return await ctx.send(f"A race is already in progress! Type `{ctx.prefix}race enter` to enter!")
+            return await ctx.send(f"A race is already in progress! Type {ctx.prefix}`race enter` to enter!")
         self.active[ctx.guild.id] = True
         self.players[ctx.guild.id].append(ctx.author)
         wait = 120
@@ -75,7 +75,7 @@ class Race(commands.Cog):
             f"🚩 A race has begun! Type {ctx.prefix}race enter "
             f"to join the race! 🚩\nThe race will begin in "
             f"{wait} seconds!\n\n**{ctx.author.mention}** entered the race!"
-        )
+            , allowed_mentions=AllowedMentions.all())
         await asyncio.sleep(wait)
         self.started[ctx.guild.id] = True
         await ctx.channel.send("🏁 The race is now in progress. 🏁")
@@ -89,32 +89,33 @@ class Race(commands.Cog):
     @app_commands.describe(user="The user to get stats for.")
     async def stats(self, ctx, user: typing.Optional[discord.Member]):
         """Display your race stats."""
-        if not user:
-            user = ctx.author
-        color = await ctx.embed_colour()
-        user_data = await self.config.member(user).all()
-        player_total = sum(user_data["Wins"].values()) + user_data["Losses"]
-        server_total = await self.config.guild(ctx.guild).Games_Played()
-        try:
-            percent = round((player_total / server_total) * 100, 1)
-        except ZeroDivisionError:
-            percent = 0
-        embed = discord.Embed(color=color, description="Race Stats")
-        embed.set_author(name=f"{user}", icon_url=user.avatar.url)
-        embed.add_field(
-            name="Wins",
-            value=(
-                f"1st: {user_data['Wins']['1']}\n2nd: {user_data['Wins']['2']}\n3rd: {user_data['Wins']['3']}"
-            ),
-        )
-        embed.add_field(name="Losses", value=f'{user_data["Losses"]}')
-        embed.set_footer(
-            text=(
-                f"You have played in {player_total} ({percent}%) races out "
-                f"of {server_total} total races on the server."
-            )
-        )
-        await ctx.send(embed=embed)
+        await ctx.send("This command is currently disabled.")
+        # if not user:
+        #     user = ctx.author
+        # color = await ctx.embed_colour()
+        # user_data = await self.config.member(user).all()
+        # player_total = sum(user_data["Wins"].values()) + user_data["Losses"]
+        # server_total = await self.config.guild(ctx.guild).Games_Played()
+        # try:
+        #     percent = round((player_total / server_total) * 100, 1)
+        # except ZeroDivisionError:
+        #     percent = 0
+        # embed = discord.Embed(color=color, description="Race Stats")
+        # embed.set_author(name=f"{user}", icon_url=user.avatar.url)
+        # embed.add_field(
+        #     name="Wins",
+        #     value=(
+        #         f"1st: {user_data['Wins']['1']}\n2nd: {user_data['Wins']['2']}\n3rd: {user_data['Wins']['3']}"
+        #     ),
+        # )
+        # embed.add_field(name="Losses", value=f'{user_data["Losses"]}')
+        # embed.set_footer(
+        #     text=(
+        #         f"You have played in {player_total} ({percent}%) races out "
+        #         f"of {server_total} total races on the server."
+        #     )
+        # )
+        # await ctx.send(embed=embed)
 
     @race.command()
     @app_commands.describe(bet="The amount to bet.")
