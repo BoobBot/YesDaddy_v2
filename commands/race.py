@@ -62,6 +62,7 @@ class Race(commands.Cog):
 
     @race.command()
     async def start(self, ctx):
+        """Starts s race."""
         await ctx.defer(ephemeral=False)
         if self.active[ctx.guild.id]:
             return await ctx.send(f"A race is already in progress! Type `{ctx.prefix}race enter` to enter!")
@@ -70,7 +71,7 @@ class Race(commands.Cog):
         wait = 60
         current = 0
 
-        await ctx.followup.send(
+        await ctx.channel.send(
             f"🚩 A race has begun! Type {ctx.prefix}race enter "
             f"to join the race! 🚩\nThe race will begin in "
             f"{wait} seconds!\n\n**{ctx.author.mention}** entered the race!"
@@ -130,6 +131,7 @@ class Race(commands.Cog):
         await ctx.send(embed=embed)
 
     @race.command()
+    @app_commands.describe(bet="The amount to bet.")
     @app_commands.describe(user="The user to place a bet on.")
     async def bet(self, ctx, bet: int, user: discord.Member):
         """Bet on a user in the race."""
@@ -142,11 +144,6 @@ class Race(commands.Cog):
     @race.command()
     async def enter(self, ctx):
         """Allows you to enter the race.
-
-        This command will return silently if a race has already started.
-        By not repeatedly telling the user that they can't enter the race, this
-        prevents spam.
-
         """
         if self.started[ctx.guild.id]:
             return await ctx.send(
