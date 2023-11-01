@@ -120,6 +120,7 @@ class FancyDictList(dict):
         value = self[key] = []
         return value
 
+
 class Race(commands.Cog):
     """Cog for racing animals"""
 
@@ -188,7 +189,7 @@ class Race(commands.Cog):
         color = await generate_embed_color(ctx.author)
         msg, embed = await self._build_end_screen(ctx, color)
         await ctx.send(content=msg, embed=embed)
-        await self._race_teardown(ctx, settings)
+        await self._race_teardown(ctx)
 
     @race.command()
     async def stats(self, ctx, user: discord.Member = None):
@@ -365,7 +366,6 @@ class Race(commands.Cog):
             if self.winners[ctx.guild.id][0][0].bot:
                 return f"{self.winners[ctx.guild.id][0][0]} is the winner!"
             return f"{self.winners[ctx.guild.id][0][0]} received $100."
-
 
     async def _get_bet_winners(self, ctx, winner):
         bet_winners = []
