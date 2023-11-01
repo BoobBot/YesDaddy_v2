@@ -112,7 +112,8 @@ class Animal:
 class Race(commands.Cog):
     """Cog for racing animals"""
 
-    def __init__(self):
+    def __init__(self, bot):
+        self.bot = bot
         self.active = {}
         self.started = {}
         self.winners = []
