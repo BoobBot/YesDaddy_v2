@@ -262,16 +262,18 @@ class Race(commands.Cog):
         for player in self.players[ctx.guild.id]:
             if player in names:
                 position = names.index(player) + 1
-                current = await self.config.member(player).Wins.get_raw(str(position))
-                await self.config.member(player).Wins.set_raw(str(position), value=current + 1)
+                #current = await self.config.member(player).Wins.get_raw(str(position))
+                #await self.config.member(player).Wins.set_raw(str(position), value=current + 1)
+                pass
             else:
-                current = await self.config.member(player).Losses()
-                await self.config.member(player).Losses.set(current + 1)
+                #current = await self.config.member(player).Losses()
+                #await self.config.member(player).Losses.set(current + 1)
+                pass
 
-    async def _race_teardown(self, ctx, settings):
+    async def _race_teardown(self, ctx):
         await self.stats_update(ctx)
-        await self.distribute_prizes(ctx, settings)
-        await self.bet_payouts(ctx, settings)
+        await self.distribute_prizes(ctx)
+        await self.bet_payouts(ctx)
         self.clear_local(ctx)
 
     def clear_local(self, ctx):
@@ -281,16 +283,19 @@ class Race(commands.Cog):
         self.active[ctx.guild.id] = False
         self.started[ctx.guild.id] = False
 
-    async def distribute_prizes(self, ctx, settings):
-        if 0 > len(self.players[ctx.guild.id]):
+    async def distribute_prizes(self, ctx):
+        if 1 > len(self.players[ctx.guild.id]):
             return
+
         if self.winners[ctx.guild.id][0][0].bot:
             return
-        pass
-        #pay
 
-    async def bet_payouts(self, ctx, settings):
-        if not self.bets[ctx.guild.id] or not settings["Bet_Allowed"]:
+        user_data = await ctx.bot.db_client.get_user(user_id=self.winners[ctx.guild.id][0][0], guild_id=ctx.guild.id)
+        await user_data.add_balance(100)
+
+
+    async def bet_payouts(self, ctx):
+        if not self.bets[ctx.guild.id]:
             return
         multiplier = 2
         first = self.winners[ctx.guild.id][0]
@@ -353,21 +358,14 @@ class Race(commands.Cog):
         mentions += "" if third is None or third[0].bot else f", {third[0].mention}"
         return mentions, embed
 
-    def _payout_msg(self, ctx, settings, currency):
+    def _payout_msg(self, ctx):
         if 0 > len(self.players[ctx.guild.id]):
             return "Not enough racers to give prizes."
         elif len(self.players[ctx.guild.id]) < 4:
             if self.winners[ctx.guild.id][0][0].bot:
                 return f"{self.winners[ctx.guild.id][0][0]} is the winner!"
-            return f"{self.winners[ctx.guild.id][0][0]} received {settings['Prize']} {currency}."
-        if settings["Pooling"]:
-            msg = ""
-            first, second, third = self.winners[ctx.guild.id]
-            for player, percentage in zip((first[0], second[0], third[0]), (0.6, 0.3, 0.1)):
-                if player.bot:
-                    continue
-                msg += f'{player.display_name} received {int(settings["Prize"] * percentage)} {currency}. '
-            return msg
+            return f"{self.winners[ctx.guild.id][0][0]} received $100."
+
 
     async def _get_bet_winners(self, ctx, winner):
         bet_winners = []
