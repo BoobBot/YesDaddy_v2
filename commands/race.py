@@ -186,7 +186,7 @@ class Race(commands.Cog):
         }
         currency = {}
         color = await generate_embed_color(ctx.author)
-        msg, embed = await self._build_end_screen(ctx, settings, currency, color)
+        msg, embed = await self._build_end_screen(ctx, color)
         await ctx.send(content=msg, embed=embed)
         await self._race_teardown(ctx, settings)
 
