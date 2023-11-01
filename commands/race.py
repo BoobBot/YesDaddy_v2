@@ -391,7 +391,7 @@ class Race(commands.Cog):
         setup = "\u200b\n" + "\n".join(
             f":carrot: **{animal.current}** 🏁[{jockey.display_name}]" for animal, jockey in players
         )
-        track = await ctx.send(setup)
+        track = await ctx.ch.send(setup)
         while not all(animal.position == 0 for animal, jockey in players):
             await asyncio.sleep(2.0)
             fields = []
