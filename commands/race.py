@@ -291,7 +291,7 @@ class Race(commands.Cog):
         if self.winners[ctx.guild.id][0][0].bot:
             return
 
-        user_data = await ctx.bot.db_client.get_user(user_id=self.winners[ctx.guild.id][0][0], guild_id=ctx.guild.id)
+        user_data = await ctx.bot.db_client.get_user(user_id=self.winners[ctx.guild.id][0][0].id, guild_id=ctx.guild.id)
         await user_data.add_balance(100)
 
 
