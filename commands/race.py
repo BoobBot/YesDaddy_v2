@@ -68,10 +68,10 @@ class Race(commands.Cog):
             return await ctx.send(f"A race is already in progress! Type `{ctx.prefix}race enter` to enter!")
         self.active[ctx.guild.id] = True
         self.players[ctx.guild.id].append(ctx.author)
-        wait = 60
+        wait = 120
         current = 0
 
-        await ctx.channel.send(
+        await ctx.send(
             f"🚩 A race has begun! Type {ctx.prefix}race enter "
             f"to join the race! 🚩\nThe race will begin in "
             f"{wait} seconds!\n\n**{ctx.author.mention}** entered the race!"
@@ -81,22 +81,8 @@ class Race(commands.Cog):
         await ctx.channel.send("🏁 The race is now in progress. 🏁")
         await self.run_game(ctx)
 
-        settings = {
-            "Wait": 60,
-            "Mode": "zoo",
-            "Prize": 100,
-            "Pooling": False,
-            "Payout_Min": 0,
-            "Bet_Multiplier": 2,
-            "Bet_Min": 10,
-            "Bet_Max": 50,
-            "Bet_Allowed": True,
-            "Games_Played": 0,
-        }
-        currency = {}
-        color = await generate_embed_color(ctx.author)
-        msg, embed = await self._build_end_screen(ctx, color)
-        await ctx.send(content=msg, embed=embed)
+        msg, embed = await self._build_end_screen(ctx)
+        await ctx.channel.send(content=msg, embed=embed)
         await self._race_teardown(ctx)
 
     @race.command()
@@ -159,8 +145,9 @@ class Race(commands.Cog):
             self.players[ctx.guild.id].append(ctx.author)
             await ctx.send(f"{ctx.author.mention} has joined the race.")
 
-    @race.command(hidden=True)
-    async def clear(self, ctx):
+    @commands.command(hidden=True)
+    @commands.is_owner()
+    async def race_clear(self, ctx):
         self.clear_local(ctx)
         await ctx.send("Race cleared.")
 
@@ -237,7 +224,7 @@ class Race(commands.Cog):
             await ctx.send(f"Bet must not be lower than {minimum} or higher than {maximum}.")
             return False
 
-    async def _build_end_screen(self, ctx, color):
+    async def _build_end_screen(self, ctx):
         if len(self.winners[ctx.guild.id]) == 3:
             first, second, third = self.winners[ctx.guild.id]
         else:
@@ -245,11 +232,7 @@ class Race(commands.Cog):
             third = None
         payout_msg = self._payout_msg(ctx)
         footer = await self._get_bet_winners(ctx, first[0])
-        race_config = (
-            f"Prize: $100\n"
-            f"Min. human players for payout: 1\n"
-            f"Bet Multiplier: 2x"
-        )
+        color = await generate_embed_color(first[0])
         embed = discord.Embed(colour=color, title="Race Results")
         embed.add_field(name=f"{first[0].display_name} 🥇", value=first[1].emoji)
         embed.add_field(name=f"{second[0].display_name} 🥈", value=second[1].emoji)
@@ -257,7 +240,6 @@ class Race(commands.Cog):
             embed.add_field(name=f"{third[0].display_name} 🥉", value=third[1].emoji)
         embed.add_field(name="-" * 90, value="\u200b", inline=False)
         embed.add_field(name="Payouts", value=payout_msg)
-        embed.add_field(name="Settings", value=race_config)
         embed.set_footer(text=f"Bet winners: {footer[0:2000]}")
         mentions = "" if first[0].bot else f"{first[0].mention}"
         mentions += "" if second[0].bot else f", {second[0].mention}" if not first[0].bot else f"{second[0].mention}"
@@ -265,8 +247,6 @@ class Race(commands.Cog):
         return mentions, embed
 
     def _payout_msg(self, ctx):
-        if 0 > len(self.players[ctx.guild.id]):
-            return "Not enough racers to give prizes."
         if self.winners[ctx.guild.id][0][0].bot:
             return f"{self.winners[ctx.guild.id][0][0]} is the winner!"
         return f"{self.winners[ctx.guild.id][0][0]} received $100."
