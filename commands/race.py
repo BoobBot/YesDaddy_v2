@@ -186,7 +186,7 @@ class Race(commands.Cog):
             return
 
         user_data = await ctx.bot.db_client.get_user(user_id=self.winners[ctx.guild.id][0][0].id, guild_id=ctx.guild.id)
-        await user_data.add_balance(100)
+        await user_data.add_balance(100*len(self.players[ctx.guild.id]))
 
     async def bet_payouts(self, ctx):
         if not self.bets[ctx.guild.id]:
@@ -202,19 +202,19 @@ class Race(commands.Cog):
 
     async def bet_conditions(self, ctx, bet, user):
         if not self.active[ctx.guild.id]:
-            await ctx.send("There isn't a race right now.")
+            await ctx.send(":x: There isn't a race right now.")
             return False
         elif self.started[ctx.guild.id]:
-            await ctx.send("You can't place a bet after the race has started.")
+            await ctx.send(":x: You can't place a bet after the race has started.")
             return False
         elif user not in self.players[ctx.guild.id]:
-            await ctx.send("You can't bet on someone who isn't in the race.")
+            await ctx.send(":x: You can't bet on someone who isn't in the race.")
             return False
         elif self.bets[ctx.guild.id][ctx.author.id]:
-            await ctx.send("You have already entered a bet for the race.")
+            await ctx.send(":x: You have already entered a bet for the race.")
             return False
         minimum = 10
-        maximum = 500
+        maximum = 100000
         user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         if bet > user_data.balance:
             await ctx.send(":x: You do not have enough money.")
@@ -222,7 +222,7 @@ class Race(commands.Cog):
         elif minimum <= bet <= maximum:
             return True
         else:
-            await ctx.send(f"Bet must not be lower than {minimum} or higher than {maximum}.")
+            await ctx.send(f":x: Bet must not be lower than {minimum} or higher than {maximum}.")
             return False
 
     async def _build_end_screen(self, ctx):
@@ -250,7 +250,7 @@ class Race(commands.Cog):
     def _payout_msg(self, ctx):
         if self.winners[ctx.guild.id][0][0].bot:
             return f"{self.winners[ctx.guild.id][0][0]} is the winner!"
-        return f"{self.winners[ctx.guild.id][0][0]} received $100."
+        return f"{self.winners[ctx.guild.id][0][0]} received ${100*len(self.players[ctx.guild.id])}."
 
     async def _get_bet_winners(self, ctx, winner):
         bet_winners = []
