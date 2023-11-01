@@ -109,16 +109,27 @@ class Animal:
             else:
                 return random.randint(0, 2) * 3
 
+class FancyDict(dict):
+    def __missing__(self, key):
+        value = self[key] = type(self)()
+        return value
+
+
+class FancyDictList(dict):
+    def __missing__(self, key):
+        value = self[key] = []
+        return value
+
 class Race(commands.Cog):
     """Cog for racing animals"""
 
     def __init__(self, bot):
         self.bot = bot
-        self.active = {}
-        self.started = {}
-        self.winners = []
-        self.players = []
-        self.bets = {}
+        self.active = FancyDict()
+        self.started = FancyDict()
+        self.winners = FancyDictList()
+        self.players = FancyDictList()
+        self.bets = FancyDict()
 
         guild_defaults = {
             "Wait": 60,
