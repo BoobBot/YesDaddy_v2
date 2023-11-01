@@ -1,5 +1,6 @@
 import asyncio
 import random
+import typing
 from typing import Literal, Optional
 
 import discord
@@ -7,107 +8,12 @@ from discord import app_commands
 from discord.ext import commands
 import random
 
+from config.settings_config import racers
+from utils.animal import Animal
 from utils.utilities import generate_embed_color
-#https://github.com/Redjumpman/Jumper-Plugins/blob/V3_dpy2/race/race.py
-racers = (
-    (":rabbit2:", "fast"),
-    (":monkey:", "fast"),
-    (":cat2:", "fast"),
-    (":mouse2:", "slow"),
-    (":chipmunk:", "fast"),
-    (":rat:", "fast"),
-    (":dove:", "fast"),
-    (":bird:", "fast"),
-    (":dromedary_camel:", "steady"),
-    (":camel:", "steady"),
-    (":dog2:", "steady"),
-    (":poodle:", "steady"),
-    (":racehorse:", "steady"),
-    (":ox:", "abberant"),
-    (":cow2:", "abberant"),
-    (":elephant:", "abberant"),
-    (":water_buffalo:", "abberant"),
-    (":ram:", "abberant"),
-    (":goat:", "abberant"),
-    (":sheep:", "abberant"),
-    (":leopard:", "predator"),
-    (":tiger2:", "predator"),
-    (":dragon:", "special"),
-    (":unicorn:", "special"),
-    (":turtle:", "slow"),
-    (":bug:", "slow"),
-    (":rooster:", "slow"),
-    (":snail:", "slow"),
-    (":scorpion:", "slow"),
-    (":crocodile:", "slow"),
-    (":pig2:", "slow"),
-    (":turkey:", "slow"),
-    (":duck:", "slow"),
-    (":baby_chick:", "slow"),
-)
 
 
-class Animal:
-    def __init__(self, emoji, _type):
-        self.emoji = emoji
-        self._type = _type
-        self.track = "•   " * 20
-        self.position = 80
-        self.turn = 0
-        self.current = self.track + self.emoji
-
-    def move(self):
-        self._update_postion()
-        self.turn += 1
-        return self.current
-
-    def _update_postion(self):
-        distance = self._calculate_movement()
-        self.current = "".join(
-            (
-                self.track[: max(0, self.position - distance)],
-                self.emoji,
-                self.track[max(0, self.position - distance) :],
-            )
-        )
-        self.position = self._get_position()
-
-    def _get_position(self):
-        return self.current.find(self.emoji)
-
-    def _calculate_movement(self):
-        if self._type == "slow":
-            return random.randint(1, 3) * 3
-        elif self._type == "fast":
-            return random.randint(0, 4) * 3
-
-        elif self._type == "steady":
-            return 2 * 3
-
-        elif self._type == "abberant":
-            if random.randint(1, 100) >= 90:
-                return 5 * 3
-            else:
-                return random.randint(0, 2) * 3
-
-        elif self._type == "predator":
-            if self.turn % 2 == 0:
-                return 0
-            else:
-                return random.randint(2, 5) * 3
-
-        elif self._type == ":unicorn:":
-            if self.turn % 3:
-                return random.choice([len("blue"), len("red"), len("green")]) * 3
-            else:
-                return 0
-        else:
-            if self.turn == 1:
-                return 14 * 3
-            elif self.turn == 2:
-                return 0
-            else:
-                return random.randint(0, 2) * 3
+# https://github.com/Redjumpman/Jumper-Plugins/blob/V3_dpy2/race/race.py
 
 class FancyDict(dict):
     def __missing__(self, key):
@@ -148,7 +54,7 @@ class Race(commands.Cog):
         # First, Second, and Third place wins
         member_defaults = {"Wins": {"1": 0, "2": 0, "3": 0}, "Losses": 0}
 
-    @commands.group()
+    @commands.hybrid_group()
     @commands.guild_only()
     async def race(self, ctx):
         """Race related commands."""
@@ -156,21 +62,22 @@ class Race(commands.Cog):
 
     @race.command()
     async def start(self, ctx):
+        await ctx.defer(ephemeral=False)
         if self.active[ctx.guild.id]:
-            return await ctx.send(f"A race is already in progress!  Type `{ctx.prefix}race enter` to enter!")
+            return await ctx.send(f"A race is already in progress! Type `{ctx.prefix}race enter` to enter!")
         self.active[ctx.guild.id] = True
         self.players[ctx.guild.id].append(ctx.author)
         wait = 60
         current = 0
 
-        await ctx.send(
+        await ctx.followup.send(
             f"🚩 A race has begun! Type {ctx.prefix}race enter "
             f"to join the race! 🚩\nThe race will begin in "
             f"{wait} seconds!\n\n**{ctx.author.mention}** entered the race!"
         )
         await asyncio.sleep(wait)
         self.started[ctx.guild.id] = True
-        await ctx.send("🏁 The race is now in progress. 🏁")
+        await ctx.channel.send("🏁 The race is now in progress. 🏁")
         await self.run_game(ctx)
 
         settings = {
@@ -192,7 +99,8 @@ class Race(commands.Cog):
         await self._race_teardown(ctx)
 
     @race.command()
-    async def stats(self, ctx, user: discord.Member = None):
+    @app_commands.describe(user="The user to get stats for.")
+    async def stats(self, ctx, user: typing.Optional[discord.Member]):
         """Display your race stats."""
         if not user:
             user = ctx.author
@@ -222,6 +130,7 @@ class Race(commands.Cog):
         await ctx.send(embed=embed)
 
     @race.command()
+    @app_commands.describe(user="The user to place a bet on.")
     async def bet(self, ctx, bet: int, user: discord.Member):
         """Bet on a user in the race."""
         if await self.bet_conditions(ctx, bet, user):
@@ -263,12 +172,12 @@ class Race(commands.Cog):
         for player in self.players[ctx.guild.id]:
             if player in names:
                 position = names.index(player) + 1
-                #current = await self.config.member(player).Wins.get_raw(str(position))
-                #await self.config.member(player).Wins.set_raw(str(position), value=current + 1)
+                # current = await self.config.member(player).Wins.get_raw(str(position))
+                # await self.config.member(player).Wins.set_raw(str(position), value=current + 1)
                 pass
             else:
-                #current = await self.config.member(player).Losses()
-                #await self.config.member(player).Losses.set(current + 1)
+                # current = await self.config.member(player).Losses()
+                # await self.config.member(player).Losses.set(current + 1)
                 pass
 
     async def _race_teardown(self, ctx):
@@ -293,7 +202,6 @@ class Race(commands.Cog):
 
         user_data = await ctx.bot.db_client.get_user(user_id=self.winners[ctx.guild.id][0][0].id, guild_id=ctx.guild.id)
         await user_data.add_balance(100)
-
 
     async def bet_payouts(self, ctx):
         if not self.bets[ctx.guild.id]:
@@ -362,10 +270,9 @@ class Race(commands.Cog):
     def _payout_msg(self, ctx):
         if 0 > len(self.players[ctx.guild.id]):
             return "Not enough racers to give prizes."
-        elif len(self.players[ctx.guild.id]) < 4:
-            if self.winners[ctx.guild.id][0][0].bot:
-                return f"{self.winners[ctx.guild.id][0][0]} is the winner!"
-            return f"{self.winners[ctx.guild.id][0][0]} received $100."
+        if self.winners[ctx.guild.id][0][0].bot:
+            return f"{self.winners[ctx.guild.id][0][0]} is the winner!"
+        return f"{self.winners[ctx.guild.id][0][0]} received $100."
 
     async def _get_bet_winners(self, ctx, winner):
         bet_winners = []

@@ -13,6 +13,44 @@ jackpot_emoji = "<a:coins:1146124100369137666>"
 jackpot_payout = 500
 bonus_multiplier = 2
 
+racers = (
+    (":rabbit2:", "fast"),
+    (":monkey:", "fast"),
+    (":cat2:", "fast"),
+    (":mouse2:", "slow"),
+    (":chipmunk:", "fast"),
+    (":rat:", "fast"),
+    (":dove:", "fast"),
+    (":bird:", "fast"),
+    (":dromedary_camel:", "steady"),
+    (":camel:", "steady"),
+    (":dog2:", "steady"),
+    (":poodle:", "steady"),
+    (":racehorse:", "steady"),
+    (":ox:", "abberant"),
+    (":cow2:", "abberant"),
+    (":elephant:", "abberant"),
+    (":water_buffalo:", "abberant"),
+    (":ram:", "abberant"),
+    (":goat:", "abberant"),
+    (":sheep:", "abberant"),
+    (":leopard:", "predator"),
+    (":tiger2:", "predator"),
+    (":dragon:", "special"),
+    (":unicorn:", "special"),
+    (":turtle:", "slow"),
+    (":bug:", "slow"),
+    (":rooster:", "slow"),
+    (":snail:", "slow"),
+    (":scorpion:", "slow"),
+    (":crocodile:", "slow"),
+    (":pig2:", "slow"),
+    (":turkey:", "slow"),
+    (":duck:", "slow"),
+    (":baby_chick:", "slow"),
+)
+
+
 fish_info = {
     'Salmon': '<:salmon:1146118005273677904>',
     'Trout': '<:trout:1146116187600715946>',
