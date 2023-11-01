@@ -1,5 +1,6 @@
 import datetime
 import random
+import re
 from typing import Optional
 
 import discord
@@ -24,6 +25,7 @@ class Currency(commands.Cog):
         user_color = await generate_embed_color(ctx.author)
         success_list = []
         fail_list = []
+
         [success_list.append(i) if i[1] else fail_list.append(i)
          for i in adv_scenarios]
         monster_rarity_threshold = random.uniform(0.1, 1)
@@ -37,6 +39,9 @@ class Currency(commands.Cog):
         monster = random.choice(available_monsters)
 
         is_successful = random.random() <= monster["success_rate"]
+
+        emoji_id = re.search(r'(?<=:)\d+', monster["emoji"]).group(0)
+        emoji_url = f"https://cdn.discordapp.com/emojis/{emoji_id}.png"
 
         if is_successful:
             user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
@@ -57,6 +62,7 @@ class Currency(commands.Cog):
         em = discord.Embed(color=user_color,
                            title=f"{user}'s adventure!",
                            description=scenario_text + outcome)
+        em.set_thumbnail(url=emoji_url)
         em.set_author(
             name="Adventure",
             icon_url=self.bot.user.display_avatar.with_static_format("png"),
