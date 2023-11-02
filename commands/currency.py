@@ -202,7 +202,8 @@ class Currency(commands.Cog):
                 role = ctx.guild.get_role(int(role_data.get('_id')))
                 claimed_money += role_data["cash"]
                 bonus_roles.append(f"{role.mention} + ${role_data['cash']}")
-        em.add_field(name=f"Bonus", value="\n".join(bonus_roles))
+        if bonus_roles:
+            em.add_field(name=f"Bonus", value="\n".join(bonus_roles), inline=False)
         em.add_field(name="Amount Added", value=f"${claimed_money}")
         em.add_field(name="New Balance",
                      value=f"{user_data.balance + claimed_money}")
