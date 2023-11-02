@@ -28,7 +28,7 @@ class TestButton(discord.ui.View):
             return False
         return True
 
-    @discord.ui.button(label="click me", style=discord.ButtonStyle.grey, emoji="")
+    @discord.ui.button(label="click me", style=discord.ButtonStyle.grey, emoji="<:time:1169390997139095623>")
     async def reminder(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.defer(thinking=True, ephemeral=True)
         self.clicked = True
