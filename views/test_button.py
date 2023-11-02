@@ -16,7 +16,8 @@ class TestButton(discord.ui.View):
 
     async def disable_buttons(self):
         for item in self.children:
-            item.style = discord.ButtonStyle.green if self.clicked else discord.ButtonStyle.red
+            item.style = discord.ButtonStyle.green if self.set else discord.ButtonStyle.red
+            item.emoji = "👍" if self.set else ":x:"
             item.disabled = True
 
         await self.message.edit(view=self)
@@ -27,7 +28,7 @@ class TestButton(discord.ui.View):
             return False
         return True
 
-    @discord.ui.button(label="click me", style=discord.ButtonStyle.grey, emoji="<:time:1169390997139095623>")
+    @discord.ui.button(label="click me", style=discord.ButtonStyle.grey, emoji="")
     async def reminder(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.defer(thinking=True, ephemeral=True)
         self.clicked = True
