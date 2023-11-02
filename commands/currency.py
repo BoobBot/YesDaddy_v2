@@ -11,6 +11,7 @@ from config.lists import job_descriptions, adv_success_strings, adv_scenarios, a
 from config.settings_config import chop_resource_info, mine_resource_info, fish_info, monsters
 from utils.checks import persistent_cooldown
 from utils.utilities import generate_embed_color
+from views.reminder_view import Reminder
 
 
 class Currency(commands.Cog):
@@ -222,7 +223,13 @@ class Currency(commands.Cog):
         )
 
         await user_data.add_balance(claimed_money)
-        await ctx.reply(embed=em)
+        view = Reminder(timeout=30)
+        view.author = ctx.author
+        view.bot = ctx.bot
+        view.seconds = 86400
+        view.type = "daily"
+        message = await ctx.reply(embed=em, view=view)
+        view.message = message
 
     @commands.hybrid_command(name="weekly", description="Get your weekly coins!.")
     @persistent_cooldown(1, 604800, commands.BucketType.user)
@@ -260,7 +267,13 @@ class Currency(commands.Cog):
             text=f"Command ran by {ctx.author.display_name} at {timestamp}",
             icon_url=ctx.author.display_avatar.with_static_format("png")
         )
-        await ctx.reply(embed=em)
+        view = Reminder(timeout=30)
+        view.author = ctx.author
+        view.bot = ctx.bot
+        view.seconds = 604800
+        view.type = "weekly"
+        message = await ctx.reply(embed=em, view=view)
+        view.message = message
 
     @commands.hybrid_command(name="work", description="get a job")
     @persistent_cooldown(1, 3600, commands.BucketType.user)
@@ -293,7 +306,13 @@ class Currency(commands.Cog):
             text=f"Command ran by {ctx.author.display_name} at {timestamp}",
             icon_url=ctx.author.display_avatar.with_static_format("png")
         )
-        await ctx.reply(embed=em)
+        view = Reminder(timeout=30)
+        view.author = ctx.author
+        view.bot = ctx.bot
+        view.seconds = 3600
+        view.type = "work"
+        message = await ctx.reply(embed=em, view=view)
+        view.message = message
 
 
 async def setup(bot):
