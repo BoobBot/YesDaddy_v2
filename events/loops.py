@@ -30,9 +30,9 @@ class Loops(commands.Cog):
         if not member:
             await self.bot.db_client.delete_reminder(reminder["_id"])
             return
-        await channel.send(f"{member.mention} you can daily again!",
+        await channel.send(f"{member.mention} you can </daily:1145445177092231343> again!",
                            allowed_mentions=discord.AllowedMentions.all())
-        await self.bot.db_client.delete_reminder(reminder["_id"])
+        await self.bot.db_client.delete_reminder(guild.id, reminder["_id"])
 
     async def weekly_reminder(self, reminder):
         guild = self.bot.get_guild(reminder["guild_id"])
@@ -41,9 +41,9 @@ class Loops(commands.Cog):
         if not member:
             await self.bot.db_client.delete_reminder(reminder["_id"])
             return
-        await channel.send(f"{member.mention} you can weekly again!",
+        await channel.send(f"{member.mention} you can </weekly:1145445177092231344> again!",
                            allowed_mentions=discord.AllowedMentions.all())
-        await self.bot.db_client.delete_reminder(reminder["_id"])
+        await self.bot.db_client.delete_reminder(guild.id, reminder["_id"])
 
     async def work_reminder(self, reminder):
         guild = self.bot.get_guild(reminder["guild_id"])
@@ -52,9 +52,9 @@ class Loops(commands.Cog):
         if not member:
             await self.bot.db_client.delete_reminder(reminder["_id"])
             return
-        await channel.send(f"{member.mention} you can work again!",
+        await channel.send(f"{member.mention} you can </work:1145445177092231345> again!",
                            allowed_mentions=discord.AllowedMentions.all())
-        await self.bot.db_client.delete_reminder(reminder["_id"])
+        await self.bot.db_client.delete_reminder(guild.id, reminder["_id"])
 
     @tasks.loop(minutes=1)
     async def reminder_loop(self):
