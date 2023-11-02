@@ -33,4 +33,5 @@ class TestButton(discord.ui.View):
         self.clicked = True
         await self.disable_buttons()
         print(dir(self))
+        await interaction.followup.send(f"Okay")
         self.stop()
