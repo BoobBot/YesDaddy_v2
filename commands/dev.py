@@ -32,7 +32,7 @@ class Dev(commands.Cog):
     @commands.command(name="testbutton", description="????")
     @commands.is_owner()
     async def test_button(self, ctx):
-        view = Reminder(timeout=30)
+        view = TestButton(timeout=30)
         view.author = ctx.author
         view.bot = ctx.bot
         view.seconds = 30
