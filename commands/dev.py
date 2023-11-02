@@ -18,6 +18,7 @@ from discord.ext import commands
 from discord.ext.commands import Context, Greedy
 
 from views import support_channel_view, test_button
+from views.test_button import TestButton
 from views.verification_view import VerificationView
 
 COG_NAME_REGEX = re.compile(r'(commands/[a-zA-Z]+)\.py')
@@ -30,7 +31,10 @@ class Dev(commands.Cog):
     @commands.command(name="testbutton", description="????")
     @commands.is_owner()
     async def test_button(self, ctx):
-        await ctx.send("Click the button below to test.", view=test_button.TestButton())
+        view = TestButton(timeout=10)
+        view.author = ctx.author
+        message = await ctx.send("Click the button below to test.", view=view)
+        view.message = message
 
     @commands.command()
     async def load(self, ctx, cog: str):
