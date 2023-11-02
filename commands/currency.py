@@ -196,11 +196,13 @@ class Currency(commands.Cog):
                                description=description)
             em.set_thumbnail(url=user.display_avatar.with_static_format("png"))
         roles = await self.bot.db_client.get_cash_roles(guild_id=ctx.guild.id)
+        bonus_roles = []
         for role_data in roles:
             if role_data["_id"] in [r.id for r in user.roles]:
                 role = ctx.guild.get_role(int(role_data.get('_id')))
                 claimed_money += role_data["cash"]
-                em.add_field(name=f"Bonus", value=f"{role.mention} + ${role_data['cash']}")
+                bonus_roles.append(f"{role.mention} + ${role_data['cash']}")
+        em.add_field(name=f"Bonus", value="\n".join(bonus_roles))
         em.add_field(name="Amount Added", value=f"${claimed_money}")
         em.add_field(name="New Balance",
                      value=f"{user_data.balance + claimed_money}")
