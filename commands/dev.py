@@ -18,6 +18,7 @@ from discord.ext import commands
 from discord.ext.commands import Context, Greedy
 
 from views import support_channel_view, test_button
+from views.reminder_view import Reminder
 from views.test_button import TestButton
 from views.verification_view import VerificationView
 
@@ -31,8 +32,11 @@ class Dev(commands.Cog):
     @commands.command(name="testbutton", description="????")
     @commands.is_owner()
     async def test_button(self, ctx):
-        view = TestButton(timeout=10)
+        view = Reminder(timeout=30)
         view.author = ctx.author
+        view.bot = ctx.bot
+        view.seconds = 30
+        view.type = "work"
         message = await ctx.send("Click the button below to test.", view=view)
         view.message = message
 

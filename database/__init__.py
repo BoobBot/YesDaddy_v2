@@ -208,3 +208,21 @@ class DiscordDatabase:
             {"guild_id": guild_id},
             {"$pull": {"shop_gifts": {"_id": gift_id}}}
         )
+
+    async def add_reminder(self, guild_id, reminder_data):
+        await self.guild_collection.update_one(
+            {"guild_id": guild_id},
+            {"$push": {"reminders": reminder_data}}
+        )
+
+    async def get_reminders(self, guild_id):
+        guild_data = await self.guild_collection.find_one({"guild_id": guild_id})
+        if guild_data and "reminders" in guild_data:
+            return guild_data["reminders"]
+        return []
+
+    async def delete_reminder(self, guild_id, reminder_id):
+        await self.guild_collection.update_one(
+            {"guild_id": guild_id},
+            {"$pull": {"reminders": {"_id": reminder_id}}}
+        )

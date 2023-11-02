@@ -14,12 +14,72 @@ class Loops(commands.Cog):
         self.change_role_color.start()
         self.voice_xp.start()
         self.guild_sync_loop.start()
+        self.reminder_loop.start()
 
     def cog_unload(self):
         self.check_jail_loop.cancel()
         self.change_role_color.cancel()
         self.voice_xp.cancel()
         self.guild_sync_loop.cancel()
+        self.reminder_loop.cancel()
+
+    async def daily_reminder(self, reminder):
+        guild = self.bot.get_guild(reminder["guild_id"])
+        channel = guild.get_channel(reminder["channel_id"])
+        member = guild.get_member(reminder["user_id"])
+        if not member:
+            await self.bot.db_client.delete_reminder(reminder["_id"])
+            return
+        await channel.send(f"{member.mention} you can daily again!",
+                           allowed_mentions=discord.AllowedMentions.all())
+        await self.bot.db_client.delete_reminder(reminder["_id"])
+
+    async def weekly_reminder(self, reminder):
+        guild = self.bot.get_guild(reminder["guild_id"])
+        channel = guild.get_channel(reminder["channel_id"])
+        member = guild.get_member(reminder["user_id"])
+        if not member:
+            await self.bot.db_client.delete_reminder(reminder["_id"])
+            return
+        await channel.send(f"{member.mention} you can weekly again!",
+                           allowed_mentions=discord.AllowedMentions.all())
+        await self.bot.db_client.delete_reminder(reminder["_id"])
+
+    async def work_reminder(self, reminder):
+        guild = self.bot.get_guild(reminder["guild_id"])
+        channel = guild.get_channel(reminder["channel_id"])
+        member = guild.get_member(reminder["user_id"])
+        if not member:
+            await self.bot.db_client.delete_reminder(reminder["_id"])
+            return
+        await channel.send(f"{member.mention} you can work again!",
+                           allowed_mentions=discord.AllowedMentions.all())
+        await self.bot.db_client.delete_reminder(reminder["_id"])
+
+    @tasks.loop(minutes=1)
+    async def reminder_loop(self):
+        try:
+            reminders = await self.bot.db_client.get_reminders()
+            for reminder in reminders:
+                now = datetime.datetime.now(datetime.timezone.utc)
+                timestamp = datetime.datetime.fromtimestamp(reminder["timestamp"], datetime.timezone.utc)
+                due = timestamp + datetime.timedelta(seconds=reminder["interval"])
+                if now >= due:
+                    if reminder["reminder_type"] == "daily":
+                        await self.daily_reminder(reminder)
+                    elif reminder["reminder_type"] == "weekly":
+                        await self.weekly_reminder(reminder)
+                    elif reminder["reminder_type"] == "work":
+                        await self.work_reminder(reminder)
+        except Exception as e:
+            self.bot.log.error(e)
+            pass
+
+    @reminder_loop.before_loop
+    async def before_reminder_loop(self):
+        await self.bot.wait_until_ready()
+        # Start the loop after the bot is ready
+        print("Starting the reminder loop")
 
     @tasks.loop(minutes=15)
     async def guild_sync_loop(self):
@@ -111,7 +171,8 @@ class Loops(commands.Cog):
                         # - Member is self-muted
                         # - Member is self-deafened
 
-                        if not (member.voice.deaf or member.voice.mute or member.voice.self_mute or member.voice.self_deaf):
+                        if not (
+                                member.voice.deaf or member.voice.mute or member.voice.self_mute or member.voice.self_deaf):
                             user = await self.bot.db_client.get_user(user_id=member.id, guild_id=guild.id)
                             print(f'{member.name} {user.xp}')
                             if user:
