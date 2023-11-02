@@ -59,7 +59,7 @@ class Loops(commands.Cog):
     @tasks.loop(minutes=1)
     async def reminder_loop(self):
         try:
-            reminders = await self.bot.db_client.get_reminders()
+            reminders = await self.bot.db_client.get_all_reminders()
             for reminder in reminders:
                 now = datetime.datetime.now(datetime.timezone.utc)
                 timestamp = datetime.datetime.fromtimestamp(reminder["timestamp"], datetime.timezone.utc)

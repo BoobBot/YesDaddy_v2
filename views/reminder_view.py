@@ -25,7 +25,7 @@ class Reminder(discord.ui.View):
             "interval": self.seconds,
             "_id": self.type+str(self.author.id)
         }
-        await self.bot.db_client.add_reminder(guild_id=self.message.guild.id, reminder=reminder)
+        await self.bot.db_client.add_reminder(guild_id=self.message.guild.id, reminder_data=reminder)
 
     async def on_timeout(self) -> None:
         await self.disable_buttons()

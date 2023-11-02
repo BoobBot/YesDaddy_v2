@@ -221,6 +221,13 @@ class DiscordDatabase:
             return guild_data["reminders"]
         return []
 
+    async def get_all_reminders(self):
+        all_reminders = []
+        async for guild in self.guild_collection.find({}, {"_id": 0}):
+            if "reminders" in guild:
+                all_reminders.extend(guild["reminders"])
+        return all_reminders
+
     async def delete_reminder(self, guild_id, reminder_id):
         await self.guild_collection.update_one(
             {"guild_id": guild_id},
