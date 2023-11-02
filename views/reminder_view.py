@@ -33,7 +33,7 @@ class Reminder(discord.ui.View):
     async def disable_buttons(self):
         for item in self.children:
             item.style = discord.ButtonStyle.green if self.set else discord.ButtonStyle.red
-            item.emoji = "👍" if self.set else "❌"
+            item.emoji = "👍" if self.set else "✖️"
             item.disabled = True
 
         await self.message.edit(view=self)
