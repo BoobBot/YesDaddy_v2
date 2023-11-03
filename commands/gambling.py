@@ -563,7 +563,7 @@ class Gambling(commands.Cog):
         if result == "win":
             winnings = bet * winnings_multiplier
             await user_data.update_balance(user_balance + winnings)
-            em.description = "The result was {result}, you win {winnings} coins!"
+            em.description = f"The result was {result}, you win {winnings} coins!"
         elif result == "lose":
             await user_data.update_balance(user_balance - bet)
             em.description = f"The result was {result}, you lose {bet} coins."
