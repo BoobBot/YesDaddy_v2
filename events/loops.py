@@ -28,7 +28,7 @@ class Loops(commands.Cog):
         channel = guild.get_channel(reminder["channel_id"])
         member = guild.get_member(reminder["user_id"])
         if not member:
-            await self.bot.db_client.delete_reminder(reminder["_id"])
+            await self.bot.db_client.delete_reminder(guild.id, reminder["_id"])
             return
         await channel.send(f"{member.mention} you can </daily:1145445177092231343> again!",
                            allowed_mentions=discord.AllowedMentions.all())
@@ -39,7 +39,7 @@ class Loops(commands.Cog):
         channel = guild.get_channel(reminder["channel_id"])
         member = guild.get_member(reminder["user_id"])
         if not member:
-            await self.bot.db_client.delete_reminder(reminder["_id"])
+            await self.bot.db_client.delete_reminder(guild.id, ["_id"])
             return
         await channel.send(f"{member.mention} you can </weekly:1145445177092231344> again!",
                            allowed_mentions=discord.AllowedMentions.all())
@@ -50,7 +50,7 @@ class Loops(commands.Cog):
         channel = guild.get_channel(reminder["channel_id"])
         member = guild.get_member(reminder["user_id"])
         if not member:
-            await self.bot.db_client.delete_reminder(reminder["_id"])
+            await self.bot.db_client.delete_reminder(guild.id, reminder["_id"])
             return
         await channel.send(f"{member.mention} you can </work:1145445177092231345> again!",
                            allowed_mentions=discord.AllowedMentions.all())
