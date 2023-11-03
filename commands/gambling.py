@@ -195,7 +195,7 @@ class Gambling(commands.Cog):
             em = discord.Embed(color=discord.Color.red(),
                                description=rob_scenario + f" failing miserably and losing ${author_loss_total}")
             if random_number < probability:
-                await user_data.jail_user(jail_time, fine)
+                await author_data.jail_user(jail_time, fine)
                 em.add_field(name="Punishment",
                              value=f"You are in jail for {jail_time} hours and have to pay a fine of {fine}. Run </bail:1145445177092231341> to do so.")
             await author_data.update_balance(total)
