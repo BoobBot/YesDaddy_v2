@@ -1,5 +1,5 @@
 import discord
-from utils.ai import MonopolyAI
+from utils.monopoly_ai import MonopolyAI
 
 
 class GetPlayersView(discord.ui.View):
