@@ -26,7 +26,7 @@ class Monopoly(commands.Cog):
 		Use the optional parameter "savefile" to load a saved game.
 		"""
 		if [game for game in self.games if game.channel == ctx.channel]:
-			return await ctx.send('A game is already running in this channel.')
+			return await ctx.send(':x: A game is already running in this channel.')
 		channel = ctx.channel
 		startCash = self.config.get('startCash')
 		if savefile is not None:
@@ -34,10 +34,8 @@ class Monopoly(commands.Cog):
 			saves = guild_data.monopoly_saves
 			if savefile not in saves:
 				return await ctx.send(
-					'There is no save file with that name.\n'
-					'Does it need to be converted? '
-					'Is it saved in another guild?\n'
-					f'Use `{ctx.prefix}monopoly list` to list save files.'
+					':x: There is no save file with that name.\n'
+					f'Use {ctx.prefix}`monopoly list` to list save files.'
 				)
 			data = saves[savefile]
 			if ctx.author.id not in data['uid']:

@@ -1,22 +1,22 @@
 from discord import Embed
 
 monopoly_game_settings = {
-  "doMention": False,
+  "doMention": True,
   "startCash": 1500,
   "incomeValue": 200,
   "luxuryValue": 100,
   "doAuction": True,
   "bailValue": 50,
   "maxJailRolls": 3,
-  "doDoubleGo": False,
+  "doDoubleGo": True,
   "goValue": 200,
-  "freeParkingValue": None,
+  "freeParkingValue": "tax",
   "hotelLimit": 12,
   "houseLimit": 32,
   "timeoutValue": 60,
   "minRaise": 1,
-  "darkMode": False,
-  "useThreads": False,
+  "darkMode": True,
+  "useThreads": True,
 }
 
 emoji_payouts = {
