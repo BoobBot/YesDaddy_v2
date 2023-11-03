@@ -28,7 +28,7 @@ class Monopoly(commands.Cog):
 		if [game for game in self.games if game.channel == ctx.channel]:
 			return await ctx.send('A game is already running in this channel.')
 		channel = ctx.channel
-		startCash = await self.config.get('startCash')
+		startCash = self.config.get('startCash')
 		if savefile is not None:
 			guild_data = await self.bot.db_client.get_guild(ctx.guild.id)
 			saves = guild_data.monopoly_saves
@@ -44,7 +44,7 @@ class Monopoly(commands.Cog):
 				return await ctx.send('You are not a player in that game!')
 			initial_message = await ctx.send(f'Using save file `{savefile}`')
 			if (
-				await self.config.get('useThreads')
+				self.config.get('useThreads')
 				and ctx.channel.permissions_for(ctx.guild.me).create_public_threads
 				and ctx.channel.type is discord.ChannelType.text
 			):
@@ -61,7 +61,7 @@ class Monopoly(commands.Cog):
 			view = GetPlayersView(ctx, 8)
 			initial_message = await ctx.send(view.generate_message(), view=view)
 			if (
-				await self.config.get('useThreads')
+				self.config.get('useThreads')
 				and ctx.channel.permissions_for(ctx.guild.me).create_public_threads
 				and ctx.channel.type is discord.ChannelType.text
 			):
