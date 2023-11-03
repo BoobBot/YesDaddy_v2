@@ -31,7 +31,7 @@ class Profile(commands.Cog):
         user_balance = max(user_data.balance + user_data.bank_balance, 0)
         cost = user_data.jail.get("fine", 0)
         # TODO add higher fine for longer jail time
-        cost_total = subtraction_percentage(user_balance, 10) + cost
+        cost_total = subtraction_percentage(user_balance, 0.1) + cost
         if cost_total > user_data.balance:
             return await ctx.reply(f":x: {user.mention} needs ${cost_total} to get out of jail.")
         await user_data.subtract_balance(cost_total)
