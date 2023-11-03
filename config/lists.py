@@ -1,3 +1,26 @@
+tools = [
+    {
+        "name": "Beginner's Hatchet",
+        "type": "Axe",
+        "tier": 1,
+        "description": "A basic woodcutter's friend. Effective on softwoods.",
+        "attributes": {
+            "damage": 2,
+            "durability": 100,
+            "required_level": 1
+        },
+        "emote": "<:axe1:1169395748870307921>",
+        "equipped": False,
+        "equippable": True,
+        "sellable": True,
+        "buyable": True,
+        "price": 100,
+        "rarity": "Common",
+        "unique": False,
+        "quantity": 1
+    }
+]
+
 job_descriptions = [
     "{0} is a professional cat juggler.",
     "{0} specializes in finding lost socks for a living.",

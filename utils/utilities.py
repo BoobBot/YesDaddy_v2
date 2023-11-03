@@ -1,6 +1,7 @@
 import math
 import random
 from io import BytesIO
+from typing import Iterator, Sequence
 
 import aiohttp
 import discord
@@ -116,3 +117,60 @@ def search(s: str, substring: str) -> bool:
     """
     last_char_index = -1
     return not any((last_char_index := s.find(c, last_char_index + 1)) == -1 for c in substring)
+
+
+class pagify(Iterator[str]):
+    def __init__(
+        self,
+        text: str,
+        delims: Sequence[str] = ("\n",),
+        *,
+        shorten_by: int = 8,
+        page_length: int = 2000,
+    ) -> None:
+        self._text = text
+        self._delims = delims
+        self._shorten_by = shorten_by
+        self._page_length = page_length - shorten_by
+        self._start = 0
+        self._end = len(text)
+
+    def __repr__(self) -> str:
+        text = self._text
+        if len(text) > 20:
+            text = f"{text[:19]}\N{HORIZONTAL ELLIPSIS}"
+        return (
+            "pagify("
+            f"{text!r},"
+            f" {self._delims!r},"
+            f" shorten_by={self._shorten_by!r},"
+            f" page_length={self._page_length + self._shorten_by!r}"
+            ")"
+        )
+
+    def __length_hint__(self) -> int:
+        return math.ceil((self._end - self._start) / self._page_length)
+
+    def __iter__(self):
+        return self
+
+    def __next__(self) -> str:
+        text = self._text
+        page_length = self._page_length
+        start = self._start
+        end = self._end
+
+        while (end - start) > page_length:
+            stop = start + page_length
+            closest_delim_it = (text.rfind(d, start + 1, stop) for d in self._delims)
+            closest_delim = max(closest_delim_it)
+            stop = closest_delim if closest_delim != -1 else stop
+            to_send = text[start:stop]
+            start = self._start = stop
+            if len(to_send.strip()) > 0:
+                return to_send
+
+        if len(text[start:end].strip()) > 0:
+            self._start = end
+            return text[start:end]
+        raise StopIteration
