@@ -700,7 +700,7 @@ class Moderation(commands.Cog):
             embed = discord.Embed(title="Ticket",
                                   description=f"Welcome {user.mention}! Thank you for contacting BoobBot support. Please send the photos required to verify following the below guidelines. All images sent will be deleted upon completion of the ticket. Please note that if you do not follow the guidelines, your ticket will be closed and you will be banned from the server. \n\n",
                                   color=0x00ff00)
-            embed.set_image(url=ctx.client.config.verification_image)
+            embed.set_image(url=ctx.bot.config.verification_image)
             await new_channel.send(embed=embed)
 
 
