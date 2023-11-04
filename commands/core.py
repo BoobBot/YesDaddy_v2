@@ -516,7 +516,7 @@ class Core(commands.Cog):
         else:
             length = random.randint(0, 30)
         dong = "8{}D".format("=" * length)
-        await ctx.send(f"**{user.display_name}'s size:**\n{dong}\n")
+        await ctx.send(f"**{user.mention}'s size:**\n{dong}\n")
 
 
 async def setup(bot):
