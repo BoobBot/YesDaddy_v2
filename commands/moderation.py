@@ -675,7 +675,7 @@ class Moderation(commands.Cog):
             }
             new_channel = await ctx.guild.create_text_channel(user.name, category=category,
                                                                       overwrites=overwrites)
-            await ctx.followup.send(f"Opened ticket {new_channel.mention}", ephemeral=True)
+            await ctx.reply(f"Opened ticket {new_channel.mention}", ephemeral=True)
             ticket_data = {
                 "channel_id": new_channel.id,
                 "user_id": user.id,
