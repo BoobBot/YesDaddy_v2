@@ -667,7 +667,7 @@ class Moderation(commands.Cog):
         if category:
             staff = ctx.guild.get_role(694641646918434875)
             overwrites = {
-                ctx.user: discord.PermissionOverwrite(send_messages=True, read_messages=True, embed_links=True,
+                user: discord.PermissionOverwrite(send_messages=True, read_messages=True, embed_links=True,
                                                               read_message_history=True, attach_files=True),
                 ctx.guild.default_role: discord.PermissionOverwrite(send_messages=False, read_messages=False),
                 staff: discord.PermissionOverwrite(send_messages=True, read_messages=True, embed_links=True,
