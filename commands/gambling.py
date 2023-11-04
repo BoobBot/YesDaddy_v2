@@ -102,7 +102,7 @@ class Gambling(commands.Cog):
             if random_number < probability:
                 await user_data.jail_user(jail_time, fine)
                 em.add_field(name="Punishment",
-                             value=f"You are in jail for {jail_time} hours and have to pay a fine of {fine}. Run </bail:1145445177092231341> to do so.")
+                             value=f"You are in jail for {jail_time} hours and have paid a fine of {fine}. For early release run </bail:1145445177092231341>.")
             await user_data.update_balance(user_total)
 
             em.set_thumbnail(
