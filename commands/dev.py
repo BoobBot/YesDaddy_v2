@@ -19,6 +19,7 @@ from discord.ext.commands import Context, Greedy
 
 from views import support_channel_view, test_button
 from views.reminder_view import Reminder
+from views.rule_button_view import RuleButton
 from views.test_button import TestButton
 from views.verification_view import VerificationView
 
@@ -202,37 +203,38 @@ class Dev(commands.Cog):
     @commands.command(name="attempt", description="????")
     @commands.is_owner()
     async def attempt(self, ctx):
-        message = """
-        __**STEPS**__
+        # message = """
+        # __**STEPS**__
+        #
+        # 1. Write down today's current date on a sheet of paper. Write down the name of the server (BoobBot) as well as your user ID.
+        #
+        # 2. Take a photo of said sheet of paper with your photo ID on it. The ID must have DOB as well as an identification photo. You can censor all other info except DOB and ID photo.
+        #
+        # 3. Take a photo of yourself holding the sheet of paper with your face clearly shown.
+        #
+        # **WE DO NOT ACCEPT BIRTH CERTIFICATES UNDER ANY CIRCUMSTANCES**
+        #
+        # 🔴 Click the button below to verify 🔴
+        # """
+        # em = discord.Embed(title="Verification", description=message, color=discord.Color.blurple())
+        # em.set_image(
+        #     url="https://cdn.discordapp.com/attachments/1141745489927229563/1158511135390187591/Verifyexample.png?ex=651c8312&is=651b3192&hm=2e20d43d928e45b444f4d047b51e9e063154ade9883c23eafed6f38d05dfd270&")
+        # await ctx.send(embed=em, view=VerificationView())
 
-        1. Write down today's current date on a sheet of paper. Write down the name of the server (BoobBot) as well as your user ID.
-
-        2. Take a photo of said sheet of paper with your photo ID on it. The ID must have DOB as well as an identification photo. You can censor all other info except DOB and ID photo.
-
-        3. Take a photo of yourself holding the sheet of paper with your face clearly shown.
-
-        **WE DO NOT ACCEPT BIRTH CERTIFICATES UNDER ANY CIRCUMSTANCES**
-
-        🔴 Click the button below to verify 🔴
-        """
-        em = discord.Embed(title="Verification", description=message, color=discord.Color.blurple())
-        em.set_image(
-            url="https://cdn.discordapp.com/attachments/1141745489927229563/1158511135390187591/Verifyexample.png?ex=651c8312&is=651b3192&hm=2e20d43d928e45b444f4d047b51e9e063154ade9883c23eafed6f38d05dfd270&")
-        await ctx.send(embed=em, view=VerificationView())
-
-        # description = "• This server is 18+. Adults acting like children, arguing with staff or causing drama will be removed.\n\n" \
-        #               "• Do not post illegal content, follow Discord TOS and Community Guidelines. No gore, bestiality, scat, necrophilia, etc.\n\n" \
-        #               "• Treat others with respect and kindness, regardless of their age, gender, race, sexual orientation, or any other personal characteristics. Do not engage in any behavior that could be considered bullying, harassment, or discrimination.\n\n" \
-        #               "• Do not post screenshots of private conversations/other servers. No doxing or posting photos of others.\n\n" \
-        #               "• Catfishing will result in a ban. Just be yourself, It's better that way.\n\n" \
-        #               "• Use the appropriate channels for different types of conversation.\n\n" \
-        #               "• The staff reserves the right to ban anyone causing trouble. No mini modding. We got this, Just enjoy your time here.\n\n" \
-        #               "• Please respect people's roles.\n\n" \
-        #               "• This server is English ONLY\n\n" \
-        #               "• If you have ever been called a snowflake ❄️ or consider yourself to be 'woke', you might want to save yourself and us some time and frustration and go ahead hit the leave server button."
-        # em = discord.Embed(title="Rules of Boobbot Community",
-        #                    description=description, color=discord.Color.blurple())
-        # await ctx.send(embed=em, view=RuleButton())
+        description = "• This server is 18+. Adults acting like children, arguing with staff or causing drama will be removed.\n\n" \
+                      "• Do not post illegal content, follow Discord TOS and Community Guidelines. No gore, bestiality, scat, necrophilia, etc.\n\n" \
+                      "• Treat others with respect and kindness, regardless of their age, gender, race, sexual orientation, or any other personal characteristics. Do not engage in any behavior that could be considered bullying, harassment, or discrimination.\n\n" \
+                      "• Do not post screenshots of private conversations/other servers. No doxing or posting photos of others.\n\n" \
+                      "• Catfishing will result in a ban. Just be yourself, It's better that way.\n\n" \
+                      "• Use the appropriate channels for different types of conversation.\n\n" \
+                      "• The staff reserves the right to ban anyone causing trouble. No mini modding. We got this, Just enjoy your time here.\n\n" \
+                      "• Please respect people's roles.\n\n" \
+                      "• This server is English ONLY\n\n" \
+                      "• DO NOT POST ANY PERSONAL NSFW CONTENT THAT CONTAINS ANOTHER PERSON IF THEY ARE NOT IN THE SERVER, VERIFIED AND HAVE GIVEN CONSENT!!\n\n" \
+                      "• If you have ever been called a snowflake ❄️ or consider yourself to be 'woke', you might want to save yourself and us some time and frustration and go ahead hit the leave server button."
+        em = discord.Embed(title="Rules of Boobbot Community",
+                           description=description, color=discord.Color.blurple())
+        await ctx.send(embed=em, view=RuleButton())
 
     @commands.hybrid_command()
     @app_commands.guilds(1138662591875518605)
