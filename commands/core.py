@@ -507,7 +507,6 @@ class Core(commands.Cog):
 
     @commands.hybrid_command(name="penis", description="penis size")
     @app_commands.describe(user="user to get penis size of")
-    @commands.command()
     async def penis(self, ctx, user: discord.Member):
         """Detects user's penis length, This is 100% accurate.
         """
