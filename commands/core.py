@@ -1,4 +1,5 @@
 import datetime
+import random
 
 import discord
 import emoji
@@ -503,6 +504,20 @@ class Core(commands.Cog):
         for ping_tag in ping_tags:
             embed.add_field(name=" ", value=f"{ping_tag.get('ping')}: <@&{ping_tag.get('role')}>", inline=False)
         await ctx.reply(embed=embed)
+
+    @commands.hybrid_command(name="penis", description="penis size")
+    @app_commands.describe(user="user to get penis size of")
+    @commands.command()
+    async def penis(self, ctx, user: discord.Member):
+        """Detects user's penis length, This is 100% accurate.
+        """
+        random.seed(str(user.id))
+        if ctx.bot.user.id == user.id:
+            length = 50
+        else:
+            length = random.randint(0, 30)
+        dong = "8{}D".format("=" * length)
+        await ctx.send(f"**{user.display_name}'s size:**\n{dong}\n")
 
 
 async def setup(bot):
