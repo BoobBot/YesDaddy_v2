@@ -686,7 +686,7 @@ class Moderation(commands.Cog):
                 "reason": "Verification"
             }
             print(ticket_data)
-            await self.bot.db_client.add_ticket(interaction.guild.id, ticket_data)
+            await self.bot.db_client.add_ticket(ctx.guild.id, ticket_data)
 
             # Deny permissions for everyone
             # await new_channel.set_permissions(interaction.guild.default_role, send_messages=False, read_messages=False)
