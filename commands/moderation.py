@@ -20,6 +20,8 @@ import matplotlib
 from discord import app_commands
 from discord.ext import commands
 
+from views.tickets_view import TicketView
+
 matplotlib.use("agg")
 import asyncio
 import functools
@@ -650,6 +652,58 @@ class Moderation(commands.Cog):
         await new_channel.send(
             f"<@&981426793925992448> Support Ticket by {user.mention}",
             view=support_view.SupportTicketView())
+
+    @commands.hybrid_command(name="new_verify", description="Create a new verify ticket")
+    @commands.has_any_role(694641646922498069, 694641646918434875)
+    async def verify(self, ctx,  user: discord.Member):
+        retrieved_guild = await self.bot.db_client.get_guild(ctx.guild.id)
+        count = len([ticket for ticket in retrieved_guild.tickets if
+                     ticket.get("user_id") == user.id and
+                     ticket.get("status") == "closed" and
+                     ticket.get("reason") == "Verification"])
+        # Create a new ticket
+        category = discord.utils.get(ctx.guild.categories, id=1141700782006222970)
+
+        if category:
+            staff = ctx.guild.get_role(694641646918434875)
+            overwrites = {
+                ctx.user: discord.PermissionOverwrite(send_messages=True, read_messages=True, embed_links=True,
+                                                              read_message_history=True, attach_files=True),
+                ctx.guild.default_role: discord.PermissionOverwrite(send_messages=False, read_messages=False),
+                staff: discord.PermissionOverwrite(send_messages=True, read_messages=True, embed_links=True,
+                                                   read_message_history=True, attach_files=True)
+            }
+            new_channel = await ctx.guild.create_text_channel(ctx.user.name, category=category,
+                                                                      overwrites=overwrites)
+            await ctx.followup.send(f"Opened ticket {new_channel.mention}", ephemeral=True)
+            ticket_data = {
+                "channel_id": new_channel.id,
+                "user_id": ctx.user.id,
+                "status": "open",
+                "resolved_by": None,
+                "resolved_at": None,
+                "created_at": datetime.datetime.utcnow(),
+                "reason": "Verification"
+            }
+            print(ticket_data)
+            await self.bot.db_client.add_ticket(interaction.guild.id, ticket_data)
+
+            # Deny permissions for everyone
+            # await new_channel.set_permissions(interaction.guild.default_role, send_messages=False, read_messages=False)
+            # Allow permissions for the specified user
+            # await new_channel.set_permissions(interaction.user, send_messages=True, read_messages=True)
+            # Send the ticket message
+            await new_channel.send(
+                f"<@&981426793925992448> Ticket by {user.mention}, {count} previous verification tickets",
+                view=TicketView())
+            # Send the verification message
+            embed = discord.Embed(title="Ticket",
+                                  description=f"Welcome {user.mention}! Thank you for contacting BoobBot support. Please send the photos required to verify following the below guidelines. All images sent will be deleted upon completion of the ticket. Please note that if you do not follow the guidelines, your ticket will be closed and you will be banned from the server. \n\n",
+                                  color=0x00ff00)
+            embed.set_image(url=ctx.client.config.verification_image)
+            await new_channel.send(embed=embed)
+
+
 
     @commands.hybrid_command(name="pings", description="role pings")
     @persistent_cooldown(1, 120, commands.BucketType.user)
