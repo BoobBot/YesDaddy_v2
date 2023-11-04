@@ -673,12 +673,12 @@ class Moderation(commands.Cog):
                 staff: discord.PermissionOverwrite(send_messages=True, read_messages=True, embed_links=True,
                                                    read_message_history=True, attach_files=True)
             }
-            new_channel = await ctx.guild.create_text_channel(ctx.user.name, category=category,
+            new_channel = await ctx.guild.create_text_channel(user.name, category=category,
                                                                       overwrites=overwrites)
             await ctx.followup.send(f"Opened ticket {new_channel.mention}", ephemeral=True)
             ticket_data = {
                 "channel_id": new_channel.id,
-                "user_id": ctx.user.id,
+                "user_id": user.id,
                 "status": "open",
                 "resolved_by": None,
                 "resolved_at": None,
