@@ -75,7 +75,7 @@ class Profile(commands.Cog):
             name="Level", value=f"{user_data.level} {bar} {user_data.level + 1}", inline=False)
         em.add_field(name="Experience", value=f"{user_data.xp} / {total}")
         em.add_field(name="Balance", value=f"{user_data.balance:,}")
-        em.add_field(name="Bank Balance", value=f"{user_data.bank_balance:,}")
+        em.add_field(name="Bank Balance", value=f"{user_data.bank_balance:,}")d
         if user_data.is_in_jail():
             release_time = user_data.is_in_jail()
             remaining_timestamp = discord.utils.format_dt(release_time, style="R"

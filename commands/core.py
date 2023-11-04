@@ -505,7 +505,7 @@ class Core(commands.Cog):
             embed.add_field(name=" ", value=f"{ping_tag.get('ping')}: <@&{ping_tag.get('role')}>", inline=False)
         await ctx.reply(embed=embed)
 
-    @commands.hybrid_command(name="penis", description="penis size")
+    @commands.hybrid_command(name="penis", description="Detects user's penis length, This is 100% accurate.")
     @app_commands.describe(user="user to get penis size of")
     async def penis(self, ctx, user: discord.Member):
         """Detects user's penis length, This is 100% accurate.
