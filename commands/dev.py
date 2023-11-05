@@ -362,7 +362,7 @@ class Dev(commands.Cog):
 
     @economy.command(name="add", description="Add money to a user's balance.")
     async def add_money(self, ctx, user: commands.UserConverter, amount: int):
-        user_data = await self.bot.db_client.get_user(user.id, ctx.guild.id)
+        user_data = await self.bot.db_client.get_user(guild_id=ctx.guild.id, user_id=user.id)
         await user_data.add_balance(amount)
         await ctx.send(f"Added {amount} to {user.display_name}'s balance.")
 
