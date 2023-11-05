@@ -328,9 +328,9 @@ class Profile(commands.Cog):
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         if not user_data.inventory.get("roles"):
             return await ctx.reply(":x: You don't have any roles in your inventory.")
-        for role in user_data.inventory.get("roles"):
-            if str(role.get("_id")) == str(role):
-                role_obj = ctx.guild.get_role(int(role.get("_id")))
+        for r in user_data.inventory.get("roles"):
+            if str(r.get("_id")) == str(role):
+                role_obj = ctx.guild.get_role(int(r.get("_id")))
                 if role_obj:
                     if role_obj in ctx.author.roles:
                         await ctx.author.remove_roles(role_obj)
