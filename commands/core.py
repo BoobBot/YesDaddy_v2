@@ -373,7 +373,7 @@ class Core(commands.Cog):
         if trigger in [reaction.get("trigger") for reaction in guild.text_reactions]:
             return await ctx.reply("That trigger is already a text reaction.")
         guild.text_reactions.append(
-            {"trigger": trigger, "response": response})
+            {"trigger": trigger, "response": response, "added_by": ctx.author.id, "add_at": datetime.datetime.utcnow()})
         await self.bot.db_client.update_guild(ctx.guild.id, {"text_reactions": guild.text_reactions})
         await ctx.reply(f"Added `{trigger}` as a text reaction.")
 
@@ -398,7 +398,11 @@ class Core(commands.Cog):
             return await ctx.reply("There are no text reactions.")
         embed = discord.Embed(title="Text Reactions")
         for reaction in reactions:
-            embed.add_field(name="react", value=f"{reaction.get('trigger')}: {reaction.get('response')}", inline=False)
+            added_by = reaction.get("added_by", None)
+
+            embed.add_field(name="react",
+                            value=f"{reaction.get('trigger')}: {reaction.get('response')}]\n added by {added_by}",
+                            inline=False)
         await ctx.reply(embed=embed)
 
     @commands.hybrid_command(name="help", description="have a list of commands")
