@@ -537,9 +537,9 @@ class Gambling(commands.Cog):
         if choice is None and color is None:
             winnings_multiplier = 2
         elif choice is not None and color is not None:
-            winnings_multiplier = 36
+            winnings_multiplier = 3
         else:
-            winnings_multiplier = 18
+            winnings_multiplier = 3
 
         # Determine the winner
         if choice is not None and choice == result:
@@ -635,7 +635,7 @@ class Gambling(commands.Cog):
         await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="wheel", description="Spin the wheel of fortune.")
-    @persistent_cooldown(1, 60, commands.BucketType.user)
+    @persistent_cooldown(1, 500, commands.BucketType.user)
     @app_commands.describe(bet='the amount of money to bet')
     async def wheel(self, ctx, bet: int):
         if bet <= 0:
@@ -662,7 +662,7 @@ class Gambling(commands.Cog):
         elif result in ["blue", "green", "yellow"]:
             winnings_multiplier = 3
         elif result in ["orange", "purple", "pink"]:
-            winnings_multiplier = 5
+            winnings_multiplier = 4
 
         # Determine the winner
         if result == "red":
