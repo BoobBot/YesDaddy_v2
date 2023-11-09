@@ -401,7 +401,7 @@ class Core(commands.Cog):
             added_by = reaction.get("added_by", None)
 
             embed.add_field(name="react",
-                            value=f"{reaction.get('trigger')}: {reaction.get('response')}]\n added by {added_by}",
+                            value=f"{reaction.get('trigger')}: {reaction.get('response')}\nAdded by <@{added_by}>",
                             inline=False)
         await ctx.reply(embed=embed)
 
