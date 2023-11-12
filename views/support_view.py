@@ -35,7 +35,7 @@ class SupportTicketView(discord.ui.View):
         ticket["resolved_by"] = interaction.user.id
         ticket["resolved_at"] = datetime.utcnow()
 
-        await interaction.client.db_client.add_support_ticket(interaction.guild.id, ticket)
+        await interaction.client.db_client.update_support_ticket(interaction.guild.id, interaction.channel.id, ticket)
         # log the verification
         ch = interaction.guild.get_channel(1153818515262947378)
         try:

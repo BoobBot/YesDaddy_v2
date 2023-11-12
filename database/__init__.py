@@ -124,6 +124,12 @@ class DiscordDatabase:
             {"$push": {"support_tickets": ticket_data}}
         )
 
+    async def update_support_ticket(self, guild_id, channel_id, new_data):
+        await self.guild_collection.update_one(
+            {"guild_id": guild_id, "support_tickets.channel_id": channel_id},
+            {"$set": {"support_tickets.$": new_data}}
+        )
+
     async def get_tickets(self, guild_id):
         guild_data = await self.guild_collection.find_one({"guild_id": guild_id})
         if guild_data and "tickets" in guild_data:
