@@ -4,7 +4,7 @@ import random
 import discord
 from discord.ext import tasks, commands
 
-from utils.utilities import calculate_level
+from utils.utilities import calculate_level, is_today_weekend_or_holiday
 
 
 class Loops(commands.Cog):
@@ -181,6 +181,8 @@ class Loops(commands.Cog):
                                     1 for role in member.roles for r in data.bonus_roles if role.id == r.get("role_id"))
                                 bonus_xp += 1
                                 xp = random.randint(10, 50) * bonus_xp
+                                if is_today_weekend_or_holiday():
+                                    xp *= 2
                                 lvl = calculate_level(user.xp + xp)
                                 if lvl > user.level:
                                     channel_id = await data.get_config("lvl_up_channel")
