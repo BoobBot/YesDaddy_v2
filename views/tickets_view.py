@@ -17,7 +17,7 @@ class TicketView(discord.ui.View):
         if not data:
             interaction.client.log.error("No data found for Ticket, this should not happen :/")
             return await interaction.followup.send("Something went wrong",
-                                                           ephemeral=True)
+                                                   ephemeral=True)
 
         ticket = next((ticket for ticket in data.tickets if ticket.get("channel_id") == interaction.channel.id \
                        and ticket.get("status") == "open"), None)
@@ -27,7 +27,7 @@ class TicketView(discord.ui.View):
 
         if ticket.get("user_id") == interaction.user.id:
             return await interaction.followup.send("You can't verify yourself, this is not your button.",
-                                                           ephemeral=True)
+                                                   ephemeral=True)
 
         user_id = ticket.get("user_id")
         ticket["status"] = "verified"
@@ -38,7 +38,7 @@ class TicketView(discord.ui.View):
             member = await interaction.guild.fetch_member(int(user_id))
         except discord.NotFound:
             return await interaction.followup.send("User not found, did they leave the server?",
-                                                           ephemeral=True)
+                                                   ephemeral=True)
 
         # female = 694641646805057561 694641646821703740
         # male = 694641646805057560 694641646813577267
@@ -66,7 +66,7 @@ class TicketView(discord.ui.View):
         await ch.send(
             f"verification ticket by {user.name} ({user.id}) was verified by {interaction.user.mention} ({interaction.user.id})")
         # store the ticket
-        await interaction.client.db_client.add_ticket(interaction.guild.id, ticket)
+        await interaction.client.db_client.update_support_ticket(interaction.guild.id, interaction.channel.id, ticket)
         # respond to the user
         await interaction.followup.send("Ticket verified!", ephemeral=True)
         await asyncio.sleep(5)
@@ -80,7 +80,7 @@ class TicketView(discord.ui.View):
         if not data:
             interaction.client.log.error("No data found for Ticket, this should not happen :/")
             return await interaction.followup.send("Something went wrong",
-                                                           ephemeral=True)
+                                                   ephemeral=True)
 
         ticket = next((ticket for ticket in data.tickets if ticket.get("channel_id") == interaction.channel.id), None)
 
@@ -89,14 +89,15 @@ class TicketView(discord.ui.View):
 
         if ticket.get("user_id") == interaction.user.id:
             return await interaction.followup.send("You can't close this yourself, this is not your button.",
-                                                           ephemeral=True)
+                                                   ephemeral=True)
 
         user_id = ticket.get("user_id")
         ticket["status"] = "closed"
         ticket["resolved_by"] = interaction.user.id
         ticket["resolved_at"] = datetime.utcnow()
 
-        await interaction.client.db_client.add_ticket(interaction.guild.id, ticket)
+        #await interaction.client.db_client.add_ticket(interaction.guild.id, ticket)
+        await interaction.client.db_client.update_support_ticket(interaction.guild.id, interaction.channel.id, ticket)
         # log the verification
         ch = interaction.guild.get_channel(1142915549198823546)
         try:
@@ -122,7 +123,7 @@ class TicketView(discord.ui.View):
         if not data:
             interaction.client.log.error("No data found for Ticket, this should not happen :/")
             return await interaction.followup.send("Something went wrong",
-                                                           ephemeral=True)
+                                                   ephemeral=True)
 
         ticket = next((ticket for ticket in data.tickets if ticket.get("channel_id") == interaction.channel.id), None)
 
@@ -131,14 +132,14 @@ class TicketView(discord.ui.View):
 
         if ticket.get("user_id") == interaction.user.id:
             return await interaction.followup.send("You can't close this yourself, this is not your button.",
-                                                           ephemeral=True)
+                                                   ephemeral=True)
 
         user_id = ticket.get("user_id")
         ticket["status"] = "banned"
         ticket["resolved_by"] = interaction.user.id
         ticket["resolved_at"] = datetime.utcnow()
 
-        await interaction.client.db_client.add_ticket(interaction.guild.id, ticket)
+        await interaction.client.db_client.update_support_ticket(interaction.guild.id, interaction.channel.id, ticket)
         ch = interaction.guild.get_channel(1142915549198823546)
         # Ban the user by ID
         try:
