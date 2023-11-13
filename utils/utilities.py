@@ -1,3 +1,4 @@
+import datetime
 import math
 import random
 from io import BytesIO
@@ -5,10 +6,27 @@ from typing import Iterator, Sequence
 
 import aiohttp
 import discord
+import holidays
 from PIL import Image
 
-xp_constant = 100
 from config.settings_config import affinity_titles, divorce_titles, claim_titles
+
+xp_constant = 100
+
+
+def is_today_weekend_or_holiday():
+    today = datetime.date.today()
+    # TODO: Add more countries
+    country_code = ['US', 'CA', 'UK']
+    # Check if today is a weekend
+    if today.weekday() >= 5:  # 5 = Saturday, 6 = Sunday
+        return True
+
+    # Check if today is a holiday
+    if today in holidays.CountryHoliday(country_code):
+        return True
+
+    return False
 
 
 def get_title(rank, title_type):
@@ -121,12 +139,12 @@ def search(s: str, substring: str) -> bool:
 
 class pagify(Iterator[str]):
     def __init__(
-        self,
-        text: str,
-        delims: Sequence[str] = ("\n",),
-        *,
-        shorten_by: int = 8,
-        page_length: int = 2000,
+            self,
+            text: str,
+            delims: Sequence[str] = ("\n",),
+            *,
+            shorten_by: int = 8,
+            page_length: int = 2000,
     ) -> None:
         self._text = text
         self._delims = delims

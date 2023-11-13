@@ -6,7 +6,7 @@ import random
 import discord
 from discord.ext import commands
 
-from utils.utilities import calculate_level
+from utils.utilities import calculate_level, is_today_weekend_or_holiday
 
 
 async def dump_delete(msg):
@@ -79,6 +79,8 @@ class Message(commands.Cog):
             bonus_xp += 1
             xp = random.randint(1, 10) * bonus_xp
             lvl = calculate_level(user.xp + xp)
+            if is_today_weekend_or_holiday():
+                xp *= 2
             if lvl > user.level:
                 guild = await self.bot.db_client.get_guild(msg.guild.id)
                 channel_id = await guild.get_config("lvl_up_channel")
