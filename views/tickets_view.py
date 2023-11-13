@@ -66,7 +66,7 @@ class TicketView(discord.ui.View):
         await ch.send(
             f"verification ticket by {user.name} ({user.id}) was verified by {interaction.user.mention} ({interaction.user.id})")
         # store the ticket
-        await interaction.client.db_client.update_support_ticket(interaction.guild.id, interaction.channel.id, ticket)
+        await interaction.client.db_client.update_ticket(interaction.guild.id, interaction.channel.id, ticket)
         # respond to the user
         await interaction.followup.send("Ticket verified!", ephemeral=True)
         await asyncio.sleep(5)
@@ -97,7 +97,7 @@ class TicketView(discord.ui.View):
         ticket["resolved_at"] = datetime.utcnow()
 
         #await interaction.client.db_client.add_ticket(interaction.guild.id, ticket)
-        await interaction.client.db_client.update_support_ticket(interaction.guild.id, interaction.channel.id, ticket)
+        await interaction.client.db_client.update_ticket(interaction.guild.id, interaction.channel.id, ticket)
         # log the verification
         ch = interaction.guild.get_channel(1142915549198823546)
         try:
@@ -139,7 +139,7 @@ class TicketView(discord.ui.View):
         ticket["resolved_by"] = interaction.user.id
         ticket["resolved_at"] = datetime.utcnow()
 
-        await interaction.client.db_client.update_support_ticket(interaction.guild.id, interaction.channel.id, ticket)
+        await interaction.client.db_client.update_ticket(interaction.guild.id, interaction.channel.id, ticket)
         ch = interaction.guild.get_channel(1142915549198823546)
         # Ban the user by ID
         try:
