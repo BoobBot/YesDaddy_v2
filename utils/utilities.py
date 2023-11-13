@@ -16,18 +16,18 @@ xp_constant = 100
 
 def is_today_weekend_or_holiday():
     today = datetime.date.today()
-    # TODO: Add more countries
-    country_code = ['US', 'CA', 'UK']
+    country_codes = ['US', 'CA', 'UK']  # List of country codes
+
     # Check if today is a weekend
     if today.weekday() >= 5:  # 5 = Saturday, 6 = Sunday
         return True
 
-    # Check if today is a holiday
-    if today in holidays.CountryHoliday(country_code):
-        return True
+    # Check if today is a holiday in any of the specified countries
+    for country_code in country_codes:
+        if today in holidays.CountryHoliday(country_code):
+            return True
 
     return False
-
 
 def get_title(rank, title_type):
     titles = None
