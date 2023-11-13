@@ -54,12 +54,6 @@ class Message(commands.Cog):
                 if reaction.get("trigger") in msg.content.lower():
                     await msg.add_reaction(reaction.get("response"))
 
-            percentage = 20
-            random_number = random.randint(1, 100)
-            if msg.author.id == 596330574109474848:
-                if random_number <= percentage:
-                    await msg.add_reaction("🌹")
-
             if msg.channel.category_id == 1141700782006222970:
                 if msg.content.startswith("-"):
                     data = await self.bot.db_client.get_guild(msg.guild.id)
