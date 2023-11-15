@@ -228,9 +228,9 @@ class Moderation(commands.Cog):
             user_data.idiot["timestamp"] = None
             user_data.idiot["change"] = None
             await user_data.update_fields(idiot=user_data.idiot)
-            await ctx.reply(f"Cleared {user.mention}'s nickname.", ephemeral=True)
+            await ctx.reply(f"Cleared {user.mention}'s nickname.")
         else:
-            await ctx.reply(f"{user.mention} is not an idiot.", ephemeral=True)
+            await ctx.reply(f"{user.mention} is not an idiot.")
 
     @idiot.command(name="check", description="check if a user is an idiot")
     @app_commands.describe(user="The user to check.")
@@ -239,10 +239,13 @@ class Moderation(commands.Cog):
         if user_data.idiot.get("idiot"):
             color = await generate_embed_color(ctx.author)
             em = discord.Embed(color=color)
-            em.description = f"{user.mention} is an idiot\nchanged by <@{user_data.idiot.get('idiot_by')}>\ntried to change {user_data.idiot['change']}\ntimes idioted {user_data.idiot['times_idiot']}."
-            await ctx.reply(embed=em, ephemeral=True)
+            em.description = (f"{user.mention} is an idiot\n"
+                              f"**Changed by**: <@{user_data.idiot.get('idiot_by')}>\n"
+                              f"**Tried to change**: {user_data.idiot['change']}\n"
+                              f"**Times idioted**: {user_data.idiot['times_idiot']}.")
+            await ctx.reply(embed=em)
         else:
-            await ctx.reply(f"{user.mention} is not an idiot.", ephemeral=True)
+            await ctx.reply(f"{user.mention} is not an idiot.")
 
     @idiot.command(name="list", description="list all idiots")
     async def idiot_list(self, ctx):
