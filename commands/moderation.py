@@ -212,7 +212,7 @@ class Moderation(commands.Cog):
                         print("idiot4")
                         await self.do_idiot(ctx.author, ctx.author.id, nickname)
                         await ctx.reply(f"LOL you tried.")
-                    return
+                        return
                 print("idiot")
                 await self.do_idiot(user, ctx.author.id, nickname)
                 await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.", ephemeral=True)
