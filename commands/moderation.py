@@ -233,6 +233,7 @@ class Moderation(commands.Cog):
             user_data.idiot["timestamp"] = None
             user_data.idiot["change"] = None
             await user_data.update_fields(idiot=user_data.idiot)
+            await user.edit(nick=None, reason="what a idiot")
             await ctx.reply(f"Cleared {user.mention}'s nickname.")
         else:
             await ctx.reply(f"{user.mention} is not an idiot.")
