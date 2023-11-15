@@ -207,7 +207,9 @@ class Moderation(commands.Cog):
             else:
                 print("idiot2432")
                 if any(user_data.idiot.get("idiot_by") == no_touch for no_touch in untouchables):
+                    print("idiot3")
                     if not any(ctx.author.id == no_touch for no_touch in untouchables):
+                        print("idiot4")
                         await self.do_idiot(ctx.author, ctx.author.id, nickname)
                         await ctx.reply(f"LOL you tried.")
                     return
