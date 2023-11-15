@@ -33,6 +33,7 @@ from collections import Counter
 
 ID_RE = re.compile(r"\d{15,21}")
 LIMIT = 1000000
+untouchables = [248294452307689473, 596330574109474848, 270393700394205185, 383932871985070085]
 
 
 class Moderation(commands.Cog):
@@ -186,34 +187,25 @@ class Moderation(commands.Cog):
     @app_commands.describe(nickname="The nickname to set.")
     async def idiot_set(self, ctx, user: discord.Member, *, nickname: str):
         user_data = await self.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
-        untouchables = [248294452307689473, 596330574109474848, 270393700394205185, 383932871985070085]
         if user_data.idiot.get("idiot"):
             view = Confirm()
             color = await generate_embed_color(ctx.author)
             em = discord.Embed(color=color)
             em.description = f"{user.mention} is already an idiot, changed by <@{user_data.idiot.get('idiot_by')}>, are you sure you want to change their nickname?"
             view.message = await ctx.reply(embed=em, view=view)
-            print("idiot1")
             await view.wait()
-            print("idiot2")
             if view.value is None:
-                print("idiot132131")
                 await ctx.reply("Timed out.")
                 return
             elif view.value is False:
-                print("idiot121")
                 await ctx.reply("Ok, I wont change it.")
                 return
             else:
-                print("idiot2432")
                 if any(user_data.idiot.get("idiot_by") == no_touch for no_touch in untouchables):
-                    print("idiot3")
                     if not any(ctx.author.id == no_touch for no_touch in untouchables):
-                        print("idiot4")
                         await self.do_idiot(ctx.author, ctx.author.id, nickname)
                         await ctx.reply(f"LOL you tried.")
                         return
-                print("idiot")
                 await self.do_idiot(user, ctx.author.id, nickname)
                 await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.")
                 return
@@ -227,6 +219,10 @@ class Moderation(commands.Cog):
     async def idiot_clear(self, ctx, user: discord.Member):
         user_data = await self.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         if user_data.idiot.get("idiot"):
+            if any(user_data.idiot.get("idiot_by") == no_touch for no_touch in untouchables):
+                if not any(ctx.author.id == no_touch for no_touch in untouchables):
+                    await ctx.reply("You can't clear this idiots nickname, suffer instead.")
+                    return
             user_data.idiot["idiot"] = False
             user_data.idiot["nickname"] = None
             user_data.idiot["idiot_by"] = None
