@@ -253,8 +253,15 @@ class Moderation(commands.Cog):
                 print(user)
                 if user.get("idiot").get("idiot", False):
                     idiots.append(
-                        f"<@{user['user_id']}>\nidiot {user.get('idiot').get('nickname')}\nchanged by <@{user.get('idiot').get('idiot_by')}>\ntried to change {user.get('idiot').get('change')}\ntimes idioted {user.get('idiot').get('times_idiot')}.")
-        await ctx.reply(f"Idiots found: {', '.join(idiots)}", ephemeral=True)
+                        f"**user**: <@{user['user_id']}>\n"
+                        f"**Idiot**: {user.get('idiot').get('nickname')}\n"
+                        f"**Changed by**: <@{user.get('idiot').get('idiot_by')}>\n"
+                        f"**Tried to change**: {user.get('idiot').get('change')}\n"
+                        f"**Times idioted**: {user.get('idiot').get('times_idiot')}.")
+        em = discord.Embed(color=await generate_embed_color(ctx.author))
+        em.title = "Idiots"
+        em.description = "\n\n".join(idiots)
+        await ctx.reply(em)
 
     @app_commands.command(name="selfban", description="Ban yourself from the server.")
     async def selfban(self, interaction: discord.Interaction):
