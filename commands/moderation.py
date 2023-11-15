@@ -124,13 +124,13 @@ class Moderation(commands.Cog):
         if user_data.idiot.get("idiot", None):
             idiot_data = user_data.idiot
             idiot_data["idiot"] = True
-            idiot_data["nickname"] = None
+            idiot_data["nickname"] = nickname
             idiot_data["idiot_by"] = mod_id
             idiot_data["timestamp"] = datetime.datetime.now(datetime.timezone.utc)
             idiot_data["times_idiot"] += 1
             idiot_data["change"] = 0
             await user_data.update_fields(idiot=idiot_data)
-            await user.edit(nick=None, reason="what a idiot")
+            await user.edit(nick=nickname, reason="what a idiot")
             return
         idiot_data = {
             "nickname": nickname,
@@ -141,7 +141,7 @@ class Moderation(commands.Cog):
             "change": 0
         }
         await user_data.update_fields(idiot=idiot_data)
-        await user.edit(nick=None, reason="what a idiot")
+        await user.edit(nick=nickname, reason="what a idiot")
         return
 
     @commands.bot_has_permissions(ban_members=True, view_audit_log=True)
