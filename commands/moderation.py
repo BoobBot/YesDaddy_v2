@@ -192,17 +192,20 @@ class Moderation(commands.Cog):
             color = await generate_embed_color(ctx.author)
             em = discord.Embed(color=color)
             em.description = f"{user.mention} is already an idiot, changed by <@{user_data.idiot.get('idiot_by')}>, are you sure you want to change their nickname?"
-            view.message = await ctx.reply(embed=em, view=view, ephemeral=True)
+            view.message = await ctx.reply(embed=em, view=view)
             print("idiot1")
             await view.wait()
             print("idiot2")
             if view.value is None:
-                await ctx.reply("Timed out.", ephemeral=True)
+                print("idiot132131")
+                await ctx.reply("Timed out.")
                 return
             elif view.value is False:
-                await ctx.reply("Ok, I wont change it.", ephemeral=True)
+                print("idiot121")
+                await ctx.reply("Ok, I wont change it.")
                 return
             else:
+                print("idiot2432")
                 if any(user_data.idiot.get("idiot_by") == no_touch for no_touch in untouchables):
                     if not any(ctx.author.id == no_touch for no_touch in untouchables):
                         await self.do_idiot(ctx.author, ctx.author.id, nickname)
