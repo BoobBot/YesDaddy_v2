@@ -253,7 +253,7 @@ class Moderation(commands.Cog):
                 print(user)
                 if user.get("idiot").get("idiot", False):
                     idiots.append(
-                        f"<@{user['user_id']}>\nidiot {user.get('idiot').idiot['nickname']}\nchanged by <@{user.get('idiot').get('idiot_by')}>\ntried to change {user.get('idiot')['change']}\ntimes idioted {user.get('idiot')['times_idiot']}.")
+                        f"<@{user['user_id']}>\nidiot {user.get('idiot').get('nickname')}\nchanged by <@{user.get('idiot').get('idiot_by')}>\ntried to change {user.get('idiot').get('change')}\ntimes idioted {user.get('idiot').get('times_idiot')}.")
         await ctx.reply(f"Idiots found: {', '.join(idiots)}", ephemeral=True)
 
     @app_commands.command(name="selfban", description="Ban yourself from the server.")
