@@ -249,8 +249,9 @@ class Moderation(commands.Cog):
         idiots = []
         guild_data = await self.bot.db_client.get_guild(ctx.guild.id)
         for user in guild_data.users:
-            if user.idiot.get("idiot"):
-                idiots.append(f"<@{user.user_id}>\nidiot {user.idiot['nickname']}\nchanged by <@{user.idiot.get('idiot_by')}>\ntried to change {user.idiot['change']}\ntimes idioted {user.idiot['times_idiot']}.")
+            if user.idiot:
+                if user.idiot["idiot"]:
+                 idiots.append(f"<@{user.user_id}>\nidiot {user.idiot['nickname']}\nchanged by <@{user.idiot.get('idiot_by')}>\ntried to change {user.idiot['change']}\ntimes idioted {user.idiot['times_idiot']}.")
         await ctx.reply(f"Idiots found: {', '.join(idiots)}", ephemeral=True)
 
     @app_commands.command(name="selfban", description="Ban yourself from the server.")
