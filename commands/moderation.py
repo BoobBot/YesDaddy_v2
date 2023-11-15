@@ -244,6 +244,15 @@ class Moderation(commands.Cog):
         else:
             await ctx.reply(f"{user.mention} is not an idiot.", ephemeral=True)
 
+    @idiot.command(name="list", description="list all idiots")
+    async def idiot_list(self, ctx):
+        idiots = []
+        guild_data = await self.bot.db_client.get_guild(ctx.guild.id)
+        for user in guild_data.users:
+            if user.idiot.get("idiot"):
+                idiots.append(f"<@{user.user_id}>\nidiot {user.idiot['nickname']}\nchanged by <@{user.idiot.get('idiot_by')}>\ntried to change {user.idiot['change']}\ntimes idioted {user.idiot['times_idiot']}.")
+        await ctx.reply(f"Idiots found: {', '.join(idiots)}", ephemeral=True)
+
     @app_commands.command(name="selfban", description="Ban yourself from the server.")
     async def selfban(self, interaction: discord.Interaction):
         # should be removed
