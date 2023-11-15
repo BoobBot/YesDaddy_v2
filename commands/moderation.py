@@ -250,7 +250,7 @@ class Moderation(commands.Cog):
         guild_data = await self.bot.db_client.get_guild(ctx.guild.id)
         for user in guild_data.users:
             if 'idiot' in user:
-                print(user.idiot)
+                print(user)
                 if user.idiot.get("idiot", None):
                     idiots.append(
                         f"<@{user.user_id}>\nidiot {user.idiot['nickname']}\nchanged by <@{user.idiot.get('idiot_by')}>\ntried to change {user.idiot['change']}\ntimes idioted {user.idiot['times_idiot']}.")
