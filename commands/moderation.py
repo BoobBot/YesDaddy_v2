@@ -261,7 +261,7 @@ class Moderation(commands.Cog):
         em = discord.Embed(color=await generate_embed_color(ctx.author))
         em.title = "Idiots"
         em.description = "\n\n".join(idiots)
-        await ctx.reply(em)
+        await ctx.reply(embed=em)
 
     @app_commands.command(name="selfban", description="Ban yourself from the server.")
     async def selfban(self, interaction: discord.Interaction):
