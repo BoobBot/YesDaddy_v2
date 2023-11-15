@@ -251,7 +251,8 @@ class Moderation(commands.Cog):
         for user in guild_data.users:
             if user.idiot:
                 if user.idiot["idiot"]:
-                 idiots.append(f"<@{user.user_id}>\nidiot {user.idiot['nickname']}\nchanged by <@{user.idiot.get('idiot_by')}>\ntried to change {user.idiot['change']}\ntimes idioted {user.idiot['times_idiot']}.")
+                    idiots.append(
+                        f"<@{user.user_id}>\nidiot {user.idiot['nickname']}\nchanged by <@{user.idiot.get('idiot_by')}>\ntried to change {user.idiot['change']}\ntimes idioted {user.idiot['times_idiot']}.")
         await ctx.reply(f"Idiots found: {', '.join(idiots)}", ephemeral=True)
 
     @app_commands.command(name="selfban", description="Ban yourself from the server.")
@@ -552,7 +553,7 @@ class Moderation(commands.Cog):
             # Append the embed to the list of embeds
             embeds.append(em)
         await Paginator(delete_on_timeout=False, timeout=120).start(ctx, pages=embeds)
-        #em = discord.Embed(title="Shop Gifts", color=await generate_embed_color(ctx.author))
+        # em = discord.Embed(title="Shop Gifts", color=await generate_embed_color(ctx.author))
         # for gift_data in gifts:
         #     e = "➕" if gift_data.get("positive") else "➖"
         #     em.add_field(name="",
@@ -665,7 +666,7 @@ class Moderation(commands.Cog):
 
     @commands.hybrid_command(name="new_verify", description="Create a new verify ticket")
     @commands.has_any_role(694641646922498069, 694641646918434875)
-    async def verify(self, ctx,  user: discord.Member):
+    async def verify(self, ctx, user: discord.Member):
         retrieved_guild = await self.bot.db_client.get_guild(ctx.guild.id)
         count = len([ticket for ticket in retrieved_guild.tickets if
                      ticket.get("user_id") == user.id and
@@ -678,13 +679,13 @@ class Moderation(commands.Cog):
             staff = ctx.guild.get_role(694641646918434875)
             overwrites = {
                 user: discord.PermissionOverwrite(send_messages=True, read_messages=True, embed_links=True,
-                                                              read_message_history=True, attach_files=True),
+                                                  read_message_history=True, attach_files=True),
                 ctx.guild.default_role: discord.PermissionOverwrite(send_messages=False, read_messages=False),
                 staff: discord.PermissionOverwrite(send_messages=True, read_messages=True, embed_links=True,
                                                    read_message_history=True, attach_files=True)
             }
             new_channel = await ctx.guild.create_text_channel(user.name, category=category,
-                                                                      overwrites=overwrites)
+                                                              overwrites=overwrites)
             await ctx.reply(f"Opened ticket {new_channel.mention}", ephemeral=True)
             ticket_data = {
                 "channel_id": new_channel.id,
@@ -713,8 +714,6 @@ class Moderation(commands.Cog):
             embed.set_image(url=ctx.bot.config.verification_image)
             await new_channel.send(embed=embed)
 
-
-
     @commands.hybrid_command(name="pings", description="role pings")
     @persistent_cooldown(1, 120, commands.BucketType.user)
     @app_commands.describe(ping="The ping to use.")
@@ -727,9 +726,9 @@ class Moderation(commands.Cog):
 
     @pings.autocomplete('ping')
     async def pings_autocomplete(self,
-                                    interaction: discord.Interaction,
-                                    current: str,
-                                    ) -> List[app_commands.Choice[str]]:
+                                 interaction: discord.Interaction,
+                                 current: str,
+                                 ) -> List[app_commands.Choice[str]]:
         guild_data = await self.bot.db_client.get_guild(interaction.guild.id)
 
         return [
