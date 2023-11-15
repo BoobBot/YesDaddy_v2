@@ -251,7 +251,7 @@ class Moderation(commands.Cog):
         for user in guild_data.users:
             if 'idiot' in user:
                 print(user)
-                if user.idiot.get("idiot", None):
+                if user.get("idiot").get("idiot", False):
                     idiots.append(
                         f"<@{user.user_id}>\nidiot {user.idiot['nickname']}\nchanged by <@{user.idiot.get('idiot_by')}>\ntried to change {user.idiot['change']}\ntimes idioted {user.idiot['times_idiot']}.")
         await ctx.reply(f"Idiots found: {', '.join(idiots)}", ephemeral=True)
