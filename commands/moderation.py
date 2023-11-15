@@ -215,11 +215,11 @@ class Moderation(commands.Cog):
                         return
                 print("idiot")
                 await self.do_idiot(user, ctx.author.id, nickname)
-                await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.", ephemeral=True)
+                await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.")
                 return
         user_data = await self.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         await self.do_idiot(user, ctx.author.id, nickname)
-        await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.", ephemeral=True)
+        await ctx.reply(f"Set {user.mention}'s nickname to {nickname}.")
         return
 
     @idiot.command(name="clear", description="clear a idiots nickname")
