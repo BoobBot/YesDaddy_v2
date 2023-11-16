@@ -160,6 +160,50 @@ class Profile(commands.Cog):
     async def leaderboard(self, ctx):
         await ctx.send("Please use a valid subcommand: `level` or `balance`.")
 
+    @leaderboard.command(name="summary", aliases=["sum"], description="View the leaderboard summary.")
+    async def leaderboard_summary(self, ctx):
+        await ctx.defer()
+        top_users_balance = await self.bot.db_client.get_top_users(
+            limit=3, guild_id=ctx.guild.id, sort_key=lambda user: user.balance)
+        top_users_level = await self.bot.db_client.get_top_users(
+            limit=3, guild_id=ctx.guild.id, sort_key=lambda user: user.level)
+        top_users_bank_balance = await self.bot.db_client.get_top_users(
+            limit=3, guild_id=ctx.guild.id, sort_key=lambda user: user.bank_balance)
+        guild_data = await self.bot.db_client.get_guild(guild_id=ctx.guild.id)
+        all_waifus = guild_data.waifus
+        sorted_data = sorted(all_waifus, key=lambda x: x['value'], reverse=True)
+        top_users_wafiu = sorted_data[:3]
+        em = discord.Embed(title=f"{ctx.guild.name}'s Leaderboard Summary", color=discord.Color.blurple())
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        em.set_author(
+            name="Leaderboard Summary Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png"))
+        em.add_field(name="Top Balance",
+                     value=f"1. {ctx.guild.get_member(top_users_balance[0].user_id).mention} - ${top_users_balance[0].balance:,}\n"
+                           f"2. {ctx.guild.get_member(top_users_balance[1].user_id).mention} - ${top_users_balance[1].balance:,}\n"
+                           f"3. {ctx.guild.get_member(top_users_balance[2].user_id).mention} - ${top_users_balance[2].balance:,}",
+                     inline=True)
+        em.add_field(name="Top Level",
+                     value=f"1. {ctx.guild.get_member(top_users_level[0].user_id).mention} - {top_users_level[0].level}\n"
+                           f"2. {ctx.guild.get_member(top_users_level[1].user_id).mention} - {top_users_level[1].level}\n"
+                           f"3. {ctx.guild.get_member(top_users_level[2].user_id).mention} - {top_users_level[2].level}",
+                     inline=True)
+        em.add_field(name="Top Bank Balance",
+                     value=f"1. {ctx.guild.get_member(top_users_bank_balance[0].user_id).mention} - ${top_users_bank_balance[0].bank_balance:,}\n"
+                           f"2. {ctx.guild.get_member(top_users_bank_balance[1].user_id).mention} - ${top_users_bank_balance[1].bank_balance:,}\n"
+                           f"3. {ctx.guild.get_member(top_users_bank_balance[2].user_id).mention} - ${top_users_bank_balance[2].bank_balance:,}",
+                     inline=True)
+        em.add_field(name="Top Waifu",
+                     value=f"1. {ctx.guild.get_member(int(top_users_wafiu[0]['user_id'])).mention} - ${top_users_wafiu[0]['value']:,}\n"
+                           f"2. {ctx.guild.get_member(int(top_users_wafiu[1]['user_id'])).mention} - ${top_users_wafiu[1]['value']:,}\n"
+                           f"3. {ctx.guild.get_member(int(top_users_wafiu[2]['user_id'])).mention} - ${top_users_wafiu[2]['value']:,}",
+                     inline=True)
+        await ctx.reply(embed=em)
+
     @leaderboard.command(name="level", aliases=["lvl"], description="View the level leaderboard.")
     async def leaderboard_level(self, ctx):
         await ctx.defer()
@@ -222,7 +266,7 @@ class Profile(commands.Cog):
     @leaderboard.command(name="total", aliases=["net"], description="View the total balance leaderboard.")
     async def leaderboard_combined(self, ctx):
         await ctx.defer()
-        top_users = top_users_by_balance = await self.bot.db_client.get_top_users(
+        top_users = await self.bot.db_client.get_top_users(
             limit=200, guild_id=ctx.guild.id, sort_key=lambda user: user.balance + user.bank_balance)
         guild = ctx.guild
         sorted_users = []
