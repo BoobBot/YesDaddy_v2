@@ -183,24 +183,24 @@ class Profile(commands.Cog):
             text=f"Command ran by {ctx.author.display_name} at {timestamp}",
             icon_url=ctx.author.display_avatar.with_static_format("png"))
         em.add_field(name="Top Balance",
-                     value=f"1. {ctx.guild.get_member(top_users_balance[0].user_id).mention} - ${top_users_balance[0].balance:,}\n"
-                           f"2. {ctx.guild.get_member(top_users_balance[1].user_id).mention} - ${top_users_balance[1].balance:,}\n"
-                           f"3. {ctx.guild.get_member(top_users_balance[2].user_id).mention} - ${top_users_balance[2].balance:,}",
+                     value=f"🥇. **{ctx.guild.get_member(top_users_balance[0].user_id).name}** - ${top_users_balance[0].balance:,}\n"
+                           f"🥈. **{ctx.guild.get_member(top_users_balance[1].user_id).name}** - ${top_users_balance[1].balance:,}\n"
+                           f"🥉. **{ctx.guild.get_member(top_users_balance[2].user_id).name}** - ${top_users_balance[2].balance:,}",
                      inline=True)
         em.add_field(name="Top Level",
-                     value=f"1. {ctx.guild.get_member(top_users_level[0].user_id).mention} - {top_users_level[0].level}\n"
-                           f"2. {ctx.guild.get_member(top_users_level[1].user_id).mention} - {top_users_level[1].level}\n"
-                           f"3. {ctx.guild.get_member(top_users_level[2].user_id).mention} - {top_users_level[2].level}",
+                     value=f"🥇. **{ctx.guild.get_member(top_users_level[0].user_id).name}** - {top_users_level[0].level}\n"
+                           f"🥈. **{ctx.guild.get_member(top_users_level[1].user_id).name}** - {top_users_level[1].level}\n"
+                           f"🥉. **{ctx.guild.get_member(top_users_level[2].user_id).name}** - {top_users_level[2].level}",
                      inline=True)
         em.add_field(name="Top Bank Balance",
-                     value=f"1. {ctx.guild.get_member(top_users_bank_balance[0].user_id).mention} - ${top_users_bank_balance[0].bank_balance:,}\n"
-                           f"2. {ctx.guild.get_member(top_users_bank_balance[1].user_id).mention} - ${top_users_bank_balance[1].bank_balance:,}\n"
-                           f"3. {ctx.guild.get_member(top_users_bank_balance[2].user_id).mention} - ${top_users_bank_balance[2].bank_balance:,}",
+                     value=f"🥇. **{ctx.guild.get_member(top_users_bank_balance[0].user_id).name}** - ${top_users_bank_balance[0].bank_balance:,}\n"
+                           f"🥈. **{ctx.guild.get_member(top_users_bank_balance[1].user_id).name}** - ${top_users_bank_balance[1].bank_balance:,}\n"
+                           f"🥉. **{ctx.guild.get_member(top_users_bank_balance[2].user_id).name}** - ${top_users_bank_balance[2].bank_balance:,}",
                      inline=True)
         em.add_field(name="Top Waifu",
-                     value=f"1. {ctx.guild.get_member(int(top_users_wafiu[0]['user_id'])).mention} - ${top_users_wafiu[0]['value']:,}\n"
-                           f"2. {ctx.guild.get_member(int(top_users_wafiu[1]['user_id'])).mention} - ${top_users_wafiu[1]['value']:,}\n"
-                           f"3. {ctx.guild.get_member(int(top_users_wafiu[2]['user_id'])).mention} - ${top_users_wafiu[2]['value']:,}",
+                     value=f"🥇. **{ctx.guild.get_member(int(top_users_wafiu[0]['user_id'])).name}** - ${top_users_wafiu[0]['value']:,}\n"
+                           f"🥈. **{ctx.guild.get_member(int(top_users_wafiu[1]['user_id'])).name}** - ${top_users_wafiu[1]['value']:,}\n"
+                           f"🥉. **{ctx.guild.get_member(int(top_users_wafiu[2]['user_id'])).name}** - ${top_users_wafiu[2]['value']:,}",
                      inline=True)
         await ctx.reply(embed=em)
 
