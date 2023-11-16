@@ -368,11 +368,11 @@ def create_leaderboard_embed(title, entries, page_number):
         emoji = "🥇" if index == 1 else "🥈" if index == 2 else "🥉" if index == 3 else f""
 
         if title == "Leaderboard - Levels: Page":
-            value = f"{emoji} {member.display_name}: {user.level}"
+            value = f"{emoji} **{member.name}**: {user.level}"
         elif title == "Leaderboard - Balance: Page":
-            value = f"{emoji} {member.display_name}: {user.balance}"
+            value = f"{emoji} **{member.name}**: {user.balance}"
         elif title == "Leaderboard - Bank Balance: Page":
-            value = f"{emoji} {member.display_name}: {user.bank_balance}"
+            value = f"{emoji} **{member.name}**: {user.bank_balance}"
         else:
             value = f"{emoji} {member.display_name}: {user.balance + user.bank_balance}"
 
