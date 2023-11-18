@@ -370,7 +370,6 @@ class Moderation(commands.Cog):
             return await ctx.send("Fine I wont reset.")
 
         await ctx.send("Okie dokie, I'll hit you up when I'm finished :)")
-        print(role.members)
         self.nickname_task = asyncio.create_task(self._do_massnick(ctx, role.members, nickname=None))
 
     async def _do_massnick(self, ctx: commands.Context, members: List[discord.Member],
@@ -403,19 +402,25 @@ class Moderation(commands.Cog):
                 try:
                     new_name = (await (await self.bot.web_client.get("https://nekos.life/api/v2/name")).json())[
                         'name'] if random is True else nickname
+                    print(new_name)
                     # if idiot:
 
                     if member.display_name == new_name or len(new_name) > 32:
+                        print(f"Skipping {member}'s nickname as it's the same as the current one or too long.")
                         continue
 
                     await member.edit(nick=new_name)
                     updated += 1
+                    print(f"Changed {member}'s nickname to {new_name}.")
                 except (discord.Forbidden, discord.HTTPException):
                     failed += 1
+                    print(f"Failed to change {member}'s nickname.")
         except asyncio.CancelledError:
+            print("cancelled")
             cancelled = True
 
         self.nickname_task = None
+        print("done")
         await ctx.author.send(
             f'Massnick results (updated: {updated} / failed: {failed}){" [cancelled]" if cancelled else ""}')
 
