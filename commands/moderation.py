@@ -396,7 +396,7 @@ class Moderation(commands.Cog):
         print(nickname)
         try:
             for member in members:
-                print(member
+                print(member)
                 if member.top_role >= ctx.guild.me.top_role:
                     continue
 
