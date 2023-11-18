@@ -370,6 +370,7 @@ class Moderation(commands.Cog):
             return await ctx.send("Fine I wont reset.")
 
         await ctx.send("Okie dokie, I'll hit you up when I'm finished :)")
+        print(role.members)
         self.nickname_task = asyncio.create_task(self._do_massnick(ctx, role.members, nickname=None))
 
     async def _do_massnick(self, ctx: commands.Context, members: List[discord.Member],
@@ -392,9 +393,10 @@ class Moderation(commands.Cog):
         updated = 0
         failed = 0
         cancelled = False
-
+        print(nickname)
         try:
             for member in members:
+                print(member
                 if member.top_role >= ctx.guild.me.top_role:
                     continue
 
