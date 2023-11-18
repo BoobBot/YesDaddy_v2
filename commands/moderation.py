@@ -353,9 +353,9 @@ class Moderation(commands.Cog):
     @commands.has_any_role(694641646922498069, 694641646918434875)
     @app_commands.describe(role="Will reset everyone with this role's name")
     async def massnick_reset(self, ctx: commands.Context, role: Optional[discord.Role]):
-        if self.nickname_task is not None:
-            await self.nickname_task.cancel()
-            await asyncio.sleep(1.5)  # Give the task time to cancel.
+        # if self.nickname_task is not None:
+        #     await self.nickname_task.cancel()
+        #     await asyncio.sleep(1.5)  # Give the task time to cancel.
 
         role = role or ctx.guild.get_role(694641646780022826)
         view = Confirm()
