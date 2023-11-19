@@ -408,8 +408,9 @@ class Moderation(commands.Cog):
                     if member.display_name == new_name or len(new_name) > 32:
                         print(f"Skipping {member}'s nickname as it's the same as the current one or too long.")
                         continue
-
+                    print(f"Changing {member}'s nickname to {new_name}.")
                     await member.edit(nick=new_name)
+                    print("done")
                     updated += 1
                     print(f"Changed {member}'s nickname to {new_name}.")
                 except (discord.Forbidden, discord.HTTPException):
