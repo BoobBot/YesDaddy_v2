@@ -405,7 +405,7 @@ class Moderation(commands.Cog):
                     print(new_name)
                     # if idiot:
 
-                    if member.display_name == new_name or len(new_name) > 32:
+                    if member.display_name == new_name or new_name is not None and new_name > 32:
                         print(f"Skipping {member}'s nickname as it's the same as the current one or too long.")
                         continue
                     print(f"Changing {member}'s nickname to {new_name}.")
