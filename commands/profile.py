@@ -22,6 +22,7 @@ class Profile(commands.Cog):
 
     @commands.hybrid_command(name="bail", description="get you or someone else out of jail")
     @app_commands.describe(user="User to bailout")
+    @commands.guild_only()
     async def bail(self, ctx, user: Optional[discord.Member]):
         user = user or ctx.author
         user_data = await ctx.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
@@ -52,6 +53,7 @@ class Profile(commands.Cog):
         await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="profile", description="Look at your profile.")
+    @commands.guild_only()
     async def profile(self, ctx, user: Optional[discord.Member]):
         user = user or ctx.author
         # user_data = await ctx.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
@@ -140,6 +142,7 @@ class Profile(commands.Cog):
 
     @commands.hybrid_command(name="avatar", description="Look at someone's avatar.")
     @app_commands.describe(user="The user to get the avatar of.")
+    @commands.guild_only()
     async def avatar(self, ctx, user: Optional[discord.Member]):
         user = user or ctx.author
         user_color = await generate_embed_color(user)
@@ -157,6 +160,7 @@ class Profile(commands.Cog):
         await ctx.reply(embed=em)
 
     @commands.hybrid_group(name="leaderboard", aliases=["lb"], description="View the leaderboard.")
+    @commands.guild_only()
     async def leaderboard(self, ctx):
         await ctx.send("Please use a valid subcommand: `level` or `balance`.")
 
@@ -345,6 +349,7 @@ class Profile(commands.Cog):
         await Paginator(delete_on_timeout=False, timeout=120).start(ctx, pages=embeds)
 
     @commands.hybrid_group(name="inventory", description="inventory commands")
+    @commands.guild_only()
     async def inventory(self, ctx):
         await ctx.send("Please use a valid subcommand: `view` or `use`.")
 
@@ -519,6 +524,7 @@ class Profile(commands.Cog):
                ][:25]
 
     @commands.hybrid_group(name="waifu", description="waifu commands")
+    @commands.guild_only()
     async def waifu(self, ctx):
         await ctx.send("Please use a valid subcommand")
 
