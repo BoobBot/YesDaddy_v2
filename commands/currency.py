@@ -20,6 +20,7 @@ class Currency(commands.Cog):
 
     @commands.hybrid_command(name="adventure", description="Go on an adventure!")
     @persistent_cooldown(1, 600, commands.BucketType.user)
+    @commands.guild_only()
     async def adventure(self, ctx):
         author = ctx.author.mention
         user = ctx.author
@@ -80,6 +81,7 @@ class Currency(commands.Cog):
     # chop command
     @commands.hybrid_command(name="chop", description="Go chopping!")
     @persistent_cooldown(1, 120, commands.BucketType.user)
+    @commands.guild_only()
     async def chop(self, ctx):
         chosen_resource = \
             random.choices(list(chop_resource_info.keys()),
@@ -110,6 +112,7 @@ class Currency(commands.Cog):
     # mining command
     @commands.hybrid_command(name="mine", description="Go mining!")
     @persistent_cooldown(1, 120, commands.BucketType.user)
+    @commands.guild_only()
     async def mine(self, ctx):
         chosen_resource = \
             random.choices(list(mine_resource_info.keys()),
@@ -143,6 +146,7 @@ class Currency(commands.Cog):
     # Fishing command
     @commands.hybrid_command(name="fish", description="Go fishing!")
     @persistent_cooldown(1, 120, commands.BucketType.user)
+    @commands.guild_only()
     async def fish(self, ctx):
         fish_name = random.choice(list(fish_info.keys()))
         fish_value = random.randint(10, 100)
@@ -169,6 +173,7 @@ class Currency(commands.Cog):
     @commands.hybrid_command(name="daily", description="Get your daily coins!.")
     @persistent_cooldown(1, 86400, commands.BucketType.user)
     @app_commands.describe(user="The user to give your daily to.")
+    @commands.guild_only()
     async def daily(self, ctx, user: Optional[discord.Member]):
         user = user or ctx.author
         user_data = await ctx.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
@@ -234,6 +239,7 @@ class Currency(commands.Cog):
     @commands.hybrid_command(name="weekly", description="Get your weekly coins!.")
     @persistent_cooldown(1, 604800, commands.BucketType.user)
     @app_commands.describe(user="The user to give your weekly to.")
+    @commands.guild_only()
     async def weekly(self, ctx, user: Optional[discord.Member]):
         user = user or ctx.author
         user_data = await ctx.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
@@ -277,6 +283,7 @@ class Currency(commands.Cog):
 
     @commands.hybrid_command(name="work", description="get a job")
     @persistent_cooldown(1, 3600, commands.BucketType.user)
+    @commands.guild_only()
     async def work(self, ctx):
         random.shuffle(job_descriptions)
         job = random.choice(job_descriptions)
