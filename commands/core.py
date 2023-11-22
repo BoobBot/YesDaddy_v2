@@ -82,6 +82,7 @@ class Core(commands.Cog):
         await ctx.reply(embed=em)
 
     @commands.hybrid_group(name="settings", description="Shop Commands")
+    @commands.guild_only()
     async def guild_settings(self, ctx):
         if not ctx.invoked_subcommand:
             await ctx.send_help(ctx.command)
@@ -511,6 +512,7 @@ class Core(commands.Cog):
 
     @commands.hybrid_command(name="penis", description="Detects user's penis length, This is 100% accurate.")
     @app_commands.describe(user="user to get penis size of")
+    @commands.guild_only()
     async def penis(self, ctx, user: discord.Member):
         """Detects user's penis length, This is 100% accurate.
         """
