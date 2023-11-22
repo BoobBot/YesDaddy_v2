@@ -185,15 +185,15 @@ class Loops(commands.Cog):
                                     xp *= 2
                                 lvl = calculate_level(user.xp + xp)
                                 if lvl > user.level:
+                                    lvl_up_bonus = 2000 * lvl
                                     channel_id = await data.get_config("lvl_up_channel")
                                     if channel_id:
                                         channel = member.guild.get_channel(int(channel_id))
                                         if channel:
                                             await channel.send(
-                                                f"Congratulations {member.mention}! You have leveled up to level {lvl}! <a:lvlup:1138933829185323149>")
+                                                f"Congratulations {member.mention}! You have leveled up to level {lvl}! <a:lvlup:1138933829185323149>\nYou have been awarded a boosted ${lvl_up_bonus} as a level up bonus for leveling up in a voice call!")
                                     self.bot.log.info(f"{member.name} {user.level} -> {lvl}")
-                                    user.level = lvl
-                                    await user.update_fields(level=lvl)
+                                    await user.update_fields(level=lvl, balance=user.balance + lvl_up_bonus)
                                 await user.update_fields(xp=user.xp + xp)
 
                                 self.bot.log.info(f"{member.name} {xp} -> {user.xp}")
