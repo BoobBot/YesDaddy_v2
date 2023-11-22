@@ -156,6 +156,7 @@ class Dev(commands.Cog):
 
     @commands.command(name="clearcd")
     @commands.is_owner()
+    @commands.guild_only()
     async def cdclear(self, ctx, user: discord.Member = None):
         user = user or ctx.author
         user_data = await ctx.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
@@ -239,6 +240,7 @@ class Dev(commands.Cog):
     @commands.hybrid_command()
     @app_commands.guilds(1138662591875518605)
     @commands.is_owner()
+    @commands.guild_only()
     async def pull(self, ctx):
         try:
             # Run git pull command and capture output
@@ -270,6 +272,7 @@ class Dev(commands.Cog):
 
     @commands.command()
     @commands.is_owner()
+    @commands.guild_only()
     async def restart(self, ctx):
         try:
             await ctx.send(f'Restarting with {sys.executable} {sys.argv}')
@@ -292,10 +295,12 @@ class Dev(commands.Cog):
     #
     @commands.group(name="jail", description="Manage jail time for users.", invoke_without_command=True)
     @commands.is_owner()
+    @commands.guild_only()
     async def jail(self, ctx):
         await ctx.send("Please use subcommands: check, clear, or add.")
 
     @jail.command(name="check", description="Check jail time of a user.")
+    @commands.guild_only()
     async def check_jail(self, ctx, user: commands.UserConverter):
         user_data = await self.bot.db_client.get_user(user.id, ctx.guild.id)
         jail_info = user_data.jail
@@ -331,6 +336,7 @@ class Dev(commands.Cog):
         await ctx.send(f"Added {time_in_seconds} seconds of jail time for {user.display_name}.")
 
     @commands.group("streaks", description="Manage user streaks.", invoke_without_command=True)
+    @commands.guild_only()
     @commands.is_owner()
     async def streaks(self, ctx):
         await ctx.send("Please use subcommands: cleardaily, or clearweekly.")
@@ -357,6 +363,7 @@ class Dev(commands.Cog):
 
     @commands.group("economy", description="Manage user economy.", invoke_without_command=True)
     @commands.is_owner()
+    @commands.guild_only()
     async def economy(self, ctx):
         await ctx.send("Please use subcommands: add, remove, or set.")
 
@@ -380,6 +387,7 @@ class Dev(commands.Cog):
 
     @commands.command(name="eval")
     @commands.is_owner()
+    @commands.guild_only()
     async def eval(self, ctx, *, body: str):
         """Evaluates a code"""
 
