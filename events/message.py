@@ -83,13 +83,13 @@ class Message(commands.Cog):
                     channel = msg.guild.get_channel(int(channel_id))
                     if channel:
                         await channel.send(
-                            f"# 🎉Congratulations {msg.author.mention}! You have leveled up to level {lvl}! <a:lvlup:1138933829185323149>\n### You have been awarded ${lvl_up_bonus} as a level up bonus!")
+                            f"# 🎉Congratulations {msg.author.mention}! You have leveled up to level {lvl}! <a:lvlup:1138933829185323149>\n### <:info:486945488080338944> You have been awarded ${lvl_up_bonus} as a level up bonus!")
                     else:
                         await msg.channel.send(
-                            f"# 🎉Congratulations {msg.author.mention}! You have leveled up to level {lvl}! <a:lvlup:1138933829185323149>\n### You have been awarded ${lvl_up_bonus} as a level up bonus!")
+                            f"# 🎉Congratulations {msg.author.mention}! You have leveled up to level {lvl}! <a:lvlup:1138933829185323149>\n### <:info:486945488080338944> You have been awarded ${lvl_up_bonus} as a level up bonus!")
                 else:
                     await msg.channel.send(
-                        f"# 🎉Congratulations {msg.author.mention}! You have leveled up to level {lvl}! <a:lvlup:1138933829185323149>\n### You have been awarded ${lvl_up_bonus} as a level up bonus!")
+                        f"# 🎉Congratulations {msg.author.mention}! You have leveled up to level {lvl}! <a:lvlup:1138933829185323149>\n### <:info:486945488080338944> You have been awarded ${lvl_up_bonus} as a level up bonus!")
                 user.level = lvl
 
                 await user.update_fields(level=lvl, balance=user.balance + lvl_up_bonus)
