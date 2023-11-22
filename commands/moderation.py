@@ -33,6 +33,7 @@ from collections import Counter
 
 ID_RE = re.compile(r"\d{15,21}")
 LIMIT = 1000000
+# TODO: add a way to add/remove users to this list. guild.config?
 untouchables = [248294452307689473, 596330574109474848, 270393700394205185, 383932871985070085]
 
 
@@ -148,6 +149,7 @@ class Moderation(commands.Cog):
     @commands.bot_has_permissions(ban_members=True, view_audit_log=True)
     @commands.hybrid_command(name="ban_chart", description="Display a chart of the moderators with the most bans.")
     @app_commands.describe(limit="The number of bans to check, between 1 and 1,000,000")
+    @commands.guild_only()
     async def ban_chart(self, ctx: commands.Context, limit: Optional[int] = LIMIT):
         """
         Display a chart of the moderators with the most bans.
@@ -179,6 +181,7 @@ class Moderation(commands.Cog):
 
     @commands.hybrid_group(name="idiot", description="idiot commands")
     @commands.has_any_role(694641646922498069, 694641646918434875)
+    @commands.guild_only()
     async def idiot(self, ctx):
         await ctx.send("Please use subcommands: set, clear, check, or list.")
 
@@ -269,6 +272,7 @@ class Moderation(commands.Cog):
         await ctx.reply(embed=em)
 
     @app_commands.command(name="selfban", description="Ban yourself from the server.")
+    @commands.guild_only()
     async def selfban(self, interaction: discord.Interaction):
         # should be removed
         if interaction.user.id == 596330574109474848:
@@ -300,6 +304,7 @@ class Moderation(commands.Cog):
                 await interaction.followup.send(f"{interaction.user} decided to selfban. Fucking idiot.")
 
     @commands.hybrid_group(name="massnick", description="massnick users")
+    @commands.guild_only()
     async def massnick(self, ctx: commands.Context):
         if not ctx.invoked_subcommand:
             await ctx.send_help(ctx.command)
@@ -429,6 +434,7 @@ class Moderation(commands.Cog):
     @commands.has_any_role(694641646922498069, 694641646918434875)
     @app_commands.describe(limit="The number of messages to purge.")
     @app_commands.describe(channel="The channel to purge messages from.")
+    @commands.guild_only()
     async def purge(self, ctx: commands.Context, limit: int, channel: Optional[discord.TextChannel]):
         channel = channel or ctx.channel
         await channel.purge(limit=limit)
@@ -438,6 +444,7 @@ class Moderation(commands.Cog):
     @commands.has_any_role(694641646922498069, 694641646918434875)
     @app_commands.describe(user="The user to kick.")
     @app_commands.describe(reason="The reason for kicking the user.")
+    @commands.guild_only()
     async def kick(self, ctx: commands.Context, user: discord.Member, *, reason: str):
         await user.kick(reason=reason)
         await ctx.send(f"Kicked {user.mention} for {reason}", ephemeral=True)
@@ -446,11 +453,13 @@ class Moderation(commands.Cog):
     @commands.has_any_role(694641646922498069, 694641646918434875)
     @app_commands.describe(user="The user to ban.")
     @app_commands.describe(reason="The reason for banning the user.")
+    @commands.guild_only()
     async def ban(self, ctx: commands.Context, user: discord.Member, *, reason: str):
         await user.ban(reason=reason)
         await ctx.send(f"Banned {user.mention} for {reason}", ephemeral=True)
 
     @commands.hybrid_group(name="shop", description="Shop Commands")
+    @commands.guild_only()
     async def shop(self, ctx):
         if not ctx.invoked_subcommand:
             await ctx.send_help(ctx.command)
@@ -619,6 +628,7 @@ class Moderation(commands.Cog):
 
     @commands.hybrid_command(name="ratio", description="Check how many nsfw vs sfw channels there are")
     @commands.has_any_role(694641646922498069, 694641646918434875)
+    @commands.guild_only()
     async def ratio(self, ctx):
         sfw = 0
         nsfw_channel_names = []
@@ -648,6 +658,7 @@ class Moderation(commands.Cog):
 
     @commands.hybrid_command(name="new_ticket", description="Create a new ticket")
     @commands.has_any_role(694641646922498069, 694641646918434875)
+    @commands.guild_only()
     async def support(self, ctx: commands.Context, user: discord.Member):
         retrieved_guild = await self.bot.db_client.get_guild(ctx.guild.id)
         try:
@@ -687,6 +698,7 @@ class Moderation(commands.Cog):
 
     @commands.hybrid_command(name="new_verify", description="Create a new verify ticket")
     @commands.has_any_role(694641646922498069, 694641646918434875)
+    @commands.guild_only()
     async def verify(self, ctx, user: discord.Member):
         retrieved_guild = await self.bot.db_client.get_guild(ctx.guild.id)
         count = len([ticket for ticket in retrieved_guild.tickets if
@@ -738,6 +750,7 @@ class Moderation(commands.Cog):
     @commands.hybrid_command(name="pings", description="role pings")
     @persistent_cooldown(1, 120, commands.BucketType.user)
     @app_commands.describe(ping="The ping to use.")
+    @commands.guild_only()
     async def pings(self, ctx: commands.Context, ping: str):
         guild_data = await self.bot.db_client.get_guild(ctx.guild.id)
         ping_data = next((gd for gd in guild_data.ping_tags if str(gd.get("role")) == str(ping)), None)
