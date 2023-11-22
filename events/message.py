@@ -76,20 +76,20 @@ class Message(commands.Cog):
             if is_today_weekend_or_holiday():
                 xp *= 2
             if lvl > user.level:
-                lvl_up_bonus = 1000*lvl
+                lvl_up_bonus = 1000 * lvl
                 guild = await self.bot.db_client.get_guild(msg.guild.id)
                 channel_id = await guild.get_config("lvl_up_channel")
                 if channel_id:
                     channel = msg.guild.get_channel(int(channel_id))
                     if channel:
                         await channel.send(
-                            f"# 🎉Congratulations {msg.author.mention}! You have leveled up to level {lvl}! <a:lvlup:1138933829185323149>\n### <:info:486945488080338944> You have been awarded ${lvl_up_bonus} as a level up bonus!")
+                            f"# 🎉Congratulations {msg.author.mention}!\n## <a:lvlup:1138933829185323149> You have leveled up to level {lvl}!\n### <:info:486945488080338944> You have been awarded ${lvl_up_bonus} as a level up bonus!")
                     else:
                         await msg.channel.send(
-                            f"# 🎉Congratulations {msg.author.mention}! You have leveled up to level {lvl}! <a:lvlup:1138933829185323149>\n### <:info:486945488080338944> You have been awarded ${lvl_up_bonus} as a level up bonus!")
+                            f"# 🎉Congratulations {msg.author.mention}!\n## <a:lvlup:1138933829185323149> You have leveled up to level {lvl}!\n### <:info:486945488080338944> You have been awarded ${lvl_up_bonus} as a level up bonus!")
                 else:
                     await msg.channel.send(
-                        f"# 🎉Congratulations {msg.author.mention}! You have leveled up to level {lvl}! <a:lvlup:1138933829185323149>\n### <:info:486945488080338944> You have been awarded ${lvl_up_bonus} as a level up bonus!")
+                        f"# 🎉Congratulations {msg.author.mention}!\n## <a:lvlup:1138933829185323149> You have leveled up to level {lvl}!\n### <:info:486945488080338944> You have been awarded ${lvl_up_bonus} as a level up bonus!")
                 user.level = lvl
 
                 await user.update_fields(level=lvl, balance=user.balance + lvl_up_bonus)
