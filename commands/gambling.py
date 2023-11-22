@@ -18,6 +18,7 @@ class Gambling(commands.Cog):
 
     @commands.hybrid_command(name="slots", description="what happens in vegas...")
     @persistent_cooldown(1, 60, commands.BucketType.user)
+    @commands.guild_only()
     async def slots(self, ctx):
         user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_balance = user_data.balance
@@ -55,6 +56,7 @@ class Gambling(commands.Cog):
 
     @commands.hybrid_command(name="crime", description="do some crime")
     @persistent_cooldown(1, 21600, commands.BucketType.user)
+    @commands.guild_only()
     async def crime(self, ctx):
         random.shuffle(funny_crime_scenarios)
         crime = random.choice(funny_crime_scenarios)
@@ -121,6 +123,7 @@ class Gambling(commands.Cog):
     @commands.hybrid_command(name="rob", description="woke up and chose to be a thief")
     @app_commands.describe(user="The user to rob.")
     @persistent_cooldown(1, 43200, commands.BucketType.user)
+    @commands.guild_only()
     async def rob(self, ctx, user: discord.Member):
         if user == self.bot.user:
             em = discord.Embed(color=discord.Color.red(), title="Touch Yourself Instead",
@@ -214,6 +217,7 @@ class Gambling(commands.Cog):
     @persistent_cooldown(1, 60, commands.BucketType.user)
     @app_commands.describe(side='pick a side, heads or tails')
     @app_commands.describe(bet='the amount of money to bet')
+    @commands.guild_only()
     async def coinflip(self, ctx, side: Literal['heads', 'tails'], bet: int):
         side = side.lower()
         if side not in ['heads', 'tails']:
@@ -285,6 +289,7 @@ class Gambling(commands.Cog):
     @persistent_cooldown(1, 60, commands.BucketType.user)
     @app_commands.describe(choice="rock, paper, or scissors")
     @app_commands.describe(bet='the amount of money to bet')
+    @commands.guild_only()
     async def rps(self, ctx, choice: Literal['rock', 'paper', 'scissors'], bet: int):
         if bet <= 0:
             await ctx.send("Invalid bet. Please bet a positive amount.")
@@ -363,6 +368,7 @@ class Gambling(commands.Cog):
     @persistent_cooldown(1, 60, commands.BucketType.user)
     @app_commands.describe(choice="rock, paper, scissors, lizard, or spock")
     @app_commands.describe(bet='the amount of money to bet')
+    @commands.guild_only()
     async def rpsls(self, ctx, choice: Literal['rock', 'paper', 'scissors', 'lizard', 'spock'], bet: int):
         if bet <= 0:
             await ctx.send("Invalid bet. Please bet a positive amount.")
@@ -441,6 +447,7 @@ class Gambling(commands.Cog):
     @commands.hybrid_command(name="dice", description="Roll a dice.")
     @persistent_cooldown(1, 60, commands.BucketType.user)
     @app_commands.describe(bet='the amount of money to bet')
+    @commands.guild_only()
     async def dice(self, ctx, bet: int):
         if bet <= 0:
             await ctx.send("Invalid bet. Please bet a positive amount.")
@@ -505,6 +512,7 @@ class Gambling(commands.Cog):
     @app_commands.describe(bet='the amount of money to bet')
     @app_commands.describe(choice='the number to bet on')
     @app_commands.describe(color='the color to bet on')
+    @commands.guild_only()
     async def roulette(self, ctx, bet: int, choice: Optional[int] = None,
                        color: Optional[Literal['red', 'black']] = None):
         if bet <= 0:
@@ -574,6 +582,7 @@ class Gambling(commands.Cog):
     @commands.hybrid_command(name="blackjack", description="Play a game of blackjack.")
     @persistent_cooldown(1, 60, commands.BucketType.user)
     @app_commands.describe(bet='the amount of money to bet')
+    @commands.guild_only()
     async def blackjack(self, ctx, bet: int):
         if bet <= 0:
             await ctx.send("Invalid bet. Please bet a positive amount.")
@@ -637,6 +646,7 @@ class Gambling(commands.Cog):
     @commands.hybrid_command(name="wheel", description="Spin the wheel of fortune.")
     @persistent_cooldown(1, 500, commands.BucketType.user)
     @app_commands.describe(bet='the amount of money to bet')
+    @commands.guild_only()
     async def wheel(self, ctx, bet: int):
         if bet <= 0:
             await ctx.send("Invalid bet. Please bet a positive amount.")
@@ -700,6 +710,7 @@ class Gambling(commands.Cog):
     @commands.hybrid_command(name="highlow", description="Play a game of high low.")
     @persistent_cooldown(1, 60, commands.BucketType.user)
     @app_commands.describe(bet='the amount of money to bet')
+    @commands.guild_only()
     async def hilow(self, ctx, bet: int):
         if bet <= 0:
             await ctx.send("Invalid bet. Please bet a positive amount.")
