@@ -12,6 +12,7 @@ class Transactions(commands.Cog):
         self.bot = bot
 
     @commands.hybrid_group(name="transactions", description="Manage transactions.")
+    @commands.guild_only()
     async def transactions(self, ctx: commands.Context) -> None:
         """
         This is a parent command. It can be invoked with `?parent` or `/parent` (once synced).
