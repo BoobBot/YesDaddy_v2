@@ -15,9 +15,8 @@ xp_constant = 100
 
 
 def amount_on_level_up(level, base_amount, scale_factor):
-    # Calculate the amount for the specific level
     amount = base_amount * (scale_factor ** (level - 1))
-    return amount
+    return int(amount)
 
 
 def is_today_weekend_or_holiday():
