@@ -14,6 +14,12 @@ from config.settings_config import affinity_titles, divorce_titles, claim_titles
 xp_constant = 100
 
 
+def amount_on_level_up(level, base_amount, scale_factor):
+    # Calculate the amount for the specific level
+    amount = base_amount * (scale_factor ** (level - 1))
+    return amount
+
+
 def is_today_weekend_or_holiday():
     today = datetime.date.today()
     country_codes = ['US', 'CA', 'UK']  # List of country codes
@@ -28,6 +34,7 @@ def is_today_weekend_or_holiday():
             return True
 
     return False
+
 
 def get_title(rank, title_type):
     titles = None
