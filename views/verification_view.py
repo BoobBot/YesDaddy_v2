@@ -8,6 +8,8 @@ from views.tickets_view import TicketView
 class VerificationView(discord.ui.View):
     def __init__(self):
         super().__init__(timeout=None)
+        # TODO add to guild config
+        self.monday = False
 
     @discord.ui.button(label='Start verification', style=discord.ButtonStyle.green,
                        custom_id='persistent_view:verification', emoji='✔️')
@@ -21,11 +23,12 @@ class VerificationView(discord.ui.View):
         # female = 694641646805057561
         # male = 694641646805057560
         # trans = 694641646805057562
-        if any(role.id == 694641646805057560 for role in interaction.user.roles):
-            if not any(role.id == 694641646838480978 for role in interaction.user.roles):
-                if date.today().isoweekday() != 1:
-                    return await interaction.followup.send("As a male you can only verify on Mondays",
-                                                           ephemeral=True)
+        if self.monday:
+            if any(role.id == 694641646805057560 for role in interaction.user.roles):
+                if not any(role.id == 694641646838480978 for role in interaction.user.roles):
+                    if date.today().isoweekday() != 1:
+                        return await interaction.followup.send("As a male you can only verify on Mondays",
+                                                               ephemeral=True)
 
         genders = [694641646805057561, 694641646805057560, 694641646805057562]
         if not any(role.id in genders for role in interaction.user.roles):
