@@ -185,7 +185,7 @@ class Loops(commands.Cog):
                                     xp *= 2
                                 lvl = calculate_level(user.xp + xp)
                                 if lvl > user.level:
-                                    lvl_up_bonus = amount_on_level_up(lvl, 100, 1.10)
+                                    lvl_up_bonus = amount_on_level_up(lvl, 100, 1.07)
                                     channel_id = await data.get_config("lvl_up_channel")
                                     if channel_id:
                                         channel = member.guild.get_channel(int(channel_id))
