@@ -651,38 +651,49 @@ class Gambling(commands.Cog):
         if bet <= 0:
             await ctx.send("Invalid bet. Please bet a positive amount.")
             return
-        if bet >= 500:
+        if bet > 500:
             await ctx.send("Invalid bet. Please bet under 500.")
             return
+
         user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_balance = user_data.balance
+
         if bet > user_balance:
             await ctx.send("You don't have enough money to do this.")
             return
 
+        # Emoji-based wheel representation
+        wheel_emojis = {
+            "red": "\U0001F534",  # Red Circle
+            "blue": "\U0001F535",  # Blue Circle
+            "green": "\U0001F7E2",  # Green Circle
+            "yellow": "\U0001F7E1",  # Yellow Circle
+            "orange": "\U0001F7E0",  # Orange Circle
+            "purple": "\U0001F7E3",  # Purple Circle
+            "pink": "\U0001F7E4",  # Pink Circle
+        }
+
         # Generate the wheel
-        wheel = ["red", "blue", "green", "yellow", "orange", "purple", "pink"]
+        wheel_colors = list(wheel_emojis.keys())
 
         # Spin the wheel
-        result = random.choice(wheel)
+        result_color = random.choice(wheel_colors)
+        result_emoji = wheel_emojis[result_color]
 
         # Determine the payout
-        if result == "red":
-            winnings_multiplier = 2
-        elif result in ["blue", "green", "yellow"]:
-            winnings_multiplier = 3
-        elif result in ["orange", "purple", "pink"]:
-            winnings_multiplier = 4
+        winnings_multiplier = {
+            "red": 2,
+            "blue": 3,
+            "green": 3,
+            "yellow": 3,
+            "orange": 4,
+            "purple": 4,
+            "pink": 4
+        }.get(result_color, 0)
 
-        # Determine the winner
-        if result == "red":
-            result = "win"
-        elif result in ["blue", "green", "yellow"]:
-            result = "win"
-        elif result in ["orange", "purple", "pink"]:
-            result = "win"
-        else:
-            result = "lose"
+        winnings = bet * winnings_multiplier
+        new_balance = user_balance + winnings if winnings_multiplier else user_balance - bet
+        await user_data.update_balance(new_balance)
 
         color = await generate_embed_color(ctx.author)
         em = discord.Embed(color=color, title="Spin the wheel of fortune.")
@@ -696,15 +707,11 @@ class Gambling(commands.Cog):
             icon_url=ctx.author.display_avatar.with_static_format("png")
         )
 
-        if result == "win":
-            winnings = bet * winnings_multiplier
-            await user_data.update_balance(user_balance + winnings)
-            em.description = f"The result was {result}, you win {winnings} coins!"
-        elif result == "lose":
-            await user_data.update_balance(user_balance - bet)
-            em.description = f"The result was {result}, you lose {bet} coins."
+        if winnings_multiplier:
+            em.description = f"The wheel landed on {result_emoji}! You win {winnings} coins!"
         else:
-            em.description = f"The result was {result}, it's a tie!"
+            em.description = f"The wheel landed on {result_emoji}. You lose {bet} coins."
+
         await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="highlow", description="Play a game of high low.")
