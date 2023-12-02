@@ -476,7 +476,7 @@ class Moderation(commands.Cog):
         for role_data in roles:
             role = ctx.guild.get_role(int(role_data.get('_id')))
             em.add_field(name="",
-                         value=f"\nRole: {role.mention}\nPrice: {role_data.get('price')}\nDiscription: {role_data.get('description')}",
+                         value=f"\nRole: {role.mention}\nPrice: {role_data.get('price')}\nDescription: {role_data.get('description')}",
                          inline=False)
         await ctx.send(embed=em)
 
