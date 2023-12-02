@@ -231,6 +231,7 @@ class Dev(commands.Cog):
                       "• The staff reserves the right to ban anyone causing trouble. No mini modding. We got this, Just enjoy your time here.\n\n" \
                       "• Please respect people's roles.\n\n" \
                       "• This server is English ONLY\n\n" \
+                      "• IF YOU SAVE PHOTOS OF ANYONE, NSFW OR OTHERWISE YOU WILL BE ADDED TO OUR PERMA BAN LIST, PERMANENTLY.\n\n" \
                       "• DO NOT POST ANY PERSONAL NSFW CONTENT THAT CONTAINS ANOTHER PERSON IF THEY ARE NOT IN THE SERVER, VERIFIED AND HAVE GIVEN CONSENT!!\n\n" \
                       "• If you have ever been called a snowflake ❄️ or consider yourself to be 'woke', you might want to save yourself and us some time and frustration and go ahead hit the leave server button."
         em = discord.Embed(title="Rules of Boobbot Community",
