@@ -15,6 +15,7 @@ class Loops(commands.Cog):
         self.voice_xp.start()
         self.guild_sync_loop.start()
         self.reminder_loop.start()
+        self.new_member_loop.start()
 
     def cog_unload(self):
         self.check_jail_loop.cancel()
@@ -22,6 +23,7 @@ class Loops(commands.Cog):
         self.voice_xp.cancel()
         self.guild_sync_loop.cancel()
         self.reminder_loop.cancel()
+        self.new_member_loop.cancel()
 
     async def daily_reminder(self, reminder):
         guild = self.bot.get_guild(reminder["guild_id"])
@@ -55,6 +57,34 @@ class Loops(commands.Cog):
         await channel.send(f"{member.mention} you can </work:1145445177092231345> again!",
                            allowed_mentions=discord.AllowedMentions.all())
         await self.bot.db_client.delete_reminder(guild.id, reminder["_id"])
+
+    @tasks.loop(minutes=1)
+    async def new_member_loop(self):
+        try:
+            members = await self.bot.db_client.get_all_new_members()
+            for m in members:
+                print(m)
+                date = datetime.datetime.fromtimestamp(m["date"], datetime.timezone.utc)
+                current_date = datetime.datetime.now(datetime.timezone.utc)
+                days_difference = (current_date - date).days
+                if days_difference >= 7:
+                    guild = self.bot.get_guild(m["guild"])
+                    member = guild.get_member(m["id"])
+                    if not member:
+                        await self.bot.db_client.delete_new_member(guild.id, member["id"])
+                        pass
+                    await self.bot.db_client.delete_new_member(guild.id, member["id"])
+                    await member.remove_roles(guild.get_role(1178610586423140382))
+                    print(f"Removed {member.name} from new member role")
+        except Exception as e:
+            pass
+
+    @new_member_loop.before_loop
+    async def before_new_member_loop(self):
+        await self.bot.wait_until_ready()
+        # Start the loop after the bot is ready
+        print("Starting the new member loop")
+
 
     @tasks.loop(minutes=1)
     async def reminder_loop(self):

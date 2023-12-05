@@ -239,3 +239,30 @@ class DiscordDatabase:
             {"guild_id": guild_id},
             {"$pull": {"reminders": {"_id": reminder_id}}}
         )
+
+    async def add_new_member(self, guild_id, data):
+        await self.guild_collection.update_one(
+            {"guild_id": guild_id},
+            {"$push": {"new_role": data}}
+        )
+
+    async def get_new_member(self, guild_id):
+        guild_data = await self.guild_collection.find_one({"guild_id": guild_id})
+        if guild_data and "new_role" in guild_data:
+            return guild_data["new_role"]
+        return []
+
+    async def get_all_new_members(self):
+        new_members = []
+        async for guild in self.guild_collection.find({}, {"_id": 0}):
+            if "new_role" in guild:
+                new_members.extend(guild["new_role"])
+        return new_members
+
+    async def delete_new_member(self, guild_id, member_id):
+        await self.guild_collection.update_one(
+            {"guild_id": guild_id},
+            {"$pull": {"new_role": {"id": member_id}}}
+        )
+
+

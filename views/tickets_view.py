@@ -60,6 +60,10 @@ class TicketView(discord.ui.View):
         await switch(member)
         # add verified role
         await member.add_roles(interaction.guild.get_role(694641646821703741))  # Verified
+        # add the new role
+        await member.add_roles(interaction.guild.get_role(694641646821703741))  # Verified
+        d = {"id": member.id, "date": datetime.utcnow(), "guild": interaction.guild.id}
+        await interaction.client.db_client.add_new_member(guild_id=interaction.guild.id, data=d)
         # log the verification
         ch = interaction.guild.get_channel(1142915549198823546)
         user = await interaction.client.fetch_user(user_id)
