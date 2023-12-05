@@ -61,7 +61,7 @@ class TicketView(discord.ui.View):
         # add verified role
         await member.add_roles(interaction.guild.get_role(694641646821703741))  # Verified
         # add the new role
-        await member.add_roles(interaction.guild.get_role(694641646821703741))  # Verified
+        await member.add_roles(interaction.guild.get_role(1178610586423140382))
         d = {"id": member.id, "date": datetime.utcnow(), "guild": interaction.guild.id}
         await interaction.client.db_client.add_new_member(guild_id=interaction.guild.id, data=d)
         # log the verification
