@@ -1,9 +1,13 @@
-import asyncio
 import datetime
-from typing import List, Optional
+import re
+from io import BytesIO
+from typing import List
+from typing import Tuple, Union, Optional
 
 import discord
-from discord import app_commands, AllowedMentions
+import matplotlib
+from discord import AllowedMentions
+from discord import app_commands
 from discord.ext import commands
 
 from utils.checks import persistent_cooldown
@@ -11,21 +15,11 @@ from utils.paginator import Paginator
 from utils.utilities import generate_embed_color, search
 from views import support_view
 from views.confirm_view import Confirm
-import re
-from io import BytesIO
-from typing import Tuple, Union, Optional
-
-import discord
-import matplotlib
-from discord import app_commands
-from discord.ext import commands
-
 from views.tickets_view import TicketView
 
 matplotlib.use("agg")
 import asyncio
 import functools
-import emoji
 import matplotlib.pyplot as plt
 
 plt.switch_backend("agg")
@@ -470,7 +464,8 @@ class Moderation(commands.Cog):
             print(f"Error occurred while bulk deleting: {e}")
 
         # Then, delete older messages one by one.
-        old_messages = [message for message in messages if message.created_at < two_weeks_ago]
+        old_messages = [message for message in messages if
+                        message.created_at < two_weeks_ago.replace(tzinfo=datetime.timezone.utc)]
         counter += len(old_messages)
         for message in old_messages:
             try:
