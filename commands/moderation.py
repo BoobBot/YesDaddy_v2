@@ -459,7 +459,8 @@ class Moderation(commands.Cog):
             messages = [message async for message in channel.history(limit=limit) if check(message)]
         except Exception as e:
             return await ctx.send(f"Error occurred while fetching messages")
-        new_messages = [message for message in messages if message.created_at > two_weeks_ago.replace(tzinfo=datetime.timezone.utc)]
+        new_messages = [message for message in messages if
+                        message.created_at > two_weeks_ago.replace(tzinfo=datetime.timezone.utc)]
         counter += len(new_messages)
         # First, try to bulk delete messages younger than two weeks.
         try:
@@ -563,7 +564,10 @@ class Moderation(commands.Cog):
         em = discord.Embed(title="Shop Items", color=await generate_embed_color(ctx.author))
         for item_data in items:
             em.add_field(name="",
-                         value=f"\nItem: {item_data.get('name')}\nPrice: {item_data.get('price')}\nDescription: {item_data.get('description')}\n\n",
+                         value=f"\nItem: {item_data.get('name')} {item_data.get('emote')}"
+                               f"\n{item_data.get('rarity')}"
+                               f"\nPrice: {item_data.get('price')}"
+                               f"\nDescription: {item_data.get('description')}\n\n",
                          inline=False)
         await ctx.send(embed=em)
 
