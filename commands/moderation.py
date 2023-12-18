@@ -455,7 +455,7 @@ class Moderation(commands.Cog):
             messages = [message async for message in channel.history(limit=limit) if check(message)]
         except Exception as e:
             return await ctx.send(f"Error occurred while fetching messages")
-        new_messages = [message for message in messages if message.created_at > two_weeks_ago]
+        new_messages = [message for message in messages if message.created_at > two_weeks_ago.replace(tzinfo=datetime.timezone.utc)]
         counter += len(new_messages)
         # First, try to bulk delete messages younger than two weeks.
         try:
