@@ -572,7 +572,7 @@ class Profile(commands.Cog):
         equipped = [item for item in user_data.equipped_items if item.get("type") == item_data.get("type")]
         if len(equipped) >=1:
             return await ctx.reply("You already have an item equipped in that slot.")
-        user_data.equipped_items.append(item_data)
+        user_data.equipped_items[item_data.get('type')] = item_data
         await user_data.update_fields(equipped_items=user_data.equipped_items)
         if item_data.get("quantity") > 1:
             item_data["quantity"] -= 1
