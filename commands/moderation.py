@@ -180,7 +180,7 @@ class Moderation(commands.Cog):
         await ctx.reply(file=chart_file)
 
     @commands.hybrid_group(name="idiot", description="idiot commands")
-    @commands.has_any_role(694641646922498069, 694641646918434875)
+    @commands.has_permissions(manage_nicknames=True)
     @commands.guild_only()
     async def idiot(self, ctx):
         await ctx.send("Please use subcommands: set, clear, check, or list.")
@@ -310,7 +310,7 @@ class Moderation(commands.Cog):
             await ctx.send_help(ctx.command)
 
     @massnick.command(name="start", description="begin a massnick")
-    @commands.has_any_role(694641646922498069, 694641646918434875)
+    @commands.has_permissions(manage_nicknames=True)
     @app_commands.describe(nickname="What you want the massnick to be. This is mutually exclusive to random.",
                            role="The role you want to massnick.",
                            random="Whether to use a random name for each member.",
@@ -339,7 +339,7 @@ class Moderation(commands.Cog):
         await ctx.send("Okie dokie, I'll hit you up when I'm finished :)")
 
     @massnick.command(name="cancel", description="Cancel your currently running massnick")
-    @commands.has_any_role(694641646922498069, 694641646918434875)
+    @commands.has_permissions(manage_nicknames=True)
     async def massnick_cancel(self, ctx: commands.Context):
         if self.nickname_task is not None:
             if self.nickname_task.cancelling() > 0:
@@ -355,7 +355,7 @@ class Moderation(commands.Cog):
         return await ctx.send("What are you cancelling if I'm not running a massnick?", ephemeral=True)
 
     @massnick.command(name="reset", description="Reset everyones names")
-    @commands.has_any_role(694641646922498069, 694641646918434875)
+    @commands.has_permissions(manage_nicknames=True)
     @app_commands.describe(role="Will reset everyone with this role's name")
     async def massnick_reset(self, ctx: commands.Context, role: Optional[discord.Role]):
         # if self.nickname_task is not None:
@@ -431,17 +431,57 @@ class Moderation(commands.Cog):
             f'Massnick results (updated: {updated} / failed: {failed}){" [cancelled]" if cancelled else ""}')
 
     @commands.hybrid_command(name="purge", description="Purge messages from a channel")
-    @commands.has_any_role(694641646922498069, 694641646918434875)
+    @commands.has_permissions(manage_messages=True)
     @app_commands.describe(limit="The number of messages to purge.")
     @app_commands.describe(channel="The channel to purge messages from.")
+    @app_commands.describe(from_bot="Set to True to purge bot messages only. Default is False.")
+    @app_commands.describe(from_user="Set to user to purge messages from a specific user.")
+    @app_commands.describe(images_only="Set to True to purge messages with images only. Default is False.")
     @commands.guild_only()
-    async def purge(self, ctx: commands.Context, limit: int, channel: Optional[discord.TextChannel]):
+    async def purge(self, ctx: commands.Context, limit: int,
+                    channel: Optional[discord.TextChannel] = None,
+                    from_bot: Optional[bool] = False,
+                    from_user: Optional[discord.User] = None,
+                    images_only: Optional[bool] = False):
+
         channel = channel or ctx.channel
-        await channel.purge(limit=limit)
-        await ctx.send(f"Purged {limit} messages from {channel.mention}", ephemeral=True)
+
+        def check(message):
+            if from_bot and message.author.bot:
+                return True
+            if from_user and message.author == from_user:
+                return True
+            if images_only and len(message.attachments) > 0:
+                return True
+            return True
+
+        two_weeks_ago = datetime.datetime.utcnow() - datetime.timedelta(weeks=2)
+        counter = 0
+        try:
+            messages = [message async for message in channel.history(limit=limit) if check(message)]
+        except Exception as e:
+            return await ctx.send(f"Error occurred while fetching messages")
+        new_messages = [message for message in messages if message.created_at > two_weeks_ago]
+        counter += len(new_messages)
+        # First, try to bulk delete messages younger than two weeks.
+        try:
+            await channel.delete_messages(new_messages, reason=f"Purged by {ctx.author}")
+        except Exception as e:
+            print(f"Error occurred while bulk deleting: {e}")
+
+        # Then, delete older messages one by one.
+        old_messages = [message for message in messages if message.created_at < two_weeks_ago]
+        counter += len(old_messages)
+        for message in old_messages:
+            try:
+                await message.delete()
+            except Exception as e:
+                print(f"Error occurred while deleting an old message: {e}")
+            await asyncio.sleep(0.3)  # Ensure we respect the rate limit
+        await ctx.send(f"Purged {counter} messages from {channel.mention}", ephemeral=True)
 
     @commands.hybrid_command(name="kick", description="Kick a user from the server")
-    @commands.has_any_role(694641646922498069, 694641646918434875)
+    @commands.has_permissions(kick_members=True)
     @app_commands.describe(user="The user to kick.")
     @app_commands.describe(reason="The reason for kicking the user.")
     @commands.guild_only()
@@ -450,7 +490,7 @@ class Moderation(commands.Cog):
         await ctx.send(f"Kicked {user.mention} for {reason}", ephemeral=True)
 
     @commands.hybrid_command(name="ban", description="Ban a user from the server")
-    @commands.has_any_role(694641646922498069, 694641646918434875)
+    @commands.has_permissions(ban_members=True)
     @app_commands.describe(user="The user to ban.")
     @app_commands.describe(reason="The reason for banning the user.")
     @commands.guild_only()
@@ -627,7 +667,7 @@ class Moderation(commands.Cog):
                ][:25]
 
     @commands.hybrid_command(name="ratio", description="Check how many nsfw vs sfw channels there are")
-    @commands.has_any_role(694641646922498069, 694641646918434875)
+    @commands.has_permissions(manage_guild=True)
     @commands.guild_only()
     async def ratio(self, ctx):
         sfw = 0
@@ -657,7 +697,7 @@ class Moderation(commands.Cog):
         await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="new_ticket", description="Create a new ticket")
-    @commands.has_any_role(694641646922498069, 694641646918434875)
+    @commands.has_permissions(manage_guild=True)
     @commands.guild_only()
     async def support(self, ctx: commands.Context, user: discord.Member):
         retrieved_guild = await self.bot.db_client.get_guild(ctx.guild.id)
@@ -697,7 +737,7 @@ class Moderation(commands.Cog):
             view=support_view.SupportTicketView())
 
     @commands.hybrid_command(name="new_verify", description="Create a new verify ticket")
-    @commands.has_any_role(694641646922498069, 694641646918434875)
+    @commands.has_permissions(manage_guild=True)
     @commands.guild_only()
     async def verify(self, ctx, user: discord.Member):
         retrieved_guild = await self.bot.db_client.get_guild(ctx.guild.id)
