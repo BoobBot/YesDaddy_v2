@@ -575,6 +575,7 @@ class Moderation(commands.Cog):
             # Add the sorted items to the description of the embed
             for item_data in chunk:
                 item_text = (f"\n**Item**: {item_data.get('name')} {item_data.get('emote')}"
+                             f"\n**Required Level**: {item_data.get('required_level')}"
                              f"\n**Rarity**: {item_data.get('rarity')}"
                              f"\n**Price**: ${item_data.get('price'):,}"
                              f"\n**Description**: {item_data.get('description')}"
@@ -589,7 +590,22 @@ class Moderation(commands.Cog):
     async def buy_item(self, ctx: commands.Context, item: str):
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         item_data = next((i for i in get_all_items() if i.get("name") == item), None)
-        return await ctx.send(item_data)
+        if user_data.level < item_data.get("required_level"):
+            return await ctx.send(f":x: You don't have a high enough level to buy that item."
+                                  f"\nYou are level {user_data.level} "
+                                  f"and you need to be level {item_data.get('required_level')}")
+        if user_data.balance < item_data.get("price"):
+            return await ctx.send(":x: You don't have enough money to buy that item.")
+        owned_item = user_data.get_item_by_key("name", item_data.get("name"), "items")
+        await user_data.update_fields(balance=user_data.balance - item_data.get("price"))
+        if owned_item is not None:
+            owned_item["quantity"] += 1
+            await user_data.set_item_by_key("name", item_data.get("name"), owned_item, "items")
+            return await ctx.send(f"Bought {item_data.get('name')} for {item_data.get('price')}.")
+        else:
+            item_data["quantity"] = 1
+            await user_data.set_item_by_key("name", item_data.get("name"), item_data, "items")
+            await ctx.send(f"Bought {item_data.get('name')} for {item_data.get('price')}.")
 
     @buy_item.autocomplete('item')
     async def buy_item_autocomplete(self,
