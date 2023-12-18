@@ -605,7 +605,7 @@ class Moderation(commands.Cog):
         else:
             item_data["quantity"] = 1
             await user_data.set_item_by_key("name", item_data.get("name"), item_data, "items")
-            await ctx.send(f"Bought {item_data.get('name')} for {item_data.get('price')}.")
+            await ctx.send(f"Bought {item_data.get('emote')} {item_data.get('name')} for {item_data.get('price')}.")
 
     @buy_item.autocomplete('item')
     async def buy_item_autocomplete(self,

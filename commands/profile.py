@@ -557,6 +557,46 @@ class Profile(commands.Cog):
         # TODO temp
         return await ctx.reply("You don't have any items in your inventory.")
 
+    @inventory_item.command(name="equip", description="equip item")
+    @app_commands.describe(item="item to equip")
+    async def inventory_item_equip(self, ctx, item: str):
+        user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
+        if not user_data.inventory.get("items"):
+            return await ctx.reply("You don't have any items in your inventory.")
+        item_data = [item for item in user_data.inventory.get("items") if item.get("name") == item]
+        if not item_data:
+            return await ctx.reply("Item not found in inventory.")
+        item_data = item_data[0]
+        if not item_data.get("equipable"):
+            return await ctx.reply("Item is not equipable.")
+        equipped = [item for item in user_data.equipped_items if item.get("type") == item_data.get("type")]
+        if len(equipped) >=1:
+            return await ctx.reply("You already have an item equipped in that slot.")
+        user_data.equipped_items.append(item_data)
+        await user_data.update_fields(equipped_items=user_data.equipped_items)
+        if item_data.get("quantity") > 1:
+            item_data["quantity"] -= 1
+            await user_data.update_fields(inventory=user_data.inventory)
+        else:
+            user_data.inventory.get("items").remove(item_data)
+            await user_data.update_fields(inventory=user_data.inventory)
+        return await ctx.reply(f"{item_data.get('emote')} {item_data.get('name')} equipped.")
+
+    @inventory_item_equip.autocomplete('item')
+    async def equip_item_autocomplete(self, interaction: discord.Interaction, current: str) -> List[
+        app_commands.Choice[str]]:
+        user_data = await self.bot.db_client.get_user(user_id=interaction.user.id, guild_id=interaction.guild.id)
+        items = user_data.inventory.get("items")
+        items = [item for item in items if item.get("equipable")]
+        return [
+                   app_commands.Choice(name=item.get('name'), value=str(item.get('name')))
+                   for item in items
+                   if not current or search(item.get('name').lower(), current.lower())
+               ][:25]
+
+
+
+
 
     @commands.hybrid_group(name="waifu", description="waifu commands")
     @commands.guild_only()
