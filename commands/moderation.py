@@ -574,11 +574,11 @@ class Moderation(commands.Cog):
             em = discord.Embed(title=first_page_title if i == 0 else "", color=await generate_embed_color(ctx.author))
             # Add the sorted items to the description of the embed
             for item_data in chunk:
-                item_text = "\nItem: {} {}\n{}\nPrice: {},\nDescription: {}\n\n".format(item_data.get('name'),
-                                                                                        item_data.get('emote'),
-                                                                                        item_data.get('rarity'),
-                                                                                        item_data.get('price'),
-                                                                                        item_data.get('description'))
+                item_text = (f"\n**Item**: {item_data.get('name')} {item_data.get('emote')}"
+                             f"\n**Rarity**: {item_data.get('rarity')}"
+                             f"\n**Price**: ${item_data.get('price')},"
+                             f"\n**Description**: {item_data.get('description')}"
+                             f"\n\n")
                 em.add_field(name="", value=item_text, inline=False)
             # Append the embed to the list of embeds
             embeds.append(em)
