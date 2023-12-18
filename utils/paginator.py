@@ -97,6 +97,14 @@ class Paginator(discord.ui.View):
     async def on_timeout(self) -> None:
         if self.delete_on_timeout:
             await self.message.delete()
+        else:
+            await self.disable_buttons()
+
+    async def disable_buttons(self) -> None:
+        for item in self.children:
+            item.disabled = True
+        await self.message.edit(view=self)
+
 
 
 class PageCounter(discord.ui.Button):
