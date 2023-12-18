@@ -614,7 +614,8 @@ class Moderation(commands.Cog):
         gifts = await self.bot.db_client.get_shop_gifts(guild_id=ctx.guild.id)
         # Sort the list of dictionaries by the 'value' key
         sorted_gifts = sorted(gifts, key=lambda x: x['value'], reverse=True)
-
+        if len(sorted_gifts) == 0:
+            return await ctx.send("There are no gifts in the shop.")
         # Create an empty list for embeds
         embeds = []
 
