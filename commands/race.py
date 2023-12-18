@@ -1,8 +1,5 @@
 import asyncio
-import random
 import typing
-from typing import Literal, Optional
-
 import discord
 from discord import app_commands, AllowedMentions
 from discord.ext import commands
@@ -186,7 +183,7 @@ class Race(commands.Cog):
             return
 
         user_data = await ctx.bot.db_client.get_user(user_id=self.winners[ctx.guild.id][0][0].id, guild_id=ctx.guild.id)
-        await user_data.add_balance(100*len(self.players[ctx.guild.id]))
+        await user_data.add_balance(100 * len(self.players[ctx.guild.id]))
 
     async def bet_payouts(self, ctx):
         if not self.bets[ctx.guild.id]:
@@ -250,7 +247,7 @@ class Race(commands.Cog):
     def _payout_msg(self, ctx):
         if self.winners[ctx.guild.id][0][0].bot:
             return f"{self.winners[ctx.guild.id][0][0]} is the winner!"
-        return f"{self.winners[ctx.guild.id][0][0]} received ${100*len(self.players[ctx.guild.id])}."
+        return f"{self.winners[ctx.guild.id][0][0]} received ${100 * len(self.players[ctx.guild.id])}."
 
     async def _get_bet_winners(self, ctx, winner):
         bet_winners = []
