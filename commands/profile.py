@@ -561,14 +561,10 @@ class Profile(commands.Cog):
     @app_commands.describe(item="item to equip")
     async def inventory_item_equip(self, ctx, item: str):
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
-        print(item)
         if not user_data.inventory.get("items"):
-
             return await ctx.reply("You don't have any items in your inventory.")
-        item_data = [item for item in user_data.inventory.get("items") if item.get("name") == item]
-        print(item_data)
+        item_data = [i for i in user_data.inventory.get("items") if i.get("name") == item]
         if not item_data:
-            print(user_data.inventory.get("items"))
             return await ctx.reply("Item not found in inventory.")
         item_data = item_data[0]
         if not item_data.get("equippable"):
