@@ -567,8 +567,8 @@ class Profile(commands.Cog):
         if not item_data:
             return await ctx.reply("Item not found in inventory.")
         item_data = item_data[0]
-        if not item_data.get("equipable"):
-            return await ctx.reply("Item is not equipable.")
+        if not item_data.get("equippable"):
+            return await ctx.reply("Item is not equippable.")
         equipped = [item for item in user_data.equipped_items if item.get("type") == item_data.get("type")]
         if len(equipped) >=1:
             return await ctx.reply("You already have an item equipped in that slot.")
@@ -587,7 +587,7 @@ class Profile(commands.Cog):
         app_commands.Choice[str]]:
         user_data = await self.bot.db_client.get_user(user_id=interaction.user.id, guild_id=interaction.guild.id)
         items = user_data.inventory.get("items")
-        items = [item for item in items if item.get("equipable")]
+        items = [item for item in items if item.get("equippable")]
         return [
                    app_commands.Choice(name=item.get('name'), value=str(item.get('name')))
                    for item in items
