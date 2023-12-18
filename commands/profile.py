@@ -78,6 +78,7 @@ class Profile(commands.Cog):
         em.add_field(name="Experience", value=f"{user_data.xp} / {total}")
         em.add_field(name="Balance", value=f"{user_data.balance:,}")
         em.add_field(name="Bank Balance", value=f"{user_data.bank_balance:,}")
+        em.add_field(name="Total Balance", value=f"{user_data.balance + user_data.bank_balance:,}")
         if user_data.is_in_jail():
             release_time = user_data.is_in_jail()
             remaining_timestamp = discord.utils.format_dt(release_time, style="R"
@@ -168,6 +169,7 @@ class Profile(commands.Cog):
     async def leaderboard_summary(self, ctx):
         await ctx.defer()
         ranks = ['🥇', '🥈', '🥉']
+
         def format_member_name(user_id, default="Member Left?"):
             member = ctx.guild.get_member(user_id)
             return member.name if member else default
@@ -197,7 +199,6 @@ class Profile(commands.Cog):
         top_waifus = []
         for index, waifu in enumerate(top_users_waifu):
             top_waifus.append(f"{ranks[index]} **{format_member_name(int(waifu['user_id']))}** - ${waifu['value']:,}")
-
 
         em = discord.Embed(title=f"{ctx.guild.name}'s Leaderboard Summary", color=discord.Color.blurple())
         timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
@@ -524,6 +525,38 @@ class Profile(commands.Cog):
                    for gift in gifts
                    if not current or search(gift.get('name').lower(), current.lower())
                ][:25]
+
+    @inventory.group(name="items", description="item commands")
+    async def inventory_item(self, ctx):
+        await ctx.send("Please use a valid subcommand: `view` or `use`.")
+
+    @inventory_item.command(name="view", description="view item inventory")
+    async def inventory_item_view(self, ctx):
+        user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
+        if not user_data.inventory.get("items"):
+            return await ctx.reply(":x: You don't have any items in your inventory.")
+        em = discord.Embed(title=f"{ctx.author}'s Item Inventory", color=discord.Color.blurple())
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        em.set_author(
+            name="Item Inventory Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png"))
+        for item_data in user_data.inventory.get("items"):
+            em.add_field(name=item_data.get("name"), value=f"{item_data.get('description')}")
+        await ctx.reply(embed=em)
+
+    @inventory_item.command(name="use", description="use item")
+    @app_commands.describe(item="item to use")
+    async def inventory_item_use(self, ctx, item: str):
+        user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
+        if not user_data.inventory.get("items"):
+            return await ctx.reply("You don't have any items in your inventory.")
+        # TODO temp
+        return await ctx.reply("You don't have any items in your inventory.")
+
 
     @commands.hybrid_group(name="waifu", description="waifu commands")
     @commands.guild_only()
