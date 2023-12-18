@@ -561,15 +561,28 @@ class Moderation(commands.Cog):
     @items.command(name="list", description="List all items in the shop")
     async def item_list(self, ctx: commands.Context):
         items = get_all_items()
-        em = discord.Embed(title="Shop Items", color=await generate_embed_color(ctx.author))
-        for item_data in items:
-            em.add_field(name="",
-                         value=f"\nItem: {item_data.get('name')} {item_data.get('emote')}"
-                               f"\n{item_data.get('rarity')}"
-                               f"\nPrice: {item_data.get('price')}"
-                               f"\nDescription: {item_data.get('description')}\n\n",
-                         inline=False)
-        await ctx.send(embed=em)
+        # Create an empty list for embeds
+        embeds = []
+
+        # Define a title for the first page
+        first_page_title = "Shop Items"
+
+        # Split the items list into chunks of maximum 10 items per embed
+        for i in range(0, len(items), 10):
+            chunk = items[i:i + 10]
+            # Create a new embed for each chunk
+            em = discord.Embed(title=first_page_title if i == 0 else "", color=await generate_embed_color(ctx.author))
+            # Add the sorted items to the description of the embed
+            for item_data in chunk:
+                item_text = "\nItem: {} {}\n{}\nPrice: {},\nDescription: {}\n\n".format(item_data.get('name'),
+                                                                                        item_data.get('emote'),
+                                                                                        item_data.get('rarity'),
+                                                                                        item_data.get('price'),
+                                                                                        item_data.get('description'))
+                em.add_field(name="", value=item_text, inline=False)
+            # Append the embed to the list of embeds
+            embeds.append(em)
+        await Paginator(delete_on_timeout=False, timeout=120).start(ctx, pages=embeds)
 
     @items.command(name="buy", description="Buy an item from the shop")
     @app_commands.describe(item="The item to buy.")
