@@ -558,7 +558,7 @@ class Moderation(commands.Cog):
             await ctx.send_help(ctx.command)
 
     @items.command(name="list", description="List all items in the shop")
-    async def list(self, ctx: commands.Context):
+    async def item_list(self, ctx: commands.Context):
         items = get_all_items()
         em = discord.Embed(title="Shop Items", color=await generate_embed_color(ctx.author))
         for item_data in items:
