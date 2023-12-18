@@ -476,7 +476,7 @@ class Moderation(commands.Cog):
             except Exception as e:
                 print(f"Error occurred while deleting an old message: {e}")
             await asyncio.sleep(0.3)  # Ensure we respect the rate limit
-        await ctx.send(f"Purged {counter} messages from {channel.mention}", ephemeral=False)
+        await ctx.channel.send(f"Purged {counter} messages from {channel.mention}", ephemeral=False)
 
     @commands.hybrid_command(name="kick", description="Kick a user from the server")
     @commands.has_permissions(kick_members=True)
