@@ -576,7 +576,7 @@ class Moderation(commands.Cog):
             for item_data in chunk:
                 item_text = (f"\n**Item**: {item_data.get('name')} {item_data.get('emote')}"
                              f"\n**Rarity**: {item_data.get('rarity')}"
-                             f"\n**Price**: ${item_data.get('price'),}"
+                             f"\n**Price**: ${item_data.get('price'):,}"
                              f"\n**Description**: {item_data.get('description')}"
                              f"\n\n")
                 em.add_field(name="", value=item_text, inline=False)
