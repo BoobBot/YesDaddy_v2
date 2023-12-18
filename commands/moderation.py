@@ -16,6 +16,7 @@ from utils.utilities import generate_embed_color, search
 from views import support_view
 from views.confirm_view import Confirm
 from views.tickets_view import TicketView
+from config.lists import get_all_items
 
 matplotlib.use("agg")
 import asyncio
@@ -558,11 +559,11 @@ class Moderation(commands.Cog):
 
     @items.command(name="list", description="List all items in the shop")
     async def list(self, ctx: commands.Context):
-        items = await self.bot.db_client.get_shop_items(guild_id=ctx.guild.id)
+        items = get_all_items()
         em = discord.Embed(title="Shop Items", color=await generate_embed_color(ctx.author))
         for item_data in items:
             em.add_field(name="",
-                         value=f"\nItem: {item_data.get('name')}\nPrice: {item_data.get('price')}\nAdded By: <@{item_data.get('added_by')}>",
+                         value=f"\nItem: {item_data.get('name')}\nPrice: {item_data.get('price')}\nDescription: {item_data.get('description')}\n\n",
                          inline=False)
         await ctx.send(embed=em)
 
@@ -570,17 +571,18 @@ class Moderation(commands.Cog):
     @app_commands.describe(item="The item to buy.")
     async def buy_item(self, ctx: commands.Context, item: str):
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
-        return await ctx.send(item)
+        item_data = next((i for i in get_all_items() if i.get("name") == item), None)
+        return await ctx.send(item_data)
 
     @buy_item.autocomplete('item')
     async def buy_item_autocomplete(self,
                                     interaction: discord.Interaction,
                                     current: str,
                                     ) -> List[app_commands.Choice[str]]:
-        items = await self.bot.db_client.get_shop_items(guild_id=interaction.guild.id)
+        items = get_all_items()
 
         return [
-                   app_commands.Choice(name=item.get('name'), value=str(item.get('_id')))
+                   app_commands.Choice(name=item.get('name'), value=str(item.get('name')))
                    for item in items
                    if not current or search(item.get('name').lower(), current.lower())
                ][:25]
