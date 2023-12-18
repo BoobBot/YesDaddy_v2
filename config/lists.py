@@ -1,22 +1,270 @@
-tools = [
+
+def get_all_items():
+    return axes + pickaxes + fishing_rods
+
+
+axes = [
     {
-        "name": "Beginner's Hatchet",
+        "name": "Beginners Hatchet",
         "type": "Axe",
         "tier": 1,
         "description": "A basic woodcutter's friend. Effective on softwoods.",
-        "damage": 2,
+        "multiplier": 2,
         "durability": 100,
         "required_level": 1,
         "emote": "<:axe1:1169395748870307921>",
-        "equipped": False,
         "equippable": True,
-        "sellable": True,
-        "buyable": True,
-        "price": 100,
+        "price": 10000,
         "rarity": "Common",
-        "unique": False,
+        "quantity": 1
+    },
+    {
+        "name": "Oakbane Axe",
+        "type": "Axe",
+        "tier": 2,
+        "description": "Crafted to tackle harder woods with ease.",
+        "multiplier": 2.2,
+        "durability": 100,
+        "required_level": 10,
+        "emote": "<:axe1:1169395748870307921>",
+        "equippable": True,
+        "price": 100000,
+        "rarity": "Uncommon",
+        "quantity": 1
+    },
+    {
+        "name": "Ironwood Chopper",
+        "type": "Axe",
+        "tier": 3,
+        "description": "A sturdy axe that makes chopping a breeze.",
+        "multiplier": 2.4,
+        "durability": 100,
+        "required_level": 20,
+        "emote": "<:axe1:1169395748870307921>",
+        "equippable": True,
+        "price": 150000,
+        "rarity": "Rare",
+        "quantity": 1
+    },
+    {
+        "name": "Lumberlord's Cleaver",
+        "type": "Axe",
+        "tier": 4,
+        "description": "For the serious woodcutter, efficiency and sharpness rolled into one.",
+        "multiplier": 2.6,
+        "durability": 100,
+        "required_level": 30,
+        "emote": "<:axe1:1169395748870307921>",
+        "equippable": True,
+        "price": 200000,
+        "rarity": "Epic",
+        "quantity": 1
+    },
+    {
+        "name": "Titanium Timberfeller",
+        "type": "Axe",
+        "tier": 5,
+        "description": "Lightweight and razor-sharp, a true companion of the professional lumberjack.",
+        "multiplier": 2.8,
+        "durability": 100,
+        "required_level": 40,
+        "emote": "<:axe1:1169395748870307921>",
+        "equippable": True,
+        "price": 1000000,
+        "rarity": "Legendary",
+        "quantity": 1
+    },
+    {
+        "name": "Mythical Lumberblade",
+        "type": "Axe",
+        "tier": 6,
+        "description": "Legends say trees fall at its mere presence.",
+        "multiplier": 5,
+        "durability": 100,
+        "required_level": 55,
+        "emote": "<:axe1:1169395748870307921>",
+        "equippable": True,
+        "price": 100000000,
+        "rarity": "Mythical",
         "quantity": 1
     }
+
+]
+
+pickaxes = [
+    {
+        "name": "Beginners Pickaxe",
+        "type": "Pickaxe",
+        "tier": 1,
+        "description": "A basic miner's friend. Effective on soft rocks.",
+        "multiplier": 2,
+        "durability": 100,
+        "required_level": 1,
+        "emote": "<:pick1:1169395748744471041>",
+        "equippable": True,
+        "price": 10000,
+        "rarity": "Common",
+        "quantity": 1
+    },
+    {
+        "name": "Stonecrusher Pickaxe",
+        "type": "Pickaxe",
+        "tier": 2,
+        "description": "Crafted to tackle harder rocks with ease.",
+        "multiplier": 2.2,
+        "durability": 100,
+        "required_level": 10,
+        "emote": "<:pick1:1169395748744471041>",
+        "equippable": True,
+        "price": 100000,
+        "rarity": "Uncommon",
+        "quantity": 1
+    },
+    {
+        "name": "Ironbreaker Pickaxe",
+        "type": "Pickaxe",
+        "tier": 3,
+        "description": "A sturdy pickaxe that makes mining a breeze.",
+        "multiplier": 2.4,
+        "durability": 100,
+        "required_level": 20,
+        "emote": "<:pick1:1169395748744471041>",
+        "equippable": True,
+        "price": 150000,
+        "rarity": "Rare",
+        "quantity": 1
+    },
+    {
+        "name": "Gemfinder's Pickaxe",
+        "type": "Pickaxe",
+        "tier": 4,
+        "description": "For the serious miner, efficiency and sharpness rolled into one.",
+        "multiplier": 2.6,
+        "durability": 100,
+        "required_level": 30,
+        "emote": "<:pick1:1169395748744471041>",
+        "equippable": True,
+        "price": 200000,
+        "rarity": "Epic",
+        "quantity": 1
+    },
+    {
+        "name": "Titanium Terra-tapper",
+        "type": "Pickaxe",
+        "tier": 5,
+        "description": "Lightweight and razor-sharp, a true companion of the professional miner.",
+        "multiplier": 2.8,
+        "durability": 100,
+        "required_level": 40,
+        "emote": "<:pick1:1169395748744471041>",
+        "equippable": True,
+        "price": 1000000,
+        "rarity": "Legendary",
+        "quantity": 1
+    },
+    {
+        "name": "Mythical Ore Oracle",
+        "type": "Pickaxe",
+        "tier": 6,
+        "description": "Legends say mountains quake at its mere presence.",
+        "multiplier": 5,
+        "durability": 100,
+        "required_level": 55,
+        "emote": "<:pick1:1169395748744471041>",
+        "equippable": True,
+        "price": 100000000,
+        "rarity": "Mythical",
+        "quantity": 1
+    }
+
+]
+
+fishing_rods = [
+    {
+        "name": "Guppy's Grip",
+        "type": "Fishing Rod",
+        "tier": 1,
+        "description": "A beginner's rod for the casual fisher.",
+        "multiplier": 2,
+        "durability": 100,
+        "required_level": 1,
+        "emote": "<:fishingrod1:1169395748648895489>",
+        "equippable": True,
+        "price": 10000,
+        "rarity": "Common",
+        "quantity": 1
+    },
+    {
+        "name": "Tide Tamer",
+        "type": "Fishing Rod",
+        "tier": 2,
+        "description": "Ideal for the aspiring angler, ready to face the challenges of the deep.",
+        "multiplier": 2.2,
+        "durability": 100,
+        "required_level": 10,
+        "emote": "<:fishingrod1:1169395748648895489>",
+        "equippable": True,
+        "price": 100000,
+        "rarity": "Uncommon",
+        "quantity": 1
+    },
+    {
+        "name": "Reel Ruler",
+        "type": "Fishing Rod",
+        "tier": 3,
+        "description": "A rod that balances strength and flexibility for a great fishing experience.",
+        "multiplier": 2.4,
+        "durability": 100,
+        "required_level": 20,
+        "emote": "<:fishingrod1:1169395748648895489>",
+        "equippable": True,
+        "price": 150000,
+        "rarity": "Rare",
+        "quantity": 1
+    },
+    {
+        "name": "Aqua Adept Rod",
+        "type": "Fishing Rod",
+        "tier": 4,
+        "description": "Expertly crafted for the seasoned angler, ready to reel in the big ones.",
+        "multiplier": 2.6,
+        "durability": 100,
+        "required_level": 30,
+        "emote": "<:fishingrod1:1169395748648895489>",
+        "equippable": True,
+        "price": 200000,
+        "rarity": "Epic",
+        "quantity": 1
+    },
+    {
+        "name": "Titanium Tidalstaff",
+        "type": "Fishing Rod",
+        "tier": 5,
+        "description": "A masterpiece in fishing gear, almost guaranteeing a good catch.",
+        "multiplier": 2.8,
+        "durability": 100,
+        "required_level": 40,
+        "emote": "<:fishingrod1:1169395748648895489>",
+        "equippable": True,
+        "price": 1000000,
+        "rarity": "Legendary",
+        "quantity": 1
+    },
+    {
+        "name": "Mythical Marlinmancer",
+        "type": "Fishing Rod",
+        "tier": 6,
+        "description": "Rumored to summon the lords of the ocean with a flick of the wrist.",
+        "multiplier": 5,
+        "durability": 100,
+        "required_level": 55,
+        "emote": "<:fishingrod1:1169395748648895489>",
+        "equippable": True,
+        "price": 100000000,
+        "rarity": "Mythical",
+        "quantity": 1
+    }
+
 ]
 
 job_descriptions = [

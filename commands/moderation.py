@@ -569,6 +569,7 @@ class Moderation(commands.Cog):
     @items.command(name="buy", description="Buy an item from the shop")
     @app_commands.describe(item="The item to buy.")
     async def buy_item(self, ctx: commands.Context, item: str):
+        user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         return await ctx.send(item)
 
     @buy_item.autocomplete('item')
