@@ -582,7 +582,7 @@ class Moderation(commands.Cog):
                 em.add_field(name="", value=item_text, inline=False)
             # Append the embed to the list of embeds
             embeds.append(em)
-        await Paginator(delete_on_timeout=False, timeout=120).start(ctx, pages=embeds)
+        await Paginator(delete_on_timeout=False, timeout=60).start(ctx, pages=embeds)
 
     @items.command(name="buy", description="Buy an item from the shop")
     @app_commands.describe(item="The item to buy.")
@@ -610,7 +610,7 @@ class Moderation(commands.Cog):
             await ctx.send_help(ctx.command)
 
     @gift.command(name="list", description="List all gifts in the shop")
-    async def list(self, ctx: commands.Context):
+    async def list_gifts(self, ctx: commands.Context):
         gifts = await self.bot.db_client.get_shop_gifts(guild_id=ctx.guild.id)
         # Sort the list of dictionaries by the 'value' key
         sorted_gifts = sorted(gifts, key=lambda x: x['value'], reverse=True)
