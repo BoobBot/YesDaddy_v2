@@ -167,10 +167,18 @@ class Profile(commands.Cog):
     @leaderboard.command(name="summary", aliases=["sum"], description="View the leaderboard summary.")
     async def leaderboard_summary(self, ctx):
         await ctx.defer()
-
+        ranks = ['🥇', '🥈', '🥉']
         def format_member_name(user_id, default="Member Left?"):
             member = ctx.guild.get_member(user_id)
             return member.name if member else default
+
+        def format_leaderboard_data(users_data, formatter):
+            formatted_data = []
+            for index, user_data in enumerate(users_data):
+                formatted_data.append(
+                    f"{ranks[index]} **{format_member_name(user_data.user_id)}** - ${user_data.balance:,}")
+
+            return "\n".join(formatted_data)
 
         top_users_balance = await self.bot.db_client.get_top_users(
             limit=3, guild_id=ctx.guild.id, sort_key=lambda user: user.balance)
@@ -181,7 +189,16 @@ class Profile(commands.Cog):
         guild_data = await self.bot.db_client.get_guild(guild_id=ctx.guild.id)
         all_waifus = guild_data.waifus
         sorted_data = sorted(all_waifus, key=lambda x: x['value'], reverse=True)
-        top_users_wafiu = sorted_data[:3]
+        top_users_waifu = sorted_data[:3]
+
+        top_balance = format_leaderboard_data(top_users_balance, lambda user: user.balance)
+        top_level = format_leaderboard_data(top_users_level, lambda user: user.level)
+        top_bank_balance = format_leaderboard_data(top_users_bank_balance, lambda user: user.bank_balance)
+        top_waifus = []
+        for index, waifu in enumerate(top_users_waifu):
+            top_waifus.append(f"{ranks[index]} **{format_member_name(int(waifu['user_id']))}** - ${waifu['value']:,}")
+
+
         em = discord.Embed(title=f"{ctx.guild.name}'s Leaderboard Summary", color=discord.Color.blurple())
         timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
         em.set_author(
@@ -191,26 +208,11 @@ class Profile(commands.Cog):
         em.set_footer(
             text=f"Command ran by {ctx.author.display_name} at {timestamp}",
             icon_url=ctx.author.display_avatar.with_static_format("png"))
-        em.add_field(name="Top Balance",
-                     value=f"🥇. **{format_member_name(top_users_balance[0].user_id)}** - ${top_users_balance[0].balance:,}\n"
-                           f"🥈. **{format_member_name(top_users_balance[1].user_id)}** - ${top_users_balance[1].balance:,}\n"
-                           f"🥉. **{format_member_name(top_users_balance[2].user_id)}** - ${top_users_balance[2].balance:,}",
+        em.add_field(name="Top Balance", value=top_balance if top_balance else 'Not enough data', inline=True)
+        em.add_field(name="Top Level", value=top_level if top_level else 'Not enough data', inline=True)
+        em.add_field(name="Top Bank Balance", value=top_bank_balance if top_bank_balance else 'Not enough data',
                      inline=True)
-        em.add_field(name="Top Level",
-                     value=f"🥇. **{format_member_name(top_users_level[0].user_id)}** - {top_users_level[0].level}\n"
-                           f"🥈. **{format_member_name(top_users_level[1].user_id)}** - {top_users_level[1].level}\n"
-                           f"🥉. **{format_member_name(top_users_level[2].user_id)}** - {top_users_level[2].level}",
-                     inline=True)
-        em.add_field(name="Top Bank Balance",
-                     value=f"🥇. **{format_member_name(top_users_bank_balance[0].user_id)}** - ${top_users_bank_balance[0].bank_balance:,}\n"
-                           f"🥈. **{format_member_name(top_users_bank_balance[1].user_id)}** - ${top_users_bank_balance[1].bank_balance:,}\n"
-                           f"🥉. **{format_member_name(top_users_bank_balance[2].user_id)}** - ${top_users_bank_balance[2].bank_balance:,}",
-                     inline=True)
-        em.add_field(name="Top Waifu",
-                     value=f"🥇. **{format_member_name(int(top_users_wafiu[0]['user_id']))}** - ${top_users_wafiu[0]['value']:,}\n"
-                           f"🥈. **{format_member_name(int(top_users_wafiu[1]['user_id']))}** - ${top_users_wafiu[1]['value']:,}\n"
-                           f"🥉. **{format_member_name(int(top_users_wafiu[2]['user_id']))}** - ${top_users_wafiu[2]['value']:,}",
-                     inline=True)
+        em.add_field(name="Top Waifu", value="\n".join(top_waifus) if top_waifus else 'Not enough data', inline=True)
         await ctx.reply(embed=em)
 
     @leaderboard.command(name="level", aliases=["lvl"], description="View the level leaderboard.")
