@@ -441,13 +441,15 @@ class Moderation(commands.Cog):
         channel = channel or ctx.channel
 
         def check(message):
+            if not from_bot and not from_user and not images_only and from_user is None:
+                return True
             if from_bot and message.author.bot:
                 return True
             if from_user and message.author == from_user:
                 return True
             if images_only and len(message.attachments) > 0:
                 return True
-            return True
+            return False
 
         two_weeks_ago = datetime.datetime.utcnow() - datetime.timedelta(weeks=2)
         counter = 0
