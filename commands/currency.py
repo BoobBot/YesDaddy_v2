@@ -93,10 +93,26 @@ class Currency(commands.Cog):
         user_id = ctx.author.id
         user_data = await ctx.bot.db_client.get_user(user_id=user_id, guild_id=ctx.guild.id)
         user_balance = user_data.balance
+        msg = (f"You chopped x{resource_amount} {resource['emote']} {chosen_resource} "
+               f"worth ${resource_value}!, "
+               f"you now have ${user_balance + resource_value * resource_amount}!"),
+        if user_data.equipped_items.get("Axe"):
+            item_data = user_data.equipped_items.get("Axe")
+            resource_amount *= item_data.get("multiplier")
+            msg = (f"You chopped x{resource_amount} {resource['emote']} {chosen_resource} "
+                   f"worth ${resource_value} using your {item_data.get('emote')}{item_data.get('name')}!, "
+                   f"you now have ${user_balance + resource_value * resource_amount}! "
+                   f"\nYour axe has {item_data.get('durability') - 1} durability left!")
+            item_data.get("durability") - 1
+            if item_data.get("durability") <= 0:
+                await user_data.remove_item("Axe")
+                await ctx.send("Your axe broke!")
+            await user_data.update_fields(equipped_items=user_data.equipped_items)
         await user_data.add_balance(resource_value * resource_amount)
         color = await generate_embed_color(ctx.author)
+
         em = discord.Embed(title="You chopped some resources!",
-                           description=f"You chopped x{resource_amount} {resource['emote']} {chosen_resource} worth ${resource_value}!, you now have ${user_balance + resource_value * resource_amount}!",
+                           description=msg,
                            color=color)
         em.set_author(
             name="Chop Command",
