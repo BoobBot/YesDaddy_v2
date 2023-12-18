@@ -435,7 +435,7 @@ class Moderation(commands.Cog):
     @app_commands.describe(limit="The number of messages to purge.")
     @app_commands.describe(channel="The channel to purge messages from.")
     @app_commands.describe(from_bot="Set to True to purge bot messages only. Default is False.")
-    @app_commands.describe(from_user="Set to user to purge messages from a specific user.")
+    @app_commands.describe(from_user="Set user to purge messages from a specific user.")
     @app_commands.describe(images_only="Set to True to purge messages with images only. Default is False.")
     @commands.guild_only()
     async def purge(self, ctx: commands.Context, limit: int,
