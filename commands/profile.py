@@ -566,6 +566,7 @@ class Profile(commands.Cog):
 
             return await ctx.reply("You don't have any items in your inventory.")
         item_data = [item for item in user_data.inventory.get("items") if item.get("name") == item]
+        print(item_data)
         if not item_data:
             print(user_data.inventory.get("items"))
             return await ctx.reply("Item not found in inventory.")
