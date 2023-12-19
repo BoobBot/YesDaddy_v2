@@ -60,6 +60,7 @@ class Currency(commands.Cog):
             # lets raise this for testing
             check_loot = maybe_loot(call_probability=1)
             if check_loot is not None:
+                print(check_loot)
                 item = check_loot.get("item")
                 # why is name not in the item dict?
                 print(item)
