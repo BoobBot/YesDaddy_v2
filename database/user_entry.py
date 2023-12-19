@@ -209,26 +209,27 @@ class User:
     def get_stat(self, stat):
         return self.stats.get(stat)
 
-    async def update_stat(self, command: str, data: dict):
+    async def update_stat(self, command: str, data: dict = None):
         if not self.stats.get(command):
             self.stats[command] = {
                 "total_used": 0
             }
-        for key, value in data.items():
-            if key in self.stats[command]:
-                self.stats[command][key] += value
-            else:
-                self.stats[command][key] = value
+        if data:
+            for key, value in data.items():
+                if key in self.stats[command]:
+                    self.stats[command][key] += value
+                else:
+                    self.stats[command][key] = value
 
-            if key == "won":
-                if "win_streak" not in self.stats[command]:
-                    self.stats[command]["win_streak"] = 0
-                if "longest_streak" not in self.stats[command]:
-                    self.stats[command]["longest_streak"] = 0
-                self.stats[command]['win_streak'] += 1
-                if self.stats[command]['win_streak'] > self.stats[command]['longest_streak']:
-                    self.stats[command]['longest_streak'] = self.stats[command]['win_streak']
-            elif key == "lost" and "win_streak" in self.stats[command]:
-                self.stats[command]['win_streak'] = 0
+                if key == "won":
+                    if "win_streak" not in self.stats[command]:
+                        self.stats[command]["win_streak"] = 0
+                    if "longest_streak" not in self.stats[command]:
+                        self.stats[command]["longest_streak"] = 0
+                    self.stats[command]['win_streak'] += 1
+                    if self.stats[command]['win_streak'] > self.stats[command]['longest_streak']:
+                        self.stats[command]['longest_streak'] = self.stats[command]['win_streak']
+                elif key == "lost" and "win_streak" in self.stats[command]:
+                    self.stats[command]['win_streak'] = 0
         self.stats[command]["total_used"] += 1
         await self.update_fields(stats=self.stats)

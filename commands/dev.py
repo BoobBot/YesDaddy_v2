@@ -409,7 +409,8 @@ class Dev(commands.Cog):
             'textwrap': textwrap,
             'traceback': traceback,
             'io': io,
-            'BytesIO': BytesIO
+            'BytesIO': BytesIO,
+            'user_data': await self.bot.db_client.get_user(ctx.author.id, ctx.guild.id)
         }
 
         env.update(globals())
