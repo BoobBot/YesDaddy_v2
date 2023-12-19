@@ -79,6 +79,24 @@ class Profile(commands.Cog):
         em.add_field(name="Balance", value=f"{user_data.balance:,}")
         em.add_field(name="Bank Balance", value=f"{user_data.bank_balance:,}")
         em.add_field(name="Total Balance", value=f"{user_data.balance + user_data.bank_balance:,}")
+        if user_data.equipped_items:
+            msg = ""
+            if user_data.equipped_items.get("Axe"):
+                axe = user_data.equipped_items.get("Axe")
+                msg += (f"Axe: {axe.get('emote')} {axe.get('name')}\n"
+                        f"{axe.get('description')}\n"
+                        f"{axe.get('rarity')}\n\n")
+            if user_data.equipped_items.get("Pickaxe"):
+                pickaxe = user_data.equipped_items.get("Pickaxe")
+                msg += (f"Pickaxe: {pickaxe.get('emote')} {pickaxe.get('name')}\n"
+                        f"{pickaxe.get('description')}\n"
+                        f"{pickaxe.get('rarity')}\n\n")
+            if user_data.equipped_items.get("Fishing Rod"):
+                fishing_rod = user_data.equipped_items.get("Fishing Rod")
+                msg += (f"Fishing Rod: {fishing_rod.get('emote')} {fishing_rod.get('name')}\n"
+                        f"{fishing_rod.get('description')}\n"
+                        f"{fishing_rod.get('rarity')}\n\n")
+            em.add_field(name="Equipped Items", value=msg, inline=False)
         if user_data.is_in_jail():
             release_time = user_data.is_in_jail()
             remaining_timestamp = discord.utils.format_dt(release_time, style="R"
