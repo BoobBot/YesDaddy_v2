@@ -59,7 +59,7 @@ class Currency(commands.Cog):
                           author, monster["emoji"]) + f" you earned ${cash}!"
             # lets raise this for testing
             check_loot = maybe_loot(call_probability=1)
-            if check_loot:
+            if check_loot is not None:
                 item = check_loot.get("item")
                 # why is name not in the item dict?
                 print(item)
