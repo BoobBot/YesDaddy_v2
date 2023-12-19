@@ -47,9 +47,12 @@ class Gambling(commands.Cog):
         )
         if is_jackpot:
             em.description = f"{slot_message}\n🎉 Jackpot! You won {jackpot_payout} coins!"
+            await user_data.update_stat(command=ctx.command.name, data={'total_jackpots': 1, 'won': 1, 'amount_won': jackpot_payout, 'amount_bet': bet})
         elif is_bonus:
+            await user_data.update_stat(command=ctx.command.name, data={'won': 1, 'amount_won': payout, 'amount_bet': bet})
             em.description = f"{slot_message}\n🎉 Bonus! You won {payout} coins with a bonus multiplier of {bonus_multiplier}!"
         else:
+            await user_data.update_stat(command=ctx.command.name, data={'won': 1, 'amount_won': payout, 'amount_bet': bet})
             em.description = f"{slot_message}\nYou won {payout} coins!"
         await user_data.update_balance(balance)
         await ctx.reply(embed=em)
@@ -77,7 +80,6 @@ class Gambling(commands.Cog):
         if crime_outcome:
             user_total = (user_balance + amount)
             await user_data.update_balance(user_total)
-
             em = discord.Embed(color=discord.Color.green(),
                                description=crime_scenario + f" gaining ${amount}, congrats on getting away with it")
             em.set_thumbnail(
