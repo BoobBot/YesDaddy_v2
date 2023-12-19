@@ -20,6 +20,18 @@ class Core(commands.Cog):
                 return True
         return emoji.is_emoji(emote)
 
+    @commands.hybrid_command(name="stats", description="View bot stats.")
+    @app_commands.describe(command="The command to view stats for.")
+    async def stats_command(self, ctx, command: str):
+        user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
+        await user_data.update_stat(command=ctx.command.name)
+        stat = await self.bot.db_client.get_stat(command=command)
+        if stat:
+            stats_response = '\n'.join(f'{key.replace("_", " ")}: {value}' for key, value in stat.items())
+            await ctx.send(f"Stats for {command}:\n{stats_response}")
+        else:
+            await ctx.send(f"No stats available for command: {command}")
+
     @commands.hybrid_command(name="ping", description="Show bot and API latency.")
     async def ping(self, ctx):
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)

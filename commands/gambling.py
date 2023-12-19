@@ -634,11 +634,14 @@ class Gambling(commands.Cog):
         if user_result == "win":
             winnings = bet * winnings_multiplier
             await user_data.update_balance(user_balance + winnings)
+            await user_data.update_stat(command=ctx.command.name, data={"won": 1, "amount_won": winnings, "amount_bet": bet})
             em.description = f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. You win {winnings} coins!"
         elif user_result == "lose":
             await user_data.update_balance(user_balance - bet)
+            await user_data.update_stat(command=ctx.command.name, data={"lost": 1, "amount_lost": bet, "amount_bet": bet})
             em.description = f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. You lose {bet} coins."
         else:
+            await user_data.update_stat(command=ctx.command.name, data={"tied": 1, "amount_bet": bet})
             em.description = f"You drew {user_card1} and {user_card2}. The bot drew {bot_card1} and {bot_card2}. It's a tie!"
 
         await ctx.reply(embed=em)

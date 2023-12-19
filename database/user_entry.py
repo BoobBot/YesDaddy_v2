@@ -206,8 +206,8 @@ class User:
         await self.update_fields(daily_streak=self.daily_streak + 1, last_daily_claim=now)
         return False, self.daily_streak
 
-    def get_stat(self, stat):
-        return self.stats.get(stat)
+    def get_stat(self, command: str):
+        return self.stats.get(command, None)
 
     async def update_stat(self, command: str, data: dict = None):
         if not self.stats.get(command):
