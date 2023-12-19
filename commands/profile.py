@@ -82,7 +82,7 @@ class Profile(commands.Cog):
         if user_data.equipped_items:
             msg = ""
             for k, v in user_data.equipped_items.items():
-                msg += f"{k}:{v.get('rarity')} {v.get('emote')} {v.get('name')}\n"
+                msg += f"{k}: {v.get('rarity')} {v.get('emote')} {v.get('name')}\n"
                 msg += f"{v.get('description')}\n\n"
             em.add_field(name="Equipped Items", value=msg, inline=False)
         if user_data.is_in_jail():
