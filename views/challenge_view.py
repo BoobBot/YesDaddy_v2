@@ -28,6 +28,7 @@ class Challenge(discord.ui.Modal, title='daily challenge'):
 
     async def on_submit(self, interaction: discord.Interaction):
         user = interaction.user
+        user_data = await self.ctx.bot.db_client.get_user(user_id=interaction.user.id, guild_id=self.ctx.guild.id)
         color = await generate_embed_color(user)
         embed = discord.Embed(title=f"{self.ctx.author.display_name}'s Daily Challenge", color=color)
         embed.set_author(
@@ -41,9 +42,8 @@ class Challenge(discord.ui.Modal, title='daily challenge'):
         )
         user_answer = self.guess.value
         if user_answer.lower() == self.answer.lower():
-            user_data = await self.ctx.bot.db_client.get_user(user_id=interaction.user.id, guild_id=self.ctx.guild.id)
             user_balance = user_data.balance
-            new_user_balance = user_balance + 2000
+            base_payout = 2000
             xp = 2000
             msg = "✅ Your answer is correct! You win!\n"
             msg += f"You got ${2000:,}!\n"
@@ -56,7 +56,7 @@ class Challenge(discord.ui.Modal, title='daily challenge'):
             if lvl > user_data.level:
                 lvl_up_bonus = amount_on_level_up(lvl, 100, 1.05)
                 msg += f"You also leveled up to level {lvl} and got ${lvl_up_bonus}!\n"
-                await user_data.update_fields(level=lvl, balance=new_user_balance + lvl_up_bonus)
+                base_payout += lvl_up_bonus
             check_loot = maybe_loot()
             if check_loot is not None:
                 item = check_loot
@@ -68,10 +68,12 @@ class Challenge(discord.ui.Modal, title='daily challenge'):
                     item["quantity"] = 1
                     await user_data.set_item_by_key("name", item.get("name"), item, "items")
                 msg += f"You also found a {check_loot.get('rarity')} {item.get('emote')} {item.get('name')}!\n"
-            await user_data.update_fields(balance=new_user_balance, xp=user_data.xp + xp)
+            await user_data.update_fields(balance=user_balance + base_payout, xp=user_data.xp + xp)
+            await user_data.update_stat(command='challenge', data={"won": 1, "total_won": base_payout})
             embed.description = msg
             await interaction.response.edit_message(embed=embed, view=None)
         else:
+            await user_data.update_stat(command='challenge', data={"loss": 1})
             msg = ":x: Incorrect answer, fucking dummy."
             embed.description = msg
             await interaction.response.edit_message(embed=embed, view=None)
