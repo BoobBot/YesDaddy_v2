@@ -32,7 +32,7 @@ class Currency(commands.Cog):
             challenge, answer = random.choice(trivia_questions)
 
         view = ChallengeView(ctx, challenge, answer, )
-        view.message = ctx.send(f"Today's challenge: {challenge}", view=view)
+        view.message = await ctx.send(f"Today's challenge: {challenge}", view=view)
 
 
     @commands.hybrid_command(name="adventure", description="Go on an adventure!")
