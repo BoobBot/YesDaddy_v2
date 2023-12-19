@@ -2,7 +2,7 @@ import discord
 from discord.ui import View, Button, TextInput
 
 
-class Challenge(discord.ui.Modal, title='daily challenge', challenge='challenge'):
+class Challenge(discord.ui.Modal, title='daily challenge'):
     def __init__(self, ctx, challenge, answer):
         super().__init__()
         self.ctx = ctx
