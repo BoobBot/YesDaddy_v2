@@ -44,7 +44,7 @@ class Currency(commands.Cog):
             text=f"Command ran by {ctx.author.display_name} at {timestamp}",
             icon_url=ctx.author.display_avatar.with_static_format("png")
         )
-        view.message = await ctx.send(f"Today's challenge: {challenge}", view=view)
+        view.message = await ctx.send(embed=embed, view=view)
 
     @commands.hybrid_command(name="adventure", description="Go on an adventure!")
     @persistent_cooldown(1, 600, commands.BucketType.user)
