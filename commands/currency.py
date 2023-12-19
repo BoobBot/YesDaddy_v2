@@ -22,6 +22,7 @@ class Currency(commands.Cog):
         self.bot = bot
 
     @commands.hybrid_command(name="challenge", description="Solve a daily challenge!")
+    @persistent_cooldown(1, 86400, commands.BucketType.user)
     async def challenge(self, ctx):
         challenge_type = random.choice(["riddle", "math", "trivia"])
         if challenge_type == "riddle":
