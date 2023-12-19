@@ -46,9 +46,12 @@ class Challenge(discord.ui.Modal, title='daily challenge'):
             new_user_balance = user_balance + 2000
             xp = 2000
             msg = "✅ Your answer is correct! You win!\n"
+            msg += f"You also got ${2000:,}!\n"
             if is_today_weekend_or_holiday():
                 xp *= 2
                 msg += f"It's a weekend/holiday, so you get double XP for a total of {xp}!\n"
+            else:
+                msg += f"You also got {xp} XP!\n"
             lvl = calculate_level(user_data.xp + xp)
             if lvl > user_data.level:
                 lvl_up_bonus = amount_on_level_up(lvl, 100, 1.05)
