@@ -111,7 +111,7 @@ class Currency(commands.Cog):
             item_data = user_data.equipped_items.get("Axe")
             resource_amount *= item_data.get("multiplier")
             resource_amount = int(resource_amount)
-            msg = (f"Using your {item_data.get('emote')}{item_data.get('name')}"
+            msg = (f"Using your {item_data.get('emote')} {item_data.get('name')}"
                    f"\nYou chopped x{resource_amount} {resource['emote']} {chosen_resource} worth ${resource_value}"
                    f"\nYou now have ${user_balance + resource_value * resource_amount}!"
                    f"\nYour axe has {item_data.get('durability') - 1} durability left!")
@@ -155,10 +155,26 @@ class Currency(commands.Cog):
         user_id = ctx.author.id
         user_data = await ctx.bot.db_client.get_user(user_id=user_id, guild_id=ctx.guild.id)
         user_balance = user_data.balance
+        msg = (f"You mined x{resource_amount} {resource['emote']} {chosen_resource} "
+               f"worth ${resource_value}!, "
+               f"you now have ${user_balance + resource_value * resource_amount}!")
+        if user_data.equipped_items.get("Pickaxe"):
+            item_data = user_data.equipped_items.get("Pickaxe")
+            resource_amount *= item_data.get("multiplier")
+            resource_amount = int(resource_amount)
+            msg = (f"Using your {item_data.get('emote')} {item_data.get('name')}"
+                   f"\nYou mined x{resource_amount} {resource['emote']} {chosen_resource} worth ${resource_value}"
+                   f"\nYou now have ${user_balance + resource_value * resource_amount}!"
+                   f"\nYour pickaxe has {item_data.get('durability') - 1} durability left!")
+            item_data.get("durability") - 1
+            if item_data.get("durability") <= 0:
+                await user_data.remove_item("Pickaxe")
+                await ctx.send("Your pickaxe broke!")
+            await user_data.update_fields(equipped_items=user_data.equipped_items)
         await user_data.add_balance(resource_value * resource_amount)
         color = await generate_embed_color(ctx.author)
         em = discord.Embed(title="You mined some resources!",
-                           description=f"You mined x{resource_amount} {resource['emote']} {chosen_resource} worth ${resource_value}! You now have ${user_balance + resource_value}!",
+                           description=msg,
                            color=color)
         em.set_author(
             name="Mine Command",
@@ -181,11 +197,26 @@ class Currency(commands.Cog):
 
         user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_balance = user_data.balance
+        msg = (f"You caught a {fish_info[fish_name]} {fish_name} worth ${fish_value}!"
+                f"\nYou now have ${user_balance + fish_value}!")
+        if user_data.equipped_items.get("Fishing Rod"):
+            item_data = user_data.equipped_items.get("Fishing Rod")
+            fish_value *= item_data.get("multiplier")
+            fish_value = int(fish_value)
+            msg = (f"Using your {item_data.get('emote')} {item_data.get('name')}"
+                   f"\nYou caught a {fish_info[fish_name]} {fish_name} worth ${fish_value}"
+                   f"\nYou now have ${user_balance + fish_value}!"
+                   f"\nYour fishing rod has {item_data.get('durability') - 1} durability left!")
+            item_data.get("durability") - 1
+            if item_data.get("durability") <= 0:
+                await user_data.remove_item("Fishing Rod")
+                await ctx.send("Your fishing rod broke!")
+            await user_data.update_fields(equipped_items=user_data.equipped_items)
         await user_data.add_balance(fish_value)
         color = await generate_embed_color(ctx.author)
 
         em = discord.Embed(title="You caught a fish!",
-                           description=f"You caught a {fish_info[fish_name]} {fish_name} worth ${fish_value}!, you now have ${user_balance + fish_value} gold!",
+                           description=msg,
                            color=color)
         em.set_author(
             name="Fish Command",
