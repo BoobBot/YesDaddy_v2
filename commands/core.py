@@ -25,7 +25,7 @@ class Core(commands.Cog):
     async def stats_command(self, ctx, command: str):
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         await user_data.update_stat(command=ctx.command.name)
-        stat = await self.bot.db_client.get_stat(command=command)
+        stat = user_data.get_stat(command)
         if stat:
             stats_response = '\n'.join(f'{key.replace("_", " ")}: {value}' for key, value in stat.items())
             await ctx.send(f"Stats for {command}:\n{stats_response}")
