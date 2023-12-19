@@ -20,7 +20,8 @@ class Currency(commands.Cog):
         self.bot = bot
 
     @commands.hybrid_command(name="adventure", description="Go on an adventure!")
-    @persistent_cooldown(1, 600, commands.BucketType.user)
+    # lets lower this for testing
+    @persistent_cooldown(1, 1, commands.BucketType.user)
     @commands.guild_only()
     async def adventure(self, ctx):
         author = ctx.author.mention
@@ -56,7 +57,8 @@ class Currency(commands.Cog):
             outcome = " " + \
                       outcome.format(
                           author, monster["emoji"]) + f" you earned ${cash}!"
-            check_loot = maybe_loot()
+            # lets raise this for testing
+            check_loot = maybe_loot(call_probability=1)
             if check_loot:
                 item = check_loot.get("item")
                 # why is name not in the item dict?
