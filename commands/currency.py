@@ -7,6 +7,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 
+from config.items import maybe_loot
 from config.lists import job_descriptions, adv_success_strings, adv_scenarios, adv_failure_strings
 from config.settings_config import chop_resource_info, mine_resource_info, fish_info, monsters
 from utils.checks import persistent_cooldown
@@ -55,6 +56,17 @@ class Currency(commands.Cog):
             outcome = " " + \
                       outcome.format(
                           author, monster["emoji"]) + f" you earned ${cash}!"
+            check_loot = maybe_loot()
+            if check_loot:
+                item = check_loot.get("item")
+                owned_item = user_data.get_item_by_key("name", item.get("name"), "items")
+                if owned_item is not None:
+                    owned_item["quantity"] += 1
+                    await user_data.set_item_by_key("name", item.get("name"), owned_item, "items")
+                else:
+                    item["quantity"] = 1
+                    await user_data.set_item_by_key("name", item.get("name"), item, "items")
+                outcome += f"\nYou also found a {check_loot.get('rarity')} {item.get('emote')}{item.get('name')}!"
         else:
             scenario = random.choice(fail_list)
             scenario_text = scenario[0].format(author, monster["emoji"])

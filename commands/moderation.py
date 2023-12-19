@@ -16,7 +16,7 @@ from utils.utilities import generate_embed_color, search
 from views import support_view
 from views.confirm_view import Confirm
 from views.tickets_view import TicketView
-from config.lists import get_all_items
+from config.items import get_all_items
 
 matplotlib.use("agg")
 import asyncio
