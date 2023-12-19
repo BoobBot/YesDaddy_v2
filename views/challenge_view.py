@@ -40,12 +40,12 @@ class ChallengeView(View):
         self.answer = answer
 
     @discord.ui.button(label='Answer', style=discord.ButtonStyle.success)
-    async def answer_button(self, button: discord.ui.Button, interaction: discord.Interaction):
-        await interaction.response.send_modal(Challenge(self.ctx, self.challenge, self.answer)
-                                              )
+    async def answer_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_modal(Challenge(self.ctx, self.challenge, self.answer))
+
 
     @discord.ui.button(label='Close', style=discord.ButtonStyle.danger)
-    async def close_button(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def close_button(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.edit_message(view=None)
         await interaction.message.delete()
 
