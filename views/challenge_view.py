@@ -8,18 +8,15 @@ class Challenge(discord.ui.Modal, title='daily challenge'):
         self.ctx = ctx
         self.challenge = challenge
         self.answer = answer
-        self.guess = None
-        self.set_text_input()
-
-    def set_text_input(self):
         self.guess = discord.ui.TextInput(
-            label=self.challenge,
+            label=challenge,
             style=discord.TextStyle.long,
             placeholder="Enter your answer",
             required=True,
             max_length=300,
             min_length=1
         )
+        self.add_item(self.guess)
 
     async def on_submit(self, interaction: discord.Interaction):
         user_answer = self.guess.value
@@ -43,7 +40,6 @@ class ChallengeView(View):
     @discord.ui.button(label='Answer', style=discord.ButtonStyle.success)
     async def answer_button(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_modal(Challenge(ctx=self.ctx, challenge=self.challenge, answer=self.answer))
-
 
     @discord.ui.button(label='Close', style=discord.ButtonStyle.danger)
     async def close_button(self, interaction: discord.Interaction, button: discord.ui.Button):
