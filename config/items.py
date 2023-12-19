@@ -1,8 +1,14 @@
 import random
 
 
-def get_all_items():
-    return axes + pickaxes + fishing_rods
+def get_all_items(item_type=None):
+    if item_type is None:
+        return axes + pickaxes + fishing_rods
+    elif item_type == "tools":
+        return axes + pickaxes + fishing_rods
+    elif item_type == "boosts":
+        return experience_boost_items
+
 
 
 axes = [
@@ -139,6 +145,50 @@ fishing_rods = [
         "quantity": 1
     }
 ]
+
+experience_boost_items = [
+    {
+        "name": "Nebula Spark",
+        "description": "A fundamental booster that initiates a faint surge in experience acquisition, akin to the first glimmers of cosmic knowledge.",
+        "cost": 50,         # Cost in game currency
+        "uses": 3,          # Number of times the item can be used
+        "multiplier": 1.2,  # Multiplier for experience gain
+        "quantity": 10      # Available quantity of this item
+    },
+    {
+        "name": "Quantum Infusion",
+        "description": "This elixir amplifies experience absorption, causing a noticeable surge in learning akin to tapping into quantum realms of understanding.",
+        "cost": 100,
+        "uses": 5,
+        "multiplier": 1.5,
+        "quantity": 7
+    },
+    {
+        "name": "Chrono Accelerant",
+        "description": "Crafted with temporal technologies, this infusion significantly speeds up knowledge acquisition, allowing for swift progress in expertise.",
+        "cost": 200,
+        "uses": 7,
+        "multiplier": 1.8,
+        "quantity": 5
+    },
+    {
+        "name": "Neural Overdrive",
+        "description": "An advanced cerebral enhancement, this booster maximizes synaptic connections, granting an exponential surge in experience accumulation.",
+        "cost": 350,
+        "uses": 10,
+        "multiplier": 2.0,
+        "quantity": 3
+    },
+    {
+        "name": "Singularity Elixir",
+        "description": "The pinnacle of experiential amplification, this rare elixir harnesses the power of a cosmic singularity, enabling an unprecedented leap in knowledge and expertise, approaching the boundaries of human understanding.",
+        "cost": 500,
+        "uses": 1,
+        "multiplier": 3.0,
+        "quantity": 1
+    }
+]
+
 
 loot = [
     {
