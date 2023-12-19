@@ -81,21 +81,9 @@ class Profile(commands.Cog):
         em.add_field(name="Total Balance", value=f"{user_data.balance + user_data.bank_balance:,}")
         if user_data.equipped_items:
             msg = ""
-            if user_data.equipped_items.get("Axe"):
-                axe = user_data.equipped_items.get("Axe")
-                msg += (f"Axe: {axe.get('emote')} {axe.get('name')}\n"
-                        f"{axe.get('description')}\n"
-                        f"{axe.get('rarity')}\n\n")
-            if user_data.equipped_items.get("Pickaxe"):
-                pickaxe = user_data.equipped_items.get("Pickaxe")
-                msg += (f"Pickaxe: {pickaxe.get('emote')} {pickaxe.get('name')}\n"
-                        f"{pickaxe.get('description')}\n"
-                        f"{pickaxe.get('rarity')}\n\n")
-            if user_data.equipped_items.get("Fishing Rod"):
-                fishing_rod = user_data.equipped_items.get("Fishing Rod")
-                msg += (f"Fishing Rod: {fishing_rod.get('emote')} {fishing_rod.get('name')}\n"
-                        f"{fishing_rod.get('description')}\n"
-                        f"{fishing_rod.get('rarity')}\n\n")
+            for k, v in user_data.equipped_items.values():
+                msg += f"{k}:{v.get('rarity')} {v.get('emote')} {v.get('name')}\n"
+                msg += f"{v.get('description')}\n\n"
             em.add_field(name="Equipped Items", value=msg, inline=False)
         if user_data.is_in_jail():
             release_time = user_data.is_in_jail()
@@ -611,10 +599,6 @@ class Profile(commands.Cog):
                    for item in items
                    if not current or search(item.get('name').lower(), current.lower())
                ][:25]
-
-
-
-
 
     @commands.hybrid_group(name="waifu", description="waifu commands")
     @commands.guild_only()
