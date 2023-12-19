@@ -23,7 +23,7 @@ class Core(commands.Cog):
     @commands.hybrid_command(name="ping", description="Show bot and API latency.")
     async def ping(self, ctx):
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
-        user_data.update_stat(name=ctx.command.name)
+        user_data.update_stat(command=ctx.command.name)
         color = await generate_embed_color(ctx.author)
         em = discord.Embed(color=color, title="Pong!", description=f"Bot latency: {self.bot.latency * 1000:.2f} ms")
         em.set_author(
@@ -40,7 +40,7 @@ class Core(commands.Cog):
     @commands.hybrid_command(name="invite", description="Invite the bot to your server.")
     async def invite(self, ctx):
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
-        user_data.update_stat(name=ctx.command.name)
+        user_data.update_stat(command=ctx.command.name)
         color = await generate_embed_color(ctx.author)
         em = discord.Embed(color=color, title="add me!",
                            description=f"https://discord.com/api/oauth2/authorize?client_id={self.bot.user.id}&permissions=8&scope=bot+applications.commands")
@@ -58,7 +58,7 @@ class Core(commands.Cog):
     @commands.hybrid_command(name="support", description="Join the support server.")
     async def support(self, ctx):
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
-        user_data.update_stat(name=ctx.command.name)
+        user_data.update_stat(command=ctx.command.name)
         color = await generate_embed_color(ctx.author)
         em = discord.Embed(color=color, title="Get support", description="https://discord.gg/invite/bra")
         em.set_author(
@@ -75,7 +75,7 @@ class Core(commands.Cog):
     @commands.hybrid_command(name="github", description="View the bot's GitHub repository.")
     async def github(self, ctx):
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
-        user_data.update_stat(name=ctx.command.name)
+        user_data.update_stat(command=ctx.command.name)
         color = await generate_embed_color(ctx.author)
         em = discord.Embed(color=color, title="GitHub", description="https://github.com/BoobBot/YesDaddy_v2")
         em.set_author(
