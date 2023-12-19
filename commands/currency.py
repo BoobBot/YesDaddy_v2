@@ -9,7 +9,7 @@ from discord.ext import commands
 
 from config.items import maybe_loot
 from config.lists import job_descriptions, adv_success_strings, adv_scenarios, adv_failure_strings, riddles, \
-    math_equations
+    math_equations, trivia_questions
 from config.settings_config import chop_resource_info, mine_resource_info, fish_info, monsters
 from utils.checks import persistent_cooldown
 from utils.utilities import generate_embed_color
