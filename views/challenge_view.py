@@ -10,7 +10,7 @@ class Challenge(discord.ui.Modal, title='daily challenge'):
         self.answer = answer
         self.label = challenge if len(challenge) <= 45 else f"Whats your answer?"
         self.guess = discord.ui.TextInput(
-            label=challenge,
+            label=self.label,
             style=discord.TextStyle.long,
             placeholder="Enter your answer",
             required=True,
