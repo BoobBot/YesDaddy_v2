@@ -569,7 +569,7 @@ class Profile(commands.Cog):
         item_data = item_data[0]
         if not item_data.get("equippable"):
             return await ctx.reply("Item is not equippable.")
-        equipped = [item for item in user_data.equipped_items if item.get("type") == item_data.get("type")]
+        equipped = [i for i in user_data.equipped_items if i.get("type") == item_data.get("type")]
         if len(equipped) >=1:
             return await ctx.reply("You already have an item equipped in that slot.")
         user_data.equipped_items[item_data.get('type')] = item_data
