@@ -59,6 +59,8 @@ class Currency(commands.Cog):
             check_loot = maybe_loot()
             if check_loot:
                 item = check_loot.get("item")
+                # why is name not in the item dict?
+                print(item)
                 owned_item = user_data.get_item_by_key("name", item.get("name"), "items")
                 if owned_item is not None:
                     owned_item["quantity"] += 1
