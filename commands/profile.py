@@ -81,7 +81,7 @@ class Profile(commands.Cog):
         em.add_field(name="Total Balance", value=f"{user_data.balance + user_data.bank_balance:,}")
         if user_data.equipped_items:
             msg = ""
-            for k, v in user_data.equipped_items:
+            for k, v in user_data.equipped_items.items():
                 msg += f"{k}:{v.get('rarity')} {v.get('emote')} {v.get('name')}\n"
                 msg += f"{v.get('description')}\n\n"
             em.add_field(name="Equipped Items", value=msg, inline=False)
