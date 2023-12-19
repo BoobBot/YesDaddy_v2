@@ -8,6 +8,7 @@ class Challenge(discord.ui.Modal, title='daily challenge'):
         self.ctx = ctx
         self.challenge = challenge
         self.answer = answer
+        self.label = challenge if len(challenge) <= 45 else f"Whats your answer?"
         self.guess = discord.ui.TextInput(
             label=challenge,
             style=discord.TextStyle.long,
@@ -36,6 +37,16 @@ class ChallengeView(View):
         self.ctx = ctx
         self.challenge = challenge
         self.answer = answer
+        self.message = None
+
+    async def on_timeout(self) -> None:
+        await self.disable_buttons()
+
+    async def disable_buttons(self) -> None:
+        for item in self.children:
+            item.disabled = True
+
+        await self.message.edit(view=self)
 
     @discord.ui.button(label='Answer', style=discord.ButtonStyle.success)
     async def answer_button(self, interaction: discord.Interaction, button: discord.ui.Button):
