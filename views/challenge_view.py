@@ -2,20 +2,23 @@ import discord
 from discord.ui import View, Button, TextInput
 
 
-class Challenge(discord.ui.Modal, title='daily challenge'):
+class Challenge(discord.ui.Modal, title='daily challenge', challenge='challenge'):
     def __init__(self, ctx, challenge, answer):
         super().__init__()
         self.ctx = ctx
         self.challenge = challenge
         self.answer = answer
+        self.guess = None
+        self.set_text_input()
 
-    guess = discord.ui.TextInput(
-        label=self.challenge,
-        style=discord.TextStyle.long,
-        placeholder="Enter your answer",
-        required=True,
-        max_length=300,
-    )
+    def set_text_input(self):
+        self.guess = discord.ui.TextInput(
+            label=self.challenge,
+            style=discord.TextStyle.long,
+            placeholder="Enter your answer",
+            required=True,
+            max_length=300,
+        )
 
     async def on_submit(self, interaction: discord.Interaction):
         user_answer = self.guess.value
