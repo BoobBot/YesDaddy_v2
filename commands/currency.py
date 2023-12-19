@@ -20,8 +20,7 @@ class Currency(commands.Cog):
         self.bot = bot
 
     @commands.hybrid_command(name="adventure", description="Go on an adventure!")
-    # lets lower this for testing
-    @persistent_cooldown(1, 1, commands.BucketType.user)
+    @persistent_cooldown(1, 600, commands.BucketType.user)
     @commands.guild_only()
     async def adventure(self, ctx):
         author = ctx.author.mention
@@ -29,7 +28,6 @@ class Currency(commands.Cog):
         user_color = await generate_embed_color(ctx.author)
         success_list = []
         fail_list = []
-
         [success_list.append(i) if i[1] else fail_list.append(i)
          for i in adv_scenarios]
         monster_rarity_threshold = random.uniform(0.1, 1)
@@ -57,8 +55,7 @@ class Currency(commands.Cog):
             outcome = " " + \
                       outcome.format(
                           author, monster["emoji"]) + f" you earned ${cash}!"
-            # lets raise this for testing
-            check_loot = maybe_loot(call_probability=1)
+            check_loot = maybe_loot()
             if check_loot is not None:
                 item = check_loot
                 owned_item = user_data.get_item_by_key("name", item.get("name"), "items")
@@ -68,7 +65,7 @@ class Currency(commands.Cog):
                 else:
                     item["quantity"] = 1
                     await user_data.set_item_by_key("name", item.get("name"), item, "items")
-                outcome += f"\nYou also found a {check_loot.get('rarity')} {item.get('emote')}{item.get('name')}!"
+                outcome += f"\nYou also found a {check_loot.get('rarity')} {item.get('emote')} {item.get('name')}!"
         else:
             scenario = random.choice(fail_list)
             scenario_text = scenario[0].format(author, monster["emoji"])
