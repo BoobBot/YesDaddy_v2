@@ -10,6 +10,7 @@ from utils.utilities import calculate_level, is_today_weekend_or_holiday, amount
 class Challenge(discord.ui.Modal, title='daily challenge'):
     def __init__(self, ctx, challenge, answer):
         super().__init__()
+        self.bot = ctx.bot
         self.ctx = ctx
         self.challenge = challenge
         self.answer = answer
