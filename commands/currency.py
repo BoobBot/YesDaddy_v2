@@ -110,6 +110,7 @@ class Currency(commands.Cog):
         if user_data.equipped_items.get("Axe"):
             item_data = user_data.equipped_items.get("Axe")
             resource_amount *= item_data.get("multiplier")
+            resource_amount = int(resource_amount)
             msg = (f"Using your {item_data.get('emote')}{item_data.get('name')}"
                    f"\nYou chopped x{resource_amount} {resource['emote']} {chosen_resource} worth ${resource_value}"
                    f"\nYou now have ${user_balance + resource_value * resource_amount}!"
