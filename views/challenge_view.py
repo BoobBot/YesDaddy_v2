@@ -18,6 +18,7 @@ class Challenge(discord.ui.Modal, title='daily challenge'):
             placeholder="Enter your answer",
             required=True,
             max_length=300,
+            min_length=1
         )
 
     async def on_submit(self, interaction: discord.Interaction):
@@ -41,7 +42,7 @@ class ChallengeView(View):
 
     @discord.ui.button(label='Answer', style=discord.ButtonStyle.success)
     async def answer_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_modal(Challenge(self.ctx, self.challenge, self.answer))
+        await interaction.response.send_modal(Challenge(ctx=self.ctx, challenge=self.challenge, answer=self.answer))
 
 
     @discord.ui.button(label='Close', style=discord.ButtonStyle.danger)
