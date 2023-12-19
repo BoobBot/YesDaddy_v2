@@ -31,9 +31,20 @@ class Currency(commands.Cog):
         else:
             challenge, answer = random.choice(trivia_questions)
 
-        view = ChallengeView(ctx, challenge, answer, )
+        view = ChallengeView(ctx, challenge, answer)
+        color = await generate_embed_color(ctx.author)
+        embed = discord.Embed(title=f"{ctx.author.display_name}'s Daily Challenge", color=color)
+        embed.description = f"Today's challenge: {challenge}"
+        embed.set_author(
+            name="Daily Challenge",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        embed.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png")
+        )
         view.message = await ctx.send(f"Today's challenge: {challenge}", view=view)
-
 
     @commands.hybrid_command(name="adventure", description="Go on an adventure!")
     @persistent_cooldown(1, 600, commands.BucketType.user)
@@ -214,7 +225,7 @@ class Currency(commands.Cog):
         user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         user_balance = user_data.balance
         msg = (f"You caught a {fish_info[fish_name]} {fish_name} worth ${fish_value}!"
-                f"\nYou now have ${user_balance + fish_value}!")
+               f"\nYou now have ${user_balance + fish_value}!")
         if user_data.equipped_items.get("Fishing Rod"):
             item_data = user_data.equipped_items.get("Fishing Rod")
             fish_value *= item_data.get("multiplier")
