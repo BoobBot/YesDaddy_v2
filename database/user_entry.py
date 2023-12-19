@@ -20,13 +20,13 @@ class User:
     __slots__ = (
         '__dict__', '_db', '_new', 'user_id', 'guild_id', 'blacklist', 'last_seen', 'xp', 'level', 'premium', 'balance',
         'bank_balance', 'cooldowns',
-        'messages', 'jail', 'last_daily_claim', 'daily_streak', 'inventory', 'idiot', 'equipped_items', 'equipped_pets', 'equipped_title')
+        'messages', 'jail', 'last_daily_claim', 'daily_streak', 'inventory', 'idiot', 'equipped_items', 'equipped_pets', 'equipped_title', 'stats')
 
     def __init__(self, db, user_id, guild_id, blacklist=False, last_seen=datetime.utcnow(), xp=0, level=0,
                  premium=False, balance=0, bank_balance=0,
                  cooldowns=None, messages=0, jail=None, last_daily_claim=None, daily_streak=0,
                  inventory=None,
-                 idiot=None, equipped_items=None, equipped_pets=None, equipped_title=None):
+                 idiot=None, equipped_items=None, equipped_pets=None, equipped_title=None, stats=None):
         self._db = db
         self._new: bool = False  # Whether this User was retrieved from the database.
         self.user_id = user_id
@@ -48,6 +48,7 @@ class User:
         self.equipped_items = equipped_items or {}
         self.equipped_pets = equipped_pets or {}
         self.equipped_title = equipped_title or {}
+        self.stats = stats or {}
 
         # ANY NEW FIELDS ADDED HERE *****MUST***** BE ADDED TO __slots__ TOO!!
 
@@ -204,3 +205,30 @@ class User:
 
         await self.update_fields(daily_streak=self.daily_streak + 1, last_daily_claim=now)
         return False, self.daily_streak
+
+    def get_stat(self, stat):
+        return self.stats.get(stat)
+
+    async def update_stat(self, command: str, data: dict):
+        if not self.stats.get(command):
+            self.stats[command] = {
+                "total_used": 0
+            }
+        for key, value in data.items():
+            if key in self.stats[command]:
+                self.stats[command][key] += value
+            else:
+                self.stats[command][key] = value
+
+            if key == "won":
+                if "win_streak" not in self.stats[command]:
+                    self.stats[command]["win_streak"] = 0
+                if "longest_streak" not in self.stats[command]:
+                    self.stats[command]["longest_streak"] = 0
+                self.stats[command]['win_streak'] += 1
+                if self.stats[command]['win_streak'] > self.stats[command]['longest_streak']:
+                    self.stats[command]['longest_streak'] = self.stats[command]['win_streak']
+            elif key == "lost" and "win_streak" in self.stats[command]:
+                self.stats[command]['win_streak'] = 0
+        self.stats[command]["total_used"] += 1
+        await self.update_fields(stats=self.stats)
