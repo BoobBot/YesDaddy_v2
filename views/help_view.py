@@ -43,5 +43,4 @@ class Help(discord.ui.Select):
 class HelpView(discord.ui.View):
     def __init__(self, ctx, timeout=180):
         super().__init__(timeout=timeout)
-        self.ctx = ctx
-        self.add_item(Help())
+        self.add_item(Help(ctx=ctx))
