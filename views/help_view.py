@@ -20,7 +20,7 @@ class Help(discord.ui.Select):
         timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
         em.set_author(
             name="Help Command",
-            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            icon_url=self.ctx.bot.user.display_avatar.with_static_format("png"),
             url="https://discord.gg/invite/tailss")
         em.set_footer(
             text=f"Command ran by {self.ctx.author.display_name} at {timestamp}",
