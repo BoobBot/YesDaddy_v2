@@ -82,7 +82,7 @@ class Help(discord.ui.Select):
             await interaction.response.edit_message(embed=em)
 
         elif self.values[0] == "Waifu":
-            em.description = "</waifu claim:1163610274251690014>: claim a waifu\n</waifu divorce:1163610274251690014>: divorce a waifu\n</waifu info:1163610274251690014>: get info about a waifu\n</waifu set-affinity:1163610274251690014>: set your affinity\n"
+            em.description = "</waifu claim:1163610274251690014>: claim a waifu\n</waifu divorce:1163610274251690014>: divorce a waifu\n</waifu info:1163610274251690014>: get info about a waifu\n</waifu set_affinity:1163610274251690014>: set your affinity\n"
             em.title = "<:waifu:1187029479726534668> Waifu Commands"
             await interaction.response.edit_message(embed=em)
 
