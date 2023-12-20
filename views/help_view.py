@@ -28,7 +28,7 @@ class Help(discord.ui.Select):
 
         if self.values[0] == "Core":
             # overwrite the embed
-            em.description = "</github:1146802715511492670>: view the bots github repo\n</invite:1146802715511492668>: invite the bot to your server\n</ping:1145445177092231339>: show bot and API latency\n</support:1146802715511492669>: join the support server\n",
+            em.description = "</github:1146802715511492670>: view the bots github repo\n</invite:1146802715511492668>: invite the bot to your server\n</ping:1145445177092231339>: show bot and API latency\n</support:1146802715511492669>: join the support server\n"
             em.title = "Core Commands"
             await interaction.response.edit_message(embed=em)
 
