@@ -686,30 +686,20 @@ class Profile(commands.Cog):
         all_waifus = guild_data.waifus
         price = int(waifu_data.get("value") * 1.10)
         value = waifu_data.get("value")
-        liked_by = [ctx.guild.get_member(int(w.get("user_id"))).display_name for w in all_waifus if
-                    str(w.get("affinity")) == str(waifu.id)]
-        formatted_liked_by = ""
-        for i, name in enumerate(liked_by):
-            formatted_liked_by += name + "\n"
-            if i == max_names - 1:
-                break
+
+        liked_by = [await self.get_name_or_unknown("claimed", {"claimed": w.get("user_id")})
+                    for w in all_waifus if str(w.get("affinity")) == str(waifu.id)]
+
+        formatted_liked_by = "\n".join(liked_by[:max_names])
 
         if len(liked_by) > max_names:
             remaining_names = len(liked_by) - max_names
             formatted_liked_by += f"...and {remaining_names} more."
 
-        claimed_names = []
-        for claim in waifu_data.get("claimed"):
-            member = ctx.guild.get_member(int(claim))
-            if member:
-                claimed_names.append(member.display_name)
-            else:
-                claimed_names.append("User not found, Left?")
-        formatted_claimed_names = ""
-        for i, name in enumerate(claimed_names):
-            formatted_claimed_names += name + "\n"
-            if i == max_names - 1:
-                break
+        claimed_names = [await self.get_name_or_unknown("claimed", {"claimed": claim})
+                         for claim in waifu_data.get("claimed", [])]
+
+        formatted_claimed_names = "\n".join(claimed_names[:max_names])
 
         if len(claimed_names) > max_names:
             remaining_names = len(claimed_names) - max_names
