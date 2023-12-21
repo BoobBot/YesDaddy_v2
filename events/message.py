@@ -94,7 +94,7 @@ class Message(commands.Cog):
 
                 await user.update_fields(level=lvl, balance=user.balance + lvl_up_bonus)
                 await process_level_roles(user, msg.author, msg.guild, self.bot)
-            await user.update_fields(xp=user.xp + xp, messages=user.messages + 1, last_seen=msg.created_at)
+            await user.update_fields(xp=user.xp + xp, messages=user.messages + 1, last_seen=msg.created_at, active={})
 
 
 async def setup(bot):

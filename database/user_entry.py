@@ -20,13 +20,13 @@ class User:
     __slots__ = (
         '__dict__', '_db', '_new', 'user_id', 'guild_id', 'blacklist', 'last_seen', 'xp', 'level', 'premium', 'balance',
         'bank_balance', 'cooldowns',
-        'messages', 'jail', 'last_daily_claim', 'daily_streak', 'inventory', 'idiot', 'equipped_items', 'equipped_pets', 'equipped_title', 'stats')
+        'messages', 'jail', 'last_daily_claim', 'daily_streak', 'inventory', 'idiot', 'equipped_items', 'equipped_pets', 'equipped_title', 'stats', 'active')
 
     def __init__(self, db, user_id, guild_id, blacklist=False, last_seen=datetime.utcnow(), xp=0, level=0,
                  premium=False, balance=0, bank_balance=0,
                  cooldowns=None, messages=0, jail=None, last_daily_claim=None, daily_streak=0,
                  inventory=None,
-                 idiot=None, equipped_items=None, equipped_pets=None, equipped_title=None, stats=None):
+                 idiot=None, equipped_items=None, equipped_pets=None, equipped_title=None, stats=None, active=None):
         self._db = db
         self._new: bool = False  # Whether this User was retrieved from the database.
         self.user_id = user_id
@@ -49,6 +49,7 @@ class User:
         self.equipped_pets = equipped_pets or {}
         self.equipped_title = equipped_title or {}
         self.stats = stats or {}
+        self.active = active or {}
 
         # ANY NEW FIELDS ADDED HERE *****MUST***** BE ADDED TO __slots__ TOO!!
 

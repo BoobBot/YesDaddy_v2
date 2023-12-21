@@ -9,6 +9,8 @@ class OnMemberJoin(commands.Cog):
     @commands.Cog.listener()
     async def on_member_join(self, member: discord.Member):
         user_data = await self.bot.db_client.get_user(member.id, member.guild.id)
+        if user_data.active.get("active", None) is False:
+            await user_data.update_fields(active={})
         if user_data.idiot.get("idiot", None):
             await member.edit(nick=user_data.idiot.get('nickname'), reason="what a idiot")
             user_data.idiot.change += 1
