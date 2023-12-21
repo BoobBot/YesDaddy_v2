@@ -105,6 +105,21 @@ class Guild:
                 await self._db.update_guild(self.guild_id, {"waifus": self.waifus})
                 return
 
+    async def delete_waifu(self, user_id):
+        for i, waifu in enumerate(self.waifus):
+            if waifu.get("user_id") == user_id:
+                del self.waifus[i]
+            if waifu.get("owner_id", None) == user_id:
+                waifu["owner_id"] = None
+            if user_id in waifu.get("claimed", []):
+                waifu["claimed"].remove(user_id)
+            if waifu.get("affinity", None) == user_id:
+                waifu["affinity"] = None
+        await self._db.update_guild(self.guild_id, {"waifus": self.waifus})
 
-
-
+    async def delete_user(self, user_id):
+        for i, user in enumerate(self.users):
+            if user.get("user_id") == user_id:
+                del self.users[i]
+        await self.delete_waifu(user_id)
+        await self._db.update_guild(self.guild_id, {"users": self.users})

@@ -36,10 +36,7 @@ class Loops(commands.Cog):
                 for user in data.users:
                     if user.active.get('active', True) is False:
                         if datetime.datetime.utcnow() - user.active.get('timestamp') > datetime.timedelta(days=30):
-                            pass
-                            # TODO: Delete user and waifu data
-                            print("Deleting user")
-                            #await self.bot.db_client.delete_user(user.id, guild.id)
+                            await data.delete_user(user.user_id)
 
         except Exception as e:
             self.bot.log.error(e)
