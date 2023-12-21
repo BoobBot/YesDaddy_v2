@@ -20,6 +20,16 @@ class Profile(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    async def get_name_or_unknown(self, key, data):
+        user_id = data.get(key)
+        if user_id is None:
+            return "Unknown"
+        try:
+            user = await self.bot.fetch_user(int(user_id))
+            return user.display_name if user is not None else "Unknown"
+        except Exception:
+            return "Unknown"
+
     @commands.hybrid_command(name="bail", description="get you or someone else out of jail")
     @app_commands.describe(user="User to bailout")
     @commands.guild_only()
@@ -725,10 +735,9 @@ class Profile(commands.Cog):
         divorce_title = get_title(rank=waifu_data.get("divorce_count"), title_type="divorce") or ""
         affinity_title = get_title(rank=waifu_data.get("affinity_changes"), title_type="affinity") or ""
 
-        owner_name = ctx.guild.get_member(int(waifu_data.get("owner_id"))).display_name if waifu_data.get(
+        owner_name = await self.get_name_or_unknown("owner_id", waifu_data) if waifu_data.get(
             "owner_id") else "Nobody..."
-
-        likes = ctx.guild.get_member(int(waifu_data.get("affinity"))).display_name if waifu_data.get(
+        likes = await self.get_name_or_unknown("affinity", waifu_data) if waifu_data.get(
             "affinity") else "Nobody..."
 
         em = discord.Embed(title=f"Info for Waifu {waifu.display_name} {claim_title}", color=discord.Color.blurple())
