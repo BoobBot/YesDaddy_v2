@@ -16,6 +16,7 @@ class Loops(commands.Cog):
         self.guild_sync_loop.start()
         self.reminder_loop.start()
         self.new_member_loop.start()
+        self.delete_inactive.start()
 
     def cog_unload(self):
         self.check_jail_loop.cancel()
@@ -24,6 +25,25 @@ class Loops(commands.Cog):
         self.guild_sync_loop.cancel()
         self.reminder_loop.cancel()
         self.new_member_loop.cancel()
+        self.delete_inactive.cancel()
+
+    @tasks.loop(minutes=30)
+    async def delete_inactive(self):
+        try:
+            guilds = self.bot.guilds
+            for guild in guilds:
+                data = await self.bot.db_client.get_guild(guild.id)
+                for user in data.users:
+                    if user.active.get('active', True) is False:
+                        if datetime.datetime.utcnow() - user.active.get('timestamp') > datetime.timedelta(days=30):
+                            pass
+                            # TODO: Delete user and waifu data
+                            print("Deleting user")
+                            #await self.bot.db_client.delete_user(user.id, guild.id)
+
+        except Exception as e:
+            self.bot.log.error(e)
+            pass
 
     async def daily_reminder(self, reminder):
         guild = self.bot.get_guild(reminder["guild_id"])
