@@ -92,9 +92,9 @@ class Loops(commands.Cog):
                     guild = self.bot.get_guild(m["guild"])
                     member = guild.get_member(m["id"])
                     if not member:
-                        await self.bot.db_client.delete_new_member(guild.id, member["id"])
+                        await self.bot.db_client.delete_new_member(guild.id, m["id"])
                         pass
-                    await self.bot.db_client.delete_new_member(guild.id, member["id"])
+                    await self.bot.db_client.delete_new_member(guild.id, member.id)
                     await member.remove_roles(guild.get_role(1178610586423140382))
                     print(f"Removed {member.name} from new member role")
         except Exception as e:
