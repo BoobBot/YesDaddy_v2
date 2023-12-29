@@ -241,7 +241,7 @@ class Loops(commands.Cog):
                                     await user.update_fields(level=lvl, balance=user.balance + lvl_up_bonus)
                                 await user.update_fields(xp=user.xp + xp)
 
-                                self.bot.log.info(f"{member.name} {xp} -> {user.xp}")
+                                #self.bot.log.info(f"{member.name} {xp} -> {user.xp}")
 
         except Exception as e:
             self.bot.log.error(e)

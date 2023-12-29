@@ -437,6 +437,8 @@ class Core(commands.Cog):
     async def help(self, ctx):
         em = discord.Embed(title="Commands List", colour=discord.Colour.blue())
         timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
+        user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
+        await user_data.update_stat(command=ctx.command.name)
         em.set_author(
             name="Help Command",
             icon_url=self.bot.user.display_avatar.with_static_format("png"),
@@ -484,6 +486,8 @@ class Core(commands.Cog):
     @commands.guild_only()
     @app_commands.describe(term="The term to search for.")
     async def urban(self, ctx, term: str):
+        user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
+        await user_data.update_stat(command=ctx.command.name)
         try:
             req = await self.bot.web_client.get(f"https://api.urbandictionary.com/v0/define?term={term}")
             if not req.status == 200:
@@ -560,6 +564,8 @@ class Core(commands.Cog):
     async def penis(self, ctx, user: discord.Member):
         """Detects user's penis length, This is 100% accurate.
         """
+        user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
+        await user_data.update_stat(command=ctx.command.name)
         random.seed(str(user.id))
         if ctx.bot.user.id == user.id:
             length = 50

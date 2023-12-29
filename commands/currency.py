@@ -77,6 +77,9 @@ class Currency(commands.Cog):
             user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
             cash = monster["value"] * random.randint(5, 10)
             await user_data.add_balance(cash)
+            await user_data.update_stat(command=ctx.command.name,
+                                        data={'won': 1, 'amount_won': cash})
+
             scenario = random.choice(success_list)
             outcome = random.choice(adv_success_strings)
             scenario_text = scenario[0].format(author, monster["emoji"])
@@ -95,6 +98,8 @@ class Currency(commands.Cog):
                     await user_data.set_item_by_key("name", item.get("name"), item, "items")
                 outcome += f"\nYou also found a {check_loot.get('rarity')} {item.get('emote')} {item.get('name')}!"
         else:
+            user_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
+            await user_data.update_stat(command=ctx.command.name, data={'lost': 1})
             scenario = random.choice(fail_list)
             scenario_text = scenario[0].format(author, monster["emoji"])
             outcome = random.choice(adv_failure_strings).format(
@@ -149,6 +154,7 @@ class Currency(commands.Cog):
                 await ctx.send("Your axe broke!")
             await user_data.update_fields(equipped_items=user_data.equipped_items)
         await user_data.add_balance(resource_value * resource_amount)
+        await user_data.update_stat(command=ctx.command.name, data={'won': resource_value * resource_amount})
         color = await generate_embed_color(ctx.author)
 
         em = discord.Embed(title="You chopped some resources!",
@@ -213,6 +219,7 @@ class Currency(commands.Cog):
             text=f"Command ran by {ctx.author.display_name} at {timestamp}",
             icon_url=ctx.author.display_avatar.with_static_format("png")
         )
+        await user_data.update_stat(command=ctx.command.name, data={'won': resource_value * resource_amount})
         await ctx.reply(embed=em)
 
     # Fishing command
@@ -255,6 +262,7 @@ class Currency(commands.Cog):
             text=f"Command ran by {ctx.author.display_name} at {timestamp}",
             icon_url=ctx.author.display_avatar.with_static_format("png")
         )
+        await user_data.update_stat(command=ctx.command.name, data={'won': fish_value})
         await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="daily", description="Get your daily coins!.")
@@ -322,6 +330,7 @@ class Currency(commands.Cog):
         view.type = "daily"
         message = await ctx.reply(embed=em, view=view)
         view.message = message
+        await user_data.update_stat(command=ctx.command.name, data={'won': claimed_money})
 
     @commands.hybrid_command(name="weekly", description="Get your weekly coins!.")
     @persistent_cooldown(1, 604800, commands.BucketType.user)
@@ -366,6 +375,7 @@ class Currency(commands.Cog):
         view.seconds = 604800
         view.type = "weekly"
         message = await ctx.reply(embed=em, view=view)
+        await user_data.update_stat(command=ctx.command.name, data={'won': money})
         view.message = message
 
     @commands.hybrid_command(name="work", description="get a job")
@@ -406,6 +416,7 @@ class Currency(commands.Cog):
         view.seconds = 3600
         view.type = "work"
         message = await ctx.reply(embed=em, view=view)
+        await user_data.update_stat(command=ctx.command.name, data={'won': cash})
         view.message = message
 
 
