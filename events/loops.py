@@ -85,7 +85,7 @@ class Loops(commands.Cog):
             print(len(members))
             for m in members:
                 print(m)
-                date = datetime.datetime.fromtimestamp(m["date"], datetime.timezone.utc)
+                date = datetime.datetime.fromtimestamp(m["date"].timestamp(), datetime.timezone.utc)
                 current_date = datetime.datetime.now(datetime.timezone.utc)
                 days_difference = (current_date - date).days
                 if days_difference >= 7:
