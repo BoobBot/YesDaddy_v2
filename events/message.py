@@ -19,6 +19,8 @@ async def process_level_roles(user, member, guild, bot):
     data = await bot.db_client.get_guild(guild.id)
     for role in data.lvl_roles:
         if role.get("level") <= user.level:
+            if member in guild.members:
+                await member.add_roles(guild.get_role(int(role.get("role_id"))))
             await member.add_roles(guild.get_role(int(role.get("role_id"))))
         # else:
         #     await user.remove_role(role.get("role_id"), bot=bot)
