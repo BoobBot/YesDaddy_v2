@@ -34,7 +34,9 @@ class Loops(commands.Cog):
             for guild in guilds:
                 data = await self.bot.db_client.get_guild(guild.id)
                 for user in data.users:
+                    print(user.active.get('active', True))
                     if user.active.get('active', True) is False:
+                        print(f"Deleting user {user.user_id}")
                         if datetime.datetime.utcnow() - user.active.get('timestamp') > datetime.timedelta(days=30):
                             await data.delete_user(user.user_id)
 
@@ -79,6 +81,7 @@ class Loops(commands.Cog):
     async def new_member_loop(self):
         try:
             members = await self.bot.db_client.get_all_new_members()
+            print(len(members))
             for m in members:
                 print(m)
                 date = datetime.datetime.fromtimestamp(m["date"], datetime.timezone.utc)
@@ -94,6 +97,7 @@ class Loops(commands.Cog):
                     await member.remove_roles(guild.get_role(1178610586423140382))
                     print(f"Removed {member.name} from new member role")
         except Exception as e:
+            print(e)
             pass
 
     @new_member_loop.before_loop
