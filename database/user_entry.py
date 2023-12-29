@@ -104,10 +104,8 @@ class User:
             self[key] = value
 
         if self._new:
-            print("New user, saving...")
             await self.save(guild_id=self.guild_id)
         else:
-            print("Existing user, updating...")
             for key, value in kwargs.items():
                await self._db.update_guild_user_data(self.guild_id, self.user_id, {key: value})
             #await self._db.update_guild_user(self.guild_id, self.user_id, self)

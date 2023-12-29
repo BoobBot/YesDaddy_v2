@@ -79,7 +79,6 @@ class Loops(commands.Cog):
 
     @tasks.loop(minutes=1)
     async def new_member_loop(self):
-        print("Running new member loop")
         try:
             members = await self.bot.db_client.get_all_new_members()
             print(len(members))
@@ -96,7 +95,6 @@ class Loops(commands.Cog):
                         continue
                     await self.bot.db_client.delete_new_member(guild.id, member.id)
                     await member.remove_roles(guild.get_role(1178610586423140382))
-                    print(f"Removed {member.name} from new member role")
         except Exception as e:
             print(e)
             pass
@@ -106,7 +104,6 @@ class Loops(commands.Cog):
         await self.bot.wait_until_ready()
         # Start the loop after the bot is ready
         print("Starting the new member loop")
-
 
     @tasks.loop(minutes=1)
     async def reminder_loop(self):
@@ -226,7 +223,6 @@ class Loops(commands.Cog):
                         if not (
                                 member.voice.deaf or member.voice.mute or member.voice.self_mute or member.voice.self_deaf):
                             user = await self.bot.db_client.get_user(user_id=member.id, guild_id=guild.id)
-                            print(f'{member.name} {user.xp}')
                             if user:
                                 data = await self.bot.db_client.get_guild(guild.id)
                                 bonus_xp = sum(
@@ -244,7 +240,7 @@ class Loops(commands.Cog):
                                         if channel:
                                             await channel.send(
                                                 f"# 🎉Congratulations {member.mention}!\n## <a:lvlup:1138933829185323149> You have leveled up to level {lvl}!\n### <:info:486945488080338944> You have been awarded a boosted ${lvl_up_bonus} as a level up bonus for leveling up in a voice call!")
-                                    self.bot.log.info(f"{member.name} {user.level} -> {lvl}")
+                                    # self.bot.log.info(f"{member.name} {user.level} -> {lvl}")
                                     await user.update_fields(level=lvl, balance=user.balance + lvl_up_bonus)
                                 await user.update_fields(xp=user.xp + xp)
 
