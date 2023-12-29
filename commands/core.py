@@ -23,6 +23,7 @@ class Core(commands.Cog):
 
     @commands.hybrid_command(name="stats", description="View bot stats.")
     @app_commands.describe(command="The command to view stats for.")
+    @commands.guild_only()
     async def stats_command(self, ctx, command: str):
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         await user_data.update_stat(command=ctx.command.name)
@@ -34,6 +35,7 @@ class Core(commands.Cog):
             await ctx.send(f"No stats available for command: {command}")
 
     @commands.hybrid_command(name="ping", description="Show bot and API latency.")
+    @commands.guild_only()
     async def ping(self, ctx):
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         await user_data.update_stat(command=ctx.command.name)
@@ -51,6 +53,7 @@ class Core(commands.Cog):
         await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="invite", description="Invite the bot to your server.")
+    @commands.guild_only()
     async def invite(self, ctx):
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         await user_data.update_stat(command=ctx.command.name)
@@ -69,6 +72,7 @@ class Core(commands.Cog):
         await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="support", description="Join the support server.")
+    @commands.guild_only()
     async def support(self, ctx):
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         await user_data.update_stat(command=ctx.command.name)
@@ -86,6 +90,7 @@ class Core(commands.Cog):
         await ctx.reply(embed=em)
 
     @commands.hybrid_command(name="github", description="View the bot's GitHub repository.")
+    @commands.guild_only()
     async def github(self, ctx):
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         await user_data.update_stat(command=ctx.command.name)
@@ -110,6 +115,7 @@ class Core(commands.Cog):
 
     @guild_settings.group(name="lvlroles", description="View or change level roles.")
     @commands.has_guild_permissions(ban_members=True)
+    @commands.guild_only()
     async def lvlrole(self, ctx: commands.Context):
         if not ctx.invoked_subcommand:
             await ctx.send_help(ctx.command)
@@ -475,6 +481,7 @@ class Core(commands.Cog):
         await ctx.reply(embed=em, view=view)
 
     @commands.hybrid_command(name="urban", description="Search the urban dictionary.")
+    @commands.guild_only()
     @app_commands.describe(term="The term to search for.")
     async def urban(self, ctx, term: str):
         try:
