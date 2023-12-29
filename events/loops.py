@@ -34,7 +34,6 @@ class Loops(commands.Cog):
             for guild in guilds:
                 data = await self.bot.db_client.get_guild(guild.id)
                 for user in data.users:
-                    print(user.active.get('active', True))
                     if user.active.get('active', True) is False:
                         print(f"Deleting user {user.user_id}")
                         if datetime.datetime.utcnow() - user.active.get('timestamp') > datetime.timedelta(days=30):
@@ -81,9 +80,7 @@ class Loops(commands.Cog):
     async def new_member_loop(self):
         try:
             members = await self.bot.db_client.get_all_new_members()
-            print(len(members))
             for m in members:
-                print(m)
                 date = datetime.datetime.fromtimestamp(m["date"].timestamp(), datetime.timezone.utc)
                 current_date = datetime.datetime.now(datetime.timezone.utc)
                 days_difference = (current_date - date).days
@@ -269,13 +266,11 @@ class Loops(commands.Cog):
 
     @tasks.loop(minutes=5)  # Run the task every 5 minutes
     async def change_role_color(self):
-        print("Changing role color")
         guild = self.bot.get_guild(694641646780022818)
         role_id_1 = 694641646901395506
         role_id_2 = 694641646922498068
         role_1 = guild.get_role(role_id_1)
         role_2 = guild.get_role(role_id_2)
-        print(f"has {guild}")
 
         if role_1 and role_2:
             non_yellow_color = None
@@ -285,7 +280,6 @@ class Loops(commands.Cog):
 
             await role_1.edit(color=non_yellow_color)
             await role_2.edit(color=discord.Color.random())
-        print("Changed color.")
 
     @staticmethod
     def is_yellow(color):
