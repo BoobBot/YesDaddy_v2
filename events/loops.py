@@ -79,6 +79,7 @@ class Loops(commands.Cog):
 
     @tasks.loop(minutes=1)
     async def new_member_loop(self):
+        print("Running new member loop")
         try:
             members = await self.bot.db_client.get_all_new_members()
             print(len(members))

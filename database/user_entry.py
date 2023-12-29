@@ -100,7 +100,7 @@ class User:
 
     async def update_fields(self, **kwargs):
         for key, value in kwargs.items():
-            print(f"Updating {key} to {value}")
+            #print(f"Updating {key} to {value}")
             self[key] = value
 
         if self._new:
