@@ -29,7 +29,7 @@ class Guild:
         self.new_role = new_role if new_role else []
 
     def to_dict(self):
-        return {k: v for k, v in self.__dict__ if not k.startswith('_')}
+        return {k: self.__dict__[k] for k in self.__dict__ if not k.startswith('_')}
 
     @classmethod
     def create(cls, db, guild_id: int):
