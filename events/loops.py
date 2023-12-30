@@ -4,6 +4,7 @@ import random
 import discord
 from discord.ext import tasks, commands
 
+from database import User
 from utils.utilities import calculate_level, is_today_weekend_or_holiday, amount_on_level_up
 
 
@@ -34,6 +35,7 @@ class Loops(commands.Cog):
             for guild in guilds:
                 data = await self.bot.db_client.get_guild(guild.id)
                 for user in data.users:
+                    user = User.from_existing(self.bot.db_client, user)
                     if user.active.get('active', True) is False:
                         print(f"Deleting user {user.user_id}")
                         if datetime.datetime.utcnow() - user.active.get('timestamp') > datetime.timedelta(days=30):
