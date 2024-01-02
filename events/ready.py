@@ -29,7 +29,7 @@ class Ready(commands.Cog):
                             f"Invalid 'last_seen' value for user: {user}")  # replace with actual user identification
                         continue  # continue with next user
 
-                current_date = datetime.datetime.now(datetime.timezone.utc)
+                current_date = datetime.datetime.now().replace(tzinfo=datetime.timezone.utc)
                 days_difference = (current_date - date).days
                 if days_difference >= 60:
                     ic += 1
