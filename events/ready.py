@@ -32,8 +32,10 @@ class Ready(commands.Cog):
                 current_date = datetime.datetime.now().replace(tzinfo=datetime.timezone.utc)
                 days_difference = (current_date - date).days
                 if days_difference >= 60:
-                    await guild.delete_waifu(user.get('user_id'))
+                    print(f"deleting {user.get('user_id')}")
                     await guild.delete_user(user.get('user_id'))
+                    print("deleted")
+                    ic += 1
             else:
                 print("no last seen")
         print(ic)
