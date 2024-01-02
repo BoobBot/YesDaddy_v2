@@ -20,7 +20,7 @@ class Ready(commands.Cog):
             last_seen = user.get('last_seen', None)
             if last_seen:
                 if isinstance(last_seen, datetime.datetime):  # if last_seen is already a datetime object
-                    date = last_seen
+                    date = last_seen.replace(tzinfo=datetime.timezone.utc)
                 else:  # assuming last_seen is an integer
                     try:
                         date = datetime.datetime.fromtimestamp(last_seen).replace(tzinfo=datetime.timezone.utc)
