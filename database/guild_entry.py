@@ -118,8 +118,8 @@ class Guild:
         await self._db.update_guild(self.guild_id, {"waifus": self.waifus})
 
     async def delete_user(self, user_id):
-        for i, user in enumerate(self.users):
-            if user.get("user_id") == user_id:
-                del self.users[i]
+        user_dict = {user.get("user_id"): i for i, user in enumerate(self.users)}
+        if user_id in user_dict:
+            del self.users[user_dict[user_id]]
         await self.delete_waifu(user_id)
         await self._db.update_guild(self.guild_id, {"users": self.users})
