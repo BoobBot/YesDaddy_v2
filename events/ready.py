@@ -23,7 +23,7 @@ class Ready(commands.Cog):
                     date = last_seen
                 else:  # assuming last_seen is an integer
                     try:
-                        date = datetime.datetime.fromtimestamp(last_seen, datetime.timezone.utc)
+                        date = datetime.datetime.fromtimestamp(last_seen).replace(tzinfo=datetime.timezone.utc)
                     except TypeError:
                         self.bot.log.error(
                             f"Invalid 'last_seen' value for user: {user}")  # replace with actual user identification
