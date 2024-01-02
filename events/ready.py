@@ -18,7 +18,7 @@ class Ready(commands.Cog):
         ic = 0
         for user in guild.users:
             if user.get('last_seen', None):
-                date = datetime.datetime.fromtimestamp(user.last_seen, datetime.timezone.utc)
+                date = datetime.datetime.fromtimestamp(user.get('last_seen'), datetime.timezone.utc)
                 current_date = datetime.datetime.now(datetime.timezone.utc)
                 days_difference = (current_date - date).days
                 if days_difference >= 60:
