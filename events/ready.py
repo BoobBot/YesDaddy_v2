@@ -17,12 +17,14 @@ class Ready(commands.Cog):
         guild = await self.bot.db_client.get_guild(694641646780022818)
         ic = 0
         for user in guild.users:
-            if user.last_seen:
+            if user.get('last_seen', None):
                 date = datetime.datetime.fromtimestamp(user.last_seen, datetime.timezone.utc)
                 current_date = datetime.datetime.now(datetime.timezone.utc)
                 days_difference = (current_date - date).days
                 if days_difference >= 60:
                     ic += 1
+            else:
+                print("no last seen")
         print(ic)
 
 async def setup(bot):
