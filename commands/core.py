@@ -36,7 +36,7 @@ class Core(commands.Cog):
         em.set_footer(
             text=f"Command ran by {ctx.author.display_name} at {timestamp}",
             icon_url=ctx.author.display_avatar.with_static_format("png"))
-        view = StatsView(ctx)
+        view = StatsView(ctx, user_data.stats)
         await ctx.reply(embed=em, view=view)
 
     @commands.hybrid_command(name="ping", description="Show bot and API latency.")

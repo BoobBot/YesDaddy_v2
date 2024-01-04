@@ -33,10 +33,10 @@ class Stats(discord.ui.Select):
 
 
 class StatsView(discord.ui.View):
-    def __init__(self, ctx, timeout=180):
+    def __init__(self, ctx, stats, timeout=180):
         super().__init__(timeout=timeout)
-        user_data = ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
+
         options = []
-        for key, value in user_data.stats.items():
+        for key, value in stats.items():
             options.append(discord.SelectOption(label=key, description=f"stats for {key}"))
         self.add_item(Stats(ctx=ctx, options=options))
