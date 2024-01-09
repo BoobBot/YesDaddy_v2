@@ -1,11 +1,12 @@
 import datetime
 
 import discord
-from discord.ui import View, Button, TextInput
+from discord.ui import Button, TextInput, View
 
 from config.items import maybe_loot
-from utils.utilities import calculate_level, is_today_weekend_or_holiday, amount_on_level_up, generate_embed_color
 from utils.text import levenshtein_distance
+from utils.utilities import (amount_on_level_up, calculate_level,
+                             generate_embed_color, is_today_weekend_or_holiday)
 
 
 class Challenge(discord.ui.Modal, title='daily challenge'):
