@@ -60,8 +60,9 @@ class Challenge(discord.ui.Modal, title='daily challenge'):
                     correct = True
                     break
         else:
-            correct = user_answer == self.answer.lower() or \
-                (not is_number and levenshtein_distance(user_answer, self.answer) <= max_distance)
+            lower = self.answer.lower()
+            correct = user_answer == lower or \
+                (not is_number and levenshtein_distance(user_answer, lower) <= max_distance)
 
         if correct:
             user_balance = user_data.balance
