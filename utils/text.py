@@ -24,10 +24,10 @@ def levenshtein_distance(s: str, t: str, ratio_calc: bool = False) -> int:
     """
     rows = len(s) + 1
     cols = len(t) + 1
-    distance = np.zeros((rows, cols), dtype = int)
+    distance = np.zeros((rows, cols), dtype=int)
 
     for i in range(1, rows):
-        for k in range(1,cols):
+        for k in range(1, cols):
             distance[i][0] = i
             distance[0][k] = k
 
@@ -41,6 +41,6 @@ def levenshtein_distance(s: str, t: str, ratio_calc: bool = False) -> int:
             distance[row][col] = min(distance[row - 1][col] + 1, distance[row][col - 1] + 1, distance[row - 1][col - 1] + cost)
 
     if ratio_calc:
-        return ((len(s)+len(t)) - distance[row][col]) / (len(s)+len(t))
+        return ((len(s) + len(t)) - distance[row][col]) / (len(s) + len(t))
 
     return distance[row][col]
