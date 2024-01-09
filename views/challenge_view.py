@@ -49,18 +49,19 @@ class Challenge(discord.ui.Modal, title='daily challenge'):
         # in the string. E.g. "an bottlw" would still match, but "an bittlw" would not.
         max_distance = 2
         user_answer = self.guess.value.lower()
+        is_number = user_answer.isdigit()
         correct: bool = False
 
         if isinstance(self.answer, tuple):
             for answer in self.answer:
                 lower = answer.lower()
 
-                if user_answer == lower or levenshtein_distance(user_answer, lower) <= max_distance:
+                if user_answer == lower or (not is_number and levenshtein_distance(user_answer, lower) <= max_distance):
                     correct = True
                     break
         else:
             correct = user_answer == self.answer.lower() or \
-                levenshtein_distance(user_answer, self.answer) <= max_distance
+                (not is_number and levenshtein_distance(user_answer, self.answer) <= max_distance)
 
         if correct:
             user_balance = user_data.balance
