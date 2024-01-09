@@ -5,6 +5,7 @@ from discord.ui import View, Button, TextInput
 
 from config.items import maybe_loot
 from utils.utilities import calculate_level, is_today_weekend_or_holiday, amount_on_level_up, generate_embed_color
+from utils.text import levenshtein_distance
 
 
 class Challenge(discord.ui.Modal, title='daily challenge'):
@@ -40,8 +41,27 @@ class Challenge(discord.ui.Modal, title='daily challenge'):
             text=f"Command ran by {self.ctx.author.display_name} at {timestamp}",
             icon_url=self.ctx.author.display_avatar.with_static_format("png")
         )
-        user_answer = self.guess.value
-        if user_answer.lower() == self.answer.lower():
+
+        # This is the maximum number of incorrect letters (added, removed or substituted)
+        # that a user can have before their answer is considered incorrect.
+        # A value of 2 means a user can have something like an -> a, with a maximum of one typo elsewhere
+        # in the string. E.g. "an bottlw" would still match, but "an bittlw" would not.
+        max_distance = 2
+        user_answer = self.guess.value.lower()
+        correct: bool = False
+
+        if isinstance(self.answer, tuple):
+            for answer in self.answer:
+                lower = answer.lower()
+
+                if user_answer == lower or levenshtein_distance(user_answer, lower) <= max_distance:
+                    correct = True
+                    break
+        else:
+            correct = user_answer == self.answer.lower() or \
+                levenshtein_distance(user_answer, self.answer) <= max_distance
+
+        if correct:
             user_balance = user_data.balance
             base_payout = 2000
             xp = 2000
