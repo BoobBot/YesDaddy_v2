@@ -32,6 +32,8 @@ class Message(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, msg):
+        if msg.channel.id == 1194630143239540788:
+            await dump_delete(msg)
         if msg.channel.id == 1141856931984715807:
             await dump_delete(msg)
         if msg.author.bot:
