@@ -74,7 +74,7 @@ class User:
         return user
     
     @classmethod
-    def from_existing(cls, db, guild_id, data: dict):
+    def from_existing(cls, db, data: dict):
         """
         Creates a user object from an existing dict.
         """
@@ -84,7 +84,7 @@ class User:
             if field not in expected_fields:
                 data.pop(field)
 
-        return cls(db, guild_id, **data)
+        return cls(db, **data)
 
     def to_dict(self):
         return {attr: getattr(self, attr) for attr in self.__slots__ if not attr.startswith('_')}
