@@ -15,7 +15,7 @@ class Ready(commands.Cog):
         self.bot.log.info(f'ID: {self.bot.user.id}')
         self.bot.log.info('------')
         guilds = self.bot.guilds
-        await self.bot.db_client.user_collection.delete_many({})
+        #await self.bot.db_client.user_collection.delete_many({})
         for guild in guilds:
             self.bot.log.info(f"Guild: {guild.name}")
             self.bot.log.info(f"ID: {guild.id}")
