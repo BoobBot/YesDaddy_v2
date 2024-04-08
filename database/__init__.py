@@ -25,6 +25,7 @@ class DiscordDatabase:
     async def get_user(self, guild_id: int, user_id: int):
         user_data = await self.user_collection.find_one({'guild_id': int(guild_id), 'user_id': int(user_id)})
         if user_data:
+            user_data['guild_id'] = guild_id  # Insert guild_id into user_data if it doesn't already exist.
             return User.from_existing(self, user_data)
         user = User.create(self, user_id, guild_id)
         await user.save(guild_id=guild_id)
