@@ -50,7 +50,7 @@ class DiscordDatabase:
 
     async def get_all_users(self):
         users = await self.user_collection.find({}).to_list(length=None)
-        return [User.from_existing(self, user["guild_id"], user) for user in users]
+        return [User.from_existing(self, user['guild_id'], user) for user in users]
 
     async def get_users_in_jail(self):
         users_in_jail = []

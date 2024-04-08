@@ -74,7 +74,7 @@ class User:
         return user
     
     @classmethod
-    def from_existing(cls, db,guild_id, data: dict):
+    def from_existing(cls, db, guild_id, data: dict):
         """
         Creates a user object from an existing dict.
         """
