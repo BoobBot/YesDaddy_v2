@@ -24,8 +24,7 @@ class Ready(commands.Cog):
                 print(f"User: {user.user_id}")
                 print(user)
                 await self.bot.db_client.set_user(user)
-            guild.users = []
-            await self.bot.db_client.update_guild(guild)
+            #await self.bot.db_client.update_guild(guild)
         self.bot.log.info('------')
 
 async def setup(bot):
