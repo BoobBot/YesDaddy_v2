@@ -22,6 +22,7 @@ class Ready(commands.Cog):
             guild = await self.bot.db_client.get_guild(guild.id)
             for user in guild.users:
                 print(f"User: {user.user_id}")
+                print(user)
                 await self.bot.db_client.set_user(user)
             guild.users = []
             await self.bot.db_client.update_guild(guild)

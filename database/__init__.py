@@ -31,7 +31,6 @@ class DiscordDatabase:
         await user.save(guild_id=guild_id)
         return user
 
-
     async def set_user(self, user_data: dict):
         await self.user_collection.update_one({'guild_id': user_data['guild_id'], 'user_id': user_data['user_id']},
                                               {'$set': user_data}, upsert=True)
