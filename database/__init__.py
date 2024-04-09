@@ -163,7 +163,6 @@ class DiscordDatabase:
         users_in_jail = []
         all_users = await self.get_all_users()
         for user_data in all_users:
-            print(user_data)
             user = User.from_existing(self, user_data)
             if user.is_in_jail():
                 users_in_jail.append(user)
