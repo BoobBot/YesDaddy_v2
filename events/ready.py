@@ -14,7 +14,7 @@ class Ready(commands.Cog):
         self.bot.log.info(f'Logged in as ----> {self.bot.user}')
         self.bot.log.info(f'ID: {self.bot.user.id}')
         self.bot.log.info('------')
-        await self.bot.db_client.remove_old_user_data()
+        #await self.bot.db_client.remove_old_user_data()
         # for guild in guilds:
         #     self.bot.log.info(f"Guild: {guild.name}")
         #     self.bot.log.info(f"ID: {guild.id}")
