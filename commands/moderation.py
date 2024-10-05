@@ -183,6 +183,7 @@ class Moderation(commands.Cog):
     @idiot.command(name="set", description="set a idiots nickname")
     @app_commands.describe(user="The user to set the nickname of.")
     @app_commands.describe(nickname="The nickname to set.")
+    @commands.has_permissions(manage_nicknames=True)
     async def idiot_set(self, ctx, user: discord.Member, *, nickname: str):
         user_data = await self.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         if user_data.idiot.get("idiot"):
@@ -214,6 +215,7 @@ class Moderation(commands.Cog):
 
     @idiot.command(name="clear", description="clear a idiots nickname")
     @app_commands.describe(user="The user to clear the nickname of.")
+    @commands.has_permissions(manage_nicknames=True)
     async def idiot_clear(self, ctx, user: discord.Member):
         user_data = await self.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         if user_data.idiot.get("idiot"):
@@ -234,6 +236,7 @@ class Moderation(commands.Cog):
 
     @idiot.command(name="check", description="check if a user is an idiot")
     @app_commands.describe(user="The user to check.")
+    @commands.has_permissions(manage_nicknames=True)
     async def idiot_check(self, ctx, user: discord.Member):
         user_data = await self.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         if user_data.idiot.get("idiot"):
@@ -248,6 +251,7 @@ class Moderation(commands.Cog):
             await ctx.reply(f"{user.mention} is not an idiot.")
 
     @idiot.command(name="list", description="list all idiots")
+    @commands.has_permissions(manage_nicknames=True)
     async def idiot_list(self, ctx):
         idiots = []
         guild_data = await self.bot.db_client.get_guild(ctx.guild.id)
