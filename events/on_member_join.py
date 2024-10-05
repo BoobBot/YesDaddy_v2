@@ -16,6 +16,10 @@ class OnMemberJoin(commands.Cog):
             user_data.idiot.change += 1
             await user_data.update_fields(idiot=user_data.idiot)
 
+        if member.guild.id == 440526421388165120:
+            role = member.guild.get_role(1016525828575727736)
+            await member.add_roles(role, reason="Member joined")
+
 
 
 async def setup(bot):

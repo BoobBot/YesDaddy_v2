@@ -30,6 +30,8 @@ class Config:
                                    'commands.transactions', 'commands.dev', 'commands.moderation',
                                    'events.on_member_update', 'events.on_member_join',
                                    'events.on_command', 'commands.race', 'commands.monopoly']  # List of initial extensions
+
+        #self.initial_extensions = ['events.ready']
         # Use environment variable as prefix
         self.prefix = os.getenv('PREFIX', "")
         # Use environment variable as owner_ids

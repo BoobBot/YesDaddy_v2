@@ -1,10 +1,12 @@
 import datetime
 
 import discord
-from discord.ui import View, Button, TextInput
+from discord.ui import Button, TextInput, View
 
 from config.items import maybe_loot
-from utils.utilities import calculate_level, is_today_weekend_or_holiday, amount_on_level_up, generate_embed_color
+from utils.text import levenshtein_distance
+from utils.utilities import (amount_on_level_up, calculate_level,
+                             generate_embed_color, is_today_weekend_or_holiday)
 
 
 class Challenge(discord.ui.Modal, title='daily challenge'):
@@ -15,7 +17,7 @@ class Challenge(discord.ui.Modal, title='daily challenge'):
         self.challenge = challenge
         self.answer = answer
         self.label = challenge if len(challenge) <= 45 else f"Whats your answer?"
-        self.placeholder = challenge if len(challenge) > 45 else f"Enter your answer"
+        self.placeholder = challenge if len(challenge) <= 45 else f"Enter your answer"
         self.guess = discord.ui.TextInput(
             label=self.label,
             style=discord.TextStyle.long,
@@ -40,8 +42,29 @@ class Challenge(discord.ui.Modal, title='daily challenge'):
             text=f"Command ran by {self.ctx.author.display_name} at {timestamp}",
             icon_url=self.ctx.author.display_avatar.with_static_format("png")
         )
-        user_answer = self.guess.value
-        if user_answer.lower() == self.answer.lower():
+
+        # This is the maximum number of incorrect letters (added, removed or substituted)
+        # that a user can have before their answer is considered incorrect.
+        # A value of 2 means a user can have something like an -> a, with a maximum of one typo elsewhere
+        # in the string. E.g. "an bottlw" would still match, but "an bittlw" would not.
+        max_distance = 2
+        user_answer = self.guess.value.lower()
+        is_number = user_answer.isdigit()
+        correct: bool = False
+
+        if isinstance(self.answer, tuple):
+            for answer in self.answer:
+                lower = answer.lower()
+
+                if user_answer == lower or (not is_number and levenshtein_distance(user_answer, lower) <= max_distance):
+                    correct = True
+                    break
+        else:
+            lower = self.answer.lower()
+            correct = user_answer == lower or \
+                (not is_number and levenshtein_distance(user_answer, lower) <= max_distance)
+
+        if correct:
             user_balance = user_data.balance
             base_payout = 2000
             xp = 2000

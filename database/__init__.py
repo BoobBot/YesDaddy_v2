@@ -12,81 +12,165 @@ class DiscordDatabase:
         self.mongo_uri = mongo_uri
         self.database_name = database_name
         self.guild_collection_name = guild_collection_name
+        self.user_collection_name = user_collection_name
         self.client = motor.motor_asyncio.AsyncIOMotorClient(self.mongo_uri)
         self.guild_collection = self.client[self.database_name][self.guild_collection_name]
+        self.user_collection = self.client[self.database_name][self.user_collection_name]
         self.log = logging.getLogger()
 
-    #############################################
-    # User operations                           #
-    #############################################
+        #############################################
+        # User operations                           #
+        #############################################
 
-    async def get_user(self, guild_id: int, user_id: int):
-        guild_data = await self.guild_collection.find_one(
-            {
-                'guild_id': int(guild_id),
-                'users.user_id': int(user_id)
-            },
-            projection={'users.$': 1}
+    # async def get_user(self, guild_id: int, user_id: int):
+    #     guild_data = await self.guild_collection.find_one(
+    #         {
+    #             'guild_id': int(guild_id),
+    #             'users.user_id': int(user_id)
+    #         },
+    #         projection={'users.$': 1}
+    #     )
+    #
+    #     if guild_data and 'users' in guild_data:
+    #         user_data = guild_data['users'][0]
+    #         user_data['guild_id'] = guild_id  # Insert guild_id into user_data if it doesn't already exist.
+    #         return User.from_existing(self, user_data)
+    #
+    #     user = User.create(self, user_id, guild_id)
+    #     await user.save(guild_id=guild_id)
+    #     return user
+    #
+
+    async def migrate_data(self):
+        self.user_collection.delete_many({})
+        self.user_collection.create_index([("guild_id", 1), ("user_id", 1)], unique=True)
+        async for guild in self.guild_collection.find({}):
+            guild_id = guild['guild_id']
+            if 'users' in guild:
+                for user_data in guild['users']:
+                    print(f"migrating user {user_data['user_id']} in guild {guild_id}")
+                    user_data['guild_id'] = guild_id
+                    await self.user_collection.update_one(
+                        {'guild_id': guild_id, 'user_id': user_data['user_id']},
+                        {'$set': user_data},
+                        upsert=True
+                    )
+
+    async def remove_old_user_data(self):
+        await self.guild_collection.update_many(
+            {},  # Selects all documents in the collection
+            {"$unset": {"users": ""}}  # Removes the 'users' field
         )
 
-        if guild_data and 'users' in guild_data:
-            user_data = guild_data['users'][0]
-            user_data['guild_id'] = guild_id  # Insert guild_id into user_data if it doesn't already exist.
+    async def get_user(self, guild_id: int, user_id: int):
+        user_data = await self.user_collection.find_one(
+            {
+                'guild_id': int(guild_id),
+                'user_id': int(user_id)
+            })
+
+        if user_data:
+            user_data['guild_id'] = guild_id
             return User.from_existing(self, user_data)
 
         user = User.create(self, user_id, guild_id)
         await user.save(guild_id=guild_id)
         return user
 
+    # async def set_user(self, guild_id: int, user_data: User):
+    #     await self.guild_collection.update_one(
+    #         # Insert into guilds where _id = guild_id, if there are no existing user documents with user_id
+    #         {'guild_id': guild_id, 'users.user_id': {'$ne': user_data.user_id}},
+    #         {'$addToSet': {'users': user_data.to_dict()}}
+    #     )
+
+    # async def set_user(self, guild_id: int, user_data: User):
+    #     await self.user_collection.update_one(
+    #         {'guild_id': guild_id, 'user_id': user_data.user_id},
+    #         {'$set': user_data.to_dict()},
+    #         upsert=True
+    #     )
+    #
     async def set_user(self, guild_id: int, user_data: User):
-        await self.guild_collection.update_one(
-             # Insert into guilds where _id = guild_id, if there are no existing user documents with user_id
-            {'guild_id': guild_id, 'users.user_id': {'$ne': user_data.user_id}},
-            {'$addToSet': {'users': user_data.to_dict()}}
+        await self.user_collection.update_one(
+            {'guild_id': guild_id, 'user_id': user_data.user_id},
+            {'$set': user_data.to_dict()},
+            upsert=True
         )
 
     async def update_guild_user(self, guild_id, user_id, user_data):
-        await self.guild_collection.update_one(
-            {"guild_id": guild_id, "users.user_id": user_id},  # prev: users: user_id
-            {"$set": {"users.$": user_data.to_dict()}}
+        await self.user_collection.update_one(
+            {"guild_id": guild_id, "user_id": user_id},
+            {"$set": user_data.to_dict()}
         )
+
 
     async def update_guild_user_data(self, guild_id, user_id, updated_fields):
-        await self.guild_collection.update_one(
-            {"guild_id": guild_id, "users.user_id": user_id},
-            {"$set": {f"users.$.{field}": updated_fields[field] for field in updated_fields}}
+        await self.user_collection.update_one(
+            {"guild_id": guild_id, "user_id": user_id},
+            {"$set": {field: updated_fields[field] for field in updated_fields}}
         )
 
-    async def get_users_in_guild(self, guild_id):
-        guild_data = await self.guild_collection.find_one({'guild_id': int(guild_id)})
+    #
+    # async def get_users_in_guild(self, guild_id):
+    #     guild_data = await self.guild_collection.find_one({'guild_id': int(guild_id)})
+    #
+    #     if guild_data and 'users' in guild_data:
+    #         return list(map(lambda user: User.from_existing(self, user), guild_data['users']))
+    #
+    #     return []
 
-        if guild_data and 'users' in guild_data:
-            return list(map(lambda user: User.from_existing(self, user), guild_data['users']))
+    async def get_users_in_guild(self, guild_id):
+        users_data = await self.user_collection.find({'guild_id': int(guild_id)}).to_list(None)
+
+        if users_data:
+            return list(map(lambda user: User.from_existing(self, user), users_data))
 
         return []
 
+    # async def get_all_users(self):
+    #     all_users = []
+    #
+    #     async for guild in self.guild_collection.find({}, {"_id": 0}):
+    #         if "users" in guild:
+    #             all_users.extend(guild["users"])
+    #
+    #     return all_users
+    #
+    #
     async def get_all_users(self):
-        all_users = []
-
-        async for guild in self.guild_collection.find({}, {"_id": 0}):
-            if "users" in guild:
-                all_users.extend(guild["users"])
-
+        all_users = await self.user_collection.find({}).to_list(None)
         return all_users
 
+
+    # async def get_users_in_jail(self):
+    #     users_in_jail = []
+    #     all_users = await self.get_all_users()
+    #     for user_data in all_users:
+    #         # TODO: This could be optimised
+    #         user = await self.get_user(user_data["guild_id"], user_data["user_id"])
+    #         if user.is_in_jail():
+    #             users_in_jail.append(user)
+    #     return users_in_jail
+    #
+    # async def get_top_users(self, guild_id, limit, sort_key):
+    #     users = await self.get_users_in_guild(guild_id)
+    #     sorted_users = sorted(users, key=sort_key, reverse=True)
+    #     return sorted_users[:limit]
+    #
+    #
     async def get_users_in_jail(self):
         users_in_jail = []
         all_users = await self.get_all_users()
         for user_data in all_users:
-            # TODO: This could be optimised
-            user = await self.get_user(user_data["guild_id"], user_data["user_id"])
+            user = User.from_existing(self, user_data)
             if user.is_in_jail():
                 users_in_jail.append(user)
         return users_in_jail
 
     async def get_top_users(self, guild_id, limit, sort_key):
-        users = await self.get_users_in_guild(guild_id)
-        sorted_users = sorted(users, key=sort_key, reverse=True)
+        users_data = await self.get_users_in_guild(guild_id)
+        sorted_users = sorted(users_data, key=sort_key, reverse=True)
         return sorted_users[:limit]
 
     #############################################

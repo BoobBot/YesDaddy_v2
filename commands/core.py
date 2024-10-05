@@ -9,6 +9,7 @@ from discord.ext import commands
 from utils.paginator import Paginator
 from utils.utilities import generate_embed_color
 from views.help_view import HelpView
+from views.stats_view import StatsView
 
 
 class Core(commands.Cog):
@@ -22,17 +23,21 @@ class Core(commands.Cog):
         return emoji.is_emoji(emote)
 
     @commands.hybrid_command(name="stats", description="View bot stats.")
-    @app_commands.describe(command="The command to view stats for.")
     @commands.guild_only()
-    async def stats_command(self, ctx, command: str):
+    async def stats_command(self, ctx):
+        em = discord.Embed(title="Stats List", colour=discord.Colour.blue())
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
         user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
         await user_data.update_stat(command=ctx.command.name)
-        stat = user_data.get_stat(command)
-        if stat:
-            stats_response = '\n'.join(f'{key.replace("_", " ")}: {value}' for key, value in stat.items())
-            await ctx.send(f"Stats for {command}:\n{stats_response}")
-        else:
-            await ctx.send(f"No stats available for command: {command}")
+        em.set_author(
+            name="Stats Command",
+            icon_url=self.bot.user.display_avatar.with_static_format("png"),
+            url="https://discord.gg/invite/tailss")
+        em.set_footer(
+            text=f"Command ran by {ctx.author.display_name} at {timestamp}",
+            icon_url=ctx.author.display_avatar.with_static_format("png"))
+        view = StatsView(ctx, user_data.stats)
+        await ctx.reply(embed=em, view=view)
 
     @commands.hybrid_command(name="ping", description="Show bot and API latency.")
     @commands.guild_only()

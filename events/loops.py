@@ -141,6 +141,8 @@ class Loops(commands.Cog):
             nitro_booster = support.get_role(585533009797578759)
             lounge_booster = lounge.get_role(588226955778850816)
             for member in contributor.members:
+                if member.id == 248294452307689473:
+                    continue
                 try:
                     if member in community.members:
                         mem = await community.fetch_member(member.id)
@@ -150,6 +152,8 @@ class Loops(commands.Cog):
                 except Exception as e:
                     pass
             for member in contributor_plus.members:
+                if member.id == 248294452307689473:
+                    continue
                 try:
                     if member in community.members:
                         mem = await community.fetch_member(member.id)
@@ -159,6 +163,8 @@ class Loops(commands.Cog):
                 except Exception as e:
                     pass
             for member in kissy_contributor.members:
+                if member.id == 248294452307689473:
+                    continue
                 try:
                     if member in community.members:
                         mem = await community.fetch_member(member.id)
@@ -168,6 +174,8 @@ class Loops(commands.Cog):
                 except Exception as e:
                     pass
             for member in nitro_booster.members:
+                if member.id == 248294452307689473:
+                    continue
                 try:
                     if member in community.members:
                         mem = await community.fetch_member(member.id)
@@ -177,6 +185,8 @@ class Loops(commands.Cog):
                 except Exception as e:
                     pass
             for member in lounge_booster.members:
+                if member.id == 248294452307689473:
+                    continue
                 try:
                     if member in community.members:
                         mem = await community.fetch_member(member.id)

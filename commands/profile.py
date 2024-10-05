@@ -190,11 +190,14 @@ class Profile(commands.Cog):
             member = ctx.guild.get_member(user_id)
             return member.name if member else default
 
-        def format_leaderboard_data(users_data, formatter):
+        def format_leaderboard_data(users_data, formatter, key):
+            s = '$'
             formatted_data = []
+            if key == 'level':
+                s = ''
             for index, user_data in enumerate(users_data):
                 formatted_data.append(
-                    f"{ranks[index]} **{format_member_name(user_data.user_id)}** - ${user_data.balance:,}")
+                    f"{ranks[index]} **{format_member_name(user_data.user_id)}** - {s}{user_data[key]:,}")
 
             return "\n".join(formatted_data)
 
@@ -209,9 +212,9 @@ class Profile(commands.Cog):
         sorted_data = sorted(all_waifus, key=lambda x: x['value'], reverse=True)
         top_users_waifu = sorted_data[:3]
 
-        top_balance = format_leaderboard_data(top_users_balance, lambda user: user.balance)
-        top_level = format_leaderboard_data(top_users_level, lambda user: user.level)
-        top_bank_balance = format_leaderboard_data(top_users_bank_balance, lambda user: user.bank_balance)
+        top_balance = format_leaderboard_data(top_users_balance, lambda user: user.balance, 'balance')
+        top_level = format_leaderboard_data(top_users_level, lambda user: user.level, 'level')
+        top_bank_balance = format_leaderboard_data(top_users_bank_balance, lambda user: user.bank_balance, 'bank_balance')
         top_waifus = []
         for index, waifu in enumerate(top_users_waifu):
             top_waifus.append(f"{ranks[index]} **{format_member_name(int(waifu['user_id']))}** - ${waifu['value']:,}")
