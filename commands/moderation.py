@@ -397,18 +397,21 @@ class Moderation(commands.Cog):
         failed = 0
         cancelled = False
         print(nickname)
+        print("starting")
         try:
+            print("starting 2")
             for member in members:
+                print("starting 3")
                 print(member)
                 if member.top_role >= ctx.guild.me.top_role:
+                    print(f"Skipping {member}'s nickname as it's higher than the bot's top role.")
                     continue
-
                 try:
+                    print("starting 4")
                     new_name = (await (await self.bot.web_client.get("https://nekos.life/api/v2/name")).json())[
                         'name'] if random is True else nickname
                     print(new_name)
                     # if idiot:
-
                     if member.display_name == new_name or new_name is not None and new_name > 32:
                         print(f"Skipping {member}'s nickname as it's the same as the current one or too long.")
                         continue
@@ -423,7 +426,6 @@ class Moderation(commands.Cog):
         except asyncio.CancelledError:
             print("cancelled")
             cancelled = True
-
         self.nickname_task = None
         print("done")
         await ctx.author.send(
