@@ -421,7 +421,7 @@ class Moderation(commands.Cog):
                     if prefix:
                         new_name = f"{prefix}{current_name}"
                     if suffix:
-                        new_name = f"{current_name}{suffix}"
+                        new_name = f"{new_name}{suffix}"
 
                     if member.display_name == new_name or (new_name and len(new_name) > 32):
                         self.log.warning(
