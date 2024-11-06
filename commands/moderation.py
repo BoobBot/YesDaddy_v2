@@ -1,6 +1,8 @@
 import datetime
 import re
+from asyncio import current_task
 from io import BytesIO
+from sys import prefix
 from typing import List
 from typing import Tuple, Union, Optional
 
@@ -35,6 +37,7 @@ untouchables = [248294452307689473, 596330574109474848, 270393700394205185, 3839
 class Moderation(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
+        self.log = self.bot.log
         self.nickname_task: Optional[asyncio.Task] = None
 
     @staticmethod
@@ -313,15 +316,23 @@ class Moderation(commands.Cog):
     @app_commands.describe(nickname="What you want the massnick to be. This is mutually exclusive to random.",
                            role="The role you want to massnick.",
                            random="Whether to use a random name for each member.",
-                           idiot="Whether to prevent users from changing their nicknames.")
+                           idiot="Whether to prevent users from changing their nicknames.",
+                           prefix="Prefix to add to the nickname.",
+                           suffix="Suffix to add to the nickname.")
     async def massnick_start(self, ctx: commands.Context, nickname: Optional[str],
                              role: Optional[discord.Role], random: Optional[bool],
-                             idiot: Optional[bool]):
+                             idiot: Optional[bool], prefix: Optional[str] = "", suffix: Optional[str] = ""):
         if self.nickname_task is not None:
             return await ctx.send("I'm already doing a massnick, chill tf out", ephemeral=True)
+        if suffix and nickname:
+            return await ctx.send("You can't have a suffix and a nickname.", ephemeral=True)
+        if prefix and nickname:
+            return await ctx.send("You can't have a prefix and a nickname.", ephemeral=True)
+        if idiot:
+            if not self.bot.is_owner(ctx.author):
+                return await ctx.send("You can't idiot people, suffer instead.", ephemeral=True)
 
         role = role or ctx.guild.get_role(694641646780022826)
-
         view = Confirm()
         view.message = await ctx.send(f"{ctx.author.mention}, are you sure you want me to run this massnick?",
                                       view=view)
@@ -334,7 +345,7 @@ class Moderation(commands.Cog):
             return await ctx.send("Fine I wont massnick the plebs.")
 
         self.nickname_task = asyncio.create_task(
-            self._do_massnick(ctx, role.members, nickname, random is True, idiot is True))
+            self._do_massnick(ctx, role.members, nickname, random, idiot, prefix, suffix))
         await ctx.send("Okie dokie, I'll hit you up when I'm finished :)")
 
     @massnick.command(name="cancel", description="Cancel your currently running massnick")
@@ -377,7 +388,7 @@ class Moderation(commands.Cog):
         self.nickname_task = asyncio.create_task(self._do_massnick(ctx, role.members, nickname=None))
 
     async def _do_massnick(self, ctx: commands.Context, members: List[discord.Member],
-                           nickname: Optional[str], random: bool = False, idiot: bool = False):
+                           nickname: Optional[str], random: bool = False, idiot: bool = False, prefix: str = "", suffix: str = ""):
         """
         Sets the nickname on all the members provided.
         ``nickname`` and ``random`` are mutually exclusive parameters.
@@ -396,31 +407,43 @@ class Moderation(commands.Cog):
         updated = 0
         failed = 0
         cancelled = False
-        print(nickname)
-        print("starting")
+        self.log.info(f"Starting massnick with nickname: {nickname}, random: {random}, idiot: {idiot}")
         try:
             for member in members:
-                print(member)
+                current_name = member.display_name
+                self.log.info(f"Processing member: {member}")
                 if member.top_role >= ctx.guild.me.top_role:
-                    print(f"Skipping {member}'s nickname as it's higher than the bot's top role.")
+                    self.log.warning(f"Skipping {member}'s nickname as it's higher than the bot's top role.")
                     continue
                 try:
                     new_name = (await (await self.bot.web_client.get("https://nekos.life/api/v2/name")).json())[
-                        'name'] if random is True else nickname
-                    if member.display_name == new_name or (new_name is not None and len(new_name) > 32):
-                        print(f"Skipping {member}'s nickname as it's the same as the current one or too long.")
+                        'name'] if random else nickname
+                    if prefix:
+                        new_name = f"{prefix}{current_name}"
+                    if suffix:
+                        new_name = f"{current_name}{suffix}"
+
+                    if member.display_name == new_name or (new_name and len(new_name) > 32):
+                        self.log.warning(
+                            f"Skipping {member}'s nickname as it's the same as the current one or too long.")
                         continue
-                    await member.edit(nick=new_name)
+                    if idiot:
+                        await self.do_idiot(member, ctx.author.id, new_name)
+                    else:
+                        await member.edit(nick=new_name)
                     updated += 1
-                except (discord.Forbidden, discord.HTTPException):
+                    self.log.info(f"Changed {member}'s nickname to {new_name}.")
+                except (discord.Forbidden, discord.HTTPException) as e:
                     failed += 1
+                    self.log.error(f"Failed to change {member}'s nickname: {e}")
         except asyncio.CancelledError:
-            print("cancelled")
+            self.log.info("Massnick task was cancelled.")
             cancelled = True
-        self.nickname_task = None
-        print("done")
-        await ctx.author.send(
-            f'Massnick results (updated: {updated} / failed: {failed}){" [cancelled]" if cancelled else ""}')
+        finally:
+            self.nickname_task = None
+            self.log.info("Massnick task completed.")
+            await ctx.author.send(
+                f'Massnick results (updated: {updated} / failed: {failed}){" [cancelled]" if cancelled else ""}')
 
     @commands.hybrid_command(name="purge", description="Purge messages from a channel")
     @commands.has_permissions(manage_messages=True)
