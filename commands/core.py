@@ -128,6 +128,7 @@ class Core(commands.Cog):
     @lvlrole.command(name="add", description="Add a level role.")
     @app_commands.describe(level="The level to add the role for.")
     @app_commands.describe(role="The role to add.")
+    @commands.has_guild_permissions(ban_members=True)
     async def lvlrole_add(self, ctx, level: int, role: discord.Role):
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
 
@@ -140,6 +141,7 @@ class Core(commands.Cog):
         await ctx.reply(f"Added {role.mention} as a level role for level {level}.")
 
     @lvlrole.command(name="remove", description="Remove a level role.")
+    @commands.has_guild_permissions(ban_members=True)
     async def lvlrole_remove(self, ctx, level: int, role: discord.Role):
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
         guild.lvl_roles.remove(
@@ -175,6 +177,7 @@ class Core(commands.Cog):
 
     @bonus_role.command(name="add", description="Add a bonus role.")
     @app_commands.describe(role="The role to add.")
+    @commands.has_guild_permissions(ban_members=True)
     async def bonus_role_add(self, ctx, role: discord.Role):
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
         if role.id in [role.get("role_id") for role in guild.bonus_roles]:
@@ -185,6 +188,7 @@ class Core(commands.Cog):
 
     @bonus_role.command(name="remove", description="Remove a bonus role.")
     @app_commands.describe(role="The role to remove.")
+    @commands.has_guild_permissions(ban_members=True)
     async def bonus_role_remove(self, ctx, role: discord.Role):
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
         guild.bonus_roles.remove({"role_id": role.id})  # TODO dedicated method to handle updating just this field
@@ -212,6 +216,7 @@ class Core(commands.Cog):
     @app_commands.describe(role="The role to add.")
     @app_commands.describe(cash="The amount of cash to give.")
     @app_commands.describe(description="The description of the role.")
+    @commands.has_guild_permissions(ban_members=True)
     async def bonus_cash_add_role(self, ctx: commands.Context, role: discord.Role, cash: int, description: str):
         role_data = {
             "_id": role.id,
@@ -227,11 +232,13 @@ class Core(commands.Cog):
 
     @bonus_cash_roles.command(name="remove_cash_role", description="Remove an role from cash roles")
     @app_commands.describe(role="The role to remove.")
+    @commands.has_guild_permissions(ban_members=True)
     async def bonus_cash_remove_role(self, ctx: commands.Context, role: discord.Role):
         await self.bot.db_client.delete_cash_role(guild_id=ctx.guild.id, role_id=role.id)
         await ctx.send(f"Removed {role.mention} from the shop.")
 
     @bonus_cash_roles.command(name="list_cash_roles", description="List all cash roles")
+    @commands.has_guild_permissions(ban_members=True)
     async def bonus_cash_list_roles(self, ctx: commands.Context):
         roles = await self.bot.db_client.get_cash_roles(guild_id=ctx.guild.id)
         em = discord.Embed(title="Cash Roles", color=await generate_embed_color(ctx.author))
@@ -252,6 +259,7 @@ class Core(commands.Cog):
     @app_commands.describe(role="The role to add.")
     @app_commands.describe(price="The price of the role.")
     @app_commands.describe(description="The description of the role.")
+    @commands.has_guild_permissions(ban_members=True)
     async def shop_admin_add_role(self, ctx: commands.Context, role: discord.Role, price: int, description: str):
         role_data = {
             "_id": role.id,
@@ -267,6 +275,7 @@ class Core(commands.Cog):
 
     @shop_admin.command(name="remove_role", description="Remove an role from the shop")
     @app_commands.describe(role="The role to remove.")
+    @commands.has_guild_permissions(ban_members=True)
     async def shop_admin_remove_role(self, ctx: commands.Context, role: discord.Role):
         await self.bot.db_client.delete_shop_role(guild_id=ctx.guild.id, role_id=role.id)
         await ctx.send(f"Removed {role.mention} from the shop.")
@@ -289,6 +298,7 @@ class Core(commands.Cog):
     @app_commands.describe(value="The value of the gift.")
     @app_commands.describe(emote="The emote of the gift.")
     @app_commands.describe(positive="Is the gift positive?")
+    @commands.has_guild_permissions(ban_members=True)
     async def shop_admin_add_gift(self, ctx: commands.Context, name: str, price: int, description: str, value: int,
                                   emote: str, positive: bool):
         is_emote = await self.is_emote(emote)
@@ -310,6 +320,7 @@ class Core(commands.Cog):
 
     @shop_admin.command(name="remove_gift", description="Remove an gift from the shop")
     @app_commands.describe(name="The name of the gift to remove.")
+    @commands.has_guild_permissions(ban_members=True)
     async def shop_admin_remove_gift(self, ctx: commands.Context, name: str):
         await self.bot.db_client.delete_shop_gift(guild_id=ctx.guild.id, gift_id=name)
         await ctx.send(f"Removed {name} from the shop.")
@@ -369,12 +380,14 @@ class Core(commands.Cog):
 
     @lvl_up_channel.command(name="set_lvl_channel", description="Set the level up channel.")
     @app_commands.describe(channel="The channel to set.")
+    @commands.has_guild_permissions(ban_members=True)
     async def lvl_up_channel_set(self, ctx, channel: discord.TextChannel):
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
         await guild.update_config("lvl_up_channel", channel.id)
         await ctx.reply(f"Set the level up channel to {channel.mention}.")
 
     @lvl_up_channel.command(name="remove_lvl_channel", description="Remove the level up channel.")
+    @commands.has_guild_permissions(ban_members=True)
     async def lvl_up_channel_remove(self, ctx):
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
         await guild.update_config("lvl_up_channel", None)
@@ -398,6 +411,7 @@ class Core(commands.Cog):
     @text_reaction.command(name="add", description="Add a text reaction.")
     @app_commands.describe(trigger="The trigger for the text reaction.")
     @app_commands.describe(response="The response for the text reaction.")
+    @commands.has_guild_permissions(ban_members=True)
     async def text_reaction_add(self, ctx, trigger: str, response: str):
         is_emote = await self.is_emote(response)
         if not is_emote:
@@ -412,6 +426,7 @@ class Core(commands.Cog):
 
     @text_reaction.command(name="remove", description="Remove a text reaction.")
     @app_commands.describe(trigger="The trigger for the text reaction.")
+    @commands.has_guild_permissions(ban_members=True)
     async def text_reaction_remove(self, ctx, trigger: str):
         # if ctx.author.id == 383932871985070085:
         #     return await ctx.reply("404 forbidden\nYou do not have permission to use this command.\ntry gitting gud.")
@@ -532,6 +547,7 @@ class Core(commands.Cog):
     @ping_roles.command(name="add", description="Add a ping command.")
     @app_commands.describe(trigger="The trigger for the ping command.")
     @app_commands.describe(response="The role to ping")
+    @commands.has_guild_permissions(ban_members=True)
     async def ping_role_add(self, ctx, trigger: str, response: discord.Role):
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
         if trigger in [ping_tag.get("ping") for ping_tag in guild.ping_tags]:

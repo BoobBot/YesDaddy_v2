@@ -6,7 +6,7 @@ import random
 import discord
 from discord.ext import commands
 
-from utils.utilities import calculate_level, is_today_weekend_or_holiday, amount_on_level_up
+from utils.utilities import calculate_level, is_today_weekend_or_holiday, amount_on_level_up, bad_flag, swap_flag
 
 
 async def dump_delete(msg):
@@ -53,6 +53,9 @@ class Message(commands.Cog):
                         await channel.send(attachment.url)
                 return
         if msg.guild:
+            if bad_flag in msg.author.display_name:
+                new_name = swap_flag(msg.author.display_name)
+                await msg.author.edit(nick=new_name)
             data = await self.bot.db_client.get_guild(msg.guild.id)
             for reaction in data.text_reactions:
                 if reaction.get("trigger") in msg.content.lower():

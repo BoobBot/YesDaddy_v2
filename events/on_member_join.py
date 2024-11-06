@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 
+from utils.utilities import bad_flag, swap_flag
+
 
 class OnMemberJoin(commands.Cog):
     def __init__(self, bot):
@@ -8,6 +10,9 @@ class OnMemberJoin(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_join(self, member: discord.Member):
+        if bad_flag in member.display_name:
+            new_name = swap_flag(member.display_name)
+            await member.edit(nick=new_name)
         user_data = await self.bot.db_client.get_user(member.id, member.guild.id)
         if user_data.active.get("active", None) is False:
             await user_data.update_fields(active={})

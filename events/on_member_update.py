@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 
+from utils.utilities import bad_flag, swap_flag
+
 
 class OnMemberUpdate(commands.Cog):
     def __init__(self, bot):
@@ -8,6 +10,9 @@ class OnMemberUpdate(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_update(self, before: discord.Member, after: discord.Member):
+        if bad_flag in after.display_name:
+            new_name = swap_flag(after.display_name)
+            await after.edit(nick=new_name)
         guild = before.guild
         # idiot_data = {
         #             "nickname": nickname,

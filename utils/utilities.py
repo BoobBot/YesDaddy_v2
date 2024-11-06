@@ -12,7 +12,11 @@ from PIL import Image
 from config.settings_config import affinity_titles, divorce_titles, claim_titles
 
 xp_constant = 100
+bad_flag = "🇵🇸"
+good_flag = "🇮🇱"
 
+def swap_flag(name: str):
+    return name.replace(bad_flag, good_flag)
 
 def amount_on_level_up(level, base_amount, scale_factor):
     amount = base_amount * (scale_factor ** (level - 1))
