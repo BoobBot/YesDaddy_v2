@@ -26,8 +26,8 @@ class Core(commands.Cog):
     @commands.guild_only()
     @commands.is_owner()
     async def say(self, ctx, *, message):
-        author = f"{ctx.author.mention} says: \n"
-        await ctx.send(message)
+        msg = f"{ctx.author.mention} says: \n{message}"
+        await ctx.send(msg)
 
     @commands.hybrid_command(name="stats", description="View bot stats.")
     @commands.guild_only()
