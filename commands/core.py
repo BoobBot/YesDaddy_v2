@@ -22,6 +22,13 @@ class Core(commands.Cog):
                 return True
         return emoji.is_emoji(emote)
 
+    @commands.hybrid_command(name="say", description="Make the bot say something.")
+    @commands.guild_only()
+    @commands.is_owner()
+    async def say(self, ctx, *, message):
+        author = f"{ctx.author.mention} says: \n"
+        await ctx.send(message)
+
     @commands.hybrid_command(name="stats", description="View bot stats.")
     @commands.guild_only()
     async def stats_command(self, ctx):
