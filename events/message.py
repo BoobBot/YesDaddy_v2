@@ -80,13 +80,13 @@ class Message(commands.Cog):
                         return
             user = await self.bot.db_client.get_user(user_id=msg.author.id, guild_id=msg.guild.id)
             bonus_xp = sum(1 for role in msg.author.roles for r in data.bonus_roles if role.id == r.get("role_id"))
-            bonus_xp += 1
-            xp = random.randint(1, 10) * bonus_xp
+            bonus_xp += 5
+            xp = random.randint(10, 100) * bonus_xp
             lvl = calculate_level(user.xp + xp)
             if is_today_weekend_or_holiday():
-                xp *= 2
+                xp *= 4
             if lvl > user.level:
-                lvl_up_bonus = amount_on_level_up(lvl, 100, 1.05)
+                lvl_up_bonus = amount_on_level_up(lvl, 1000, 1.05)
                 guild = await self.bot.db_client.get_guild(msg.guild.id)
                 channel_id = await guild.get_config("lvl_up_channel")
                 if channel_id:

@@ -236,13 +236,13 @@ class Loops(commands.Cog):
                                 data = await self.bot.db_client.get_guild(guild.id)
                                 bonus_xp = sum(
                                     1 for role in member.roles for r in data.bonus_roles if role.id == r.get("role_id"))
-                                bonus_xp += 1
-                                xp = random.randint(10, 50) * bonus_xp
+                                bonus_xp += 10
+                                xp = random.randint(100, 500) * bonus_xp
                                 if is_today_weekend_or_holiday():
-                                    xp *= 2
+                                    xp *= 20
                                 lvl = calculate_level(user.xp + xp)
                                 if lvl > user.level:
-                                    lvl_up_bonus = amount_on_level_up(lvl, 100, 1.07)
+                                    lvl_up_bonus = amount_on_level_up(lvl, 1000, 1.07)
                                     channel_id = await data.get_config("lvl_up_channel")
                                     if channel_id:
                                         channel = member.guild.get_channel(int(channel_id))
