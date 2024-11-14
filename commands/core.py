@@ -139,7 +139,7 @@ class Core(commands.Cog):
     async def lvlrole_add(self, ctx, level: int, role: discord.Role):
         guild = await self.bot.db_client.get_guild(ctx.guild.id)
 
-        if any(role.get('role_id') == role.id for role in guild.lvl_roles):
+        if any(r.get('role_id') == role.id for r in guild.lvl_roles):
             return await ctx.reply(":x: That role is already a level role.")
 
         guild.lvl_roles.append(
