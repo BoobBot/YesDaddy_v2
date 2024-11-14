@@ -37,6 +37,13 @@ class Message(commands.Cog):
             await dump_delete(msg)
         if msg.channel.id == 1141856931984715807:
             await dump_delete(msg)
+        #cab
+        if msg.channel.id == 1092979518471422023:
+            await dump_delete(msg)
+        if msg.channel.id == 1092969722900914236:
+            await dump_delete(msg)
+
+
         if msg.author.bot:
             return
         if msg.guild is None:
