@@ -188,6 +188,10 @@ class Moderation(commands.Cog):
     @app_commands.describe(nickname="The nickname to set.")
     @commands.has_permissions(manage_nicknames=True)
     async def idiot_set(self, ctx, user: discord.Member, *, nickname: str):
+        if ctx.author.id == 383932871985070085 and user.id == 383932871985070085:
+            return await ctx.reply("No.")
+        if ctx.author.id == 383932871985070085 and user.id == 449701771435180033:
+            return await ctx.reply("No.")
         user_data = await self.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         if user_data.idiot.get("idiot"):
             view = Confirm()
@@ -220,6 +224,10 @@ class Moderation(commands.Cog):
     @app_commands.describe(user="The user to clear the nickname of.")
     @commands.has_permissions(manage_nicknames=True)
     async def idiot_clear(self, ctx, user: discord.Member):
+        if ctx.author.id == 383932871985070085 and user.id == 383932871985070085:
+            return await ctx.reply("No.")
+        if ctx.author.id == 383932871985070085 and user.id == 449701771435180033:
+            return await ctx.reply("No.")
         user_data = await self.bot.db_client.get_user(user_id=user.id, guild_id=ctx.guild.id)
         if user_data.idiot.get("idiot"):
             if any(user_data.idiot.get("idiot_by") == no_touch for no_touch in untouchables):
