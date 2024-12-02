@@ -128,14 +128,11 @@ class TicketView(discord.ui.View):
         await interaction.client.db_client.update_ticket(interaction.guild.id, interaction.channel.id, ticket)
         # respond to the user
         wmsg = f"""
-                ## <@&990274958234107914> {user.display_name} {random.choice(post_verification_messages)}
-
-
+                ## <@& 990274958234107914> {user.mention}\n{random.choice(post_verification_messages)}\n
                 -# If you're looking for the NSFW stuff please make sure you carefully read <#957202739492962304>\n
                 * Check out <#1153718280696103002> and <#1141873785562222763>\n
                 * If you need something, hit us up in <#1141914446772588605>\n
-
-                Lastly, join us in <#694641649044685285> and/or <#1131685130533081210> when you're ready.
+                Lastly, join us in <#694641649044685285> and/or <#1131685130533081210> when you're ready.\n
                 """
 
         w_channel = interaction.guild.get_channel(1181580837200859267)
