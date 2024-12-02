@@ -43,9 +43,15 @@ class Profile(commands.Cog):
         cost = user_data.jail.get("fine", 0)
         # TODO add higher fine for longer jail time
         cost_total = subtraction_percentage(user_balance, 90) + cost
-        if cost_total > user_data.balance:
-            return await ctx.reply(f":x: {user.mention} needs ${cost_total} to get out of jail.")
-        await user_data.subtract_balance(cost_total)
+        if user != ctx.author:
+            author_data = await ctx.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
+            if author_data.balance < cost_total:
+                return await ctx.reply(f":x: {ctx.author.mention} needs ${cost_total} to bail out {user.mention}.")
+            await author_data.subtract_balance(cost_total)
+        else:
+            if cost_total > user_data.balance:
+                return await ctx.reply(f":x: {user.mention} needs ${cost_total} to get out of jail.")
+            await user_data.subtract_balance(cost_total)
         # await user_data.update_user({"jail": {}})
         await user_data.update_fields(jail={})
         em = discord.Embed(title=f"{user}'s Bail",
