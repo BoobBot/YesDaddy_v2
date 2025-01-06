@@ -134,12 +134,12 @@ class Loops(commands.Cog):
         try:
             support = self.bot.get_guild(440526421388165120)
             community = self.bot.get_guild(694641646780022818)
-            lounge = self.bot.get_guild(449970824812953612)
+            lounge = self.bot.get_guild(449931404151750657)
             contributor = support.get_role(528615882709008430)
             contributor_plus = support.get_role(528615837305929748)
             kissy_contributor = support.get_role(528615659115118602)
             nitro_booster = support.get_role(585533009797578759)
-            lounge_booster = lounge.get_role(588226955778850816)
+            lounge_booster = lounge.get_role(1323408923901956147)
             for member in contributor.members:
                 if member.id == 248294452307689473:
                     continue
