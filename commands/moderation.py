@@ -178,7 +178,6 @@ class Moderation(commands.Cog):
         await ctx.reply(file=chart_file)
 
     @commands.hybrid_group(name="idiot", description="idiot commands")
-    @commands.has_permissions(manage_nicknames=True)
     @commands.guild_only()
     async def idiot(self, ctx):
         await ctx.send("Please use subcommands: set, clear, check, or list.")
