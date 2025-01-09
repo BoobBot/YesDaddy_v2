@@ -30,7 +30,7 @@ class Help(discord.ui.Select):
         em.set_author(
             name="Help Command",
             icon_url=self.ctx.bot.user.display_avatar.with_static_format("png"),
-            url="https://discord.gg/invite/tailss")
+            url="https://discord.gg/invite/tomgames")
         em.set_footer(
             text=f"Command ran by {self.ctx.author.display_name} at {timestamp}",
             icon_url=self.ctx.author.display_avatar.with_static_format("png"))

@@ -464,8 +464,9 @@ class Core(commands.Cog):
     async def help(self, ctx):
         em = discord.Embed(title="Commands List", colour=discord.Colour.blue())
         timestamp = datetime.datetime.now(datetime.timezone.utc).strftime('%I:%M %p')
-        user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
-        await user_data.update_stat(command=ctx.command.name)
+        if ctx.guild:
+            user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
+            await user_data.update_stat(command=ctx.command.name)
         em.set_author(
             name="Help Command",
             icon_url=self.bot.user.display_avatar.with_static_format("png"),
