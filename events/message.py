@@ -24,7 +24,7 @@ async def process_level_roles(user, member, guild, bot):
             await member.add_roles(guild.get_role(int(role.get("role_id"))))
         else:
             print(role.get("role_id"))
-            await member.remove_role(guild.get_role(int(role.get("role_id"))))
+            await member.remove_roles(guild.get_role(int(role.get("role_id"))))
 
 
 class Message(commands.Cog):
@@ -96,24 +96,25 @@ class Message(commands.Cog):
             if is_today_weekend_or_holiday():
                 xp *= 2
             if lvl > user.level:
-                lvl_up_bonus = amount_on_level_up(lvl, 100, 1.05)
-                guild = await self.bot.db_client.get_guild(msg.guild.id)
-                channel_id = await guild.get_config("lvl_up_channel")
-                if channel_id:
-                    channel = msg.guild.get_channel(int(channel_id))
-                    if channel:
-                        await channel.send(
-                            f"# 🎉Congratulations {msg.author.mention}!\n## <a:lvlup:1138933829185323149> You have leveled up to level {lvl}!\n### <:info:486945488080338944> You have been awarded ${lvl_up_bonus} as a level up bonus!")
+                if msg.guild.id != 1217880601135288493:
+                    lvl_up_bonus = amount_on_level_up(lvl, 100, 1.05)
+                    guild = await self.bot.db_client.get_guild(msg.guild.id)
+                    channel_id = await guild.get_config("lvl_up_channel")
+                    if channel_id:
+                        channel = msg.guild.get_channel(int(channel_id))
+                        if channel:
+                            await channel.send(
+                                f"# 🎉Congratulations {msg.author.mention}!\n## <a:lvlup:1138933829185323149> You have leveled up to level {lvl}!\n### <:info:486945488080338944> You have been awarded ${lvl_up_bonus} as a level up bonus!")
+                        else:
+                            await msg.channel.send(
+                                f"# 🎉Congratulations {msg.author.mention}!\n## <a:lvlup:1138933829185323149> You have leveled up to level {lvl}!\n### <:info:486945488080338944> You have been awarded ${lvl_up_bonus} as a level up bonus!")
                     else:
                         await msg.channel.send(
                             f"# 🎉Congratulations {msg.author.mention}!\n## <a:lvlup:1138933829185323149> You have leveled up to level {lvl}!\n### <:info:486945488080338944> You have been awarded ${lvl_up_bonus} as a level up bonus!")
-                else:
-                    await msg.channel.send(
-                        f"# 🎉Congratulations {msg.author.mention}!\n## <a:lvlup:1138933829185323149> You have leveled up to level {lvl}!\n### <:info:486945488080338944> You have been awarded ${lvl_up_bonus} as a level up bonus!")
-                user.level = lvl
+                    user.level = lvl
 
-                await user.update_fields(level=lvl, balance=user.balance + lvl_up_bonus)
-                await process_level_roles(user, msg.author, msg.guild, self.bot)
+                    await user.update_fields(level=lvl, balance=user.balance + lvl_up_bonus)
+                    await process_level_roles(user, msg.author, msg.guild, self.bot)
             await user.update_fields(xp=user.xp + xp, messages=user.messages + 1, last_seen=msg.created_at, active={})
 
 
