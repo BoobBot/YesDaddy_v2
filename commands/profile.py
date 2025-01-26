@@ -607,6 +607,33 @@ class Profile(commands.Cog):
             await user_data.update_fields(inventory=user_data.inventory)
         return await ctx.reply(f"{item_data.get('emote')} {item_data.get('name')} equipped.")
 
+    @inventory_item.command(name="unequip", description="unequip item")
+    @app_commands.describe(item_type="type of item to unequip")
+    async def inventory_item_unequip(self, ctx, item_type: str):
+        user_data = await self.bot.db_client.get_user(user_id=ctx.author.id, guild_id=ctx.guild.id)
+
+        # Check if the user has equipped items
+        if not user_data.equipped_items.get(item_type):
+            return await ctx.reply(f"You don't have any item equipped in the {item_type} slot.")
+
+        # Retrieve the equipped item data
+        unequipped_item = user_data.equipped_items.pop(item_type)
+
+        # Add the unequipped item back to inventory
+        inventory_items = user_data.inventory.get("items", [])
+        matching_item = next((i for i in inventory_items if i.get("name") == unequipped_item["name"]), None)
+
+        if matching_item:
+            matching_item["quantity"] += 1
+        else:
+            inventory_items.append({**unequipped_item, "quantity": 1})
+
+        # Update user data
+        user_data.inventory["items"] = inventory_items
+        await user_data.update_fields(equipped_items=user_data.equipped_items, inventory=user_data.inventory)
+
+        return await ctx.reply(f"{unequipped_item.get('emote')} {unequipped_item.get('name')} unequipped.")
+
     @inventory_item_equip.autocomplete('item')
     async def equip_item_autocomplete(self, interaction: discord.Interaction, current: str) -> List[
         app_commands.Choice[str]]:
