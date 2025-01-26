@@ -607,6 +607,18 @@ class Profile(commands.Cog):
             await user_data.update_fields(inventory=user_data.inventory)
         return await ctx.reply(f"{item_data.get('emote')} {item_data.get('name')} equipped.")
 
+    @inventory_item_equip.autocomplete('item')
+    async def equip_item_autocomplete(self, interaction: discord.Interaction, current: str) -> List[
+        app_commands.Choice[str]]:
+        user_data = await self.bot.db_client.get_user(user_id=interaction.user.id, guild_id=interaction.guild.id)
+        items = user_data.inventory.get("items")
+        items = [item for item in items if item.get("equippable")]
+        return [
+                   app_commands.Choice(name=item.get('name'), value=str(item.get('name')))
+                   for item in items
+                   if not current or search(item.get('name').lower(), current.lower())
+               ][:25]
+
     @inventory_item.command(name="unequip", description="unequip item")
     @app_commands.describe(item_type="type of item to unequip")
     async def inventory_item_unequip(self, ctx, item_type: str):
@@ -634,16 +646,16 @@ class Profile(commands.Cog):
 
         return await ctx.reply(f"{unequipped_item.get('emote')} {unequipped_item.get('name')} unequipped.")
 
-    @inventory_item_equip.autocomplete('item')
-    async def equip_item_autocomplete(self, interaction: discord.Interaction, current: str) -> List[
+    @inventory_item_unequip.autocomplete('item_type')
+    async def unequip_item_autocomplete(self, interaction: discord.Interaction, current: str) -> List[
         app_commands.Choice[str]]:
         user_data = await self.bot.db_client.get_user(user_id=interaction.user.id, guild_id=interaction.guild.id)
-        items = user_data.inventory.get("items")
-        items = [item for item in items if item.get("equippable")]
+        equipped_items = user_data.equipped_items
+
         return [
-                   app_commands.Choice(name=item.get('name'), value=str(item.get('name')))
-                   for item in items
-                   if not current or search(item.get('name').lower(), current.lower())
+                   app_commands.Choice(name=slot, value=slot)
+                   for slot in equipped_items.keys()
+                   if not current or slot.lower().startswith(current.lower())
                ][:25]
 
     @commands.hybrid_group(name="waifu", description="waifu commands")
