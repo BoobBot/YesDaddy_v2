@@ -67,7 +67,7 @@ class CountingCog(commands.Cog):
             if number == self.current_number + 1:
                 # Update the count
                 self.current_number = number
-                await self.update_channel_topic(message.channel)
+                #await self.update_channel_topic(message.channel)
                 self.save_count()  # Persist the updated count
 
             else:
