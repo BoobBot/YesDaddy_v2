@@ -29,7 +29,7 @@ class Config:
                                    'commands.currency', 'commands.gambling', 'commands.profile',
                                    'commands.transactions', 'commands.dev', 'commands.moderation',
                                    'events.on_member_update', 'events.on_member_join',
-                                   'events.on_command', 'commands.race', 'commands.monopoly']  # List of initial extensions
+                                   'events.on_command', 'commands.race', 'commands.monopoly', 'commands.counting']  # List of initial extensions
 
         #self.initial_extensions = ['events.ready']
         # Use environment variable as prefix
