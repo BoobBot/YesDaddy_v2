@@ -284,9 +284,9 @@ class Moderation(commands.Cog):
     @commands.guild_only()
     async def selfban(self, interaction: discord.Interaction):
         # should be removed
-        if interaction.user.id == 596330574109474848:
-            return await interaction.response.send_message(
-                "Tom said No, Stop fucking trying <:pikascream:585952447801982977>")
+        # if interaction.user.id == 596330574109474848:
+        #     return await interaction.response.send_message(
+        #         "Tom said No, Stop fucking trying <:pikascream:585952447801982977>")
 
         if any(role.id == 694641646922498069 for role in interaction.user.roles):
             return await interaction.response.send_message(
