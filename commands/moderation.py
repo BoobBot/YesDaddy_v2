@@ -319,7 +319,7 @@ class Moderation(commands.Cog):
             await ctx.send_help(ctx.command)
 
     @massnick.command(name="start", description="begin a massnick")
-    @commands.has_permissions(manage_nicknames=True)
+    @commands.has_permissions(manage_server=True)
     @app_commands.describe(nickname="What you want the massnick to be. This is mutually exclusive to random.",
                            role="The role you want to massnick.",
                            random="Whether to use a random name for each member.",
@@ -356,7 +356,7 @@ class Moderation(commands.Cog):
         await ctx.send("Okie dokie, I'll hit you up when I'm finished :)")
 
     @massnick.command(name="cancel", description="Cancel your currently running massnick")
-    @commands.has_permissions(manage_nicknames=True)
+    @commands.has_permissions(manage_server=True)
     async def massnick_cancel(self, ctx: commands.Context):
         if self.nickname_task is not None:
             if self.nickname_task.cancelling() > 0:
@@ -372,7 +372,7 @@ class Moderation(commands.Cog):
         return await ctx.send("What are you cancelling if I'm not running a massnick?", ephemeral=True)
 
     @massnick.command(name="reset", description="Reset everyones names")
-    @commands.has_permissions(manage_nicknames=True)
+    @commands.has_permissions(manage_server=True)
     @app_commands.describe(role="Will reset everyone with this role's name")
     async def massnick_reset(self, ctx: commands.Context, role: Optional[discord.Role]):
         # if self.nickname_task is not None:
