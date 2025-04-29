@@ -1,0 +1,14 @@
+[Unit]
+Description=yd bot
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/yesdaddy
+ExecStart=/home/yesdaddy/venv/bin/python3.11 /home/yesdaddy/app.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
