@@ -136,12 +136,14 @@ class Loops(commands.Cog):
             community = self.bot.get_guild(694641646780022818)
             lounge = self.bot.get_guild(449931404151750657)
             dyna = self.bot.get_guild(1217880601135288493)
+            cab = self.bot.get_guild(1091163666071687168)
             contributor = support.get_role(528615882709008430)
             contributor_plus = support.get_role(528615837305929748)
             kissy_contributor = support.get_role(528615659115118602)
             nitro_booster = support.get_role(585533009797578759)
             lounge_booster = lounge.get_role(1323408923901956147)
             dyna_booster = dyna.get_role(1315146916962766949)
+            cab_booster = cab.get_role(1092271098139254844)
             for member in contributor.members:
                 if member.id == 248294452307689473:
                     continue
@@ -197,6 +199,16 @@ class Loops(commands.Cog):
                 except Exception as e:
                     pass
             for member in dyna_booster.members:
+                if member.id == 248294452307689473:
+                    continue
+                try:
+                    if member in community.members:
+                        mem = await community.fetch_member(member.id)
+                        if mem:
+                            await mem.add_roles(community.get_role(872596931598225489))
+                except Exception as e:
+                    pass
+            for member in cab_booster.members:
                 if member.id == 248294452307689473:
                     continue
                 try:

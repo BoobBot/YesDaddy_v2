@@ -80,23 +80,41 @@ async def get_average_color(url):
                 return discord.Colour.from_rgb(avg_r, avg_g, avg_b)
 
 
-async def generate_embed_color(member):
-    embed_color = None
-    if hasattr(member, "roles"):
-        roles_with_color = [role for role in reversed(
-            member.roles) if role.color != discord.Colour.default()]
+async def generate_embed_color(entity):
+    """
+    Generate an appropriate embed color based on a member's roles or avatar.
+    If the entity is a user without roles (discord.User), fallback to avatar or random color.
 
+    Parameters:
+        entity (discord.Member | discord.User): The entity for which to generate an embed color.
+
+    Returns:
+        discord.Colour: The calculated embed color.
+    """
+    embed_color = None
+
+    # Check for roles if the entity is a Member (not just a User)
+    if isinstance(entity, discord.Member) and hasattr(entity, "roles"):
+        roles_with_color = [
+            role for role in reversed(entity.roles)
+            if role.color != discord.Colour.default()
+        ]
+
+        # Use the first role with a color if available
         if roles_with_color:
             embed_color = roles_with_color[0].color
 
-    if not embed_color and member.avatar:
-        avatar_url = member.avatar.url
-        avg_color = await get_average_color(avatar_url)
-        return avg_color
-    elif not embed_color and not member.avatar:
-        return discord.Colour(random.randint(0, 0xFFFFFF))
-    else:
-        return embed_color
+    # If no color from roles, try to generate a color from the avatar
+    if not embed_color:
+        if entity.avatar:  # User/Member avatar
+            avatar_url = entity.avatar.url
+            avg_color = await get_average_color(avatar_url)
+            return avg_color
+        else:
+            # If no avatar, fallback to a random color
+            return discord.Colour(random.randint(0, 0xFFFFFF))
+
+    return embed_color
 
 
 def calculate_level(user_xp):
