@@ -45,6 +45,8 @@ class Message(commands.Cog):
             await dump_delete(msg)
         if msg.channel.id == 1092969722900914236:
             await dump_delete(msg)
+        if msg.channel.id == 1378806059497558241:
+            await dump_delete(msg)
 
 
         if msg.author.bot:
