@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 
 from utils.utilities import bad_flag, swap_flag
+from views.sc_view import ReferralView
 
 
 class OnMemberJoin(commands.Cog):
@@ -24,6 +25,16 @@ class OnMemberJoin(commands.Cog):
         if member.guild.id == 440526421388165120:
             role = member.guild.get_role(1016525828575727736)
             await member.add_roles(role, reason="Member joined")
+
+        if member.guild.id == 694641646780022818 or 440526421388165120:
+            try:
+                await member.send(
+                    "👋 Welcome to the server! Ready to explore the stars?\nUse this referral link to join Star Citizen and receive bonus rewards:",
+                    view=ReferralView()
+                )
+            except discord.Forbidden:
+               pass
+
 
 
 

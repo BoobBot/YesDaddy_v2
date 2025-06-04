@@ -15,6 +15,7 @@ from database import DiscordDatabase
 from utils.logger import setup_logger
 from views import tickets_view, support_view, support_channel_view
 from views.rule_button_view import RuleButton
+from views.sc_view import ReferralView
 from views.verification_view import VerificationView
 
 sys.stdin.reconfigure(encoding="utf-8")
@@ -59,6 +60,7 @@ class Bot(commands.Bot):
         self.add_view(RuleButton())
         self.add_view(support_view.SupportTicketView())
         self.add_view(support_channel_view.SupportChannelView())
+        self.add_view(ReferralView())
         self.remove_command('help')
 
         for extension in self.initial_extensions:
