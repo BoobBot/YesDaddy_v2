@@ -29,7 +29,10 @@ class OnMemberJoin(commands.Cog):
         if member.guild.id == 694641646780022818 or 440526421388165120:
             try:
                 await member.send(
-                    "👋 Welcome to the server! Ready to explore the stars?\nUse this referral link to join Star Citizen and receive bonus rewards:",
+                    "👋 Welcome to the server! Ready to explore the stars?\n"
+                    "Use this referral link to join Star Citizen and receive bonus rewards\n"
+                    "Dont like the button? here is a link too: https://www.robertsspaceindustries.com/enlist?referral=STAR-9YPL-WBP9\n"
+                    "Did you buy a game package? Open a ticket for a role.\n",
                     view=ReferralView()
                 )
             except discord.Forbidden:
