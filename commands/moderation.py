@@ -291,7 +291,7 @@ class Moderation(commands.Cog):
             print("yes")
             if user_data.idiot:
                 print("yes2")
-                if user_data.get("idiot").get("idiot", False):
+                if user_data.idiot.get("idiot", False):
                     print("yes3")
                     user_data.idiot["idiot"] = False
                     user_data.idiot["nickname"] = None
