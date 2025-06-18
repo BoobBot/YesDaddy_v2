@@ -286,8 +286,8 @@ class Moderation(commands.Cog):
     async def idiot_nuke(self, ctx):
         await ctx.defer()
         count = 0
-        guild_data = await self.bot.db_client.get_guild(ctx.guild.id)
-        for user_data in guild_data.users:
+        users = await self.bot.db_client.get_users_in_guild(ctx.guild.id)
+        for user_data in users:
             print("yes")
             if 'idiot' in user_data:
                 print("yes2")
