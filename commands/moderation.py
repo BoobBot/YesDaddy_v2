@@ -289,7 +289,7 @@ class Moderation(commands.Cog):
         users = await self.bot.db_client.get_users_in_guild(ctx.guild.id)
         for user_data in users:
             print("yes")
-            if 'idiot' in user_data:
+            if user_data.idiot:
                 print("yes2")
                 if user_data.get("idiot").get("idiot", False):
                     print("yes3")
