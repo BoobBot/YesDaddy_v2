@@ -285,20 +285,25 @@ class Moderation(commands.Cog):
     @commands.has_permissions(manage_nicknames=True)
     async def idiot_nuke(self, ctx):
         await ctx.defer()
+        count = 0
         guild_data = await self.bot.db_client.get_guild(ctx.guild.id)
         for user_data in guild_data.users:
+            print("yes")
             if 'idiot' in user_data:
+                print("yes2")
                 if user_data.get("idiot").get("idiot", False):
+                    print("yes3")
                     user_data.idiot["idiot"] = False
                     user_data.idiot["nickname"] = None
                     user_data.idiot["idiot_by"] = None
                     user_data.idiot["timestamp"] = None
                     user_data.idiot["change"] = None
                     await user_data.update_fields(idiot=user_data.idiot)
+                    count += 1
                     user = ctx.guild.get_member(user_data.user_id)
                     if user:
                         await user.edit(nick=None, reason="what a idiot")
-        return await ctx.reply("done.")
+        return await ctx.reply(f"done, cleared {count} idiots.")
 
     @app_commands.command(name="selfban", description="Ban yourself from the server.")
     @commands.guild_only()
