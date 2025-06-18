@@ -302,7 +302,11 @@ class Moderation(commands.Cog):
                     count += 1
                     user = ctx.guild.get_member(user_data.user_id)
                     if user:
-                        await user.edit(nick=None, reason="what a idiot")
+                        try:
+                            await user.edit(nick=None, reason="what a idiot")
+                        except:
+                            self.log.error(f"Failed to clear idiot nickname for {user} ({user.id})")
+                            continue
         return await ctx.reply(f"done, cleared {count} idiots.")
 
     @app_commands.command(name="selfban", description="Ban yourself from the server.")
