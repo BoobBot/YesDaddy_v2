@@ -223,6 +223,7 @@ class Moderation(commands.Cog):
     @app_commands.describe(user="The user to clear the nickname of.")
     @commands.has_permissions(manage_nicknames=True)
     async def idiot_clear(self, ctx, user: discord.Member):
+        await ctx.defer()
         if ctx.author.id == 383932871985070085 and user.id == 383932871985070085:
             return await ctx.reply("No.")
         if ctx.author.id == 383932871985070085 and user.id == 449701771435180033:
@@ -231,8 +232,7 @@ class Moderation(commands.Cog):
         if user_data.idiot.get("idiot"):
             if any(user_data.idiot.get("idiot_by") == no_touch for no_touch in untouchables):
                 if not any(ctx.author.id == no_touch for no_touch in untouchables):
-                    await ctx.reply("You can't clear this idiots nickname, suffer instead.")
-                    return
+                    return await ctx.reply("You can't clear this idiots nickname, suffer instead.")
             user_data.idiot["idiot"] = False
             user_data.idiot["nickname"] = None
             user_data.idiot["idiot_by"] = None
@@ -240,9 +240,9 @@ class Moderation(commands.Cog):
             user_data.idiot["change"] = None
             await user_data.update_fields(idiot=user_data.idiot)
             await user.edit(nick=None, reason="what a idiot")
-            await ctx.reply(f"Cleared {user.mention}'s nickname.")
+            return await ctx.reply(f"Cleared {user.mention}'s nickname.")
         else:
-            await ctx.reply(f"{user.mention} is not an idiot.")
+            return await ctx.reply(f"{user.mention} is not an idiot.")
 
     @idiot.command(name="check", description="check if a user is an idiot")
     @app_commands.describe(user="The user to check.")
@@ -279,6 +279,26 @@ class Moderation(commands.Cog):
         em.title = "Idiots"
         em.description = "\n\n".join(idiots)
         await ctx.reply(embed=em)
+
+
+    @idiot.command(name="massclear", description="clear all idiots")
+    @commands.has_permissions(manage_nicknames=True)
+    async def idiot_nuke(self, ctx):
+        await ctx.defer()
+        guild_data = await self.bot.db_client.get_guild(ctx.guild.id)
+        for user_data in guild_data.users:
+            if 'idiot' in user_data:
+                if user_data.get("idiot").get("idiot", False):
+                    user_data.idiot["idiot"] = False
+                    user_data.idiot["nickname"] = None
+                    user_data.idiot["idiot_by"] = None
+                    user_data.idiot["timestamp"] = None
+                    user_data.idiot["change"] = None
+                    await user_data.update_fields(idiot=user_data.idiot)
+                    user = ctx.guild.get_member(user_data.user_id)
+                    if user:
+                        await user.edit(nick=None, reason="what a idiot")
+        return await ctx.reply("done.")
 
     @app_commands.command(name="selfban", description="Ban yourself from the server.")
     @commands.guild_only()
