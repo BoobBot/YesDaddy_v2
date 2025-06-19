@@ -345,7 +345,7 @@ class Loops(commands.Cog):
                 if r.status != 200:
                     self.bot.log.error(f"Failed to change role color: {r.status} {await r.text()}")
                 else:
-                    self.bot.log.info(f"Changed role color to {non_yellow_color}")
+                    self.bot.log.info(f"Changed role color")
 
                 r1, g1, b1 = self.generate_random_cmyk_no_yellow_and_convert_to_rgb()
                 r2, g2, b2 = self.generate_random_cmyk_no_yellow_and_convert_to_rgb()
@@ -365,7 +365,7 @@ class Loops(commands.Cog):
                 if r.status != 200:
                     self.bot.log.error(f"Failed to change role color: {r.status} {await r.text()}")
                 else:
-                    self.bot.log.info(f"Changed role color to {non_yellow_color}")
+                    self.bot.log.info(f"Changed role color")
         except Exception as e:
             self.bot.log.error(e)
             pass
