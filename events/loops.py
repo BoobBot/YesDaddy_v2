@@ -304,66 +304,71 @@ class Loops(commands.Cog):
 
     @tasks.loop(minutes=5)  # Run the task every 5 minutes
     async def change_role_color(self):
-        guild = self.bot.get_guild(694641646780022818)
-        role_id_1 = 694641646901395506
-        role_id_2 = 694641646922498068
-        role_id_3 = 931907174622449734
-        role_1 = guild.get_role(role_id_1)
-        role_2 = guild.get_role(role_id_2)
-        role_3 = guild.get_role(role_id_3)
+        try:
+            guild = self.bot.get_guild(694641646780022818)
+            role_id_1 = 694641646901395506
+            role_id_2 = 694641646922498068
+            role_id_3 = 931907174622449734
+            role_1 = guild.get_role(role_id_1)
+            role_2 = guild.get_role(role_id_2)
+            role_3 = guild.get_role(role_id_3)
 
-
-        r1, g1, b1 = self.generate_random_cmyk_no_yellow_and_convert_to_rgb()
-        r2, g2, b2 = self.generate_random_cmyk_no_yellow_and_convert_to_rgb()
-
-        primary_color = self.rgb_to_int(r1, g1, b1)
-        secondary_color = self.rgb_to_int(r2, g2, b2)
-
-        if role_1 and role_2:
-            non_yellow_color = None
-
-            while not non_yellow_color or self.is_yellow(non_yellow_color):
-                non_yellow_color = discord.Color.random()
-            await role_1.edit(color=non_yellow_color)
-            #await role_2.edit(color=discord.Color.random())
-            url = f"https://discord.com/api/v10/guilds/694641646780022818/roles/{role_id_2}"
-            headers = {
-                "Authorization": f"Bot {self.bot.http.token}",
-                "Content-Type": "application/json"
-            }
-
-            json_data = {
-                "color": discord.Color.random(),  # fallback solid color
-                "colors": {
-                    "primary_color": primary_color,
-                    "secondary_color": secondary_color
-                }
-            }
-            r = await self.bot.web_client.patch(url, json=json_data, headers=headers)
-            if r.status != 200:
-                self.bot.log.error(f"Failed to change role color: {r.status} {await r.text()}")
-            else:
-                self.bot.log.info(f"Changed role color to {non_yellow_color}")
 
             r1, g1, b1 = self.generate_random_cmyk_no_yellow_and_convert_to_rgb()
             r2, g2, b2 = self.generate_random_cmyk_no_yellow_and_convert_to_rgb()
 
             primary_color = self.rgb_to_int(r1, g1, b1)
             secondary_color = self.rgb_to_int(r2, g2, b2)
-            url = f"https://discord.com/api/v10/guilds/694641646780022818/roles/{role_id_3}"
 
-            json_data = {
-                "color": discord.Color.random(),  # fallback solid color
-                "colors": {
-                    "primary_color": primary_color,
-                    "secondary_color": secondary_color
+            if role_1 and role_2:
+                non_yellow_color = None
+
+                while not non_yellow_color or self.is_yellow(non_yellow_color):
+                    non_yellow_color = discord.Color.random()
+                await role_1.edit(color=non_yellow_color)
+                #await role_2.edit(color=discord.Color.random())
+                url = f"https://discord.com/api/v10/guilds/694641646780022818/roles/{role_id_2}"
+                headers = {
+                    "Authorization": f"Bot {self.bot.http.token}",
+                    "Content-Type": "application/json"
                 }
-            }
-            r = await self.bot.web_client.patch(url, json=json_data, headers=headers)
-            if r.status != 200:
-                self.bot.log.error(f"Failed to change role color: {r.status} {await r.text()}")
-            else:
-                self.bot.log.info(f"Changed role color to {non_yellow_color}")
+
+                json_data = {
+                    "color": discord.Color.random(),  # fallback solid color
+                    "colors": {
+                        "primary_color": primary_color,
+                        "secondary_color": secondary_color
+                    }
+                }
+                print(json_data)
+                r = await self.bot.web_client.patch(url, json=json_data, headers=headers)
+                if r.status != 200:
+                    self.bot.log.error(f"Failed to change role color: {r.status} {await r.text()}")
+                else:
+                    self.bot.log.info(f"Changed role color to {non_yellow_color}")
+
+                r1, g1, b1 = self.generate_random_cmyk_no_yellow_and_convert_to_rgb()
+                r2, g2, b2 = self.generate_random_cmyk_no_yellow_and_convert_to_rgb()
+
+                primary_color = self.rgb_to_int(r1, g1, b1)
+                secondary_color = self.rgb_to_int(r2, g2, b2)
+                url = f"https://discord.com/api/v10/guilds/694641646780022818/roles/{role_id_3}"
+
+                json_data = {
+                    "color": discord.Color.random(),  # fallback solid color
+                    "colors": {
+                        "primary_color": primary_color,
+                        "secondary_color": secondary_color
+                    }
+                }
+                r = await self.bot.web_client.patch(url, json=json_data, headers=headers)
+                if r.status != 200:
+                    self.bot.log.error(f"Failed to change role color: {r.status} {await r.text()}")
+                else:
+                    self.bot.log.info(f"Changed role color to {non_yellow_color}")
+        except Exception as e:
+            self.bot.log.error(e)
+            pass
 
 
 
