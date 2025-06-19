@@ -329,9 +329,12 @@ class Loops(commands.Cog):
                     "secondary_color": discord.Color.random()
                 }
             }
+            r = await self.bot.web_client.patch(url, json=json_data, headers=headers)
+            if r.status != 200:
+                self.bot.log.error(f"Failed to change role color: {r.status} {await r.text()}")
+            else:
+                self.bot.log.info(f"Changed role color to {non_yellow_color}")
 
-
-            await self.bot.web_client.patch(url, json=json_data, headers=headers)
 
 
     @staticmethod
