@@ -334,7 +334,7 @@ class Loops(commands.Cog):
                 }
 
                 json_data = {
-                    "color": discord.Color.random(),  # fallback solid color
+                    "color": primary_color,  # fallback solid color
                     "colors": {
                         "primary_color": primary_color,
                         "secondary_color": secondary_color
@@ -355,7 +355,7 @@ class Loops(commands.Cog):
                 url = f"https://discord.com/api/v10/guilds/694641646780022818/roles/{role_id_3}"
 
                 json_data = {
-                    "color": discord.Color.random(),  # fallback solid color
+                    "color": primary_color,  # fallback solid color
                     "colors": {
                         "primary_color": primary_color,
                         "secondary_color": secondary_color
