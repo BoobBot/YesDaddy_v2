@@ -314,9 +314,9 @@ class Loops(commands.Cog):
 
             while not non_yellow_color or self.is_yellow(non_yellow_color):
                 non_yellow_color = discord.Color.random()
-            #await role_1.edit(color=non_yellow_color)
-            await role_2.edit(color=discord.Color.random())
-            url = f"https://discord.com/api/v10/guilds/694641646780022818/roles/694641646901395506"
+            await role_1.edit(color=non_yellow_color)
+            #await role_2.edit(color=discord.Color.random())
+            url = f"https://discord.com/api/v10/guilds/694641646780022818/roles/694641646922498068"
             headers = {
                 "Authorization": f"Bot {self.bot.http.token}",
                 "Content-Type": "application/json"
