@@ -129,13 +129,11 @@ class TicketView(discord.ui.View):
         # respond to the user
         wmsg = f"""## <@&990274958234107914> {user.mention}\n
 {random.choice(post_verification_messages)}\n
--# If you're looking for the NSFW stuff please make sure you carefully read <#957202739492962304>\n
 * Check out <#1153718280696103002> and <#1141873785562222763>\n
 * If you need something, hit us up in <#1141914446772588605>\n
-Lastly, join us in <#694641649044685285> and/or <#1131685130533081210> when you're ready.\n
 """
 
-        w_channel = interaction.guild.get_channel(1181580837200859267)
+        w_channel = interaction.guild.get_channel(694641649044685285)
         await w_channel.send(wmsg, allowed_mentions=discord.AllowedMentions.all())
         await interaction.followup.send("Ticket verified!", ephemeral=True)
         await asyncio.sleep(5)
