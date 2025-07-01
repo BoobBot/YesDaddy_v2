@@ -308,10 +308,8 @@ class Loops(commands.Cog):
             guild = self.bot.get_guild(694641646780022818)
             role_id_1 = 694641646901395506
             role_id_2 = 694641646922498068
-            role_id_3 = 931907174622449734
             role_1 = guild.get_role(role_id_1)
             role_2 = guild.get_role(role_id_2)
-            role_3 = guild.get_role(role_id_3)
 
 
             r1, g1, b1 = self.generate_random_cmyk_no_yellow_and_convert_to_rgb()
@@ -347,25 +345,6 @@ class Loops(commands.Cog):
                 else:
                     self.bot.log.info(f"Changed role color")
 
-                r1, g1, b1 = self.generate_random_cmyk_no_yellow_and_convert_to_rgb()
-                r2, g2, b2 = self.generate_random_cmyk_no_yellow_and_convert_to_rgb()
-
-                primary_color = self.rgb_to_int(r1, g1, b1)
-                secondary_color = self.rgb_to_int(r2, g2, b2)
-                url = f"https://discord.com/api/v10/guilds/694641646780022818/roles/{role_id_3}"
-
-                json_data = {
-                    "color": primary_color,  # fallback solid color
-                    "colors": {
-                        "primary_color": primary_color,
-                        "secondary_color": secondary_color
-                    }
-                }
-                r = await self.bot.web_client.patch(url, json=json_data, headers=headers)
-                if r.status != 200:
-                    self.bot.log.error(f"Failed to change role color: {r.status} {await r.text()}")
-                else:
-                    self.bot.log.info(f"Changed role color")
         except Exception as e:
             self.bot.log.error(e)
             pass
