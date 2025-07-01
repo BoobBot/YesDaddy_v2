@@ -127,7 +127,8 @@ class TicketView(discord.ui.View):
         # store the ticket
         await interaction.client.db_client.update_ticket(interaction.guild.id, interaction.channel.id, ticket)
         # respond to the user
-        wmsg = f"""## <@&990274958234107914> {user.mention}\n{random.choice(post_verification_messages)}\nCheck out <#1153718280696103002> and <#1141873785562222763>\nIf you need something, hit us up in <#1141914446772588605>\n"""
+        wmsg = f"""## <@&990274958234107914> {user.mention}\n{random.choice(post_verification_messages)}\n* Check out <#1153718280696103002> and <#1141873785562222763>\n* If you need something, hit us up in <#1141914446772588605>\n"""
+
         w_channel = interaction.guild.get_channel(694641649044685285)
         await w_channel.send(wmsg, allowed_mentions=discord.AllowedMentions.all())
         await interaction.followup.send("Ticket verified!", ephemeral=True)
