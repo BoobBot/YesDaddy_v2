@@ -13,7 +13,7 @@ class RecreateWithAttachments(commands.Cog):
         await ctx.send(f"🔄 Recreating from {source_channel.mention} to {dest_channel.mention}...")
 
         threads = {t.id: t for t in source_channel.threads if isinstance(t, discord.Thread)}
-        await ctx.send("Found {len(threads)} threads in source channel.")
+        await ctx.send(f"Found {len(threads)} threads in source channel.")
 
         async for msg in source_channel.history(limit=None, oldest_first=True):
             if msg.type != discord.MessageType.default:
@@ -37,7 +37,6 @@ class RecreateWithAttachments(commands.Cog):
                     new_thread = await new_msg.create_thread(
                         name=thread.name,
                         auto_archive_duration=thread.auto_archive_duration,
-                        type=thread.type,
                     )
                 except Exception as e:
                     print(f"❌ Failed to create thread {thread.name}: {e}")
