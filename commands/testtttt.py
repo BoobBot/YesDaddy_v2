@@ -9,20 +9,11 @@ class RecreateWithAttachments(commands.Cog):
         self.bot = bot
 
     @commands.command(name="recreate")
-    async def recreate(
-        self,
-        ctx,
-        source_channel: discord.TextChannel,
-        dest_channel: discord.TextChannel,
-    ):
+    async def recreate(self, ctx, source_channel: discord.TextChannel, dest_channel: discord.TextChannel):
         await ctx.send(f"🔄 Recreating from {source_channel.mention} to {dest_channel.mention}...")
 
-        # Fetch all threads (active + archived)
-        threads = await source_channel.guild.fetch_active_threads()
-        archived = await source_channel.guild.fetch_archived_threads(source_channel)
-        all_threads = {t.id: t for t in (*threads.threads, *archived.threads)}
-
-        print(f"Found {len(all_threads)} threads total")
+        threads = {t.id: t for t in source_channel.threads if isinstance(t, discord.Thread)}
+        print(f"Found {len(threads)} threads in source channel.")
 
         async for msg in source_channel.history(limit=None, oldest_first=True):
             if msg.type != discord.MessageType.default:
@@ -38,21 +29,21 @@ class RecreateWithAttachments(commands.Cog):
                 print(f"❌ Failed to send message: {e}")
                 continue
 
-            # Check if a thread exists with id == msg.id (meaning the thread was created from this message)
-            old_thread = all_threads.get(msg.id)
-            if old_thread:
-                print(f"🧵 Creating thread: {old_thread.name}")
+            # Match threads created from messages (thread.id == message.id)
+            thread = threads.get(msg.id)
+            if thread:
+                print(f"🧵 Recreating thread: {thread.name}")
                 try:
                     new_thread = await new_msg.create_thread(
-                        name=old_thread.name,
-                        auto_archive_duration=old_thread.auto_archive_duration,
-                        type=old_thread.type,
+                        name=thread.name,
+                        auto_archive_duration=thread.auto_archive_duration,
+                        type=thread.type,
                     )
                 except Exception as e:
-                    print(f"❌ Failed to create thread {old_thread.name}: {e}")
+                    print(f"❌ Failed to create thread {thread.name}: {e}")
                     continue
 
-                async for tmsg in old_thread.history(limit=None, oldest_first=True):
+                async for tmsg in thread.history(limit=None, oldest_first=True):
                     if tmsg.type != discord.MessageType.default:
                         continue
                     t_files = await self.download_attachments(tmsg.attachments)
@@ -64,7 +55,7 @@ class RecreateWithAttachments(commands.Cog):
                     except Exception as e:
                         print(f"❌ Failed to send in thread: {e}")
 
-        await ctx.send("✅ Re-creation complete.")
+        await ctx.send("✅ Done copying channel with threads.")
 
     async def download_attachments(self, attachments):
         files = []
