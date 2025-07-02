@@ -39,7 +39,6 @@ class RecreateWithAllThreads(commands.Cog):
                 new_thread = await placeholder.create_thread(
                     name=thread.name,
                     auto_archive_duration=thread.auto_archive_duration,
-                    type=discord.ChannelType.public_thread
                 )
 
                 print(f"✅ Created thread: {new_thread.name} (ID: {new_thread.id})")
