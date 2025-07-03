@@ -125,7 +125,9 @@ class Dev(commands.Cog):
         "verified-general": "💬",
         "sfw-events": "🎟️",
         "introductions": "🙋",
-
+        "yesdaddy": "😳",
+        "staff-information": "🧾",
+        "on-duty": "🕓",
 
     }
 
