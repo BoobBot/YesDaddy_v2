@@ -105,7 +105,28 @@ class Dev(commands.Cog):
         "place-of-testing": "🧪",
         "staff-rebrand-assets": "🎯",
         "avatars-banners": "🧑‍🎨",
-        "i-survived-2024": "🧾"
+        "i-survived-2024": "🧾",
+        "verified-logs": "📁",
+        "support-logs": "📁",
+        "unpunishment-cats": "🐾",
+        "events-only": "📅",
+        "cases": "📂",
+        "admin-chat": "🧠",
+        "events": "🎇",
+        "bot-news": "📣",
+        "information": "🧠",
+        "meet-the-staff": "🧑‍🔧",
+        "verified-news": "📰",
+        "verified-faq": "❓",
+        "verified-roles・🧻": "🧻",  # Special character may need normalization
+        "nsfw-information": "🔞",
+        "giveaways": "🎁",
+        "suggestions": "💡",
+        "verified-general": "💬",
+        "sfw-events": "🎟️",
+        "introductions": "🙋",
+
+
     }
 
 
