@@ -30,6 +30,121 @@ class Dev(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    # Your emoji mapping here
+    EMOJI_REPLACEMENTS = {
+        # Categories
+        "Tickets": "🧾",
+        "Staff": "🧑‍🔧",
+        "Important": "🗣️",
+        "Information": "🧿",
+        "General (SFW)": "💬",
+        "Verified Info": "🛡️",
+        "Verified General": "🎖️",
+        "The Basement": "🫣",
+        "Voice Chat": "🎧",
+        "Lewdy Rudeys": "🔥",
+        "Dev and Admin ✯": "🖥️",
+
+        # Channels
+        "general": "💬",
+        "counting": "🧮",
+        "pets": "🐶",
+        "sticker-spam": "🖼️",
+        "emote-spam": "😆",
+        "yesdaddy": "🧨",
+        "sfw-bots": "🤖",
+        "levels": "📊",
+        "poketwo": "🔴",
+        "staff-chat": "🧠",
+        "commands": "🤖",
+        "mod-log": "🕵️",
+        "rules": "📜",
+        "announcements": "🛎️",
+        "bot-announcements": "📣",
+        "verification": "🛂",
+        "faq": "❓",
+        "booster-roles": "🎖️",
+        "bump-me": "🔁",
+        "starboard": "🔖",
+        "selfies": "🤳",
+        "photo-comments": "💭",
+        "food": "🍔",
+        "men-only": "👨",
+        "girls-only": "👩",
+        "nsfw-memes": "😂",
+        "art": "🎨",
+        "photography": "📸",
+        "aesthetic": "🌠",
+        "pictures-and-things": "🖼️",
+        "basement-rules": "📜",
+        "my-kinky-intro": "🔥",
+        "basement": "🚪",
+        "flash-and-dash": "⚡",
+        "lovense-corner": "💗",
+        "permission-to-play": "🧾",
+        "play-together": "🎮",
+        "furry-and-weeb-postings": "🧸",
+        "auto-pictures": "🖼️",
+        "nsfw-bots-and-gifs": "🕹️",
+        "extreme": "💥",
+        "exhibition": "🔊",
+        "voice-rules": "📜",
+        "Verified Voice": "🗣️",
+        "One on One": "🗨️",
+        "AFK": "💤",
+        "tease": "😏",
+        "female-full": "👩‍🦰",
+        "male-full": "👨‍🦱",
+        "nbgt": "🌈",
+        "couples": "💑",
+        "tummies": "🤰",
+        "nsfw-event": "📅",
+        "nsfw-comments": "💭",
+        "bot-testing": "🧪",
+        "store-alerts": "🛎️",
+        "place-of-testing": "🧪",
+        "staff-rebrand-assets": "🎯",
+        "avatars-banners": "🧑‍🎨",
+        "i-survived-2024": "🧾"
+    }
+
+
+    @commands.command(name="updateemojis")
+    @commands.is_owner()
+    async def update_emojis(self, ctx):
+        guild = ctx.guild
+        await ctx.send(f"Updating emojis in `{guild.name}`...")
+
+        # Update category names
+        for category in guild.categories:
+            name_parts = category.name.split("‣", 1)
+            if len(name_parts) == 2:
+                suffix = name_parts[1].strip()
+                base_name = suffix
+                emoji = self.EMOJI_REPLACEMENTS.get(base_name)
+                if emoji and not category.name.startswith(emoji):
+                    new_name = f"{emoji} ‣ {base_name}"
+                    try:
+                        await category.edit(name=new_name)
+                    except Exception as e:
+                        print(f"Failed to rename category {category.name}: {e}")
+
+        # Update text/voice channel names
+        for channel in guild.channels:
+            if isinstance(channel, (discord.TextChannel, discord.VoiceChannel, discord.ForumChannel)):
+                name_parts = channel.name.split("〉", 1)
+                if len(name_parts) == 2:
+                    suffix = name_parts[1].strip()
+                    emoji =self.EMOJI_REPLACEMENTS.get(suffix)
+                    if emoji and not channel.name.startswith(emoji):
+                        new_name = f"{emoji}〉{suffix}"
+                        try:
+                            await channel.edit(name=new_name)
+                        except Exception as e:
+                            print(f"Failed to rename channel {channel.name}: {e}")
+
+        await ctx.send("✅ Emoji updates completed.")
+
     @commands.command(name="testbutton", description="????")
     @commands.is_owner()
     async def test_button(self, ctx):
