@@ -135,7 +135,7 @@ class Message(commands.Cog):
             if contains_trigger_word_exact(msg.content):
                 user = msg.guild.get_member(704819426679324672)
                 if user:
-                    await msg.channel.send(f"{user.mention} ⚠️ gay detected: \"{msg.content}\"")
+                    await msg.channel.send(f"{user.mention} ⚠️ gay detected: \"{msg.content}\"", delete_after=60)
 
 
 
