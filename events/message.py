@@ -9,6 +9,62 @@ from discord.ext import commands
 from utils.utilities import calculate_level, is_today_weekend_or_holiday, amount_on_level_up, bad_flag, swap_flag, \
     good_flag
 
+import string
+
+TRIGGER_WORDS = {
+    "gay",
+    "homo",
+    "homosexual",
+    "lesbian",
+    "bi",
+    "bisexual",
+    "trans",
+    "transgender",
+    "lgbt",
+    "lgbtq",
+    "queer",
+    "nonbinary",
+    "non-binary",
+    "nb",
+    "pansexual",
+    "asexual",
+    "ace",
+    "aro",
+    "aromantic",
+    "drag",
+    "pride",
+    "closet",
+    "closeted",
+    "ally",
+    "top",
+    "bottom",
+    "switch",
+    "femboy",
+    "twink",
+    "bear",
+    "daddy",
+    "yas",
+    "slay",
+    "serve",
+    "werk",
+    "queen",
+    "king",
+    "gender",
+    "genderfluid",
+    "genderqueer",
+    "pronoun",
+    "he/him",
+    "she/her",
+    "they/them",
+    "homophobia"
+}
+
+def contains_trigger_word_exact(message_content: str) -> bool:
+    # Normalize message: lowercase and strip punctuation from words
+    translator = str.maketrans('', '', string.punctuation)
+    words = [w.translate(translator).lower() for w in message_content.split()]
+    return any(word in TRIGGER_WORDS for word in words)
+
 
 async def dump_delete(msg):
     with contextlib.suppress(Exception):
@@ -75,6 +131,13 @@ class Message(commands.Cog):
             for reaction in data.text_reactions:
                 if reaction.get("trigger") in msg.content.lower():
                     await msg.add_reaction(reaction.get("response"))
+
+            if contains_trigger_word_exact(msg.content):
+                user = msg.guild.get_member(704819426679324672)
+                if user:
+                    await msg.channel.send(f"{user.mention} ⚠️ gay detected: \"{msg.content}\"")
+
+
 
             if msg.channel.category_id == 1141700782006222970:
                 if msg.content.startswith("-"):

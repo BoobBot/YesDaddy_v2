@@ -341,6 +341,43 @@ class Moderation(commands.Cog):
             else:
                 await interaction.followup.send(f"{interaction.user} decided to selfban. Fucking idiot.")
 
+    @commands.hybrid_command(name="mute", description="Mute (timeout) one or more users.")
+    @app_commands.describe(
+        members="Users to mute",
+        duration="Duration in minutes",
+        reason="Reason for mute"
+    )
+    async def mute(self, ctx: commands.Context, members: commands.Greedy[discord.Member], duration: int = 5, *,
+                   reason: str = None):
+        if not members:
+            await ctx.reply("You must specify at least one member to mute.", ephemeral=True)
+            return
+
+        # Validate duration
+        duration = max(1, min(duration, 40320))  # Discord max timeout is 28 days = 40320 minutes
+        until = discord.utils.utcnow() + datetime.timedelta(minutes=duration)
+
+        muted = []
+        failed = []
+
+        for member in members:
+            try:
+                await member.timeout(until, reason=reason or f"Muted by {ctx.author}")
+                muted.append(str(member))
+            except discord.Forbidden:
+                failed.append(f"{member} (Missing Permissions)")
+            except Exception as e:
+                failed.append(f"{member} ({e})")
+
+        response = ""
+        if muted:
+            response += f"🔇 Muted: {', '.join(muted)} for {duration} minutes.\n"
+        if failed:
+            response += f"⚠️ Failed: {', '.join(failed)}"
+
+        await ctx.reply(response)
+
+
     @commands.hybrid_group(name="massnick", description="massnick users")
     @commands.guild_only()
     async def massnick(self, ctx: commands.Context):
