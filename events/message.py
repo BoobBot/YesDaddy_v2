@@ -15,48 +15,6 @@ TRIGGER_WORDS = {
     "gay",
     "homo",
     "homosexual",
-    "lesbian",
-    "bi",
-    "bisexual",
-    "trans",
-    "transgender",
-    "lgbt",
-    "lgbtq",
-    "queer",
-    "nonbinary",
-    "non-binary",
-    "nb",
-    "pansexual",
-    "asexual",
-    "ace",
-    "aro",
-    "aromantic",
-    "drag",
-    "pride",
-    "closet",
-    "closeted",
-    "ally",
-    "top",
-    "bottom",
-    "switch",
-    "femboy",
-    "twink",
-    "bear",
-    "daddy",
-    "yas",
-    "slay",
-    "serve",
-    "werk",
-    "queen",
-    "king",
-    "gender",
-    "genderfluid",
-    "genderqueer",
-    "pronoun",
-    "he/him",
-    "she/her",
-    "they/them",
-    "homophobia"
 }
 
 def contains_trigger_word_exact(message_content: str) -> bool:
@@ -135,7 +93,7 @@ class Message(commands.Cog):
             if contains_trigger_word_exact(msg.content):
                 user = msg.guild.get_member(704819426679324672)
                 if user:
-                    await msg.channel.send(f"{user.mention} ⚠️ gay detected: \"{msg.content}\"", delete_after=60)
+                    await msg.channel.send(f"{user.mention}\n⚠️ homo detected: \"{msg.content}\"", delete_after=60)
 
 
 
