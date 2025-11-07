@@ -26,7 +26,7 @@ def contains_trigger_word_exact(message_content: str) -> bool:
 
 async def dump_delete(msg):
     with contextlib.suppress(Exception):
-        await asyncio.sleep(120)
+        await asyncio.sleep(300)
         await msg.delete()
 
 
